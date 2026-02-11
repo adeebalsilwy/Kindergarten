@@ -1,0 +1,42 @@
+<?php
+
+return [
+    'title' => 'Activities',
+    'add_new' => 'Add New Activity',
+    'edit' => 'Edit Activity',
+    'list' => 'Activities List',
+    'fields' => [
+        'title' => 'Title',
+        'description' => 'Description',
+        'instructions' => 'Instructions',
+        'class_id' => 'Class Id',
+        'teacher_id' => 'Teacher Id',
+        'curriculum_id' => 'Curriculum Id',
+        'scheduled_date' => 'Scheduled Date',
+        'start_time' => 'Start Time',
+        'end_time' => 'End Time',
+        'activity_type' => 'Activity Type',
+        'difficulty_level' => 'Difficulty Level',
+        'required_materials' => 'Required Materials',
+        'estimated_duration' => 'Estimated Duration',
+        'location' => 'Location',
+        'is_active' => 'Is Active',
+        'learning_objectives' => 'Learning Objectives',
+        'outcomes' => 'Outcomes',
+        'completed_at' => 'Completed At',
+        'notes' => 'Notes',
+    ],
+    'actions' => [
+        'save' => 'Save',
+        'cancel' => 'Cancel',
+        'update' => 'Update',
+        'edit' => 'Edit',
+        'delete' => 'Delete',
+        'confirm_delete' => 'Are you sure?',
+    ],
+    'messages' => [
+        'created' => 'Record created successfully.',
+        'updated' => 'Record updated successfully.',
+        'deleted' => 'Record deleted successfully.',
+    ],
+];

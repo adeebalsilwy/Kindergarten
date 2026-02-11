@@ -1,0 +1,35 @@
+<?php
+
+namespace App\Http\Requests;
+
+use Illuminate\Foundation\Http\FormRequest;
+
+class UpdateParentRequest extends FormRequest
+{
+    public function authorize()
+    {
+        return true;
+    }
+
+    public function rules()
+    {
+        return [
+            'name' => 'nullable|string|max:255',
+            'phone' => 'nullable|string|max:255',
+            'address' => 'nullable|string',
+            'relation' => 'nullable|string|max:255',
+
+        ];
+    }
+
+    public function attributes()
+    {
+        return [
+            'name' => __('parents.fields.name'),
+            'phone' => __('parents.fields.phone'),
+            'address' => __('parents.fields.address'),
+            'relation' => __('parents.fields.relation'),
+
+        ];
+    }
+}

@@ -1,0 +1,42 @@
+<?php
+
+return [
+    'title' => 'Activities',
+    'add_new' => 'إضافة Activity جديد',
+    'edit' => 'تعديل Activity',
+    'list' => 'قائمة Activities',
+    'fields' => [
+        'title' => 'العنوان',
+        'description' => 'الوصف',
+        'instructions' => 'Instructions',
+        'class_id' => 'Class Id',
+        'teacher_id' => 'Teacher Id',
+        'curriculum_id' => 'Curriculum Id',
+        'scheduled_date' => 'Scheduled Date',
+        'start_time' => 'Start Time',
+        'end_time' => 'End Time',
+        'activity_type' => 'Activity Type',
+        'difficulty_level' => 'Difficulty Level',
+        'required_materials' => 'Required Materials',
+        'estimated_duration' => 'Estimated Duration',
+        'location' => 'Location',
+        'is_active' => 'نشط',
+        'learning_objectives' => 'Learning Objectives',
+        'outcomes' => 'Outcomes',
+        'completed_at' => 'Completed At',
+        'notes' => 'ملاحظات',
+    ],
+    'actions' => [
+        'save' => 'حفظ',
+        'cancel' => 'إلغاء',
+        'update' => 'تحديث',
+        'edit' => 'تعديل',
+        'delete' => 'حذف',
+        'confirm_delete' => 'هل أنت متأكد؟',
+    ],
+    'messages' => [
+        'created' => 'تم إنشاء السجل بنجاح.',
+        'updated' => 'تم تحديث السجل بنجاح.',
+        'deleted' => 'تم حذف السجل بنجاح.',
+    ],
+];

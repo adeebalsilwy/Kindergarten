@@ -1,0 +1,117 @@
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "Data Source=192.168.155.100;Initial Catalog=CISRemittanceNetwork;User ID=CIS;Password=1n1N@#A#d@4D$"
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "AllowedHosts": "*",
+  "Jwt": {
+    "Key": "youw/nWigZFXkLaKej1W45ccif/+O+PodikGLJitTtYRWWBU4VZ9flR1MrDuAPVV3KSRsTNJF0YnAzzo2ZVwcyLiDoi2s2FUTxSQNqMt7HR5W/RUcXgJbjT7XGGHuq1pBOtXokuT0vtELvtSMEmrt+DMo1klwktw2ch2B/IyLfZOZ7aO5RQaDMuDau8MXqJ0msFZk9V6dEbJXLUYrbYsC4xhN3eQdKtY5APVYZ2J7fBzAsWquuHIPgcYXXzLpr10H+o1M44VTvkVzUkn5bdJ2TVrqmiLCEX5Q0SpI8b9vF6PoXEpznT3LMnZHBb16H0U/T5TeEJT+GWoh+eMvx8mOg==",
+    "Issuer": "https://fdo.net",
+    "Audiance": "https://fdo.net/"
+  },
+  "StartupConfig": {
+    "TokenEncriptionKey": "0",
+    "ForceHttpsRedirection": false,
+    "UseSecurityHeaders": false,
+    "UseSecureHashFilter": false,
+    "UseResponseCompression": true,
+    "UseRateLimiter": false,
+    "ShowAPIDocumentation": true,
+    "RateLimitTotalSeconds": 10,
+    "UseIPWishList": {
+      "Status": false,
+      "IPs": [
+        "::1"
+      ]
+    }
+  },
+  "SystemConfig": {
+    "APIVersion": 1,
+    "RemittancePublicIdStartWith": "",
+    "RemittanceExpressIdStartWith": "",
+    "RemittanceIdLength": 9,
+    "EnableValidatingRemittanceRestriction": true,
+    "EnableSMS": true,
+    "EnableCheckSusbendedCauses": true,
+    "RequireRemittanceDetailedData": false,
+    "ImmediateExtraDataFormTriggerd": false,
+    "RestrictPymentForFingerPrintedRemittances": true
+  },
+  "ExternalRemittancesSettings": {
+    "URL": "https://localhost:5001/api/"
+  },
+"ExternalServices": {
+    "ServiceType": 1,
+    "CompanyName": " بنك عدن الاول",
+    "ServiceName": "فاد موني  ",
+    "MobileQueryURL": "https://paysms2.cismobile.net/API/BillPayment/",
+    "MobilePaymentURL": "https://paysms2.cismobile.net/API/BillPayment/",
+    "DepositURL": "",
+    "SMSSettings": {
+      "SMSURL": "https://paysms2.cismobile.net/API/",
+      "SMSServer": "",
+      "SMSUser": "",
+      "SMSPass": "",
+      "SMSToken": "0",
+      "SMSApplicationID": 0,
+        "SMSChannel": 7,
+
+  "SMSYMGateway": {
+    "URL": "http://10.220.172.100:7070/",
+    "SMSUser": "Bank",
+    "SMSPass": "Bank@2024",
+    "SMSUserID": 124985
+  }
+},
+    "MobilePaymentUserName": "",
+    "MobilePaymentPassword": "",
+    "APIKey": "0",
+    "XAppKey": "0",
+    "XAPIKey": "0"
+  },
+  "IBSRemittancesSettings": [
+    {
+      "URL": "https://unm-yemen.com:6663/",
+      "UserName": "FADBankAPI",
+      "Password": "fad_1234",
+      "SecretCode": "U1n?i1f$i2e?dn!e0t@W5o9rk",
+      "SubChannelType": "fad_1234",
+      "ChannelType": "2",
+      "ClientSecret": "fad_1234",
+      "DeviceID": null,
+      "AgentBranchCode": "fad_1234",
+      "DistinationId": 6,
+      "NetworkId": 2
+    }
+  ],
+  "RemittancesSettings": [
+  {
+    "URL": "https://must.center/AgentTest/api",
+    "UserName": "بنك عدن الاول/ادارة",
+    "Password": "123456",
+    "Certificate": "",
+    "MachineCode": "aden first Bank bankDemo-AgentRemittanceService",
+    "MachineCode2": 365784915,
+    "Version": 5,
+    "DistinationId": 0,
+    "NetworkId": 10
+  },
+   {
+    "URL": "https://alb.shhbay.com:8082/Agent/api",
+    "UserName": "FirstBank",
+    "Password": "firstbank@#$2025",
+    "Certificate": "",
+    "MachineCode": "FirstAdenBank-API",
+    "MachineCode2": 102365387,
+    "Version": 4,
+    "DistinationId": 0,
+    "NetworkId": 13
+  }
+  ]
+  
+}

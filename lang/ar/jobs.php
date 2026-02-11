@@ -1,0 +1,40 @@
+<?php
+
+return [
+    'title' => 'Jobs',
+    'add_new' => 'إضافة Job جديد',
+    'edit' => 'تعديل Job',
+    'list' => 'قائمة Jobs',
+    'fields' => [
+        'queue' => 'Queue',
+        'payload' => 'Payload',
+        'attempts' => 'Attempts',
+        'reserved_at' => 'Reserved At',
+        'available_at' => 'Available At',
+        'name' => 'الاسم',
+        'total_jobs' => 'Total Jobs',
+        'pending_jobs' => 'Pending Jobs',
+        'failed_jobs' => 'Failed Jobs',
+        'failed_job_ids' => 'Failed Job Ids',
+        'options' => 'Options',
+        'cancelled_at' => 'Cancelled At',
+        'finished_at' => 'Finished At',
+        'uuid' => 'Uuid',
+        'connection' => 'Connection',
+        'exception' => 'Exception',
+        'failed_at' => 'Failed At',
+    ],
+    'actions' => [
+        'save' => 'حفظ',
+        'cancel' => 'إلغاء',
+        'update' => 'تحديث',
+        'edit' => 'تعديل',
+        'delete' => 'حذف',
+        'confirm_delete' => 'هل أنت متأكد؟',
+    ],
+    'messages' => [
+        'created' => 'تم إنشاء السجل بنجاح.',
+        'updated' => 'تم تحديث السجل بنجاح.',
+        'deleted' => 'تم حذف السجل بنجاح.',
+    ],
+];
