@@ -3,56 +3,43 @@
 namespace App\Traits;
 
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 
 trait Filterable
 {
     /**
-     * Scope a query to filter results.
+     * Apply filters to the query.
      *
      * @param Builder $query
-     * @param Request $request
+     * @param mixed $request
      * @return Builder
      */
-    public function scopeFilter(Builder $query, Request $request)
+    public function scopeFilter(Builder $query, $request)
     {
-        $params = $request->all();
-
-        foreach ($params as $field => $value) {
-            if ($value === '' || $value === null) {
-                continue;
-            }
-
-            // Custom filter method (e.g. filterByStatus)
-            $method = 'filterBy' . Str::studly($field);
-            if (method_exists($this, $method)) {
-                $this->{$method}($query, $value);
-                continue;
-            }
-
-            // Search functionality
-            if ($field === 'search' && $this->searchable) {
-                $query->where(function ($q) use ($value) {
-                    foreach ($this->searchable as $column) {
-                        $q->orWhere($column, 'LIKE', '%' . $value . '%');
-                    }
-                });
-                continue;
-            }
-
-            // Simple "where" clause if column exists in fillable
-            if (in_array($field, $this->fillable)) {
-                $query->where($field, $value);
-            }
+        if (method_exists($this, 'scopeSearch')) {
+            $query->search($request->get('search'));
         }
 
-        // Sorting
-        if ($request->has('sort_by')) {
-            $direction = $request->get('sort_order', 'asc');
-            $query->orderBy($request->get('sort_by'), $direction);
-        }
-
+        // Add more generic filtering logic here if needed
         return $query;
+    }
+
+    /**
+     * Apply search to the query.
+     *
+     * @param Builder $query
+     * @param string|null $search
+     * @return Builder
+     */
+    public function scopeSearch(Builder $query, $search)
+    {
+        if (!$search || !isset($this->searchable)) {
+            return $query;
+        }
+
+        return $query->where(function ($q) use ($search) {
+            foreach ($this->searchable as $column) {
+                $q->orWhere($column, 'LIKE', "%{$search}%");
+            }
+        });
     }
 }
