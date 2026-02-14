@@ -145,8 +145,9 @@ class UserController extends Controller
     public function create()
     {
         $this->authorize('create_users');
+        $user = new \App\Models\User();
 
-        return view('pages.users.create', get_defined_vars());
+        return view('pages.users.create', compact('user'));
     }
 
     public function store(StoreUserRequest $request)
@@ -170,7 +171,7 @@ class UserController extends Controller
         $this->authorize('edit_users');
         $user = $this->service->find($id);
 
-        return view('pages.users.edit', get_defined_vars());
+        return view('pages.users.edit', compact('user'));
     }
 
     public function update(UpdateUserRequest $request, $id)

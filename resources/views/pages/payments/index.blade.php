@@ -112,13 +112,20 @@
                 <x-base.table.tbody>
                     @forelse($payments as $payment)
                         <x-base.table.tr class="intro-x">
-                            <x-base.table.td class="text-center">{{ $payment->child_id ?? '-' }}</x-base.table.td>
-                            <x-base.table.td class="text-center">{{ $payment->fee_id ?? '-' }}</x-base.table.td>
-                            <x-base.table.td class="text-center">{{ $payment->amount ?? '-' }}</x-base.table.td>
+                            <x-base.table.td class="text-center">{{ $payment->child->name ?? '-' }}</x-base.table.td>
+                            <x-base.table.td class="text-center">{{ $payment->fee->name ?? '-' }}</x-base.table.td>
+                            <x-base.table.td class="text-center font-medium text-success">{{ __('global.currency_symbol', ['amount' => number_format($payment->amount)]) }}</x-base.table.td>
                             <x-base.table.td class="text-center">{{ $payment->payment_date ? $payment->payment_date->format('Y-m-d') : '-' }}</x-base.table.td>
                             <x-base.table.td class="text-center">{{ $payment->payment_method ?? '-' }}</x-base.table.td>
                             <x-base.table.td class="text-center">{{ $payment->reference_number ?? '-' }}</x-base.table.td>
-                            <x-base.table.td class="text-center">{{ $payment->status ?? '-' }}</x-base.table.td>
+                            <x-base.table.td class="text-center">
+                                <span class="px-2 py-1 rounded-full text-xs font-medium
+                                    {{ $payment->status == 'completed' ? 'bg-success/10 text-success' : '' }}
+                                    {{ $payment->status == 'pending' ? 'bg-warning/10 text-warning' : '' }}
+                                    {{ $payment->status == 'failed' ? 'bg-danger/10 text-danger' : '' }}">
+                                    {{ __('payments.status.' . ($payment->status ?? 'pending')) }}
+                                </span>
+                            </x-base.table.td>
                             <x-base.table.td class="text-center">{{ $payment->receipt_number ?? '-' }}</x-base.table.td>
 
                             @if($canEdit || $canDelete || $canView)

@@ -14,10 +14,12 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 class GuardianController extends Controller
 {
     protected $service;
+    protected $dashboardService;
 
-    public function __construct(GuardianService $service)
+    public function __construct(GuardianService $service, \App\Services\DashboardService $dashboardService)
     {
         $this->service = $service;
+        $this->dashboardService = $dashboardService;
     }
 
     public function index(Request $request)
@@ -35,9 +37,24 @@ class GuardianController extends Controller
             return $this->export($request->get('export'), $query);
         }
 
+        // Clone query for stats
+        $statsQuery = clone $query;
+        $totalGuardians = $statsQuery->count();
+        $primaryGuardians = (clone $statsQuery)->where('relationship', 'Father')->count();
+        $contactableGuardians = (clone $statsQuery)->whereNotNull('phone')->count();
+        $guardiansWithOutstanding = (clone $statsQuery)->whereHas('children', function($q) {
+            $q->whereRaw('fees_required > fees_paid');
+        })->count();
+
         $parents = $query->paginate(15)->withQueryString();
 
-        return view('pages.guardians.index', compact('parents'));
+        return view('pages.guardians.index', compact(
+            'parents',
+            'totalGuardians',
+            'primaryGuardians',
+            'contactableGuardians',
+            'guardiansWithOutstanding'
+        ));
     }
 
     /**
@@ -145,8 +162,9 @@ class GuardianController extends Controller
     public function create()
     {
         $this->authorize('create_guardians');
+        $guardian = new \App\Models\Guardian();
 
-        return view('pages.guardians.create', get_defined_vars());
+        return view('pages.guardians.create', compact('guardian'));
     }
 
     public function store(StoreGuardianRequest $request)
@@ -160,17 +178,17 @@ class GuardianController extends Controller
     public function show($id)
     {
         $this->authorize('view_guardians');
-        $parents = $this->service->find($id);
+        $guardian = $this->service->find($id);
 
-        return view('pages.guardians.show', compact('parents'));
+        return view('pages.guardians.show', compact('guardian'));
     }
 
     public function edit($id)
     {
         $this->authorize('edit_guardians');
-        $parents = $this->service->find($id);
+        $guardian = $this->service->find($id);
 
-        return view('pages.guardians.edit', get_defined_vars());
+        return view('pages.guardians.edit', compact('guardian'));
     }
 
     public function update(UpdateGuardianRequest $request, $id)

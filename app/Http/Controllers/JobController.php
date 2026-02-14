@@ -140,8 +140,9 @@ class JobController extends Controller
     public function create()
     {
         $this->authorize('create_jobs');
+        $job = new \App\Models\Job();
 
-        return view('pages.jobs.create', get_defined_vars());
+        return view('pages.jobs.create', compact('job'));
     }
 
     public function store(StoreJobRequest $request)
@@ -165,7 +166,7 @@ class JobController extends Controller
         $this->authorize('edit_jobs');
         $job = $this->service->find($id);
 
-        return view('pages.jobs.edit', get_defined_vars());
+        return view('pages.jobs.edit', compact('job'));
     }
 
     public function update(UpdateJobRequest $request, $id)

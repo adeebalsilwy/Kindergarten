@@ -61,7 +61,7 @@
                             description="Today's attendance"
                             icon="UserCheck"
                             color="info"
-                            route="attendance.index"
+                            route="attendances.index"
                         />
                         
                         <!-- Monthly Revenue -->
@@ -374,7 +374,7 @@
                                     <span class="truncate">{{ __('global.Add_New_Child') }}</span>
                                 </div>
                             </a>
-                            <a href="{{ route('attendance.index') }}" class="block">
+                            <a href="{{ route('attendances.index') }}" class="block">
                                 <div class="box p-4 flex items-center hover:bg-slate-100 dark:hover:bg-darkmode-400">
                                     <x-base.lucide icon="Calendar" class="w-5 h-5 text-success mr-3" />
                                     <span class="truncate">{{ __('global.Record_Attendance') }}</span>

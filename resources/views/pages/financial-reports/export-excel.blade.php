@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ __('financial-reports.title') }} - {{ config('app.name') }}</title>
+    <title>{{ __('financial_reports.title') }} - {{ config('app.name') }}</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -98,7 +98,7 @@
                 <img src="{{ public_path(config('app.logo')) }}" alt="{{ config('app.name') }}" class="logo">
             @endif
             <h1>{{ config('app.name') }}</h1>
-            <p>{{ __('financial-reports.title') }} - {{ __('global.export_excel') }}</p>
+            <p>{{ __('financial_reports.title') }} - {{ __('global.export_excel') }}</p>
         </div>
 
         <div class="report-info">

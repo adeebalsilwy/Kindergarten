@@ -13,7 +13,7 @@
                 {{ __('global.back') }}
             </x-base.button>
             @can('edit_guardians')
-            <x-base.button variant="primary" as="a" href="{{ route('guardians.edit', $parents->id) }}">
+            <x-base.button variant="primary" as="a" href="{{ route('guardians.edit', $guardian->id) }}">
                 <x-base.lucide icon="Pencil" class="w-4 h-4 mr-2" />
                 {{ __('global.edit') }}
             </x-base.button>
@@ -26,22 +26,22 @@
             <div class="box p-5">
                 <div class="flex items-center">
                     <div class="w-16 h-16 rounded-full overflow-hidden">
-                        @if($parents->photo)
-                            <img src="{{ asset('storage/'.$parents->photo) }}" class="w-full h-full object-cover" alt="{{ $parents->name }}">
+                        @if($guardian->photo)
+                            <img src="{{ asset('storage/'.$guardian->photo) }}" class="w-full h-full object-cover" alt="{{ $guardian->name }}">
                         @else
                             <div class="w-16 h-16 bg-primary/10 flex items-center justify-center text-primary font-bold">
-                                {{ strtoupper(substr($parents->name, 0, 1)) }}
+                                {{ strtoupper(substr($guardian->name, 0, 1)) }}
                             </div>
                         @endif
                     </div>
                     <div class="ml-4">
-                        <div class="text-base font-medium">{{ $parents->name }}</div>
+                        <div class="text-base font-medium">{{ $guardian->name }}</div>
                         <div class="text-slate-500 text-sm">
-                            {{ $parents->relationship ?? __('global.not_specified') }}
+                            {{ $guardian->relationship ?? __('global.not_specified') }}
                         </div>
                     </div>
                     <div class="ml-auto">
-                        @if($parents->is_active ?? true)
+                        @if($guardian->is_active ?? true)
                             <span class="px-2 py-1 rounded-full text-xs bg-success/20 text-success">{{ __('global.active') }}</span>
                         @else
                             <span class="px-2 py-1 rounded-full text-xs bg-danger/20 text-danger">{{ __('global.inactive') }}</span>
@@ -51,15 +51,15 @@
                 <div class="mt-5 space-y-2">
                     <div class="flex items-center text-sm">
                         <x-base.lucide icon="Phone" class="w-4 h-4 mr-2" />
-                        <span>{{ $parents->phone ?? __('global.not_provided') }}</span>
+                        <span>{{ $guardian->phone ?? __('global.not_provided') }}</span>
                     </div>
                     <div class="flex items-center text-sm">
                         <x-base.lucide icon="Mail" class="w-4 h-4 mr-2" />
-                        <span>{{ $parents->email ?? __('global.not_provided') }}</span>
+                        <span>{{ $guardian->email ?? __('global.not_provided') }}</span>
                     </div>
                     <div class="flex items-center text-sm">
                         <x-base.lucide icon="Home" class="w-4 h-4 mr-2" />
-                        <span>{{ $parents->address ?? __('global.not_provided') }}</span>
+                        <span>{{ $guardian->address ?? __('global.not_provided') }}</span>
                     </div>
                 </div>
             </div>
@@ -67,7 +67,7 @@
             <div class="box p-5 mt-5">
                 <div class="text-base font-medium mb-3">{{ __('global.children') }}</div>
                 <div class="flex flex-wrap gap-2">
-                    @forelse($parents->children as $child)
+                    @forelse($guardian->children as $child)
                         <a href="{{ route('children.show', $child->id) }}" class="px-2 py-1 text-xs rounded-full bg-primary/10 text-primary border border-primary/20">
                             {{ $child->name ?? $child->first_name }}
                         </a>
@@ -82,16 +82,16 @@
             <div class="box p-5">
                 <div class="text-base font-medium mb-3">{{ __('global.contact_preferences') }}</div>
                 <div class="grid grid-cols-3 gap-4">
-                    <x-widgets.stat-card :value="($parents->receives_sms_notifications ?? false) ? __('global.enabled') : __('global.disabled')" :label="__('global.sms_notifications')" icon="MessageSquare" />
-                    <x-widgets.stat-card :value="($parents->receives_email_notifications ?? false) ? __('global.enabled') : __('global.disabled')" :label="__('global.email_notifications')" icon="Mail" />
-                    <x-widgets.stat-card :value="$parents->children->count()" :label="__('global.children_count')" icon="Users" />
+                    <x-widgets.stat-card :value="($guardian->receives_sms_notifications ?? false) ? __('global.enabled') : __('global.disabled')" :label="__('global.sms_notifications')" icon="MessageSquare" />
+                    <x-widgets.stat-card :value="($guardian->receives_email_notifications ?? false) ? __('global.enabled') : __('global.disabled')" :label="__('global.email_notifications')" icon="Mail" />
+                    <x-widgets.stat-card :value="$guardian->children->count()" :label="__('global.children_count')" icon="Users" />
                 </div>
             </div>
 
             <div class="box p-5 mt-5">
                 <div class="text-base font-medium mb-3">{{ __('global.activity_summary') }}</div>
                 <div class="grid grid-cols-2 gap-4">
-                    @foreach($parents->children as $child)
+                    @foreach($guardian->children as $child)
                         <div class="p-3 border rounded">
                             <div class="font-medium">{{ $child->name }}</div>
                             <div class="text-xs text-slate-500">
@@ -99,7 +99,7 @@
                             </div>
                         </div>
                     @endforeach
-                    @if($parents->children->isEmpty())
+                    @if($guardian->children->isEmpty())
                         <div class="text-slate-500">{{ __('global.no_data') }}</div>
                     @endif
                 </div>

@@ -57,7 +57,7 @@
     $canDelete = auth()->user()->can('delete_financial_reports');
     $canView = auth()->user()->can('view_financial_reports');
 @endphp
-                            <x-base.table.th class="whitespace-nowrap text-center">{{ __('financial-reports.fields.name') }}</x-base.table.th>
+                            <x-base.table.th class="whitespace-nowrap text-center">{{ __('financial_reports.fields.name') }}</x-base.table.th>
 
                         @if($canEdit || $canDelete || $canView)
                         <x-base.table.th class="text-center whitespace-nowrap">{{ __('global.actions') }}</x-base.table.th>

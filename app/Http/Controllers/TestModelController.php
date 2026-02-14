@@ -140,8 +140,9 @@ class TestModelController extends Controller
     public function create()
     {
         $this->authorize('create_test_models');
+        $testModel = new \App\Models\TestModel();
 
-        return view('pages.test_models.create', get_defined_vars());
+        return view('pages.test_models.create', compact('testModel'));
     }
 
     public function store(StoreTestModelRequest $request)
@@ -165,7 +166,7 @@ class TestModelController extends Controller
         $this->authorize('edit_test_models');
         $testModel = $this->service->find($id);
 
-        return view('pages.test_models.edit', get_defined_vars());
+        return view('pages.test_models.edit', compact('testModel'));
     }
 
     public function update(UpdateTestModelRequest $request, $id)

@@ -120,7 +120,7 @@ class Teacher extends Model
     // Mutators
     public function setNameAttribute($value)
     {
-        $this->attributes['name'] = ucfirst(strtolower($value));
+        $this->attributes['name'] = ucwords(strtolower($value));
     }
 
     public function setPhoneAttribute($value)

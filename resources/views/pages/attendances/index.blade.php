@@ -223,7 +223,7 @@
                                         </div>
                                         <div>
                                             <div class="font-medium">{{ $attendance->child->name ?? 'N/A' }}</div>
-                                            <div class="text-slate-500 text-xs">{{ $attendance->child->guardian->name ?? 'No Guardian' }}</div>
+                                            <div class="text-slate-500 text-xs">{{ $attendance->child->parent->name ?? 'No Guardian' }}</div>
                                         </div>
                                     </div>
                                 </x-base.table.td>

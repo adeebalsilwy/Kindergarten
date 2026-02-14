@@ -8,11 +8,11 @@
     <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
         <h2 class="text-lg font-medium mr-auto">{{ __('global.account_statement') }}</h2>
         <div class="w-full sm:w-auto flex mt-4 sm:mt-0">
-            <x-base.button variant="outline-primary" as="a" href="{{ route('accounting-entries.export.pdf') }}?report_type=account_statement" class="flex items-center mr-2">
+            <x-base.button variant="outline-primary" as="a" href="{{ route('accounting_entries.export.pdf') }}?report_type=account_statement" class="flex items-center mr-2">
                 <x-base.lucide icon="FileText" class="w-4 h-4 mr-2" />
                 {{ __('global.export_pdf') }}
             </x-base.button>
-            <x-base.button variant="outline-success" as="a" href="{{ route('accounting-entries.export.excel') }}?report_type=account_statement" class="flex items-center">
+            <x-base.button variant="outline-success" as="a" href="{{ route('accounting_entries.export.excel') }}?report_type=account_statement" class="flex items-center">
                 <x-base.lucide icon="FileSpreadsheet" class="w-4 h-4 mr-2" />
                 {{ __('global.export_excel') }}
             </x-base.button>
@@ -23,7 +23,7 @@
         <!-- Filter Section -->
         <div class="intro-y col-span-12">
             <div class="box p-5">
-                <form method="GET" action="{{ route('accounting-entries.account-statement') }}">
+                <form method="GET" action="{{ route('accounting_entries.account-statement') }}">
                     <div class="flex flex-col sm:flex-row gap-4">
                         <div class="flex-1">
                             <x-base.form-label>{{ __('global.start_date') }}</x-base.form-label>

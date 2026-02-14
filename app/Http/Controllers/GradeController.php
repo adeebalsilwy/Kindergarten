@@ -140,8 +140,9 @@ class GradeController extends Controller
     public function create()
     {
         $this->authorize('create_grades');
+        $grade = new \App\Models\Grade();
 
-        return view('pages.grades.create', get_defined_vars());
+        return view('pages.grades.create', compact('grade'));
     }
 
     public function store(StoreGradeRequest $request)
@@ -165,7 +166,7 @@ class GradeController extends Controller
         $this->authorize('edit_grades');
         $grade = $this->service->find($id);
 
-        return view('pages.grades.edit', get_defined_vars());
+        return view('pages.grades.edit', compact('grade'));
     }
 
     public function update(UpdateGradeRequest $request, $id)

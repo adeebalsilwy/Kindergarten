@@ -140,8 +140,9 @@ class LanguageController extends Controller
     public function create()
     {
         $this->authorize('create_languages');
+        $language = new \App\Models\Language();
 
-        return view('pages.languages.create', get_defined_vars());
+        return view('pages.languages.create', compact('language'));
     }
 
     public function store(StoreLanguageRequest $request)
@@ -165,7 +166,7 @@ class LanguageController extends Controller
         $this->authorize('edit_languages');
         $language = $this->service->find($id);
 
-        return view('pages.languages.edit', get_defined_vars());
+        return view('pages.languages.edit', compact('language'));
     }
 
     public function update(UpdateLanguageRequest $request, $id)

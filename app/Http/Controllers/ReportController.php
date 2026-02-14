@@ -140,8 +140,9 @@ class ReportController extends Controller
     public function create()
     {
         $this->authorize('create_reports');
+        $report = new \App\Models\Report();
 
-        return view('pages.reports.create', get_defined_vars());
+        return view('pages.reports.create', compact('report'));
     }
 
     public function store(StoreReportRequest $request)
@@ -165,7 +166,7 @@ class ReportController extends Controller
         $this->authorize('edit_reports');
         $report = $this->service->find($id);
 
-        return view('pages.reports.edit', get_defined_vars());
+        return view('pages.reports.edit', compact('report'));
     }
 
     public function update(UpdateReportRequest $request, $id)

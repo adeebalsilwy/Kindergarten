@@ -14,10 +14,12 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 class ChildrenController extends Controller
 {
     protected $service;
+    protected $dashboardService;
 
-    public function __construct(ChildrenService $service)
+    public function __construct(ChildrenService $service, \App\Services\DashboardService $dashboardService)
     {
         $this->service = $service;
+        $this->dashboardService = $dashboardService;
     }
 
     public function index(Request $request)
@@ -37,7 +39,23 @@ class ChildrenController extends Controller
         $childrens = $query->paginate(15)->withQueryString();
         $classes = \App\Models\Classes::select('id', 'name')->orderBy('name')->get();
 
-        return view('pages.children.index', compact('childrens', 'classes'));
+        // Fetch stats for the view
+        $metrics = $this->dashboardService->getGeneralMetrics();
+        $attendanceStats = $this->dashboardService->getAttendanceStats();
+
+        $totalActive = $metrics['active_students'];
+        $totalOutstanding = $metrics['pending_payments'];
+        $todayAttendance = $attendanceStats['today']['attendance_rate'];
+        $totalClasses = $metrics['total_classes'];
+
+        return view('pages.children.index', compact(
+            'childrens',
+            'classes',
+            'totalActive',
+            'totalOutstanding',
+            'todayAttendance',
+            'totalClasses'
+        ));
     }
 
     /**
@@ -146,10 +164,11 @@ class ChildrenController extends Controller
     {
         $this->authorize('create_children');
 
+        $children = new \App\Models\Children();
         $classes = \App\Models\Classes::select('id', 'name')->orderBy('name')->get();
         $parents = \App\Models\Guardian::select('id', 'name')->orderBy('name')->get();
 
-        return view('pages.children.create', compact('classes', 'parents'));
+        return view('pages.children.create', compact('children', 'classes', 'parents'));
     }
 
     public function store(StoreChildrenRequest $request)

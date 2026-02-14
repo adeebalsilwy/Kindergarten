@@ -106,10 +106,8 @@ Route::middleware(['auth', 'verified', 'role:Administrator|Accountant|Principal'
     Route::get('cash-flow', [ReportController::class, 'cashFlow'])->name('cash-flow');
     Route::get('attendance-report', [ReportController::class, 'attendanceReport'])->name('attendance-report');
 });
-Route::get('attendance', [AttendanceController::class, 'index'])->name('attendance.index')->middleware(['auth', 'role:Administrator|Principal|Teacher']);
-Route::get('attendance/bulk', [AttendanceController::class, 'bulk'])->name('attendance.bulk')->middleware(['auth', 'role:Administrator|Principal|Teacher']);
-Route::post('attendance/bulk', [AttendanceController::class, 'bulkStore'])->name('attendance.bulk.store')->middleware(['auth', 'role:Administrator|Principal|Teacher']);
-Route::post('attendance', [AttendanceController::class, 'store'])->name('attendance.store')->middleware(['auth', 'role:Administrator|Principal|Teacher']);
+Route::get('attendances/bulk', [AttendanceController::class, 'bulk'])->name('attendances.bulk')->middleware(['auth', 'role:Administrator|Principal|Teacher']);
+Route::post('attendances/bulk', [AttendanceController::class, 'bulkStore'])->name('attendances.bulk.store')->middleware(['auth', 'role:Administrator|Principal|Teacher']);
 Route::resource('grades', GradeController::class)->only(['index', 'store'])->middleware(['auth', 'verified', 'role:Administrator|Principal|Teacher']);
 Route::resource('children', ChildrenController::class)->middleware(['auth', 'verified', 'role:Administrator|Principal|Teacher']);
 // Route::resource('parents', ParentsController::class); // Replaced by guardians resource below
@@ -155,7 +153,7 @@ Route::prefix('api-manager')->middleware(['auth', 'verified', 'role:Administrato
 
 Route::prefix('access-control')->middleware(['auth', 'verified', 'role:Administrator'])->group(function () {
     Route::resource('roles', \App\Http\Controllers\RoleController::class);
-    Route::resource('permissions', \App\Http\Controllers\PermissionController::class)->only(['index', 'store', 'destroy']);
+    Route::resource('permissions', \App\Http\Controllers\PermissionController::class);
 });
 
 Route::prefix('monitoring')->middleware(['auth', 'verified', 'role:Administrator'])->group(function () {
@@ -242,8 +240,8 @@ Route::get('payments/export/pdf', [PaymentController::class, 'exportPdf'])->name
 Route::get('payments/export/excel', [PaymentController::class, 'exportExcel'])->name('payments.export.excel')->middleware(['auth', 'verified', 'role:Administrator|Accountant|Principal']);
 
 // Export Routes for Permission
-Route::get('permission/export/pdf', [PermissionController::class, 'exportPdf'])->name('permission.export.pdf')->middleware(['auth', 'verified', 'role:Administrator']);
-Route::get('permission/export/excel', [PermissionController::class, 'exportExcel'])->name('permission.export.excel')->middleware(['auth', 'verified', 'role:Administrator']);
+Route::get('permissions/export/pdf', [PermissionController::class, 'exportPdf'])->name('permissions.export.pdf')->middleware(['auth', 'verified', 'role:Administrator']);
+Route::get('permissions/export/excel', [PermissionController::class, 'exportExcel'])->name('permissions.export.excel')->middleware(['auth', 'verified', 'role:Administrator']);
 Route::resource('teachers', TeacherController::class)->middleware(['auth', 'verified', 'role:Administrator|Principal']);
 
 // Export Routes for Teacher

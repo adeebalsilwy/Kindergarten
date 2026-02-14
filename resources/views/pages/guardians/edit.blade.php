@@ -11,13 +11,13 @@
     <div class="grid grid-cols-12 gap-6 mt-5">
         <div class="intro-y col-span-12 lg:col-span-10">
             <div class="intro-y box p-5">
-                <form action="{{ route('guardians.update', $parents->id) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('guardians.update', $guardian->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <div class="grid grid-cols-12 gap-4">
                         <div class="col-span-12 sm:col-span-6">
                             <x-base.form-label>{{ __('guardians.fields.name') }}</x-base.form-label>
-                            <x-base.form-input type="text" name="name" value="{{ old('name', $parents->name ?? '') }}" class="mt-2" />
+                            <x-base.form-input type="text" name="name" value="{{ old('name', $guardian->name ?? '') }}" class="mt-2" />
                         </div>
 
                     </div>

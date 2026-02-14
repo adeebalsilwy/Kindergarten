@@ -140,8 +140,9 @@ class ActivityController extends Controller
     public function create()
     {
         $this->authorize('create_activities');
+        $activity = new \App\Models\Activity();
 
-        return view('pages.activities.create', get_defined_vars());
+        return view('pages.activities.create', compact('activity'));
     }
 
     public function store(StoreActivityRequest $request)
@@ -165,7 +166,7 @@ class ActivityController extends Controller
         $this->authorize('edit_activities');
         $activity = $this->service->find($id);
 
-        return view('pages.activities.edit', get_defined_vars());
+        return view('pages.activities.edit', compact('activity'));
     }
 
     public function update(UpdateActivityRequest $request, $id)

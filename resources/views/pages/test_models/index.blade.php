@@ -57,7 +57,7 @@
     $canDelete = auth()->user()->can('delete_test_models');
     $canView = auth()->user()->can('view_test_models');
 @endphp
-                            <x-base.table.th class="whitespace-nowrap text-center">{{ __('test-models.fields.name') }}</x-base.table.th>
+                            <x-base.table.th class="whitespace-nowrap text-center">{{ __('test_models.fields.name') }}</x-base.table.th>
 
                         @if($canEdit || $canDelete || $canView)
                         <x-base.table.th class="text-center whitespace-nowrap">{{ __('global.actions') }}</x-base.table.th>

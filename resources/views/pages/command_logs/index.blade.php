@@ -57,9 +57,9 @@
     $canDelete = auth()->user()->can('delete_command_logs');
     $canView = auth()->user()->can('view_command_logs');
 @endphp
-                            <x-base.table.th class="whitespace-nowrap text-center">{{ __('command-logs.fields.command') }}</x-base.table.th>
-                            <x-base.table.th class="whitespace-nowrap text-center">{{ __('command-logs.fields.parameters') }}</x-base.table.th>
-                            <x-base.table.th class="whitespace-nowrap text-center">{{ __('command-logs.fields.status') }}</x-base.table.th>
+                            <x-base.table.th class="whitespace-nowrap text-center">{{ __('command_logs.fields.command') }}</x-base.table.th>
+                            <x-base.table.th class="whitespace-nowrap text-center">{{ __('command_logs.fields.parameters') }}</x-base.table.th>
+                            <x-base.table.th class="whitespace-nowrap text-center">{{ __('command_logs.fields.status') }}</x-base.table.th>
 
                         @if($canEdit || $canDelete || $canView)
                         <x-base.table.th class="text-center whitespace-nowrap">{{ __('global.actions') }}</x-base.table.th>

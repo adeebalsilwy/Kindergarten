@@ -140,8 +140,9 @@ class CommandLogController extends Controller
     public function create()
     {
         $this->authorize('create_command_logs');
+        $commandLog = new \App\Models\CommandLog();
 
-        return view('pages.command_logs.create', get_defined_vars());
+        return view('pages.command_logs.create', compact('commandLog'));
     }
 
     public function store(StoreCommandLogRequest $request)
@@ -165,7 +166,7 @@ class CommandLogController extends Controller
         $this->authorize('edit_command_logs');
         $commandLog = $this->service->find($id);
 
-        return view('pages.command_logs.edit', get_defined_vars());
+        return view('pages.command_logs.edit', compact('commandLog'));
     }
 
     public function update(UpdateCommandLogRequest $request, $id)

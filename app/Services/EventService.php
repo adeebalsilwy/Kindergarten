@@ -14,6 +14,11 @@ class EventService
         $this->repository = $repository;
     }
 
+    public function all()
+    {
+        return $this->getAll();
+    }
+
     public function getAll()
     {
         return $this->repository->all();

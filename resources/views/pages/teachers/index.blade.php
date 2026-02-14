@@ -55,7 +55,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="text-2xl font-bold leading-8 mt-4">{{ $teachers->total() }}</div>
+                    <div class="text-2xl font-bold leading-8 mt-4">{{ $totalTeachers ?? 0 }}</div>
                     <div class="text-sm text-slate-600 mt-1">{{ __('global.total_teachers') }}</div>
                 </div>
             </div>
@@ -76,12 +76,7 @@
                         </div>
                     </div>
                     <div class="text-2xl font-bold leading-8 mt-4">
-                        @php
-                            $qualifiedCount = $teachers->filter(function($teacher) { 
-                                return !empty($teacher->qualification); 
-                            })->count();
-                        @endphp
-                        {{ $qualifiedCount }}
+                        {{ $qualifiedCount ?? 0 }}
                     </div>
                     <div class="text-sm text-slate-600 mt-1">{{ __('global.with_qualifications') }}</div>
                 </div>
@@ -103,12 +98,7 @@
                         </div>
                     </div>
                     <div class="text-2xl font-bold leading-8 mt-4">
-                        @php
-                            $experiencedCount = $teachers->filter(function($teacher) { 
-                                return $teacher->hire_date && $teacher->hire_date->diffInYears(now()) >= 2; 
-                            })->count();
-                        @endphp
-                        {{ $experiencedCount }}
+                        {{ $experiencedCount ?? 0 }}
                     </div>
                     <div class="text-sm text-slate-600 mt-1">{{ __('global.two_years_plus') }}</div>
                 </div>
@@ -130,12 +120,7 @@
                         </div>
                     </div>
                     <div class="text-2xl font-bold leading-8 mt-4">
-                        @php
-                            $avgSalary = $teachers->filter(function($teacher) { 
-                                return is_numeric($teacher->salary); 
-                            })->avg('salary');
-                        @endphp
-                        {{ $avgSalary ? number_format($avgSalary, 0) : '0' }}
+                        {{ isset($avgSalary) ? number_format($avgSalary, 0) : '0' }}
                     </div>
                     <div class="text-sm text-slate-600 mt-1">{{ __('global.avg_monthly_salary') }}</div>
                 </div>

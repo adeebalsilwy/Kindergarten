@@ -15,6 +15,11 @@ class ChildrenService
         return Children::query();
     }
 
+    public function all()
+    {
+        return Children::all();
+    }
+
     public function find(int $id): Children
     {
         return Children::with(['parent', 'secondParent', 'class', 'attendances', 'grades', 'payments', 'activities', 'events'])->findOrFail($id);
@@ -59,7 +64,7 @@ class ChildrenService
      */
     public function update($child, array $data): Children
     {
-        if (is_int($child)) {
+        if (is_numeric($child)) {
             $model = Children::findOrFail($child);
             $model->update($data);
 
@@ -82,7 +87,7 @@ class ChildrenService
      */
     public function delete($child): bool
     {
-        if (is_int($child)) {
+        if (is_numeric($child)) {
             $model = Children::findOrFail($child);
 
             return $model->delete();

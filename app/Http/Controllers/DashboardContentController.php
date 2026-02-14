@@ -140,8 +140,9 @@ class DashboardContentController extends Controller
     public function create()
     {
         $this->authorize('create_dashboard_contents');
+        $dashboardContent = new \App\Models\DashboardContent();
 
-        return view('pages.dashboard_contents.create', get_defined_vars());
+        return view('pages.dashboard_contents.create', compact('dashboardContent'));
     }
 
     public function store(StoreDashboardContentRequest $request)
@@ -165,7 +166,7 @@ class DashboardContentController extends Controller
         $this->authorize('edit_dashboard_contents');
         $dashboardContent = $this->service->find($id);
 
-        return view('pages.dashboard_contents.edit', get_defined_vars());
+        return view('pages.dashboard_contents.edit', compact('dashboardContent'));
     }
 
     public function update(UpdateDashboardContentRequest $request, $id)
