@@ -10,16 +10,16 @@
         <div class="w-full sm:w-auto flex mt-4 sm:mt-0">
             
                         <div class="flex gap-2">
-                            <x-base.button variant="outline-primary" as="a" href="{{ route('accounting-entries.export.pdf') }}" class="flex items-center">
+                            <x-base.button variant="outline-primary" as="a" href="{{ route('accounting_entries.export.pdf') }}" class="flex items-center">
                                 <x-base.lucide icon="FileText" class="w-4 h-4 mr-2" />
                                 {{ __('global.export_pdf') }}
                             </x-base.button>
-                            <x-base.button variant="outline-success" as="a" href="{{ route('accounting-entries.export.excel') }}" class="flex items-center">
+                            <x-base.button variant="outline-success" as="a" href="{{ route('accounting_entries.export.excel') }}" class="flex items-center">
                                 <x-base.lucide icon="FileSpreadsheet" class="w-4 h-4 mr-2" />
                                 {{ __('global.export_excel') }}
                             </x-base.button>
                         </div>
-            <x-base.button variant="primary" as="a" href="{{ route('accounting-entries.create') }}" class="ml-2 flex items-center">
+            <x-base.button variant="primary" as="a" href="{{ route('accounting_entries.create') }}" class="ml-2 flex items-center">
                 <x-base.lucide icon="Plus" class="w-4 h-4 mr-2" />
                 {{ __('AccountingEntry.add_new') }}
             </x-base.button>
@@ -60,27 +60,27 @@
             <x-base.table class="table-report -mt-2">
                 <x-base.table.thead>
                     <x-base.table.tr>
-                            <x-base.table.th class="whitespace-nowrap text-center">{{ __('accounting-entries.fields.name') }}</x-base.table.th>
+                            <x-base.table.th class="whitespace-nowrap text-center">{{ __('accounting_entries.fields.name') }}</x-base.table.th>
 
                         <x-base.table.th class="text-center whitespace-nowrap">{{ __('global.actions') }}</x-base.table.th>
                     </x-base.table.tr>
                 </x-base.table.thead>
                 <x-base.table.tbody>
-                    @forelse($accountingEntries as $accountingEntries)
+                    @forelse($accountingEntries as $entry)
                         <x-base.table.tr class="intro-x">
-                            <x-base.table.td class="text-center">{{ $accountingEntries->name }}</x-base.table.td>
+                            <x-base.table.td class="text-center">{{ $entry->name }}</x-base.table.td>
 
                             <x-base.table.td class="table-report__action w-56">
                                 <div class="flex justify-center items-center">
-                                    <x-base.button variant="outline-secondary" as="a" href="{{ route('accounting-entries.show', $accountingEntries->id) }}" size="sm" class="mr-2">
+                                    <x-base.button variant="outline-secondary" as="a" href="{{ route('accounting_entries.show', $entry->id) }}" size="sm" class="mr-2">
                                         <x-base.lucide icon="Eye" class="w-4 h-4 mr-1" />
                                         {{ __('global.view') }}
                                     </x-base.button>
-                                    <x-base.button variant="outline-primary" as="a" href="{{ route('accounting-entries.edit', $accountingEntries->id) }}" size="sm" class="mr-2">
+                                    <x-base.button variant="outline-primary" as="a" href="{{ route('accounting_entries.edit', $entry->id) }}" size="sm" class="mr-2">
                                         <x-base.lucide icon="Pencil" class="w-4 h-4 mr-1" />
                                         {{ __('global.edit') }}
                                     </x-base.button>
-                                    <form action="{{ route('accounting-entries.destroy', $accountingEntries->id) }}" method="POST" onsubmit="return confirm('{{ __('global.confirm_delete') }}')" class="inline">
+                                    <form action="{{ route('accounting_entries.destroy', $entry->id) }}" method="POST" onsubmit="return confirm('{{ __('global.confirm_delete') }}')" class="inline">
                                         @csrf
                                         @method('DELETE')
                                         <x-base.button variant="outline-danger" type="submit" size="sm">
@@ -98,7 +98,7 @@
                                     <x-base.lucide icon="Inbox" class="w-16 h-16 text-gray-400 mb-4" />
                                     <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100">{{ __('global.no_data_found') }}</h3>
                                     <p class="text-gray-500 dark:text-gray-400 mt-1">{{ __('global.no_data_description') }}</p>
-                                    <x-base.button variant="primary" as="a" href="{{ route('accounting-entries.create') }}" class="mt-4">
+                                    <x-base.button variant="primary" as="a" href="{{ route('accounting_entries.create') }}" class="mt-4">
                                         <x-base.lucide icon="Plus" class="w-4 h-4 mr-2" />
                                         {{ __('AccountingEntry.add_new') }}
                                     </x-base.button>

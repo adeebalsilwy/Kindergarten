@@ -140,8 +140,9 @@ class EventController extends Controller
     public function create()
     {
         $this->authorize('create_events');
+        $event = new \App\Models\Event();
 
-        return view('pages.events.create', get_defined_vars());
+        return view('pages.events.create', compact('event'));
     }
 
     public function store(StoreEventRequest $request)
@@ -165,7 +166,7 @@ class EventController extends Controller
         $this->authorize('edit_events');
         $event = $this->service->find($id);
 
-        return view('pages.events.edit', get_defined_vars());
+        return view('pages.events.edit', compact('event'));
     }
 
     public function update(UpdateEventRequest $request, $id)

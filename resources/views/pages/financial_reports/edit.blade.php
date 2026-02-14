@@ -16,7 +16,7 @@
                     @method('PUT')
                     <div class="grid grid-cols-12 gap-4">
                         <div class="col-span-12 sm:col-span-6">
-                            <x-base.form-label>{{ __('financial-reports.fields.name') }}</x-base.form-label>
+                            <x-base.form-label>{{ __('financial_reports.fields.name') }}</x-base.form-label>
                             <x-base.form-input type="text" name="name" value="{{ old('name', $financialReport->name ?? '') }}" class="mt-2" />
                         </div>
 

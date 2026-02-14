@@ -14,10 +14,12 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 class ClassesController extends Controller
 {
     protected $service;
+    protected $dashboardService;
 
-    public function __construct(ClassesService $service)
+    public function __construct(ClassesService $service, \App\Services\DashboardService $dashboardService)
     {
         $this->service = $service;
+        $this->dashboardService = $dashboardService;
     }
 
     public function index(Request $request)
@@ -36,8 +38,9 @@ class ClassesController extends Controller
         }
 
         $classes = $query->paginate(15)->withQueryString();
+        $stats = $this->dashboardService->getClassStats();
 
-        return view('pages.classes.index', compact('classes'));
+        return view('pages.classes.index', compact('classes', 'stats'));
     }
 
     /**
@@ -146,10 +149,11 @@ class ClassesController extends Controller
     {
         $this->authorize('create_classes');
 
+        $classes = new \App\Models\Classes();
         $teachers = \App\Models\Teacher::select('id', 'name')->orderBy('name')->get();
         $grades = \App\Models\Grade::select('id', 'name')->orderBy('name')->get();
 
-        return view('pages.classes.create', compact('teachers', 'grades'));
+        return view('pages.classes.create', compact('classes', 'teachers', 'grades'));
     }
 
     public function store(StoreClassesRequest $request)

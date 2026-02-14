@@ -14,10 +14,12 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 class TeacherController extends Controller
 {
     protected $service;
+    protected $dashboardService;
 
-    public function __construct(TeacherService $service)
+    public function __construct(TeacherService $service, \App\Services\DashboardService $dashboardService)
     {
         $this->service = $service;
+        $this->dashboardService = $dashboardService;
     }
 
     public function index(Request $request)
@@ -34,9 +36,24 @@ class TeacherController extends Controller
             return $this->export($request->get('export'), $query);
         }
 
-        $teachers = $query->paginate(15)->withQueryString();
+        // Clone query for stats to avoid pagination issues
+        $statsQuery = clone $query;
+        $totalTeachers = $statsQuery->count();
+        $qualifiedCount = (clone $statsQuery)->whereNotNull('qualification')->where('qualification', '!=', '')->count();
+        $experiencedCount = (clone $statsQuery)->where('hire_date', '<=', now()->subYears(2))->count();
+        $avgSalary = $statsQuery->avg('salary') ?: 0;
 
-        return view('pages.teachers.index', compact('teachers'));
+        $teachers = $query->paginate(15)->withQueryString();
+        $stats = $this->dashboardService->getTeacherStats();
+
+        return view('pages.teachers.index', compact(
+            'teachers',
+            'stats',
+            'totalTeachers',
+            'qualifiedCount',
+            'experiencedCount',
+            'avgSalary'
+        ));
     }
 
     /**
@@ -144,8 +161,9 @@ class TeacherController extends Controller
     public function create()
     {
         $this->authorize('create_teachers');
+        $teacher = new \App\Models\Teacher();
 
-        return view('pages.teachers.create', get_defined_vars());
+        return view('pages.teachers.create', compact('teacher'));
     }
 
     public function store(StoreTeacherRequest $request)
@@ -169,7 +187,7 @@ class TeacherController extends Controller
         $this->authorize('edit_teachers');
         $teacher = $this->service->find($id);
 
-        return view('pages.teachers.edit', get_defined_vars());
+        return view('pages.teachers.edit', compact('teacher'));
     }
 
     public function update(UpdateTeacherRequest $request, $id)

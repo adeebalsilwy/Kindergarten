@@ -14,10 +14,12 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 class FeeController extends Controller
 {
     protected $service;
+    protected $dashboardService;
 
-    public function __construct(FeeService $service)
+    public function __construct(FeeService $service, \App\Services\DashboardService $dashboardService)
     {
         $this->service = $service;
+        $this->dashboardService = $dashboardService;
     }
 
     public function index(Request $request)
@@ -35,8 +37,9 @@ class FeeController extends Controller
         }
 
         $fees = $query->paginate(15)->withQueryString();
+        $stats = $this->dashboardService->getFinancialStats();
 
-        return view('pages.fees.index', compact('fees'));
+        return view('pages.fees.index', compact('fees', 'stats'));
     }
 
     /**
@@ -144,8 +147,9 @@ class FeeController extends Controller
     public function create()
     {
         $this->authorize('create_fees');
+        $fee = new \App\Models\Fee();
 
-        return view('pages.fees.create', get_defined_vars());
+        return view('pages.fees.create', compact('fee'));
     }
 
     public function store(StoreFeeRequest $request)
@@ -169,7 +173,7 @@ class FeeController extends Controller
         $this->authorize('edit_fees');
         $fee = $this->service->find($id);
 
-        return view('pages.fees.edit', get_defined_vars());
+        return view('pages.fees.edit', compact('fee'));
     }
 
     public function update(UpdateFeeRequest $request, $id)

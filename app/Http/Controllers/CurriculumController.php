@@ -140,8 +140,9 @@ class CurriculumController extends Controller
     public function create()
     {
         $this->authorize('create_curricula');
+        $curriculum = new \App\Models\Curriculum();
 
-        return view('pages.curricula.create', get_defined_vars());
+        return view('pages.curricula.create', compact('curriculum'));
     }
 
     public function store(StoreCurriculumRequest $request)
@@ -165,7 +166,7 @@ class CurriculumController extends Controller
         $this->authorize('edit_curricula');
         $curriculum = $this->service->find($id);
 
-        return view('pages.curricula.edit', get_defined_vars());
+        return view('pages.curricula.edit', compact('curriculum'));
     }
 
     public function update(UpdateCurriculumRequest $request, $id)

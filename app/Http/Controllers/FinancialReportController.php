@@ -140,8 +140,9 @@ class FinancialReportController extends Controller
     public function create()
     {
         $this->authorize('create_financial_reports');
+        $financialReport = new \App\Models\FinancialReport();
 
-        return view('pages.financial_reports.create', get_defined_vars());
+        return view('pages.financial_reports.create', compact('financialReport'));
     }
 
     public function store(StoreFinancialReportRequest $request)
@@ -165,7 +166,7 @@ class FinancialReportController extends Controller
         $this->authorize('edit_financial_reports');
         $financialReport = $this->service->find($id);
 
-        return view('pages.financial_reports.edit', get_defined_vars());
+        return view('pages.financial_reports.edit', compact('financialReport'));
     }
 
     public function update(UpdateFinancialReportRequest $request, $id)

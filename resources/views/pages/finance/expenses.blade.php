@@ -31,24 +31,56 @@
 
     <!-- Summary Cards -->
     <div class="col-span-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div class="bg-white dark:bg-dark-1 shadow rounded-lg p-6">
-            <div class="text-gray-600 dark:text-gray-400">Total Expenses</div>
-            <div class="text-2xl font-bold text-red-600 mt-2">${{ number_format($expenseSummary['total_expenses'] ?? 0, 2) }}</div>
+        <div class="intro-y">
+            <div class="report-box zoom-in">
+                <div class="box p-5">
+                    <div class="flex">
+                        <x-base.lucide icon="TrendingDown" class="report-box__icon text-danger" />
+                    </div>
+                    <div class="text-2xl font-bold leading-8 mt-6">
+                        {{ __('global.currency_symbol', ['amount' => number_format($expenseSummary['total_expenses'] ?? 0)]) }}
+                    </div>
+                    <div class="text-base text-slate-500 mt-1">{{ __('global.total_expenses') }}</div>
+                </div>
+            </div>
         </div>
-        <div class="bg-white dark:bg-dark-1 shadow rounded-lg p-6">
-            <div class="text-gray-600 dark:text-gray-400">Total Expenses Count</div>
-            <div class="text-2xl font-bold text-blue-600 mt-2">{{ $expenseSummary['total_expenses_count'] ?? 0 }}</div>
+        <div class="intro-y">
+            <div class="report-box zoom-in">
+                <div class="box p-5">
+                    <div class="flex">
+                        <x-base.lucide icon="FileText" class="report-box__icon text-primary" />
+                    </div>
+                    <div class="text-2xl font-bold leading-8 mt-6">{{ $expenseSummary['total_expenses_count'] ?? 0 }}</div>
+                    <div class="text-base text-slate-500 mt-1">{{ __('global.total_expenses_count') }}</div>
+                </div>
+            </div>
         </div>
-        <div class="bg-white dark:bg-dark-1 shadow rounded-lg p-6">
-            <div class="text-gray-600 dark:text-gray-400">Average Expense</div>
-            <div class="text-2xl font-bold text-purple-600 mt-2">${{ number_format($expenseSummary['total_expenses_count'] > 0 ? ($expenseSummary['total_expenses'] / $expenseSummary['total_expenses_count']) : 0, 2) }}</div>
+        <div class="intro-y">
+            <div class="report-box zoom-in">
+                <div class="box p-5">
+                    <div class="flex">
+                        <x-base.lucide icon="CreditCard" class="report-box__icon text-pending" />
+                    </div>
+                    <div class="text-2xl font-bold leading-8 mt-6">
+                        {{ __('global.currency_symbol', ['amount' => number_format($expenseSummary['total_expenses_count'] > 0 ? ($expenseSummary['total_expenses'] / $expenseSummary['total_expenses_count']) : 0)]) }}
+                    </div>
+                    <div class="text-base text-slate-500 mt-1">{{ __('global.average_expense') }}</div>
+                </div>
+            </div>
         </div>
-        <div class="bg-white dark:bg-dark-1 shadow rounded-lg p-6">
-            <div class="text-gray-600 dark:text-gray-400">Expense Categories</div>
-            <div class="mt-2">
-                @foreach(($expenseSummary['by_category'] ?? collect([]))->take(2) as $category => $amount)
-                    <div class="text-sm">{{ ucfirst($category) }}: ${{ number_format($amount, 2) }}</div>
-                @endforeach
+        <div class="intro-y">
+            <div class="report-box zoom-in">
+                <div class="box p-5">
+                    <div class="flex">
+                        <x-base.lucide icon="Tag" class="report-box__icon text-warning" />
+                    </div>
+                    <div class="mt-4">
+                        @foreach(($expenseSummary['by_category'] ?? collect([]))->take(2) as $category => $amount)
+                            <div class="text-sm font-medium">{{ ucfirst($category) }}: {{ number_format($amount) }}</div>
+                        @endforeach
+                    </div>
+                    <div class="text-base text-slate-500 mt-1">{{ __('global.expense_categories') }}</div>
+                </div>
             </div>
         </div>
     </div>

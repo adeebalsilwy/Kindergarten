@@ -140,8 +140,9 @@ class ExpenseController extends Controller
     public function create()
     {
         $this->authorize('create_expenses');
+        $expense = new \App\Models\Expense();
 
-        return view('pages.expenses.create', get_defined_vars());
+        return view('pages.expenses.create', compact('expense'));
     }
 
     public function store(StoreExpenseRequest $request)
@@ -165,7 +166,7 @@ class ExpenseController extends Controller
         $this->authorize('edit_expenses');
         $expense = $this->service->find($id);
 
-        return view('pages.expenses.edit', get_defined_vars());
+        return view('pages.expenses.edit', compact('expense'));
     }
 
     public function update(UpdateExpenseRequest $request, $id)

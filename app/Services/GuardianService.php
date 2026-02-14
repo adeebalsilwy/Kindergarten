@@ -45,7 +45,7 @@ class GuardianService
      */
     public function update($guardian, array $data): Guardian
     {
-        if (is_int($guardian)) {
+        if (is_numeric($guardian)) {
             $model = Guardian::findOrFail($guardian);
             $model->update($data);
 
@@ -61,7 +61,7 @@ class GuardianService
      */
     public function delete($guardian): bool
     {
-        if (is_int($guardian)) {
+        if (is_numeric($guardian)) {
             $model = Guardian::findOrFail($guardian);
 
             return $model->delete();

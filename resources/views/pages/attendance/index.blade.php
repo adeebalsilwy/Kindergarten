@@ -12,7 +12,7 @@
     @endif
 
     <div class="intro-y box p-5 mt-5">
-        <form action="{{ route('attendance.store') }}" method="POST">
+        <form action="{{ route('attendances.store') }}" method="POST">
             @csrf
             <input type="hidden" name="date" value="{{ $date }}">
             

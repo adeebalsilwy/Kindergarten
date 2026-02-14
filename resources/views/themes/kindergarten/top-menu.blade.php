@@ -122,7 +122,7 @@
                             <div class="mb-5">
                                 <a
                                     class="mt-2 flex items-center"
-                                    href="{{ route('attendance.index') }}"
+                                    href="{{ route('attendances.index') }}"
                                 >
                                     <div class="image-fit h-8 w-8">
                                         <div class="flex h-8 w-8 items-center justify-center rounded-full bg-purple-500/20 text-purple-600">
@@ -366,7 +366,7 @@
         <!-- END: Top Menu -->
         <!-- BEGIN: Content -->
         <div
-            class="md:max-w-auto min-h-screen min-w-0 max-w-full flex-1 rounded-[30px] bg-gradient-to-br from-pink-50 to-blue-50 px-4 pb-10 before:block before:h-px before:w-full before:content-[''] dark:bg-darkmode-700 md:px-[22px]">
+                class="md:max-w-auto min-h-screen min-w-0 max-w-full flex-1 rounded-[20px] bg-white dark:bg-darkmode-700 shadow-sm border border-slate-200/60 dark:border-darkmode-400 px-4 pb-10 before:block before:h-px before:w-full before:content-[''] md:px-[22px]">
             @yield('subcontent')
         </div>
         <!-- END: Content -->

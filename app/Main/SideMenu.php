@@ -79,12 +79,12 @@ class SideMenu
                 'sub_menu' => [
                     'records' => [
                         'icon' => 'check-circle',
-                        'route_name' => 'attendance.index',
+                        'route_name' => 'attendances.index',
                         'title' => __('global.attendance_records'),
                     ],
                     'bulk-attendance' => [
                         'icon' => 'layers',
-                        'route_name' => 'attendance.bulk',
+                        'route_name' => 'attendances.bulk',
                         'title' => __('global.bulk_attendance'),
                     ],
                     'reports' => [

@@ -144,8 +144,9 @@ class AccountingEntryController extends Controller
     public function create()
     {
         $this->authorize('create_accounting_entries');
+        $accounting_entry = new \App\Models\AccountingEntry();
 
-        return view('pages.accounting_entries.create', get_defined_vars());
+        return view('pages.accounting_entries.create', compact('accounting_entry'));
     }
 
     public function store(StoreAccountingEntryRequest $request)
@@ -169,7 +170,7 @@ class AccountingEntryController extends Controller
         $this->authorize('edit_accounting_entries');
         $accountingEntry = $this->service->find($id);
 
-        return view('pages.accounting_entries.edit', get_defined_vars());
+        return view('pages.accounting_entries.edit', compact('accountingEntry'));
     }
 
     public function update(UpdateAccountingEntryRequest $request, $id)

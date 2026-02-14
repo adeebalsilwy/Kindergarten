@@ -31,24 +31,56 @@
 
     <!-- Summary Cards -->
     <div class="col-span-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div class="bg-white dark:bg-dark-1 shadow rounded-lg p-6">
-            <div class="text-gray-600 dark:text-gray-400">Total Revenue</div>
-            <div class="text-2xl font-bold text-green-600 mt-2">${{ number_format($revenueSummary['total_revenue'] ?? 0, 2) }}</div>
+        <div class="intro-y">
+            <div class="report-box zoom-in">
+                <div class="box p-5">
+                    <div class="flex">
+                        <x-base.lucide icon="TrendingUp" class="report-box__icon text-success" />
+                    </div>
+                    <div class="text-2xl font-bold leading-8 mt-6">
+                        {{ __('global.currency_symbol', ['amount' => number_format($revenueSummary['total_revenue'] ?? 0)]) }}
+                    </div>
+                    <div class="text-base text-slate-500 mt-1">{{ __('global.total_revenue') }}</div>
+                </div>
+            </div>
         </div>
-        <div class="bg-white dark:bg-dark-1 shadow rounded-lg p-6">
-            <div class="text-gray-600 dark:text-gray-400">Total Transactions</div>
-            <div class="text-2xl font-bold text-blue-600 mt-2">{{ $revenueSummary['total_transactions'] ?? 0 }}</div>
+        <div class="intro-y">
+            <div class="report-box zoom-in">
+                <div class="box p-5">
+                    <div class="flex">
+                        <x-base.lucide icon="ShoppingCart" class="report-box__icon text-primary" />
+                    </div>
+                    <div class="text-2xl font-bold leading-8 mt-6">{{ $revenueSummary['total_transactions'] ?? 0 }}</div>
+                    <div class="text-base text-slate-500 mt-1">{{ __('global.total_transactions') }}</div>
+                </div>
+            </div>
         </div>
-        <div class="bg-white dark:bg-dark-1 shadow rounded-lg p-6">
-            <div class="text-gray-600 dark:text-gray-400">Average Transaction</div>
-            <div class="text-2xl font-bold text-purple-600 mt-2">${{ number_format($revenueSummary['total_transactions'] > 0 ? ($revenueSummary['total_revenue'] / $revenueSummary['total_transactions']) : 0, 2) }}</div>
+        <div class="intro-y">
+            <div class="report-box zoom-in">
+                <div class="box p-5">
+                    <div class="flex">
+                        <x-base.lucide icon="CreditCard" class="report-box__icon text-pending" />
+                    </div>
+                    <div class="text-2xl font-bold leading-8 mt-6">
+                        {{ __('global.currency_symbol', ['amount' => number_format($revenueSummary['total_transactions'] > 0 ? ($revenueSummary['total_revenue'] / $revenueSummary['total_transactions']) : 0)]) }}
+                    </div>
+                    <div class="text-base text-slate-500 mt-1">{{ __('global.average_transaction') }}</div>
+                </div>
+            </div>
         </div>
-        <div class="bg-white dark:bg-dark-1 shadow rounded-lg p-6">
-            <div class="text-gray-600 dark:text-gray-400">Payment Methods</div>
-            <div class="mt-2">
-                @foreach(($revenueSummary['payment_methods'] ?? collect([]))->take(2) as $method => $count)
-                    <div class="text-sm">{{ ucfirst($method) }}: {{ $count }}</div>
-                @endforeach
+        <div class="intro-y">
+            <div class="report-box zoom-in">
+                <div class="box p-5">
+                    <div class="flex">
+                        <x-base.lucide icon="Wallet" class="report-box__icon text-warning" />
+                    </div>
+                    <div class="mt-4">
+                        @foreach(($revenueSummary['payment_methods'] ?? collect([]))->take(2) as $method => $count)
+                            <div class="text-sm font-medium">{{ ucfirst($method) }}: {{ $count }}</div>
+                        @endforeach
+                    </div>
+                    <div class="text-base text-slate-500 mt-1">{{ __('global.payment_methods') }}</div>
+                </div>
             </div>
         </div>
     </div>

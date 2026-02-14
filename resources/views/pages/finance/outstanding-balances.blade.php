@@ -12,17 +12,42 @@
 <div class="grid grid-cols-12 gap-6 mt-5">
     <!-- Summary Cards -->
     <div class="col-span-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div class="bg-white dark:bg-dark-1 shadow rounded-lg p-6">
-            <div class="text-gray-600 dark:text-gray-400">Total Outstanding</div>
-            <div class="text-2xl font-bold text-orange-600 mt-2">${{ number_format($outstandingBalances['total_outstanding'] ?? 0, 2) }}</div>
+        <div class="intro-y">
+            <div class="report-box zoom-in">
+                <div class="box p-5">
+                    <div class="flex">
+                        <x-base.lucide icon="AlertCircle" class="report-box__icon text-warning" />
+                    </div>
+                    <div class="text-2xl font-bold leading-8 mt-6 text-warning">
+                        {{ __('global.currency_symbol', ['amount' => number_format($outstandingBalances['total_outstanding'] ?? 0)]) }}
+                    </div>
+                    <div class="text-base text-slate-500 mt-1">{{ __('global.total_outstanding') }}</div>
+                </div>
+            </div>
         </div>
-        <div class="bg-white dark:bg-dark-1 shadow rounded-lg p-6">
-            <div class="text-gray-600 dark:text-gray-400">Number of Accounts</div>
-            <div class="text-2xl font-bold text-blue-600 mt-2">{{ $outstandingBalances['count'] ?? 0 }}</div>
+        <div class="intro-y">
+            <div class="report-box zoom-in">
+                <div class="box p-5">
+                    <div class="flex">
+                        <x-base.lucide icon="Users" class="report-box__icon text-primary" />
+                    </div>
+                    <div class="text-2xl font-bold leading-8 mt-6">{{ $outstandingBalances['count'] ?? 0 }}</div>
+                    <div class="text-base text-slate-500 mt-1">{{ __('global.number_of_accounts') }}</div>
+                </div>
+            </div>
         </div>
-        <div class="bg-white dark:bg-dark-1 shadow rounded-lg p-6">
-            <div class="text-gray-600 dark:text-gray-400">Average Balance</div>
-            <div class="text-2xl font-bold text-purple-600 mt-2">${{ number_format($outstandingBalances['count'] > 0 ? ($outstandingBalances['total_outstanding'] / $outstandingBalances['count']) : 0, 2) }}</div>
+        <div class="intro-y">
+            <div class="report-box zoom-in">
+                <div class="box p-5">
+                    <div class="flex">
+                        <x-base.lucide icon="CreditCard" class="report-box__icon text-pending" />
+                    </div>
+                    <div class="text-2xl font-bold leading-8 mt-6">
+                        {{ __('global.currency_symbol', ['amount' => number_format($outstandingBalances['count'] > 0 ? ($outstandingBalances['total_outstanding'] / $outstandingBalances['count']) : 0)]) }}
+                    </div>
+                    <div class="text-base text-slate-500 mt-1">{{ __('global.average_balance') }}</div>
+                </div>
+            </div>
         </div>
     </div>
 

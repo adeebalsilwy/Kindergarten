@@ -36,8 +36,8 @@
                     @endforeach
                 </div>
                 <div class="flex justify-end mt-5">
-                    <a href="{{ route('test-models.index') }}" class="btn btn-outline-secondary w-24 mr-1">{{ __('global.back') }}</a>
-                    <a href="{{ route('test-models.edit', $testModel->id) }}" class="btn btn-primary w-24">{{ __('global.edit') }}</a>
+                    <a href="{{ route('test_models.index') }}" class="btn btn-outline-secondary w-24 mr-1">{{ __('global.back') }}</a>
+                    <a href="{{ route('test_models.edit', $testModel->id) }}" class="btn btn-primary w-24">{{ __('global.edit') }}</a>
                 </div>
             </div>
         </div>

@@ -13,6 +13,40 @@ use Illuminate\Support\Facades\DB;
 
 class ReportService
 {
+    public function query()
+    {
+        return \App\Models\Report::query();
+    }
+
+    public function find(int $id)
+    {
+        return \App\Models\Report::findOrFail($id);
+    }
+
+    public function create(array $data)
+    {
+        return \App\Models\Report::create($data);
+    }
+
+    public function update($report, array $data)
+    {
+        if (is_numeric($report)) {
+            $report = $this->find($report);
+        }
+        $report->update($data);
+
+        return $report;
+    }
+
+    public function delete($report)
+    {
+        if (is_numeric($report)) {
+            $report = $this->find($report);
+        }
+
+        return $report->delete();
+    }
+
     /**
      * Generate student academic report
      */

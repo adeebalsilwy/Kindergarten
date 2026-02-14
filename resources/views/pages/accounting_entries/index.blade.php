@@ -57,11 +57,11 @@
     $canDelete = auth()->user()->can('delete_accounting_entries');
     $canView = auth()->user()->can('view_accounting_entries');
 @endphp
-                            <x-base.table.th class="whitespace-nowrap text-center">{{ __('accounting-entries.fields.debit') }}</x-base.table.th>
-                            <x-base.table.th class="whitespace-nowrap text-center">{{ __('accounting-entries.fields.credit') }}</x-base.table.th>
-                            <x-base.table.th class="whitespace-nowrap text-center">{{ __('accounting-entries.fields.entry_date') }}</x-base.table.th>
-                            <x-base.table.th class="whitespace-nowrap text-center">{{ __('accounting-entries.fields.reference') }}</x-base.table.th>
-                            <x-base.table.th class="whitespace-nowrap text-center">{{ __('accounting-entries.fields.account_type') }}</x-base.table.th>
+                            <x-base.table.th class="whitespace-nowrap text-center">{{ __('accounting_entries.fields.debit') }}</x-base.table.th>
+                            <x-base.table.th class="whitespace-nowrap text-center">{{ __('accounting_entries.fields.credit') }}</x-base.table.th>
+                            <x-base.table.th class="whitespace-nowrap text-center">{{ __('accounting_entries.fields.entry_date') }}</x-base.table.th>
+                            <x-base.table.th class="whitespace-nowrap text-center">{{ __('accounting_entries.fields.reference') }}</x-base.table.th>
+                            <x-base.table.th class="whitespace-nowrap text-center">{{ __('accounting_entries.fields.account_type') }}</x-base.table.th>
 
                         @if($canEdit || $canDelete || $canView)
                         <x-base.table.th class="text-center whitespace-nowrap">{{ __('global.actions') }}</x-base.table.th>

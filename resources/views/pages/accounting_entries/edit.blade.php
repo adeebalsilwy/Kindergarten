@@ -16,27 +16,27 @@
                     @method('PUT')
                     <div class="grid grid-cols-12 gap-4">
                         <div class="col-span-12">
-                            <x-base.form-label>{{ __('accounting-entries.fields.description') }}</x-base.form-label>
+                            <x-base.form-label>{{ __('accounting_entries.fields.description') }}</x-base.form-label>
                             <x-base.form-textarea name="description" rows="4" class="resize-none">{{ old('description', $accountingEntry->description ?? '') }}</x-base.form-textarea>
                         </div>
                         <div class="col-span-12 sm:col-span-6">
-                            <x-base.form-label>{{ __('accounting-entries.fields.debit') }}</x-base.form-label>
+                            <x-base.form-label>{{ __('accounting_entries.fields.debit') }}</x-base.form-label>
                             <x-base.form-input type="number" step="0.01" name="debit" value="{{ old('debit', $accountingEntry->debit ?? '') }}" class="mt-2" />
                         </div>
                         <div class="col-span-12 sm:col-span-6">
-                            <x-base.form-label>{{ __('accounting-entries.fields.credit') }}</x-base.form-label>
+                            <x-base.form-label>{{ __('accounting_entries.fields.credit') }}</x-base.form-label>
                             <x-base.form-input type="number" step="0.01" name="credit" value="{{ old('credit', $accountingEntry->credit ?? '') }}" class="mt-2" />
                         </div>
                         <div class="col-span-12 sm:col-span-6">
-                            <x-base.form-label>{{ __('accounting-entries.fields.entry_date') }}</x-base.form-label>
+                            <x-base.form-label>{{ __('accounting_entries.fields.entry_date') }}</x-base.form-label>
                             <x-base.form-input type="text" name="entry_date" value="{{ old('entry_date', $accountingEntry->entry_date ?? '') }}" class="mt-2" />
                         </div>
                         <div class="col-span-12 sm:col-span-6">
-                            <x-base.form-label>{{ __('accounting-entries.fields.reference') }}</x-base.form-label>
+                            <x-base.form-label>{{ __('accounting_entries.fields.reference') }}</x-base.form-label>
                             <x-base.form-input type="text" name="reference" value="{{ old('reference', $accountingEntry->reference ?? '') }}" class="mt-2" />
                         </div>
                         <div class="col-span-12 sm:col-span-6">
-                            <x-base.form-label>{{ __('accounting-entries.fields.account_type') }}</x-base.form-label>
+                            <x-base.form-label>{{ __('accounting_entries.fields.account_type') }}</x-base.form-label>
                             <x-base.form-input type="text" name="account_type" value="{{ old('account_type', $accountingEntry->account_type ?? '') }}" class="mt-2" />
                         </div>
 

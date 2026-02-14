@@ -82,12 +82,12 @@ class Classes extends Model
 
     public function activities(): HasMany
     {
-        return $this->hasMany(Activity::class);
+        return $this->hasMany(Activity::class, 'class_id');
     }
 
     public function events(): HasMany
     {
-        return $this->hasMany(Event::class);
+        return $this->hasMany(Event::class, 'class_id');
     }
 
     // public function curriculum(): BelongsTo

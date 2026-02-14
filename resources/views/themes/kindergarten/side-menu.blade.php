@@ -27,67 +27,6 @@
                         <span class="text-green-300">Care</span>
                     </span>
                 </a>
-                <div class="my-6 side-nav__divider"></div>
-                <div class="px-5">
-                    <div class="text-xs font-medium text-white/90">Themes</div>
-                    <div class="mt-3 grid grid-cols-2 gap-2">
-                        @foreach (['rubick', 'icewall', 'tinker', 'enigma', 'kindergarten'] as $theme)
-                            <a
-                                href="{{ route('theme-switcher', ['activeTheme' => $theme]) }}"
-                                @class([
-                                    'text-xs rounded-md px-3 py-2 block text-center',
-                                    $activeTheme == $theme ? 'bg-white/20 text-white' : 'bg-white/10 text-white/80 hover:bg-white/15',
-                                ])
-                            >
-                                {{ ucfirst($theme) }}
-                            </a>
-                        @endforeach
-                    </div>
-                </div>
-                <div class="my-6 side-nav__divider"></div>
-                <ul class="px-5">
-                    <li>
-                        <a href="{{ route('crud-builder.index') }}" class="side-menu">
-                            <div class="side-menu__icon">
-                                <x-base.lucide icon="Settings" />
-                            </div>
-                            <div class="side-menu__title"> Developer Tools </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('monitoring.index') }}" class="side-menu">
-                            <div class="side-menu__icon">
-                                <x-base.lucide icon="Activity" />
-                            </div>
-                            <div class="side-menu__title"> Monitoring </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('api-manager.index') }}" class="side-menu">
-                            <div class="side-menu__icon">
-                                <x-base.lucide icon="Server" />
-                            </div>
-                            <div class="side-menu__title"> API Manager </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('backup.index') }}" class="side-menu">
-                            <div class="side-menu__icon">
-                                <x-base.lucide icon="Database" />
-                            </div>
-                            <div class="side-menu__title"> Backup </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('database-import.index') }}" class="side-menu">
-                            <div class="side-menu__icon">
-                                <x-base.lucide icon="UploadCloud" />
-                            </div>
-                            <div class="side-menu__title"> Database Import </div>
-                        </a>
-                    </li>
-                </ul>
-                <div class="my-6 side-nav__divider"></div>
                 <ul>
                     @foreach ($mainMenu as $menuKey => $menu)
                         @if ($menu == 'divider')
@@ -176,7 +115,7 @@
             <!-- END: Side Menu -->
             <!-- BEGIN: Content -->
             <div
-                class="md:max-w-auto min-h-screen min-w-0 max-w-full flex-1 rounded-[30px] bg-gradient-to-br from-pink-50 to-blue-50 px-4 pb-10 before:block before:h-px before:w-full before:content-[''] dark:bg-darkmode-700 md:px-[22px]">
+                class="md:max-w-auto min-h-screen min-w-0 max-w-full flex-1 rounded-[20px] bg-white dark:bg-darkmode-700 shadow-sm border border-slate-200/60 dark:border-darkmode-400 px-4 pb-10 before:block before:h-px before:w-full before:content-[''] md:px-[22px]">
                 <x-themes.kindergarten.top-bar />
                 @if (session('success'))
                     <x-base.alert variant="success" class="mb-2 flex items-center">

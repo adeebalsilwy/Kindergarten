@@ -16,19 +16,19 @@
                     @method('PUT')
                     <div class="grid grid-cols-12 gap-4">
                         <div class="col-span-12 sm:col-span-6">
-                            <x-base.form-label>{{ __('command-logs.fields.command') }}</x-base.form-label>
+                            <x-base.form-label>{{ __('command_logs.fields.command') }}</x-base.form-label>
                             <x-base.form-input type="text" name="command" value="{{ old('command', $commandLog->command ?? '') }}" class="mt-2" />
                         </div>
                         <div class="col-span-12">
-                            <x-base.form-label>{{ __('command-logs.fields.parameters') }}</x-base.form-label>
+                            <x-base.form-label>{{ __('command_logs.fields.parameters') }}</x-base.form-label>
                             <x-base.form-textarea name="parameters" rows="4" class="resize-none">{{ old('parameters', $commandLog->parameters ?? '') }}</x-base.form-textarea>
                         </div>
                         <div class="col-span-12">
-                            <x-base.form-label>{{ __('command-logs.fields.output') }}</x-base.form-label>
+                            <x-base.form-label>{{ __('command_logs.fields.output') }}</x-base.form-label>
                             <x-base.form-textarea name="output" rows="4" class="resize-none">{{ old('output', $commandLog->output ?? '') }}</x-base.form-textarea>
                         </div>
                         <div class="col-span-12 sm:col-span-6">
-                            <x-base.form-label>{{ __('command-logs.fields.status') }}</x-base.form-label>
+                            <x-base.form-label>{{ __('command_logs.fields.status') }}</x-base.form-label>
                             <x-base.tom-select name="status" class="mt-2">
                                 <option value="">{{ __('global.select_option') }}</option>
                                 <option value="active" {{ old('status', $commandLog->status ?? '') == 'active' ? 'selected' : '' }}>{{ __('global.active') }}</option>
@@ -38,7 +38,7 @@
                             </x-base.tom-select>
                         </div>
                         <div class="col-span-12">
-                            <x-base.form-label>{{ __('command-logs.fields.error_message') }}</x-base.form-label>
+                            <x-base.form-label>{{ __('command_logs.fields.error_message') }}</x-base.form-label>
                             <x-base.form-textarea name="error_message" rows="4" class="resize-none">{{ old('error_message', $commandLog->error_message ?? '') }}</x-base.form-textarea>
                         </div>
 

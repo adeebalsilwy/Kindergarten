@@ -147,10 +147,11 @@ class PaymentController extends Controller
     {
         $this->authorize('create_payments');
 
+        $payment = new \App\Models\Payment();
         $children = \App\Models\Children::select('id', 'name')->orderBy('name')->get();
         $fees = \App\Models\Fee::select('id', 'name')->orderBy('name')->get();
 
-        return view('pages.payments.create', compact('children', 'fees'));
+        return view('pages.payments.create', compact('payment', 'children', 'fees'));
     }
 
     public function store(StorePaymentRequest $request)

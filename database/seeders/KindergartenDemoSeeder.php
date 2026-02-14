@@ -168,7 +168,7 @@ class KindergartenDemoSeeder extends Seeder
                 ],
             ];
 
-            $teachers = [];
+            $teachers = collect([]);
             foreach ($professionalTeachers as $teacherData) {
                 $teacher = Teacher::create([
                     'name' => $teacherData['name'],
@@ -184,7 +184,7 @@ class KindergartenDemoSeeder extends Seeder
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ]);
-                $teachers[] = $teacher;
+                $teachers->push($teacher);
             }
         } else {
             $this->command->info('Teachers already exist. Skipping teacher creation.');
@@ -240,7 +240,7 @@ class KindergartenDemoSeeder extends Seeder
                 ],
             ];
 
-            $classes = [];
+            $classes = collect([]);
             foreach ($classData as $data) {
                 $class = Classes::create([
                     'name' => $data['name'],
@@ -251,14 +251,14 @@ class KindergartenDemoSeeder extends Seeder
                     'current_students' => rand(15, $data['capacity'] - 2),
                     'start_time' => '07:30:00',
                     'end_time' => '13:30:00',
-                    'room_number' => 'Room '.(count($classes) + 1),
+                    'room_number' => 'Room '.($classes->count() + 1),
                     'monthly_fee' => $data['monthly_fee'],
                     'curriculum' => $data['curriculum'],
                     'teacher_id' => $data['teacher_id'],
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ]);
-                $classes[] = $class;
+                $classes->push($class);
             }
         } else {
             $this->command->info('Classes already exist. Skipping class creation.');
@@ -314,7 +314,7 @@ class KindergartenDemoSeeder extends Seeder
                     'emergency_contact_relation' => 'الوالد/الوالدة',
                     'medical_conditions' => rand(1, 5) == 1 ? 'حساسية من اللوز' : 'طفل بصحة جيدة',
                     'allergies' => rand(1, 8) == 1 ? 'حساسية من الفول السوداني' : null,
-                    'class_id' => $classes[array_rand($classes)]->id,
+                    'class_id' => $classes->random()->id,
                     'enrollment_date' => Carbon::now()->subDays(rand(30, 365)),
                     'nationality' => 'يمني',
                     'blood_type' => ['A+', 'B+', 'O+', 'AB+'][rand(0, 3)],

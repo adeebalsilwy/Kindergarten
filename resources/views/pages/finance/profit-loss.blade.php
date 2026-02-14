@@ -31,24 +31,56 @@
 
     <!-- Profit/Loss Summary Cards -->
     <div class="col-span-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div class="bg-white dark:bg-dark-1 shadow rounded-lg p-6">
-            <div class="text-gray-600 dark:text-gray-400">Total Revenue</div>
-            <div class="text-2xl font-bold text-green-600 mt-2">${{ number_format($profitLoss['revenue'] ?? 0, 2) }}</div>
-        </div>
-        <div class="bg-white dark:bg-dark-1 shadow rounded-lg p-6">
-            <div class="text-gray-600 dark:text-gray-400">Total Expenses</div>
-            <div class="text-2xl font-bold text-red-600 mt-2">${{ number_format($profitLoss['expenses'] ?? 0, 2) }}</div>
-        </div>
-        <div class="bg-white dark:bg-dark-1 shadow rounded-lg p-6">
-            <div class="text-gray-600 dark:text-gray-400">Net Profit/Loss</div>
-            <div class="text-2xl font-bold {{ ($profitLoss['profit'] ?? 0) >= 0 ? 'text-green-600' : 'text-red-600' }} mt-2">
-                ${{ number_format($profitLoss['profit'] ?? 0, 2) }}
+        <div class="intro-y">
+            <div class="report-box zoom-in">
+                <div class="box p-5">
+                    <div class="flex">
+                        <x-base.lucide icon="TrendingUp" class="report-box__icon text-success" />
+                    </div>
+                    <div class="text-2xl font-bold leading-8 mt-6">
+                        {{ __('global.currency_symbol', ['amount' => number_format($profitLoss['revenue'] ?? 0)]) }}
+                    </div>
+                    <div class="text-base text-slate-500 mt-1">{{ __('global.total_revenue') }}</div>
+                </div>
             </div>
         </div>
-        <div class="bg-white dark:bg-dark-1 shadow rounded-lg p-6">
-            <div class="text-gray-600 dark:text-gray-400">Profit Margin</div>
-            <div class="text-2xl font-bold text-blue-600 mt-2">
-                {{ number_format($profitLoss['profit_margin'] ?? 0, 2) }}%
+        <div class="intro-y">
+            <div class="report-box zoom-in">
+                <div class="box p-5">
+                    <div class="flex">
+                        <x-base.lucide icon="TrendingDown" class="report-box__icon text-danger" />
+                    </div>
+                    <div class="text-2xl font-bold leading-8 mt-6">
+                        {{ __('global.currency_symbol', ['amount' => number_format($profitLoss['expenses'] ?? 0)]) }}
+                    </div>
+                    <div class="text-base text-slate-500 mt-1">{{ __('global.total_expenses') }}</div>
+                </div>
+            </div>
+        </div>
+        <div class="intro-y">
+            <div class="report-box zoom-in">
+                <div class="box p-5 border border-primary/20 bg-primary/5">
+                    <div class="flex">
+                        <x-base.lucide icon="BarChart3" class="report-box__icon text-primary" />
+                    </div>
+                    <div class="text-2xl font-bold leading-8 mt-6 {{ ($profitLoss['profit'] ?? 0) >= 0 ? 'text-success' : 'text-danger' }}">
+                        {{ __('global.currency_symbol', ['amount' => number_format($profitLoss['profit'] ?? 0)]) }}
+                    </div>
+                    <div class="text-base text-slate-500 mt-1">{{ __('global.net_profit') }}</div>
+                </div>
+            </div>
+        </div>
+        <div class="intro-y">
+            <div class="report-box zoom-in">
+                <div class="box p-5">
+                    <div class="flex">
+                        <x-base.lucide icon="Percent" class="report-box__icon text-info" />
+                    </div>
+                    <div class="text-2xl font-bold leading-8 mt-6">
+                        {{ number_format($profitLoss['profit_margin'] ?? 0, 1) }}%
+                    </div>
+                    <div class="text-base text-slate-500 mt-1">{{ __('global.profit_margin') }}</div>
+                </div>
             </div>
         </div>
     </div>
