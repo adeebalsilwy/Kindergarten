@@ -553,7 +553,7 @@ class KindergartenDemoSeeder extends Seeder
                         'score' => $grades[rand(0, count($grades) - 1)],
                         'date' => Carbon::now()->subDays(rand(15, 90)), // evaluation date
                         'comments' => 'تقدم جيد في الأنشطة الصفية والتفاعل مع الزملاء',
-                        'evaluator_id' => $teachers->random()->id,
+                        'evaluator_id' => collect($teachers)->random()->id,
                         'created_at' => Carbon::now(),
                         'updated_at' => Carbon::now(),
                     ]);

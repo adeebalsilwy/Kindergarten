@@ -145,11 +145,11 @@ class ClassesController extends Controller
     public function create()
     {
         $this->authorize('create_classes');
-
+        $classes = new \App\Models\Classes();
         $teachers = \App\Models\Teacher::select('id', 'name')->orderBy('name')->get();
         $grades = \App\Models\Grade::select('id', 'name')->orderBy('name')->get();
 
-        return view('pages.classes.create', compact('teachers', 'grades'));
+        return view('pages.classes.create', compact('classes', 'teachers', 'grades'));
     }
 
     public function store(StoreClassesRequest $request)

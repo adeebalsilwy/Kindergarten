@@ -14,11 +14,12 @@ class StoreGradeRequest extends FormRequest
     public function rules()
     {
         return [
-            'child_id' => 'required',
+            'child_id' => 'required|exists:children,id',
             'subject' => 'required|string|max:255',
             'score' => 'required|string|max:255',
             'date' => 'required|date',
-
+            'comments' => 'nullable|string',
+            'evaluator_id' => 'nullable|exists:teachers,id',
         ];
     }
 
@@ -29,7 +30,8 @@ class StoreGradeRequest extends FormRequest
             'subject' => __('grades.fields.subject'),
             'score' => __('grades.fields.score'),
             'date' => __('grades.fields.date'),
-
+            'comments' => __('grades.fields.comments'),
+            'evaluator_id' => __('grades.fields.evaluator_id'),
         ];
     }
 }

@@ -140,8 +140,11 @@ class GradeController extends Controller
     public function create()
     {
         $this->authorize('create_grades');
+        $grade = new \App\Models\Grade();
+        $children = \App\Models\Children::select('id', 'name')->orderBy('name')->get();
+        $teachers = \App\Models\Teacher::select('id', 'name')->orderBy('name')->get();
 
-        return view('pages.grades.create', get_defined_vars());
+        return view('pages.grades.create', compact('grade', 'children', 'teachers'));
     }
 
     public function store(StoreGradeRequest $request)
@@ -164,8 +167,10 @@ class GradeController extends Controller
     {
         $this->authorize('edit_grades');
         $grade = $this->service->find($id);
+        $children = \App\Models\Children::select('id', 'name')->orderBy('name')->get();
+        $teachers = \App\Models\Teacher::select('id', 'name')->orderBy('name')->get();
 
-        return view('pages.grades.edit', get_defined_vars());
+        return view('pages.grades.edit', compact('grade', 'children', 'teachers'));
     }
 
     public function update(UpdateGradeRequest $request, $id)

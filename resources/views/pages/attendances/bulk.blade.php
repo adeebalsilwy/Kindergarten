@@ -13,7 +13,7 @@
         <div class="intro-y col-span-12">
             <!-- Filter Box -->
             <div class="box p-5">
-                <form action="{{ route('attendance.bulk') }}" method="GET" class="flex flex-col md:flex-row gap-4">
+                <form action="{{ route('attendances.bulk') }}" method="GET" class="flex flex-col md:flex-row gap-4">
                     <div class="flex-1">
                         <x-base.form-label>{{ __('global.select_class') }}</x-base.form-label>
                         <x-base.form-select name="class_id" class="w-full" onchange="this.form.submit()">
@@ -33,7 +33,7 @@
             @if($class_id)
                 <!-- Attendance Sheet -->
                 <div class="box p-5 mt-5">
-                    <form action="{{ route('attendance.bulk.store') }}" method="POST">
+                    <form action="{{ route('attendances.bulk.store') }}" method="POST">
                         @csrf
                         <input type="hidden" name="date" value="{{ $date }}">
                         <div class="overflow-x-auto">

@@ -33,8 +33,9 @@ class AttendanceController extends Controller
         }
 
         $attendances = $query->paginate(15);
+        $classes = \App\Models\Classes::select('id', 'name')->orderBy('name')->get();
 
-        return view('pages.attendances.index', compact('attendances'));
+        return view('pages.attendances.index', compact('attendances', 'classes'));
     }
 
     /**
@@ -142,16 +143,23 @@ class AttendanceController extends Controller
     public function create()
     {
         $this->authorize('create_attendances');
-
+        $attendance = new \App\Models\Attendance();
         $children = \App\Models\Children::select('id', 'name')->orderBy('name')->get();
 
-        return view('pages.attendances.create', compact('children'));
+        return view('pages.attendances.create', compact('attendance', 'children'));
     }
 
     public function store(StoreAttendanceRequest $request)
     {
         $this->authorize('create_attendances');
-        $this->service->create($request->validated());
+        $data = $request->validated();
+        if (isset($data['check_in'])) {
+            $data['check_in_time'] = $data['check_in'];
+        }
+        if (isset($data['check_out'])) {
+            $data['check_out_time'] = $data['check_out'];
+        }
+        $this->service->create($data);
 
         return redirect()->route('attendances.index')->with('success', __('attendances.messages.created'));
     }
@@ -176,7 +184,14 @@ class AttendanceController extends Controller
     public function update(UpdateAttendanceRequest $request, $id)
     {
         $this->authorize('edit_attendances');
-        $this->service->update($id, $request->validated());
+        $data = $request->validated();
+        if (isset($data['check_in'])) {
+            $data['check_in_time'] = $data['check_in'];
+        }
+        if (isset($data['check_out'])) {
+            $data['check_out_time'] = $data['check_out'];
+        }
+        $this->service->update($id, $data);
 
         return redirect()->route('attendances.index')->with('success', __('attendances.messages.updated'));
     }

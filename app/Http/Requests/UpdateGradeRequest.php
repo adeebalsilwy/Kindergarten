@@ -14,11 +14,12 @@ class UpdateGradeRequest extends FormRequest
     public function rules()
     {
         return [
-            'child_id' => 'nullable',
+            'child_id' => 'nullable|exists:children,id',
             'subject' => 'nullable|string|max:255',
             'score' => 'nullable|string|max:255',
             'date' => 'nullable|date',
-
+            'comments' => 'nullable|string',
+            'evaluator_id' => 'nullable|exists:teachers,id',
         ];
     }
 
@@ -29,7 +30,8 @@ class UpdateGradeRequest extends FormRequest
             'subject' => __('grades.fields.subject'),
             'score' => __('grades.fields.score'),
             'date' => __('grades.fields.date'),
-
+            'comments' => __('grades.fields.comments'),
+            'evaluator_id' => __('grades.fields.evaluator_id'),
         ];
     }
 }

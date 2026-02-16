@@ -10,6 +10,34 @@ use Carbon\Carbon;
 
 class DashboardContentService
 {
+    public function query()
+    {
+        return \App\Models\DashboardContent::query();
+    }
+
+    public function find($id)
+    {
+        return \App\Models\DashboardContent::findOrFail($id);
+    }
+
+    public function create(array $data)
+    {
+        return \App\Models\DashboardContent::create($data);
+    }
+
+    public function update($id, array $data)
+    {
+        $model = $this->find($id);
+        $model->update($data);
+        return $model;
+    }
+
+    public function delete($id)
+    {
+        $model = $this->find($id);
+        return $model->delete();
+    }
+
     public function getGeneralMetrics(): array
     {
         return [
