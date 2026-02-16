@@ -43,11 +43,11 @@
                         <div class="col-span-12 md:col-span-3 flex items-end">
                             <div class="flex items-center gap-4">
                                 <div class="flex items-center">
-                                    <x-base.form-check.input id="api-with-resource" class="form-check-input" type="checkbox">
+                                    <x-base.form-check.input id="api-with-resource" class="form-check-input" type="checkbox" />
                                     <x-base.form-label for="api-with-resource" class="ml-2">With Resource</x-base.form-label>
                                 </div>
                                 <div class="flex items-center">
-                                    <x-base.form-check.input id="api-with-repository" class="form-check-input" type="checkbox">
+                                    <x-base.form-check.input id="api-with-repository" class="form-check-input" type="checkbox" />
                                     <x-base.form-label for="api-with-repository" class="ml-2">With Repository</x-base.form-label>
                                 </div>
                             </div>

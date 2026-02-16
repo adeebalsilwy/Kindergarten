@@ -74,12 +74,16 @@
                         <x-base.table.tr class="intro-x">
                             <x-base.table.td class="text-center">{{ $dashboardContent->section ?? '-' }}</x-base.table.td>
                             <x-base.table.td class="text-center">{{ $dashboardContent->key ?? '-' }}</x-base.table.td>
-                            <x-base.table.td class="text-center">{{ $dashboardContent->content ?? '-' }}</x-base.table.td>
+                            <x-base.table.td class="text-center">
+                                {{ is_array($dashboardContent->content) ? json_encode($dashboardContent->content) : ($dashboardContent->content ?? '-') }}
+                            </x-base.table.td>
                             <x-base.table.td class="text-center">
                                 <div class="flex items-center justify-center {{ $dashboardContent->is_active ? 'text-success' : 'text-danger' }}"> <x-base.lucide icon="{{ $dashboardContent->is_active ? 'CheckSquare' : 'XSquare' }}" class="w-4 h-4 mr-2" /> {{ $dashboardContent->is_active ? __('global.yes') : __('global.no') }} </div>
                             </x-base.table.td>
                             <x-base.table.td class="text-center">{{ $dashboardContent->order ?? '-' }}</x-base.table.td>
-                            <x-base.table.td class="text-center">{{ $dashboardContent->metadata ?? '-' }}</x-base.table.td>
+                            <x-base.table.td class="text-center">
+                                {{ is_array($dashboardContent->metadata) ? json_encode($dashboardContent->metadata) : ($dashboardContent->metadata ?? '-') }}
+                            </x-base.table.td>
 
                             @if($canEdit || $canDelete || $canView)
                             <x-base.table.td class="table-report__action w-56">

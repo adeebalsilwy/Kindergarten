@@ -145,11 +145,11 @@ class ChildrenController extends Controller
     public function create()
     {
         $this->authorize('create_children');
-
+        $children = new \App\Models\Children();
         $classes = \App\Models\Classes::select('id', 'name')->orderBy('name')->get();
         $parents = \App\Models\Guardian::select('id', 'name')->orderBy('name')->get();
 
-        return view('pages.children.create', compact('classes', 'parents'));
+        return view('pages.children.create', compact('children', 'classes', 'parents'));
     }
 
     public function store(StoreChildrenRequest $request)

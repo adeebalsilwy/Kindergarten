@@ -13,6 +13,34 @@ use Illuminate\Support\Facades\DB;
 
 class ReportService
 {
+    public function query()
+    {
+        return \App\Models\Report::query();
+    }
+
+    public function find($id)
+    {
+        return \App\Models\Report::findOrFail($id);
+    }
+
+    public function create(array $data)
+    {
+        return \App\Models\Report::create($data);
+    }
+
+    public function update($id, array $data)
+    {
+        $report = $this->find($id);
+        $report->update($data);
+        return $report;
+    }
+
+    public function delete($id)
+    {
+        $report = $this->find($id);
+        return $report->delete();
+    }
+
     /**
      * Generate student academic report
      */

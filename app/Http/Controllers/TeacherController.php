@@ -144,8 +144,9 @@ class TeacherController extends Controller
     public function create()
     {
         $this->authorize('create_teachers');
+        $teacher = new \App\Models\Teacher();
 
-        return view('pages.teachers.create', get_defined_vars());
+        return view('pages.teachers.create', compact('teacher'));
     }
 
     public function store(StoreTeacherRequest $request)
@@ -169,7 +170,7 @@ class TeacherController extends Controller
         $this->authorize('edit_teachers');
         $teacher = $this->service->find($id);
 
-        return view('pages.teachers.edit', get_defined_vars());
+        return view('pages.teachers.edit', compact('teacher'));
     }
 
     public function update(UpdateTeacherRequest $request, $id)

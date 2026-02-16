@@ -420,7 +420,7 @@ class DashboardService
             ],
             [
                 'title' => 'Record Attendance',
-                'route' => 'attendance.index',
+                'route' => 'attendances.index',
                 'icon' => 'Calendar',
                 'color' => 'success',
             ],
