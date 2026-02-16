@@ -6,7 +6,7 @@
 
 @section('subcontent')
     <div class="intro-y mt-8 flex items-center">
-        <h2 class="mr-auto text-lg font-medium">Profile Layout</h2>
+        <h2 class="me-auto text-lg font-medium">Profile Layout</h2>
     </div>
     <x-base.tab.group>
         <!-- BEGIN: Profile Info -->
@@ -20,14 +20,14 @@
                             alt="Midone - Tailwind Admin Dashboard Template"
                         />
                         <div
-                            class="absolute bottom-0 right-0 mb-1 mr-1 flex items-center justify-center rounded-full bg-primary p-2">
+                            class="absolute bottom-0 right-0 mb-1 me-1 flex items-center justify-center rounded-full bg-primary p-2">
                             <x-base.lucide
                                 class="h-4 w-4 text-white"
                                 icon="Camera"
                             />
                         </div>
                     </div>
-                    <div class="ml-5">
+                    <div class="ms-5">
                         <div class="w-24 truncate text-lg font-medium sm:w-40 sm:whitespace-normal">
                             {{ $fakers[0]['users'][0]['name'] }}
                         </div>
@@ -36,27 +36,27 @@
                 </div>
                 <div
                     class="mt-6 flex-1 border-l border-r border-t border-slate-200/60 px-5 pt-5 dark:border-darkmode-400 lg:mt-0 lg:border-t-0 lg:pt-0">
-                    <div class="text-center font-medium lg:mt-3 lg:text-left">
+                    <div class="text-center font-medium lg:mt-3 lg:text-start">
                         Contact Details
                     </div>
                     <div class="mt-4 flex flex-col items-center justify-center lg:items-start">
                         <div class="flex items-center truncate sm:whitespace-normal">
                             <x-base.lucide
-                                class="mr-2 h-4 w-4"
+                                class="me-2 h-4 w-4"
                                 icon="Mail"
                             />
                             {{ $fakers[0]['users'][0]['email'] }}
                         </div>
                         <div class="mt-3 flex items-center truncate sm:whitespace-normal">
                             <x-base.lucide
-                                class="mr-2 h-4 w-4"
+                                class="me-2 h-4 w-4"
                                 icon="Instagram"
                             /> Instagram
                             {{ $fakers[0]['users'][0]['name'] }}
                         </div>
                         <div class="mt-3 flex items-center truncate sm:whitespace-normal">
                             <x-base.lucide
-                                class="mr-2 h-4 w-4"
+                                class="me-2 h-4 w-4"
                                 icon="Twitter"
                             /> Twitter
                             {{ $fakers[0]['users'][0]['name'] }}
@@ -65,28 +65,28 @@
                 </div>
                 <div
                     class="mt-6 flex-1 border-t border-slate-200/60 px-5 pt-5 dark:border-darkmode-400 lg:mt-0 lg:border-0 lg:pt-0">
-                    <div class="text-center font-medium lg:mt-5 lg:text-left">
+                    <div class="text-center font-medium lg:mt-5 lg:text-start">
                         Sales Growth
                     </div>
                     <div class="mt-2 flex items-center justify-center lg:justify-start">
-                        <div class="mr-2 flex w-20">
+                        <div class="me-2 flex w-20">
                             USP:
-                            <span class="ml-3 font-medium text-success">+23%</span>
+                            <span class="ms-3 font-medium text-success">+23%</span>
                         </div>
                         <div class="w-3/4">
                             <x-simple-line-chart-1
-                                class="-mr-5"
+                                class="-me-5"
                                 height="h-[55px]"
                             />
                         </div>
                     </div>
                     <div class="flex items-center justify-center lg:justify-start">
-                        <div class="mr-2 flex w-20">
-                            STP: <span class="ml-3 font-medium text-danger">-2%</span>
+                        <div class="me-2 flex w-20">
+                            STP: <span class="ms-3 font-medium text-danger">-2%</span>
                         </div>
                         <div class="w-3/4">
                             <x-simple-line-chart-2
-                                class="-mr-5"
+                                class="-me-5"
                                 height="h-[55px]"
                             />
                         </div>
@@ -138,10 +138,10 @@
                     <!-- BEGIN: Top Categories -->
                     <div class="intro-y box col-span-12 lg:col-span-6">
                         <div class="flex items-center border-b border-slate-200/60 p-5 dark:border-darkmode-400">
-                            <h2 class="mr-auto text-base font-medium">
+                            <h2 class="me-auto text-base font-medium">
                                 Top Categories
                             </h2>
-                            <x-base.menu class="ml-auto">
+                            <x-base.menu class="ms-auto">
                                 <x-base.menu.button
                                     class="block h-5 w-5"
                                     href="#"
@@ -155,14 +155,14 @@
                                 <x-base.menu.items class="w-40">
                                     <x-base.menu.item>
                                         <x-base.lucide
-                                            class="mr-2 h-4 w-4"
+                                            class="me-2 h-4 w-4"
                                             icon="Plus"
                                         /> Add
                                         Category
                                     </x-base.menu.item>
                                     <x-base.menu.item>
                                         <x-base.lucide
-                                            class="mr-2 h-4 w-4"
+                                            class="me-2 h-4 w-4"
                                             icon="Settings"
                                         />
                                         Settings
@@ -172,7 +172,7 @@
                         </div>
                         <div class="p-5">
                             <div class="flex flex-col sm:flex-row">
-                                <div class="mr-auto">
+                                <div class="me-auto">
                                     <a
                                         class="font-medium"
                                         href=""
@@ -184,7 +184,7 @@
                                     </div>
                                 </div>
                                 <div class="flex">
-                                    <div class="-ml-2 mr-auto mt-5 w-32 sm:ml-0 sm:mr-5">
+                                    <div class="-ms-2 me-auto mt-5 w-32 sm:ms-0 sm:me-5">
                                         <x-simple-line-chart height="h-[30px]" />
                                     </div>
                                     <div class="text-center">
@@ -196,7 +196,7 @@
                                 </div>
                             </div>
                             <div class="mt-5 flex flex-col sm:flex-row">
-                                <div class="mr-auto">
+                                <div class="me-auto">
                                     <a
                                         class="font-medium"
                                         href=""
@@ -208,7 +208,7 @@
                                     </div>
                                 </div>
                                 <div class="flex">
-                                    <div class="-ml-2 mr-auto mt-5 w-32 sm:ml-0 sm:mr-5">
+                                    <div class="-ms-2 me-auto mt-5 w-32 sm:ms-0 sm:me-5">
                                         <x-simple-line-chart height="h-[30px]" />
                                     </div>
                                     <div class="text-center">
@@ -220,7 +220,7 @@
                                 </div>
                             </div>
                             <div class="mt-5 flex flex-col sm:flex-row">
-                                <div class="mr-auto">
+                                <div class="me-auto">
                                     <a
                                         class="font-medium"
                                         href=""
@@ -232,7 +232,7 @@
                                     </div>
                                 </div>
                                 <div class="flex">
-                                    <div class="-ml-2 mr-auto mt-5 w-32 sm:ml-0 sm:mr-5">
+                                    <div class="-ms-2 me-auto mt-5 w-32 sm:ms-0 sm:me-5">
                                         <x-simple-line-chart height="h-[30px]" />
                                     </div>
                                     <div class="text-center">
@@ -250,10 +250,10 @@
                     <x-base.tab.group class="intro-y box col-span-12 lg:col-span-6">
                         <div
                             class="flex items-center border-b border-slate-200/60 px-5 py-5 dark:border-darkmode-400 sm:py-0">
-                            <h2 class="mr-auto text-base font-medium">
+                            <h2 class="me-auto text-base font-medium">
                                 Work In Progress
                             </h2>
-                            <x-base.menu class="ml-auto sm:hidden">
+                            <x-base.menu class="ms-auto sm:hidden">
                                 <x-base.menu.button
                                     class="block h-5 w-5"
                                     href="#"
@@ -288,7 +288,7 @@
                                 </x-base.menu.items>
                             </x-base.menu>
                             <x-base.tab.list
-                                class="ml-auto hidden w-auto sm:flex"
+                                class="ms-auto hidden w-auto sm:flex"
                                 variant="link-tabs"
                             >
                                 <x-base.tab
@@ -319,7 +319,7 @@
                                 >
                                     <div>
                                         <div class="flex">
-                                            <div class="mr-auto">Pending Tasks</div>
+                                            <div class="me-auto">Pending Tasks</div>
                                             <div>20%</div>
                                         </div>
                                         <x-base.progress class="mt-2 h-1">
@@ -334,7 +334,7 @@
                                     </div>
                                     <div class="mt-5">
                                         <div class="flex">
-                                            <div class="mr-auto">Completed Tasks</div>
+                                            <div class="me-auto">Completed Tasks</div>
                                             <div>2 / 20</div>
                                         </div>
                                         <x-base.progress class="mt-2 h-1">
@@ -349,7 +349,7 @@
                                     </div>
                                     <div class="mt-5">
                                         <div class="flex">
-                                            <div class="mr-auto">Tasks In Progress</div>
+                                            <div class="me-auto">Tasks In Progress</div>
                                             <div>42</div>
                                         </div>
                                         <x-base.progress class="mt-2 h-1">
@@ -379,8 +379,8 @@
                     <div class="intro-y box col-span-12 lg:col-span-6">
                         <div
                             class="flex items-center border-b border-slate-200/60 px-5 py-5 dark:border-darkmode-400 sm:py-3">
-                            <h2 class="mr-auto text-base font-medium">Daily Sales</h2>
-                            <x-base.menu class="ml-auto sm:hidden">
+                            <h2 class="me-auto text-base font-medium">Daily Sales</h2>
+                            <x-base.menu class="ms-auto sm:hidden">
                                 <x-base.menu.button
                                     class="block h-5 w-5"
                                     href="#"
@@ -394,7 +394,7 @@
                                 <x-base.menu.items class="w-40">
                                     <x-base.menu.item>
                                         <x-base.lucide
-                                            class="mr-2 h-4 w-4"
+                                            class="me-2 h-4 w-4"
                                             icon="File"
                                         /> Download
                                         Excel
@@ -406,7 +406,7 @@
                                 variant="outline-secondary"
                             >
                                 <x-base.lucide
-                                    class="mr-2 h-4 w-4"
+                                    class="me-2 h-4 w-4"
                                     icon="File"
                                 /> Download
                                 Excel
@@ -421,14 +421,14 @@
                                         alt="Midone - Tailwind Admin Dashboard Template"
                                     />
                                 </div>
-                                <div class="ml-4 mr-auto">
+                                <div class="ms-4 me-auto">
                                     <a
                                         class="font-medium"
                                         href=""
                                     >
                                         {{ $fakers[0]['users'][0]['name'] }}
                                     </a>
-                                    <div class="mr-5 text-slate-500 sm:mr-5">
+                                    <div class="me-5 text-slate-500 sm:me-5">
                                         Bootstrap 4 HTML Admin Template
                                     </div>
                                 </div>
@@ -444,14 +444,14 @@
                                         alt="Midone - Tailwind Admin Dashboard Template"
                                     />
                                 </div>
-                                <div class="ml-4 mr-auto">
+                                <div class="ms-4 me-auto">
                                     <a
                                         class="font-medium"
                                         href=""
                                     >
                                         {{ $fakers[1]['users'][0]['name'] }}
                                     </a>
-                                    <div class="mr-5 text-slate-500 sm:mr-5">
+                                    <div class="me-5 text-slate-500 sm:me-5">
                                         Tailwind Admin Dashboard Template
                                     </div>
                                 </div>
@@ -467,14 +467,14 @@
                                         alt="Midone - Tailwind Admin Dashboard Template"
                                     />
                                 </div>
-                                <div class="ml-4 mr-auto">
+                                <div class="ms-4 me-auto">
                                     <a
                                         class="font-medium"
                                         href=""
                                     >
                                         {{ $fakers[2]['users'][0]['name'] }}
                                     </a>
-                                    <div class="mr-5 text-slate-500 sm:mr-5">
+                                    <div class="me-5 text-slate-500 sm:me-5">
                                         Vuejs HTML Admin Template
                                     </div>
                                 </div>
@@ -489,10 +489,10 @@
                     <x-base.tab.group class="intro-y box col-span-12 lg:col-span-6">
                         <div
                             class="flex items-center border-b border-slate-200/60 px-5 py-5 dark:border-darkmode-400 sm:py-0">
-                            <h2 class="mr-auto text-base font-medium">
+                            <h2 class="me-auto text-base font-medium">
                                 Latest Tasks
                             </h2>
-                            <x-base.menu class="ml-auto sm:hidden">
+                            <x-base.menu class="ms-auto sm:hidden">
                                 <x-base.menu.button
                                     class="block h-5 w-5"
                                     href="#"
@@ -527,7 +527,7 @@
                                 </x-base.menu.items>
                             </x-base.menu>
                             <x-base.tab.list
-                                class="ml-auto hidden w-auto sm:flex"
+                                class="ms-auto hidden w-auto sm:flex"
                                 variant="link-tabs"
                             >
                                 <x-base.tab
@@ -557,7 +557,7 @@
                                     selected
                                 >
                                     <div class="flex items-center">
-                                        <div class="border-l-2 border-primary pl-4 dark:border-primary">
+                                        <div class="border-l-2 border-primary ps-4 dark:border-primary">
                                             <a
                                                 class="font-medium"
                                                 href=""
@@ -566,12 +566,12 @@
                                             </a>
                                             <div class="text-slate-500">10:00 AM</div>
                                         </div>
-                                        <x-base.form-switch class="ml-auto">
+                                        <x-base.form-switch class="ms-auto">
                                             <x-base.form-switch.input type="checkbox" />
                                         </x-base.form-switch>
                                     </div>
                                     <div class="mt-5 flex items-center">
-                                        <div class="border-l-2 border-primary pl-4 dark:border-primary">
+                                        <div class="border-l-2 border-primary ps-4 dark:border-primary">
                                             <a
                                                 class="font-medium"
                                                 href=""
@@ -580,12 +580,12 @@
                                             </a>
                                             <div class="text-slate-500">02:00 PM</div>
                                         </div>
-                                        <x-base.form-switch class="ml-auto">
+                                        <x-base.form-switch class="ms-auto">
                                             <x-base.form-switch.input type="checkbox" />
                                         </x-base.form-switch>
                                     </div>
                                     <div class="mt-5 flex items-center">
-                                        <div class="border-l-2 border-primary pl-4 dark:border-primary">
+                                        <div class="border-l-2 border-primary ps-4 dark:border-primary">
                                             <a
                                                 class="font-medium"
                                                 href=""
@@ -594,7 +594,7 @@
                                             </a>
                                             <div class="text-slate-500">04:00 PM</div>
                                         </div>
-                                        <x-base.form-switch class="ml-auto">
+                                        <x-base.form-switch class="ms-auto">
                                             <x-base.form-switch.input type="checkbox" />
                                         </x-base.form-switch>
                                     </div>
@@ -607,10 +607,10 @@
                     <div class="intro-y box col-span-12">
                         <div
                             class="flex items-center border-b border-slate-200/60 px-5 py-5 dark:border-darkmode-400 sm:py-3">
-                            <h2 class="mr-auto text-base font-medium">
+                            <h2 class="me-auto text-base font-medium">
                                 General Statistics
                             </h2>
-                            <x-base.menu class="ml-auto sm:hidden">
+                            <x-base.menu class="ms-auto sm:hidden">
                                 <x-base.menu.button
                                     class="block h-5 w-5"
                                     href="#"
@@ -623,7 +623,7 @@
                                 <x-base.menu.items class="w-40">
                                     <x-base.menu.item>
                                         <x-base.lucide
-                                            class="mr-2 h-4 w-4"
+                                            class="me-2 h-4 w-4"
                                             icon="File"
                                         /> Download
                                         XML
@@ -635,7 +635,7 @@
                                 variant="outline-secondary"
                             >
                                 <x-base.lucide
-                                    class="mr-2 h-4 w-4"
+                                    class="me-2 h-4 w-4"
                                     icon="File"
                                 /> Download XML
                             </x-base.button>
@@ -646,9 +646,9 @@
                                     <div class="box col-span-2 p-5 dark:bg-darkmode-500 sm:col-span-1 2xl:col-span-2">
                                         <div class="font-medium">Net Worth</div>
                                         <div class="mt-1 flex items-center sm:mt-0">
-                                            <div class="mr-4 flex w-20">
+                                            <div class="me-4 flex w-20">
                                                 USP:
-                                                <span class="ml-3 font-medium text-success">
+                                                <span class="ms-3 font-medium text-success">
                                                     +23%
                                                 </span>
                                             </div>
@@ -660,9 +660,9 @@
                                     <div class="box col-span-2 p-5 dark:bg-darkmode-500 sm:col-span-1 2xl:col-span-2">
                                         <div class="font-medium">Sales</div>
                                         <div class="mt-1 flex items-center sm:mt-0">
-                                            <div class="mr-4 flex w-20">
+                                            <div class="me-4 flex w-20">
                                                 USP:
-                                                <span class="ml-3 font-medium text-danger">
+                                                <span class="ms-3 font-medium text-danger">
                                                     -5%
                                                 </span>
                                             </div>
@@ -674,9 +674,9 @@
                                     <div class="box col-span-2 p-5 dark:bg-darkmode-500 sm:col-span-1 2xl:col-span-2">
                                         <div class="font-medium">Profit</div>
                                         <div class="mt-1 flex items-center sm:mt-0">
-                                            <div class="mr-4 flex w-20">
+                                            <div class="me-4 flex w-20">
                                                 USP:
-                                                <span class="ml-3 font-medium text-danger">
+                                                <span class="ms-3 font-medium text-danger">
                                                     -10%
                                                 </span>
                                             </div>
@@ -688,9 +688,9 @@
                                     <div class="box col-span-2 p-5 dark:bg-darkmode-500 sm:col-span-1 2xl:col-span-2">
                                         <div class="font-medium">Products</div>
                                         <div class="mt-1 flex items-center sm:mt-0">
-                                            <div class="mr-4 flex w-20">
+                                            <div class="me-4 flex w-20">
                                                 USP:
-                                                <span class="ml-3 font-medium text-success">
+                                                <span class="ms-3 font-medium text-success">
                                                     +55%
                                                 </span>
                                             </div>
@@ -703,12 +703,12 @@
                             </div>
                             <div class="w-full 2xl:col-span-5">
                                 <div class="mt-8 flex justify-center">
-                                    <div class="mr-5 flex items-center">
-                                        <div class="mr-3 h-2 w-2 rounded-full bg-primary"></div>
+                                    <div class="me-5 flex items-center">
+                                        <div class="me-3 h-2 w-2 rounded-full bg-primary"></div>
                                         <span>Product Profit</span>
                                     </div>
                                     <div class="flex items-center">
-                                        <div class="mr-3 h-2 w-2 rounded-full bg-slate-300"></div>
+                                        <div class="me-3 h-2 w-2 rounded-full bg-slate-300"></div>
                                         <span>Author Sales</span>
                                     </div>
                                 </div>

@@ -5,10 +5,10 @@
 @endsection
 
 @section('subcontent')
-    <h2 class="intro-y mt-8 text-lg font-medium mr-auto">Children Management</h2>
+    <h2 class="intro-y mt-8 text-lg font-medium me-auto">Children Management</h2>
     <div class="grid grid-cols-12 gap-6 mt-5">
         <div class="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2">
-            <a href="{{ route('childrens.create') }}" class="btn btn-primary shadow-md mr-2">Add New Children</a>
+            <a href="{{ route('childrens.create') }}" class="btn btn-primary shadow-md me-2">Add New Children</a>
         </div>
         <!-- Data List -->
         <div class="intro-y col-span-12 overflow-auto lg:overflow-visible">
@@ -27,11 +27,11 @@
 
                             <td class="table-report__action w-56">
                                 <div class="flex justify-center items-center">
-                                    <a class="flex items-center mr-3" href="{{ route('childrens.edit', $children->id) }}"> <i data-lucide="check-square" class="w-4 h-4 mr-1"></i> Edit </a>
+                                    <a class="flex items-center me-3" href="{{ route('childrens.edit', $children->id) }}"> <i data-lucide="check-square" class="w-4 h-4 me-1"></i> Edit </a>
                                     <form action="{{ route('childrens.destroy', $children->id) }}" method="POST" onsubmit="return confirm('Are you sure?')">
                                         @csrf
                                         @method('DELETE')
-                                        <button class="flex items-center text-danger"> <i data-lucide="trash-2" class="w-4 h-4 mr-1"></i> Delete </button>
+                                        <button class="flex items-center text-danger"> <i data-lucide="trash-2" class="w-4 h-4 me-1"></i> Delete </button>
                                     </form>
                                 </div>
                             </td>

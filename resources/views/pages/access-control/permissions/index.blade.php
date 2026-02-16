@@ -6,7 +6,7 @@
 
 @section('subcontent')
     <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
-        <h2 class="text-lg font-medium mr-auto">Permissions Management</h2>
+        <h2 class="text-lg font-medium me-auto">Permissions Management</h2>
     </div>
 
     <div class="grid grid-cols-12 gap-6 mt-5">
@@ -47,7 +47,7 @@
                                             @csrf
                                             @method('DELETE')
                                             <x-base.button variant="outline-danger" type="submit" size="sm">
-                                                <x-base.lucide icon="Trash2" class="w-4 h-4 mr-1" /> Delete
+                                                <x-base.lucide icon="Trash2" class="w-4 h-4 me-1" /> Delete
                                             </x-base.button>
                                         </form>
                                     </div>

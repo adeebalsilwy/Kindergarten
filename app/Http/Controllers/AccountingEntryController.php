@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use OmarAlalwi\Gpdf\Facades\Gpdf;
+
 use App\Http\Requests\StoreAccountingEntryRequest;
 use App\Http\Requests\UpdateAccountingEntryRequest;
 use App\Services\AccountingEntryService;
@@ -62,7 +64,7 @@ class AccountingEntryController extends Controller
      */
     protected function exportToPdf($data)
     {
-        $pdf = Pdf::loadView('pages.accounting_entries.export-pdf', ['data' => $data]);
+        $pdf = Gpdf::loadView('pages.accounting_entries.export-pdf', ['data' => $data]);
 
         return $pdf->download('AccountingEntry_export_'.date('Y-m-d_H-i-s').'.pdf');
     }

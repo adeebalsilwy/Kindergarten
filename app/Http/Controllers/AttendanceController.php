@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use OmarAlalwi\Gpdf\Facades\Gpdf;
+
 use App\Http\Requests\StoreAttendanceRequest;
 use App\Http\Requests\UpdateAttendanceRequest;
 use App\Services\AttendanceService;
@@ -60,7 +62,7 @@ class AttendanceController extends Controller
      */
     protected function exportToPdf($data)
     {
-        $pdf = Pdf::loadView('pages.attendances.export-pdf', ['data' => $data]);
+        $pdf = Gpdf::loadView('pages.attendances.export-pdf', ['data' => $data]);
 
         return $pdf->download('Attendance_export_'.date('Y-m-d_H-i-s').'.pdf');
     }

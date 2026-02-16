@@ -7,12 +7,12 @@
 @section('subcontent')
     <div class="mt-8 flex items-center justify-between">
         <div>
-            <h2 class="intro-y text-2xl font-bold mr-auto text-slate-800 dark:text-slate-200">Edit Existing Model</h2>
+            <h2 class="intro-y text-2xl font-bold me-auto text-slate-800 dark:text-slate-200">Edit Existing Model</h2>
             <div class="text-slate-500 text-sm mt-1">Add fields and relationships to your existing database tables.</div>
         </div>
         <a href="{{ route('crud-builder.index') }}">
             <x-base.button variant="outline-secondary" class="px-4 py-2">
-                <x-base.lucide icon="ArrowLeft" class="w-4 h-4 mr-2" /> Back to Builder
+                <x-base.lucide icon="ArrowLeft" class="w-4 h-4 me-2" /> Back to Builder
             </x-base.button>
         </a>
     </div>
@@ -34,7 +34,7 @@
                 </div>
                 <div class="pb-1">
                     <x-base.button id="btn-load-target" variant="primary" disabled class="px-4 py-2.5 shadow-md">
-                        <x-base.lucide icon="Download" class="w-4 h-4 mr-2" /> Load Schema
+                        <x-base.lucide icon="Download" class="w-4 h-4 me-2" /> Load Schema
                     </x-base.button>
                 </div>
             </div>
@@ -50,7 +50,7 @@
                 <div class="col-span-12 intro-y">
                     <div class="box p-6 border border-slate-200/60 shadow-lg dark:border-darkmode-400 bg-gradient-to-br from-slate-50 to-white dark:from-darkmode-500/20 dark:to-darkmode-600">
                         <div class="flex items-center border-b border-slate-200/60 pb-4 mb-5 dark:border-darkmode-400">
-                            <div class="w-10 h-10 bg-gradient-to-r from-blue-500 to-blue-600 text-white flex items-center justify-center rounded-lg mr-4 shadow-md">
+                            <div class="w-10 h-10 bg-gradient-to-r from-blue-500 to-blue-600 text-white flex items-center justify-center rounded-lg me-4 shadow-md">
                                 <x-base.lucide icon="Info" class="w-5 h-5" />
                             </div>
                             <div>
@@ -76,7 +76,7 @@
                     <div class="box p-6 border border-slate-200/60 shadow-lg dark:border-darkmode-400 bg-gradient-to-br from-slate-50 to-white dark:from-darkmode-500/20 dark:to-darkmode-600">
                         <div class="flex items-center justify-between border-b border-slate-200/60 pb-4 mb-5 dark:border-darkmode-400">
                             <div class="flex items-center">
-                                <div class="w-10 h-10 bg-gradient-to-r from-purple-500 to-purple-600 text-white flex items-center justify-center rounded-lg mr-4 shadow-md">
+                                <div class="w-10 h-10 bg-gradient-to-r from-purple-500 to-purple-600 text-white flex items-center justify-center rounded-lg me-4 shadow-md">
                                     <x-base.lucide icon="Database" class="w-5 h-5" />
                                 </div>
                                 <div>
@@ -86,7 +86,7 @@
                             </div>
                             <div class="text-sm">
                                 <span class="bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-200 px-3 py-1.5 rounded-lg font-medium">{{ __('global.total') }}: </span>
-                                <span id="existing-fields-count" class="font-bold text-lg ml-2">0</span>
+                                <span id="existing-fields-count" class="font-bold text-lg ms-2">0</span>
                             </div>
                         </div>
                         <div class="overflow-x-auto rounded-lg border border-slate-200 dark:border-darkmode-400 shadow-sm max-h-[400px]">
@@ -109,14 +109,14 @@
                             <x-base.table class="table-auto bg-white dark:bg-darkmode-600 w-full">
                                 <x-base.table.thead class="bg-gradient-to-r from-slate-100 to-slate-200 dark:from-darkmode-500 dark:to-darkmode-600 sticky top-0 z-10">
                                     <x-base.table.tr class="text-slate-700 dark:text-slate-300">
-                                        <x-base.table.th class="whitespace-nowrap px-4 py-3 text-left font-semibold border-b border-slate-200 dark:border-darkmode-400 sticky left-0 bg-inherit z-20">Column</x-base.table.th>
-                                        <x-base.table.th class="whitespace-nowrap px-4 py-3 text-left font-semibold border-b border-slate-200 dark:border-darkmode-400">Type</x-base.table.th>
+                                        <x-base.table.th class="whitespace-nowrap px-4 py-3 text-start font-semibold border-b border-slate-200 dark:border-darkmode-400 sticky left-0 bg-inherit z-20">Column</x-base.table.th>
+                                        <x-base.table.th class="whitespace-nowrap px-4 py-3 text-start font-semibold border-b border-slate-200 dark:border-darkmode-400">Type</x-base.table.th>
                                         <x-base.table.th class="whitespace-nowrap px-4 py-3 text-center font-semibold border-b border-slate-200 dark:border-darkmode-400">Nullable</x-base.table.th>
-                                        <x-base.table.th class="whitespace-nowrap px-4 py-3 text-left font-semibold border-b border-slate-200 dark:border-darkmode-400">Default</x-base.table.th>
+                                        <x-base.table.th class="whitespace-nowrap px-4 py-3 text-start font-semibold border-b border-slate-200 dark:border-darkmode-400">Default</x-base.table.th>
                                         <x-base.table.th class="whitespace-nowrap px-4 py-3 text-center font-semibold border-b border-slate-200 dark:border-darkmode-400">Fillable</x-base.table.th>
                                         <x-base.table.th class="whitespace-nowrap px-4 py-3 text-center font-semibold border-b border-slate-200 dark:border-darkmode-400">Index</x-base.table.th>
                                         <x-base.table.th class="whitespace-nowrap px-4 py-3 text-center font-semibold border-b border-slate-200 dark:border-darkmode-400">Unique</x-base.table.th>
-                                        <x-base.table.th class="whitespace-nowrap px-4 py-3 text-left font-semibold border-b border-slate-200 dark:border-darkmode-400">Foreign Key</x-base.table.th>
+                                        <x-base.table.th class="whitespace-nowrap px-4 py-3 text-start font-semibold border-b border-slate-200 dark:border-darkmode-400">Foreign Key</x-base.table.th>
                                     </x-base.table.tr>
                                 </x-base.table.thead>
                                 <x-base.table.tbody id="existing-fields-body" class="divide-y divide-slate-200 dark:divide-darkmode-400">
@@ -132,7 +132,7 @@
                     <div class="box p-6 border border-slate-200/60 shadow-lg dark:border-darkmode-400 bg-gradient-to-br from-slate-50 to-white dark:from-darkmode-500/20 dark:to-darkmode-600">
                         <div class="flex items-center justify-between border-b border-slate-200/60 pb-4 mb-5 dark:border-darkmode-400">
                             <div class="flex items-center">
-                                <div class="w-10 h-10 bg-gradient-to-r from-blue-500 to-blue-600 text-white flex items-center justify-center rounded-lg mr-4 shadow-md">
+                                <div class="w-10 h-10 bg-gradient-to-r from-blue-500 to-blue-600 text-white flex items-center justify-center rounded-lg me-4 shadow-md">
                                     <x-base.lucide icon="PlusCircle" class="w-5 h-5" />
                                 </div>
                                 <div>
@@ -143,10 +143,10 @@
                             <div class="flex items-center gap-3">
                                 <div class="text-sm">
                                     <span class="bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-200 px-3 py-1.5 rounded-lg font-medium">{{ __('global.new') }}: </span>
-                                    <span id="new-fields-count" class="font-bold text-lg ml-2">0</span>
+                                    <span id="new-fields-count" class="font-bold text-lg ms-2">0</span>
                                 </div>
                                 <x-base.button type="button" id="add-field-btn" variant="primary" size="sm" class="shadow-md px-4 py-2">
-                                    <x-base.lucide icon="Plus" class="w-4 h-4 mr-2" /> Add Field
+                                    <x-base.lucide icon="Plus" class="w-4 h-4 me-2" /> Add Field
                                 </x-base.button>
                             </div>
                         </div>
@@ -167,7 +167,7 @@
                     <div class="box p-6 border border-slate-200/60 shadow-lg dark:border-darkmode-400 bg-gradient-to-br from-slate-50 to-white dark:from-darkmode-500/20 dark:to-darkmode-600">
                         <div class="flex items-center justify-between border-b border-slate-200/60 pb-4 mb-5 dark:border-darkmode-400">
                             <div class="flex items-center">
-                                <div class="w-10 h-10 bg-gradient-to-r from-green-500 to-green-600 text-white flex items-center justify-center rounded-lg mr-4 shadow-md">
+                                <div class="w-10 h-10 bg-gradient-to-r from-green-500 to-green-600 text-white flex items-center justify-center rounded-lg me-4 shadow-md">
                                     <x-base.lucide icon="Link" class="w-5 h-5" />
                                 </div>
                                 <div>
@@ -176,18 +176,18 @@
                                 </div>
                             </div>
                             <x-base.button type="button" id="add-rel-btn" variant="success" size="sm" class="shadow-md px-4 py-2">
-                                <x-base.lucide icon="Plus" class="w-4 h-4 mr-2" /> Add Relationship
+                                <x-base.lucide icon="Plus" class="w-4 h-4 me-2" /> Add Relationship
                             </x-base.button>
                         </div>
                         
                         <!-- Existing Relationships (Detected) -->
                         <div id="existing-rels-container" class="mb-6 hidden">
-                            <h4 class="text-sm font-bold text-slate-600 dark:text-slate-300 uppercase mb-3 pl-1 border-b pb-2 border-slate-200 dark:border-darkmode-400">Existing / Detected</h4>
+                            <h4 class="text-sm font-bold text-slate-600 dark:text-slate-300 uppercase mb-3 ps-1 border-b pb-2 border-slate-200 dark:border-darkmode-400">Existing / Detected</h4>
                             <div id="existing-rels-list" class="space-y-3 mt-3"></div>
                         </div>
 
                         <!-- New Relationships -->
-                        <h4 class="text-sm font-bold text-slate-600 dark:text-slate-300 uppercase mb-3 pl-1 border-b pb-2 border-slate-200 dark:border-darkmode-400">New Relationships</h4>
+                        <h4 class="text-sm font-bold text-slate-600 dark:text-slate-300 uppercase mb-3 ps-1 border-b pb-2 border-slate-200 dark:border-darkmode-400">New Relationships</h4>
                         <div class="space-y-4" id="relationships-container">
                             <div class="text-slate-500 text-center py-10 bg-slate-50 rounded-xl border-2 border-dashed border-slate-300 italic" id="no-rels-msg">
                                 <x-base.lucide icon="GitBranch" class="w-10 h-10 mx-auto mb-3 text-slate-300" />
@@ -202,7 +202,7 @@
                 <div class="col-span-12 intro-y">
                     <div class="box p-6 border border-slate-200/60 shadow-lg dark:border-darkmode-400 bg-gradient-to-br from-slate-50 to-white dark:from-darkmode-500/20 dark:to-darkmode-600">
                         <div class="flex items-center border-b border-slate-200/60 pb-4 mb-5 dark:border-darkmode-400">
-                            <div class="w-10 h-10 bg-gradient-to-r from-yellow-500 to-yellow-600 text-white flex items-center justify-center rounded-lg mr-4 shadow-md">
+                            <div class="w-10 h-10 bg-gradient-to-r from-yellow-500 to-yellow-600 text-white flex items-center justify-center rounded-lg me-4 shadow-md">
                                 <x-base.lucide icon="Settings" class="w-5 h-5" />
                             </div>
                             <div>
@@ -243,7 +243,7 @@
                         <p class="text-blue-100">This will generate a migration for new fields and update the model.</p>
                     </div>
                     <x-base.button type="submit" variant="primary" size="lg" class="w-44 shadow-xl bg-white text-blue-600 hover:bg-slate-100 font-bold px-4 py-3">
-                        <x-base.lucide icon="Save" class="w-5 h-5 mr-2" /> Save Changes
+                        <x-base.lucide icon="Save" class="w-5 h-5 me-2" /> Save Changes
                     </x-base.button>
                 </div>
             </div>
@@ -289,7 +289,7 @@
 
                 loadBtn.disabled = true;
                 const originalBtnContent = loadBtn.innerHTML;
-                loadBtn.innerHTML = '<span class="w-4 h-4 mr-2"><svg width="25" viewBox="-2 -2 42 42" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" class="w-full h-full"><g fill="none" fill-rule="evenodd"><g transform="translate(1 1)" stroke-width="4"><circle stroke-opacity=".5" cx="18" cy="18" r="18"></circle><path d="M36 18c0-9.94-8.06-18-18-18"><animateTransform attributeName="transform" type="rotate" from="0 18 18" to="360 18 18" dur="1s" repeatCount="indefinite"></animateTransform></path></g></g></svg></span> Loading...';
+                loadBtn.innerHTML = '<span class="w-4 h-4 me-2"><svg width="25" viewBox="-2 -2 42 42" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" class="w-full h-full"><g fill="none" fill-rule="evenodd"><g transform="translate(1 1)" stroke-width="4"><circle stroke-opacity=".5" cx="18" cy="18" r="18"></circle><path d="M36 18c0-9.94-8.06-18-18-18"><animateTransform attributeName="transform" type="rotate" from="0 18 18" to="360 18 18" dur="1s" repeatCount="indefinite"></animateTransform></path></g></g></svg></span> Loading...';
 
                 fetch(`{{ route('crud-builder.table-details') }}?table=${table}`)
                     .then(res => res.json())
@@ -304,13 +304,13 @@
                             const tr = document.createElement('tr');
                             const tableOptions = availableTables.map(t => `<option value="${t}">${t}</option>`).join('');
                             tr.innerHTML = `
-                                <td class="font-medium px-4 py-3 text-left border-b border-slate-200 dark:border-darkmode-400">
+                                <td class="font-medium px-4 py-3 text-start border-b border-slate-200 dark:border-darkmode-400">
                                     <div class="flex items-center">
-                                        <i data-lucide="Database" class="w-4 h-4 mr-2 text-slate-400"></i>
+                                        <i data-lucide="Database" class="w-4 h-4 me-2 text-slate-400"></i>
                                         \${field.name}
                                     </div>
                                 </td>
-                                <td class="text-slate-500 px-4 py-3 text-left border-b border-slate-200 dark:border-darkmode-400">
+                                <td class="text-slate-500 px-4 py-3 text-start border-b border-slate-200 dark:border-darkmode-400">
                                     <span class="inline-block px-2 py-1 text-xs font-medium bg-slate-100 dark:bg-darkmode-400 rounded">
                                         \${field.type}
                                     </span>
@@ -318,7 +318,7 @@
                                 <td class="text-center px-4 py-3 text-slate-500 border-b border-slate-200 dark:border-darkmode-400">
                                     \${field.nullable ? '<span class="text-success text-xs font-medium bg-success/10 px-2 py-1 rounded">Yes</span>' : '<span class="text-slate-400 text-xs">No</span>'}
                                 </td>
-                                <td class="text-slate-500 text-xs px-4 py-3 text-left border-b border-slate-200 dark:border-darkmode-400">
+                                <td class="text-slate-500 text-xs px-4 py-3 text-start border-b border-slate-200 dark:border-darkmode-400">
                                     \${field.default || '-'}
                                 </td>
                                 <td class="text-center px-4 py-3 text-slate-500 border-b border-slate-200 dark:border-darkmode-400">
@@ -369,13 +369,13 @@
                                 div.className = 'p-3 bg-slate-50 border border-slate-200 rounded-md text-sm text-slate-600 flex justify-between items-center shadow-sm';
                                 div.innerHTML = `
                                     <div class="flex items-center">
-                                        <div class="w-2 h-2 bg-slate-400 rounded-full mr-2"></div>
+                                        <div class="w-2 h-2 bg-slate-400 rounded-full me-2"></div>
                                         <div class="flex items-center">
-                                            <i data-lucide="Link" class="w-4 h-4 mr-2 text-primary"></i>
+                                            <i data-lucide="Link" class="w-4 h-4 me-2 text-primary"></i>
                                             <span class="font-bold text-primary">\${rel.type}</span> 
                                             <span class="mx-1">-></span> 
                                             Model <span class="font-bold text-slate-800">\${rel.related_table}</span> 
-                                            <span class="text-slate-400 text-xs ml-2">(via \${rel.foreign_key})</span>
+                                            <span class="text-slate-400 text-xs ms-2">(via \${rel.foreign_key})</span>
                                         </div>
                                     </div>
                                     <div class="flex gap-2">
@@ -413,7 +413,7 @@
                                             <span class="font-bold text-blue-600">\${relText}</span> 
                                             <span class="mx-1">-></span> 
                                             <span class="font-bold text-slate-800">\${relTable}</span>
-                                            <input type="text" class="form-control form-control-sm w-24 ml-2" value="\${relForeignKey}" placeholder="Foreign Key">
+                                            <input type="text" class="form-control form-control-sm w-24 ms-2" value="\${relForeignKey}" placeholder="Foreign Key">
                                         </div>
                                         <div class="flex gap-2">
                                             <button type="button" class="btn btn-sm btn-success save-rel-btn" data-rel-id="\${relId}">
@@ -440,13 +440,13 @@
                                         savedDiv.className = 'p-3 bg-slate-50 border border-slate-200 rounded-md text-sm text-slate-600 flex justify-between items-center shadow-sm mb-2';
                                         savedDiv.innerHTML = `
                                             <div class="flex items-center">
-                                                <div class="w-2 h-2 bg-slate-400 rounded-full mr-2"></div>
+                                                <div class="w-2 h-2 bg-slate-400 rounded-full me-2"></div>
                                                 <div class="flex items-center">
-                                                    <i data-lucide="Link" class="w-4 h-4 mr-2 text-primary"></i>
+                                                    <i data-lucide="Link" class="w-4 h-4 me-2 text-primary"></i>
                                                     <span class="font-bold text-primary">\${relText}</span> 
                                                     <span class="mx-1">-></span> 
                                                     Model <span class="font-bold text-slate-800">\${relTable}</span> 
-                                                    <span class="text-slate-400 text-xs ml-2">(via \${newFk})</span>
+                                                    <span class="text-slate-400 text-xs ms-2">(via \${newFk})</span>
                                                 </div>
                                             </div>
                                             <div class="flex gap-2">
@@ -478,13 +478,13 @@
                                         originalDiv.className = 'p-3 bg-slate-50 border border-slate-200 rounded-md text-sm text-slate-600 flex justify-between items-center shadow-sm mb-2';
                                         originalDiv.innerHTML = `
                                             <div class="flex items-center">
-                                                <div class="w-2 h-2 bg-slate-400 rounded-full mr-2"></div>
+                                                <div class="w-2 h-2 bg-slate-400 rounded-full me-2"></div>
                                                 <div class="flex items-center">
-                                                    <i data-lucide="Link" class="w-4 h-4 mr-2 text-primary"></i>
+                                                    <i data-lucide="Link" class="w-4 h-4 me-2 text-primary"></i>
                                                     <span class="font-bold text-primary">\${relText}</span> 
                                                     <span class="mx-1">-></span> 
                                                     Model <span class="font-bold text-slate-800">\${relTable}</span> 
-                                                    <span class="text-slate-400 text-xs ml-2">(via \${relForeignKey})</span>
+                                                    <span class="text-slate-400 text-xs ms-2">(via \${relForeignKey})</span>
                                                 </div>
                                             </div>
                                             <div class="flex gap-2">
@@ -582,13 +582,13 @@
                     </div>
                     <div class="col-span-12 md:col-span-3 flex items-center space-x-4 pt-5">
                         <label class="flex items-center text-xs cursor-pointer">
-                            <input type="checkbox" name="fields[${fieldCount}][nullable]" value="1" class="form-check-input mr-1.5"> Nullable
+                            <input type="checkbox" name="fields[${fieldCount}][nullable]" value="1" class="form-check-input me-1.5"> Nullable
                         </label>
                         <label class="flex items-center text-xs cursor-pointer">
-                            <input type="checkbox" name="fields[${fieldCount}][unique]" value="1" class="form-check-input mr-1.5"> Unique
+                            <input type="checkbox" name="fields[${fieldCount}][unique]" value="1" class="form-check-input me-1.5"> Unique
                         </label>
                         <label class="flex items-center text-xs cursor-pointer">
-                            <input type="checkbox" name="fields[${fieldCount}][fillable]" value="1" class="form-check-input mr-1.5" checked> Fillable
+                            <input type="checkbox" name="fields[${fieldCount}][fillable]" value="1" class="form-check-input me-1.5" checked> Fillable
                         </label>
                     </div>
                     <div class="col-span-12 md:col-span-1 flex justify-end pt-5">

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use OmarAlalwi\Gpdf\Facades\Gpdf;
+
 use App\Http\Requests\StoreClassesRequest;
 use App\Http\Requests\UpdateClassesRequest;
 use App\Services\ClassesService;
@@ -63,7 +65,7 @@ class ClassesController extends Controller
      */
     protected function exportToPdf($data)
     {
-        $pdf = Pdf::loadView('pages.classes.export-pdf', ['data' => $data]);
+        $pdf = Gpdf::loadView('pages.classes.export-pdf', ['data' => $data]);
 
         return $pdf->download('Classes_export_'.date('Y-m-d_H-i-s').'.pdf');
     }

@@ -26,23 +26,23 @@
 
 @section('subcontent')
 <div class="intro-y flex items-center mt-8">
-    <h2 class="text-2xl font-bold mr-auto">
+    <h2 class="text-2xl font-bold me-auto">
         <span class="ltr:inline">{{ __('global.trial_balance') }}</span>
         <span class="rtl:inline">{{ __('global.trial_balance_ar') }}</span>
     </h2>
     <div class="flex space-x-2 no-print">
         <a href="{{ route('finance.export.excel', ['report_type' => 'trial-balance', 'start_date' => request('start_date'), 'end_date' => request('end_date')]) }}" 
            class="btn btn-success flex items-center">
-            <i data-lucide="download" class="w-4 h-4 mr-2"></i>
+            <i data-lucide="download" class="w-4 h-4 me-2"></i>
             {{ __('global.export_excel') }}
         </a>
         <a href="{{ route('finance.export.pdf', ['report_type' => 'trial-balance', 'start_date' => request('start_date'), 'end_date' => request('end_date')]) }}" 
            class="btn btn-primary flex items-center">
-            <i data-lucide="printer" class="w-4 h-4 mr-2"></i>
+            <i data-lucide="printer" class="w-4 h-4 me-2"></i>
             {{ __('global.export_pdf') }}
         </a>
         <button onclick="window.print()" class="btn btn-secondary flex items-center no-print">
-            <i data-lucide="printer" class="w-4 h-4 mr-2"></i>
+            <i data-lucide="printer" class="w-4 h-4 me-2"></i>
             {{ __('global.print') }}
         </button>
     </div>
@@ -90,7 +90,7 @@
                 </div>
                 <div class="col-span-12 md:col-span-4 flex items-end space-x-2">
                     <button type="submit" class="btn btn-primary w-full md:w-auto">
-                        <i data-lucide="filter" class="w-4 h-4 mr-2"></i>
+                        <i data-lucide="filter" class="w-4 h-4 me-2"></i>
                         {{ __('global.filter') }}
                     </button>
                     <a href="{{ route('finance.trial-balance') }}" class="btn btn-outline-secondary w-full md:w-auto">
@@ -152,16 +152,16 @@
             <table class="financial-table table table-striped w-full">
                 <thead class="bg-gray-50 dark:bg-dark-2">
                     <tr>
-                        <th class="font-semibold text-gray-700 dark:text-gray-300 text-left">
+                        <th class="font-semibold text-gray-700 dark:text-gray-300 text-start">
                             {{ __('global.account_name') }}
                         </th>
-                        <th class="font-semibold text-gray-700 dark:text-gray-300 text-right">
+                        <th class="font-semibold text-gray-700 dark:text-gray-300 text-end">
                             {{ __('global.debits') }}
                         </th>
-                        <th class="font-semibold text-gray-700 dark:text-gray-300 text-right">
+                        <th class="font-semibold text-gray-700 dark:text-gray-300 text-end">
                             {{ __('global.credits') }}
                         </th>
-                        <th class="font-semibold text-gray-700 dark:text-gray-300 text-right">
+                        <th class="font-semibold text-gray-700 dark:text-gray-300 text-end">
                             {{ __('global.balance') }}
                         </th>
                         <th class="font-semibold text-gray-700 dark:text-gray-300 text-center">
@@ -178,15 +178,15 @@
                             <td class="font-medium text-gray-900 dark:text-gray-100">
                                 {{ $entry['account_name'] }}
                             </td>
-                            <td class="text-right text-blue-600 font-medium">
+                            <td class="text-end text-blue-600 font-medium">
                                 {{ __('global.currency_symbol', ['amount' => number_format($entry['debits'], 2)]) }}
                             </td>
-                            <td class="text-right text-green-600 font-medium">
+                            <td class="text-end text-green-600 font-medium">
                                 {{ __('global.currency_symbol', ['amount' => number_format($entry['credits'], 2)]) }}
                             </td>
-                            <td class="text-right font-bold {{ $entry['balance'] >= 0 ? 'text-green-600' : 'text-red-600' }}">
+                            <td class="text-end font-bold {{ $entry['balance'] >= 0 ? 'text-green-600' : 'text-red-600' }}">
                                 {{ __('global.currency_symbol', ['amount' => number_format(abs($entry['balance']), 2)]) }}
-                                <span class="text-xs ml-1">{{ $entry['balance'] >= 0 ? 'DR' : 'CR' }}</span>
+                                <span class="text-xs ms-1">{{ $entry['balance'] >= 0 ? 'DR' : 'CR' }}</span>
                             </td>
                             <td class="text-center">
                                 <span class="px-2 py-1 rounded-full text-xs font-medium 
@@ -197,7 +197,7 @@
                             <td class="text-center no-print">
                                 <a href="{{ route('finance.general-ledger', ['account_name' => urlencode($entry['account_name'])]) }}" 
                                    class="btn btn-sm btn-outline-primary">
-                                    <i data-lucide="eye" class="w-4 h-4 mr-1"></i>
+                                    <i data-lucide="eye" class="w-4 h-4 me-1"></i>
                                     {{ __('global.view_details') }}
                                 </a>
                             </td>
@@ -218,13 +218,13 @@
                         <td class="px-6 py-3 text-gray-900 dark:text-gray-100">
                             {{ __('global.total') }}
                         </td>
-                        <td class="px-6 py-3 text-right text-blue-600">
+                        <td class="px-6 py-3 text-end text-blue-600">
                             {{ __('global.currency_symbol', ['amount' => number_format($trialBalance['totals']['total_debits'] ?? 0, 2)]) }}
                         </td>
-                        <td class="px-6 py-3 text-right text-green-600">
+                        <td class="px-6 py-3 text-end text-green-600">
                             {{ __('global.currency_symbol', ['amount' => number_format($trialBalance['totals']['total_credits'] ?? 0, 2)]) }}
                         </td>
-                        <td class="px-6 py-3 text-right {{ ($trialBalance['totals']['difference'] ?? 0) == 0 ? 'text-green-600' : 'text-red-600' }}">
+                        <td class="px-6 py-3 text-end {{ ($trialBalance['totals']['difference'] ?? 0) == 0 ? 'text-green-600' : 'text-red-600' }}">
                             {{ __('global.currency_symbol', ['amount' => number_format(abs($trialBalance['totals']['difference'] ?? 0), 2)]) }}
                         </td>
                         <td class="px-6 py-3 text-center"></td>
@@ -317,7 +317,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
                 <h4 class="font-medium text-gray-800 dark:text-gray-200 mb-2">{{ __('global.about_trial_balance') }}</h4>
-                <ul class="list-disc pl-5 space-y-1 text-gray-600 dark:text-gray-400 text-sm">
+                <ul class="list-disc ps-5 space-y-1 text-gray-600 dark:text-gray-400 text-sm">
                     <li>{{ __('global.trial_balance_explanation') }}</li>
                     <li>{{ __('global.difference_zero_note') }}</li>
                     <li>{{ __('global.use_for_verification') }}</li>
@@ -325,7 +325,7 @@
             </div>
             <div>
                 <h4 class="font-medium text-gray-800 dark:text-gray-200 mb-2">{{ __('global.export_options') }}</h4>
-                <ul class="list-disc pl-5 space-y-1 text-gray-600 dark:text-gray-400 text-sm">
+                <ul class="list-disc ps-5 space-y-1 text-gray-600 dark:text-gray-400 text-sm">
                     <li>{{ __('global.export_options_note') }}</li>
                     <li>{{ __('global.supports_multilingual') }}</li>
                     <li>{{ __('global.preserves_formatting') }}</li>

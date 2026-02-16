@@ -23,14 +23,14 @@
 
 <div class="intro-y box p-5">
     <div class="flex items-center justify-between mb-4">
-        <h2 class="text-lg font-medium truncate mr-5">
-            <x-base.lucide class="inline h-5 w-5 mr-2 {{ $colorClass }}" icon="{{ $icon }}" />
+        <h2 class="text-lg font-medium truncate me-5">
+            <x-base.lucide class="inline h-5 w-5 me-2 {{ $colorClass }}" icon="{{ $icon }}" />
             {{ $title }}
         </h2>
         @if($route && $showViewAll)
-            <a href="{{ route($route) }}" class="text-{{ $color }} truncate ml-auto">
+            <a href="{{ route($route) }}" class="text-{{ $color }} truncate ms-auto">
                 {{ __('global.view_all') }}
-                <x-base.lucide class="inline h-4 w-4 ml-1" icon="ArrowRight" />
+                <x-base.lucide class="inline h-4 w-4 ms-1" icon="ArrowRight" />
             </a>
         @endif
     </div>
@@ -41,7 +41,7 @@
                 <div class="intro-y">
                     <div class="box zoom-in mb-3 flex items-center px-4 py-3">
                         @if(isset($item['icon']))
-                            <div class="flex-none mr-3">
+                            <div class="flex-none me-3">
                                 <x-base.lucide 
                                     class="h-5 w-5 {{ $colorClasses[$item['color'] ?? 'primary'] ?? $colorClasses['primary'] }}" 
                                     icon="{{ $item['icon'] }}" 
@@ -64,7 +64,7 @@
                         </div>
                         
                         @if(isset($item['amount']))
-                            <div class="ml-2 font-medium {{ $item['amount'] > 0 ? 'text-success' : 'text-danger' }}">
+                            <div class="ms-2 font-medium {{ $item['amount'] > 0 ? 'text-success' : 'text-danger' }}">
                                 {{ $item['amount'] > 0 ? '+' : '' }}${{ number_format(abs($item['amount']), 2) }}
                             </div>
                         @endif

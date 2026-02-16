@@ -6,30 +6,30 @@
 
 @section('subcontent')
     <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
-        <h2 class="text-lg font-medium mr-auto">{{ __('global.guardian_management') }}</h2>
+        <h2 class="text-lg font-medium me-auto">{{ __('global.guardian_management') }}</h2>
         <div class="w-full sm:w-auto flex flex-wrap gap-2 mt-4 sm:mt-0">
             @can('create_guardians')
             <x-base.button variant="primary" as="a" href="{{ route('guardians.create') }}" class="flex items-center shadow-md">
-                <x-base.lucide icon="UserPlus" class="w-4 h-4 mr-2" />
+                <x-base.lucide icon="UserPlus" class="w-4 h-4 me-2" />
                 {{ __('global.add_new_guardian') }}
             </x-base.button>
             @endcan
             
             @can('export_guardians')
-            <div class="dropdown ml-2">
+            <div class="dropdown ms-2">
                 <x-base.button variant="outline-secondary" class="flex items-center">
-                    <x-base.lucide icon="Download" class="w-4 h-4 mr-2" />
+                    <x-base.lucide icon="Download" class="w-4 h-4 me-2" />
                     {{ __('global.export') }}
-                    <x-base.lucide icon="ChevronDown" class="w-4 h-4 ml-2" />
+                    <x-base.lucide icon="ChevronDown" class="w-4 h-4 ms-2" />
                 </x-base.button>
                 <div class="dropdown-menu w-40">
                     <div class="dropdown-content">
                         <a href="{{ route('guardians.export.pdf') }}" class="dropdown-item flex items-center">
-                            <x-base.lucide icon="FileText" class="w-4 h-4 mr-2" />
+                            <x-base.lucide icon="FileText" class="w-4 h-4 me-2" />
                             {{ __('global.export_pdf') }}
                         </a>
                         <a href="{{ route('guardians.export.excel') }}" class="dropdown-item flex items-center">
-                            <x-base.lucide icon="FileSpreadsheet" class="w-4 h-4 mr-2" />
+                            <x-base.lucide icon="FileSpreadsheet" class="w-4 h-4 me-2" />
                             {{ __('global.export_excel') }}
                         </a>
                     </div>
@@ -48,9 +48,9 @@
                         <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
                             <x-base.lucide icon="Users" class="w-6 h-6 text-primary" />
                         </div>
-                        <div class="ml-auto">
+                        <div class="ms-auto">
                             <div class="text-success flex items-center">
-                                <x-base.lucide icon="TrendingUp" class="w-4 h-4 mr-1" />
+                                <x-base.lucide icon="TrendingUp" class="w-4 h-4 me-1" />
                                 <span class="text-xs">{{ __('global.total') }}</span>
                             </div>
                         </div>
@@ -68,9 +68,9 @@
                         <div class="w-10 h-10 rounded-full bg-info/10 flex items-center justify-center">
                             <x-base.lucide icon="UserCheck" class="w-6 h-6 text-info" />
                         </div>
-                        <div class="ml-auto">
+                        <div class="ms-auto">
                             <div class="text-success flex items-center">
-                                <x-base.lucide icon="TrendingUp" class="w-4 h-4 mr-1" />
+                                <x-base.lucide icon="TrendingUp" class="w-4 h-4 me-1" />
                                 <span class="text-xs">{{ __('global.primary') }}</span>
                             </div>
                         </div>
@@ -88,9 +88,9 @@
                         <div class="w-10 h-10 rounded-full bg-warning/10 flex items-center justify-center">
                             <x-base.lucide icon="Phone" class="w-6 h-6 text-warning" />
                         </div>
-                        <div class="ml-auto">
+                        <div class="ms-auto">
                             <div class="text-success flex items-center">
-                                <x-base.lucide icon="TrendingUp" class="w-4 h-4 mr-1" />
+                                <x-base.lucide icon="TrendingUp" class="w-4 h-4 me-1" />
                                 <span class="text-xs">{{ __('global.contactable') }}</span>
                             </div>
                         </div>
@@ -108,9 +108,9 @@
                         <div class="w-10 h-10 rounded-full bg-success/10 flex items-center justify-center">
                             <x-base.lucide icon="DollarSign" class="w-6 h-6 text-success" />
                         </div>
-                        <div class="ml-auto">
+                        <div class="ms-auto">
                             <div class="text-success flex items-center">
-                                <x-base.lucide icon="TrendingUp" class="w-4 h-4 mr-1" />
+                                <x-base.lucide icon="TrendingUp" class="w-4 h-4 me-1" />
                                 <span class="text-xs">{{ __('global.outstanding') }}</span>
                             </div>
                         </div>
@@ -143,7 +143,7 @@
                             <option value="0" {{ request('is_active') == '0' ? 'selected' : '' }}>{{ __('global.inactive') }}</option>
                         </select>
                         <x-base.button type="submit" variant="secondary" class="flex items-center">
-                            <x-base.lucide icon="Filter" class="w-4 h-4 mr-2" />
+                            <x-base.lucide icon="Filter" class="w-4 h-4 me-2" />
                             {{ __('global.filter') }}
                         </x-base.button>
                     </div>
@@ -161,7 +161,7 @@
                             <img alt="{{ $guardian->name }}" class="rounded-full border-2 border-white shadow-md" 
                                  src="{{ $guardian->photo ? asset('storage/' . $guardian->photo) : asset('dist/images/profile-1.jpg') }}">
                         </div>
-                        <div class="ml-4 mr-auto">
+                        <div class="ms-4 me-auto">
                             <div class="font-medium text-base">{{ $guardian->name ?? '-' }}</div>
                             <div class="text-slate-500 text-xs mt-1">
                                 {{ $guardian->relationship_type ? ucfirst($guardian->relationship_type) : __('global.not_specified') }}
@@ -169,10 +169,10 @@
                         </div>
                         <div class="flex items-center">
                             @if($guardian->is_active)
-                                <div class="w-3 h-3 rounded-full bg-success mr-2"></div>
+                                <div class="w-3 h-3 rounded-full bg-success me-2"></div>
                                 <span class="text-xs text-success">{{ __('global.active') }}</span>
                             @else
-                                <div class="w-3 h-3 rounded-full bg-danger mr-2"></div>
+                                <div class="w-3 h-3 rounded-full bg-danger me-2"></div>
                                 <span class="text-xs text-danger">{{ __('global.inactive') }}</span>
                             @endif
                         </div>
@@ -180,11 +180,11 @@
                     <div class="px-5 py-3 border-t border-slate-200/60 dark:border-darkmode-400">
                         <div class="flex flex-wrap gap-2">
                             <div class="flex items-center text-xs text-slate-600 dark:text-slate-300">
-                                <x-base.lucide icon="Phone" class="w-3 h-3 mr-1" />
+                                <x-base.lucide icon="Phone" class="w-3 h-3 me-1" />
                                 {{ $guardian->phone ?? __('global.not_provided') }}
                             </div>
-                            <div class="flex items-center text-xs text-slate-600 dark:text-slate-300 ml-3">
-                                <x-base.lucide icon="Mail" class="w-3 h-3 mr-1" />
+                            <div class="flex items-center text-xs text-slate-600 dark:text-slate-300 ms-3">
+                                <x-base.lucide icon="Mail" class="w-3 h-3 me-1" />
                                 {{ $guardian->email ?? __('global.not_provided') }}
                             </div>
                         </div>
@@ -234,7 +234,7 @@
                         <p class="text-slate-600 dark:text-slate-400 mb-6">{{ __('global.start_by_adding_guardian') }}</p>
                         @can('create_guardians')
                         <x-base.button variant="primary" as="a" href="{{ route('guardians.create') }}" class="flex items-center mx-auto">
-                            <x-base.lucide icon="UserPlus" class="w-4 h-4 mr-2" />
+                            <x-base.lucide icon="UserPlus" class="w-4 h-4 me-2" />
                             {{ __('global.add_first_guardian') }}
                         </x-base.button>
                         @endcan
@@ -256,7 +256,7 @@
                 <div class="box p-5 border border-primary/20 bg-primary/5">
                     <div class="flex items-center">
                         <x-base.lucide icon="Database" class="w-8 h-8 text-primary" />
-                        <div class="ml-auto">
+                        <div class="ms-auto">
                             <div class="report-box__indicator bg-success"> 
                                 <x-base.lucide icon="TrendingUp" class="w-4 h-4" /> 
                             </div>
@@ -271,7 +271,7 @@
                 <div class="box p-5 border border-info/20 bg-info/5">
                     <div class="flex items-center">
                         <x-base.lucide icon="Activity" class="w-8 h-8 text-info" />
-                        <div class="ml-auto">
+                        <div class="ms-auto">
                             <div class="report-box__indicator bg-success"> 
                                 <x-base.lucide icon="TrendingUp" class="w-4 h-4" /> 
                             </div>
@@ -293,7 +293,7 @@
                 <div class="box p-5 border border-warning/20 bg-warning/5">
                     <div class="flex items-center">
                         <x-base.lucide icon="Calendar" class="w-8 h-8 text-warning" />
-                        <div class="ml-auto">
+                        <div class="ms-auto">
                             <div class="report-box__indicator bg-success"> 
                                 <x-base.lucide icon="TrendingUp" class="w-4 h-4" /> 
                             </div>
@@ -313,7 +313,7 @@
                 <div class="box p-5 border border-success/20 bg-success/5">
                     <div class="flex items-center">
                         <x-base.lucide icon="Users" class="w-8 h-8 text-success" />
-                        <div class="ml-auto">
+                        <div class="ms-auto">
                             <div class="report-box__indicator bg-success"> 
                                 <x-base.lucide icon="TrendingUp" class="w-4 h-4" /> 
                             </div>

@@ -6,7 +6,7 @@
 
 @section('subcontent')
     <div class="intro-y flex items-center mt-8">
-        <h2 class="text-lg font-medium mr-auto">{{ __('Children.add_new') }}</h2>
+        <h2 class="text-lg font-medium me-auto">{{ __('Children.add_new') }}</h2>
     </div>
     <div class="grid grid-cols-12 gap-6 mt-5">
         <div class="intro-y col-span-12 lg:col-span-10">
@@ -25,7 +25,7 @@
                             <x-base.form-label>{{ __('childrens.fields.dob') }}</x-base.form-label>
                             <div class="relative mt-2">
                                 <x-base.form-input type="date" name="dob" value="{{ old('dob', $children->dob ?? '') }}" />
-                                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                <div class="absolute inset-y-0 right-0 pe-3 flex items-center pointer-events-none">
                                     <x-base.lucide icon="Calendar" class="h-5 w-5 text-gray-400" />
                                 </div>
                             </div>
@@ -89,12 +89,12 @@
                         <div class="col-span-12 sm:col-span-6">
                             <x-base.form-label>{{ __('childrens.fields.photo_path') }}</x-base.form-label>
                             <div class="mt-2 flex items-center">
-                                <x-base.form-input type="file" name="photo_path" accept="image/*" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-white hover:file:bg-primary/90" />
+                                <x-base.form-input type="file" name="photo_path" accept="image/*" class="block w-full text-sm text-gray-500 file:me-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-white hover:file:bg-primary/90" />
                             </div>
                             @if($children->photo_path)
                                 <div class="mt-2 flex items-center">
                                     <img src="{{ asset('storage/' . $children->photo_path) }}" alt="Current Photo" class="w-16 h-16 object-cover rounded border-2 border-gray-200">
-                                    <span class="ml-3 text-sm text-gray-500">{{ __('global.current_image') }}</span>
+                                    <span class="ms-3 text-sm text-gray-500">{{ __('global.current_image') }}</span>
                                 </div>
                             @endif
                             @error('photo_path')
@@ -104,10 +104,10 @@
                         <div class="col-span-12 sm:col-span-6">
                             <x-base.form-label>{{ __('childrens.fields.fees_required') }}</x-base.form-label>
                             <div class="relative mt-2">
-                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <div class="absolute inset-y-0 left-0 ps-3 flex items-center pointer-events-none">
                                     <span class="text-gray-500 sm:text-sm">{{ config('app.currency', 'USD') }}</span>
                                 </div>
-                                <x-base.form-input type="number" step="0.01" min="0" name="fees_required" value="{{ old('fees_required', $children->fees_required ?? '') }}" class="pl-12" />
+                                <x-base.form-input type="number" step="0.01" min="0" name="fees_required" value="{{ old('fees_required', $children->fees_required ?? '') }}" class="ps-12" />
                             </div>
                             @error('fees_required')
                                 <div class="text-danger mt-2">{{ $message }}</div>
@@ -116,10 +116,10 @@
                         <div class="col-span-12 sm:col-span-6">
                             <x-base.form-label>{{ __('childrens.fields.fees_paid') }}</x-base.form-label>
                             <div class="relative mt-2">
-                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <div class="absolute inset-y-0 left-0 ps-3 flex items-center pointer-events-none">
                                     <span class="text-gray-500 sm:text-sm">{{ config('app.currency', 'USD') }}</span>
                                 </div>
-                                <x-base.form-input type="number" step="0.01" min="0" name="fees_paid" value="{{ old('fees_paid', $children->fees_paid ?? '') }}" class="pl-12" />
+                                <x-base.form-input type="number" step="0.01" min="0" name="fees_paid" value="{{ old('fees_paid', $children->fees_paid ?? '') }}" class="ps-12" />
                             </div>
                             @error('fees_paid')
                                 <div class="text-danger mt-2">{{ $message }}</div>
@@ -193,7 +193,7 @@
 
                     </div>
                     <div class="flex justify-end mt-5">
-                        <a href="{{ route('children.index') }}" class="btn btn-outline-secondary w-24 mr-1">{{ __('global.cancel') }}</a>
+                        <a href="{{ route('children.index') }}" class="btn btn-outline-secondary w-24 me-1">{{ __('global.cancel') }}</a>
                         <x-base.button type="submit" variant="primary" class="w-24">{{ __('global.save') }}</x-base.button>
                     </div>
                 </form>

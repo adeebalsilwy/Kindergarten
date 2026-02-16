@@ -6,7 +6,7 @@
 
 @section('subcontent')
     <div class="intro-y flex items-center mt-8">
-        <h2 class="text-lg font-medium mr-auto">Create New Role</h2>
+        <h2 class="text-lg font-medium me-auto">Create New Role</h2>
     </div>
 
     <div class="grid grid-cols-12 gap-6 mt-5">
@@ -25,14 +25,14 @@
                             @foreach($permissions as $permission)
                                 <div class="col-span-12 sm:col-span-4 flex items-center">
                                     <x-base.form-check.input id="perm-{{ $permission->id }}" type="checkbox" name="permissions[]" value="{{ $permission->id }}" />
-                                    <x-base.form-label class="ml-2 mb-0" for="perm-{{ $permission->id }}">{{ $permission->name }}</x-base.form-label>
+                                    <x-base.form-label class="ms-2 mb-0" for="perm-{{ $permission->id }}">{{ $permission->name }}</x-base.form-label>
                                 </div>
                             @endforeach
                         </div>
                     </div>
 
                     <div class="mt-8 flex justify-end">
-                        <x-base.button variant="outline-secondary" as="a" href="{{ route('roles.index') }}" class="w-24 mr-2">Cancel</x-base.button>
+                        <x-base.button variant="outline-secondary" as="a" href="{{ route('roles.index') }}" class="w-24 me-2">Cancel</x-base.button>
                         <x-base.button variant="primary" type="submit" class="w-24">Save</x-base.button>
                     </div>
                 </form>

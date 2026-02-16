@@ -12,9 +12,9 @@
                 <!-- BEGIN: General Metrics -->
                 <div class="col-span-12 mt-8">
                     <div class="intro-y flex h-10 items-center">
-                        <h2 class="mr-5 truncate text-lg font-medium">{{ __('global.general_report') }}</h2>
-                        <a href="{{ route('dashboard-overview-1') }}" class="ml-auto flex items-center text-primary">
-                            <x-base.lucide class="mr-3 h-4 w-4" icon="RefreshCcw" /> {{ __('global.reload_data') }}
+                        <h2 class="me-5 truncate text-lg font-medium">{{ __('global.general_report') }}</h2>
+                        <a href="{{ route('dashboard-overview-1') }}" class="ms-auto flex items-center text-primary">
+                            <x-base.lucide class="me-3 h-4 w-4" icon="RefreshCcw" /> {{ __('global.reload_data') }}
                         </a>
                     </div>
                     <div class="mt-5 grid grid-cols-12 gap-6">
@@ -82,14 +82,14 @@
                 <!-- BEGIN: Financial Summary -->
                 <div class="col-span-12 mt-8 lg:col-span-6">
                     <div class="intro-y block h-10 items-center sm:flex">
-                        <h2 class="mr-5 truncate text-lg font-medium">{{ __('global.financial_reporting') }}</h2>
-                        <div class="relative mt-3 text-slate-500 sm:ml-auto sm:mt-0">
+                        <h2 class="me-5 truncate text-lg font-medium">{{ __('global.financial_reporting') }}</h2>
+                        <div class="relative mt-3 text-slate-500 sm:ms-auto sm:mt-0">
                             <x-base.lucide
-                                class="absolute inset-y-0 left-0 z-10 my-auto ml-3 h-4 w-4"
+                                class="absolute inset-y-0 left-0 z-10 my-auto ms-3 h-4 w-4"
                                 icon="Calendar"
                             />
                             <x-base.litepicker
-                                class="datepicker !box pl-10 sm:w-56"
+                                class="datepicker !box ps-10 sm:w-56"
                                 type="text"
                                 :options="[
                                     'format' => 'YYYY-MM-DD',
@@ -117,7 +117,7 @@
                                     <div class="mt-0.5 text-slate-500">{{ __('global.total_expenses') }}</div>
                                 </div>
                             </div>
-                            <x-base.menu class="mt-5 md:ml-auto md:mt-0">
+                            <x-base.menu class="mt-5 md:ms-auto md:mt-0">
                                 <x-base.menu.button
                                     class="font-normal"
                                     as="x-base.button"
@@ -125,7 +125,7 @@
                                 >
                                     {{ __('global.filter_by_category') }}
                                     <x-base.lucide
-                                        class="ml-2 h-4 w-4"
+                                        class="ms-2 h-4 w-4"
                                         icon="ChevronDown"
                                     />
                                 </x-base.menu.button>
@@ -163,7 +163,7 @@
                 <!-- BEGIN: Quick Actions -->
                 <div class="col-span-12 mt-8">
                     <div class="intro-y flex h-10 items-center">
-                        <h2 class="mr-5 truncate text-lg font-medium">{{ __('global.quick_actions') }}</h2>
+                        <h2 class="me-5 truncate text-lg font-medium">{{ __('global.quick_actions') }}</h2>
                     </div>
                     <div class="mt-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                         @foreach($quickActions as $action)
@@ -183,7 +183,7 @@
                 <!-- BEGIN: Enrollment Statistics -->
                 <div class="col-span-12 mt-8">
                     <div class="intro-y flex h-10 items-center">
-                        <h2 class="mr-5 truncate text-lg font-medium">{{ __('global.enrollment_statistics') }}</h2>
+                        <h2 class="me-5 truncate text-lg font-medium">{{ __('global.enrollment_statistics') }}</h2>
                     </div>
                     <div class="intro-y box mt-5 p-5">
                         <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
@@ -222,7 +222,7 @@
                                                     style="width: {{ $classStat['occupancy_rate'] }}%">
                                                 </div>
                                             </div>
-                                            <span class="text-sm w-12 text-right">{{ $classStat['occupancy_rate'] }}%</span>
+                                            <span class="text-sm w-12 text-end">{{ $classStat['occupancy_rate'] }}%</span>
                                         </div>
                                     </div>
                                 @endforeach
@@ -237,11 +237,11 @@
         <!-- Sidebar -->
         <div class="col-span-12 2xl:col-span-3">
             <div class="-mb-10 pb-10 2xl:border-l">
-                <div class="grid grid-cols-12 gap-x-6 gap-y-6 2xl:gap-x-0 2xl:pl-6">
+                <div class="grid grid-cols-12 gap-x-6 gap-y-6 2xl:gap-x-0 2xl:ps-6">
                     <!-- BEGIN: Upcoming Events -->
                     <div class="col-span-12 mt-3 md:col-span-6 xl:col-span-12 2xl:mt-8">
                         <div class="intro-y flex h-10 items-center">
-                            <h2 class="mr-5 truncate text-lg font-medium">{{ __('global.upcoming_events') }}</h2>
+                            <h2 class="me-5 truncate text-lg font-medium">{{ __('global.upcoming_events') }}</h2>
                         </div>
                         <div class="mt-5">
                             @if(count($upcomingEvents) > 0)
@@ -277,7 +277,7 @@
                     <!-- BEGIN: Recent Payments -->
                     <div class="col-span-12 mt-3 md:col-span-6 xl:col-span-12">
                         <div class="intro-y flex h-10 items-center">
-                            <h2 class="mr-5 truncate text-lg font-medium">{{ __('global.recent_payments') }}</h2>
+                            <h2 class="me-5 truncate text-lg font-medium">{{ __('global.recent_payments') }}</h2>
                         </div>
                         <div class="mt-5">
                             @if(isset($financialSummary['recent_payments']) && count($financialSummary['recent_payments']) > 0)
@@ -290,7 +290,7 @@
                                                     alt="Student"
                                                 />
                                             </div>
-                                            <div class="ml-4 mr-auto">
+                                            <div class="ms-4 me-auto">
                                                 <div class="font-medium">{{ $payment['child_name'] }}</div>
                                                 <div class="mt-0.5 text-xs text-slate-500">
                                                     {{ $payment['date'] }}

@@ -7,7 +7,7 @@
 @section('subcontent')
     <div class="mt-8 flex items-center justify-between">
         <div>
-            <h2 class="intro-y text-lg font-medium mr-auto">API Manager</h2>
+            <h2 class="intro-y text-lg font-medium me-auto">API Manager</h2>
             <div class="text-slate-500 text-xs mt-1">Manage your API endpoints and versions.</div>
         </div>
     </div>
@@ -18,7 +18,7 @@
             <div class="col-span-12 intro-y">
                 <div class="box p-5 border border-slate-200/60 shadow-sm dark:border-darkmode-400">
                     <div class="flex items-center border-b border-slate-200/60 pb-3 mb-4 dark:border-darkmode-400">
-                        <div class="w-8 h-8 bg-primary/10 text-primary flex items-center justify-center rounded-full mr-3">
+                        <div class="w-8 h-8 bg-primary/10 text-primary flex items-center justify-center rounded-full me-3">
                             <x-base.lucide icon="Code" class="w-4 h-4" />
                         </div>
                         <div>
@@ -44,17 +44,17 @@
                             <div class="flex items-center gap-4">
                                 <div class="flex items-center">
                                     <x-base.form-check.input id="api-with-resource" class="form-check-input" type="checkbox">
-                                    <x-base.form-label for="api-with-resource" class="ml-2">With Resource</x-base.form-label>
+                                    <x-base.form-label for="api-with-resource" class="ms-2">With Resource</x-base.form-label>
                                 </div>
                                 <div class="flex items-center">
                                     <x-base.form-check.input id="api-with-repository" class="form-check-input" type="checkbox">
-                                    <x-base.form-label for="api-with-repository" class="ml-2">With Repository</x-base.form-label>
+                                    <x-base.form-label for="api-with-repository" class="ms-2">With Repository</x-base.form-label>
                                 </div>
                             </div>
                         </div>
                         <div class="col-span-12 md:col-span-2 flex items-end">
                             <x-base.button id="create-api-btn" variant="primary" class="w-full">
-                                <x-base.lucide icon="Plus" class="w-4 h-4 mr-2" /> Create API
+                                <x-base.lucide icon="Plus" class="w-4 h-4 me-2" /> Create API
                             </x-base.button>
                         </div>
                     </div>
@@ -66,7 +66,7 @@
                 <div class="box p-5 border border-slate-200/60 shadow-sm dark:border-darkmode-400">
                     <div class="flex items-center justify-between border-b border-slate-200/60 pb-3 mb-4 dark:border-darkmode-400">
                         <div class="flex items-center">
-                            <div class="w-8 h-8 bg-success/10 text-success flex items-center justify-center rounded-full mr-3">
+                            <div class="w-8 h-8 bg-success/10 text-success flex items-center justify-center rounded-full me-3">
                                 <x-base.lucide icon="Server" class="w-4 h-4" />
                             </div>
                             <div>
@@ -98,7 +98,7 @@
                                         <x-base.table.tr>
                                             <x-base.table.td class="font-medium">
                                                 <div class="flex items-center">
-                                                    <x-base.lucide icon="Code" class="w-4 h-4 mr-2 text-primary" />
+                                                    <x-base.lucide icon="Code" class="w-4 h-4 me-2 text-primary" />
                                                     {{ $api['name'] }}
                                                 </div>
                                             </x-base.table.td>
@@ -156,7 +156,7 @@
             <div class="col-span-12 intro-y">
                 <div class="box p-5 border border-slate-200/60 shadow-sm dark:border-darkmode-400">
                     <div class="flex items-center border-b border-slate-200/60 pb-3 mb-4 dark:border-darkmode-400">
-                        <div class="w-8 h-8 bg-info/10 text-info flex items-center justify-center rounded-full mr-3">
+                        <div class="w-8 h-8 bg-info/10 text-info flex items-center justify-center rounded-full me-3">
                             <x-base.lucide icon="Zap" class="w-4 h-4" />
                         </div>
                         <div>
@@ -186,7 +186,7 @@
                         </div>
                         <div class="col-span-12 md:col-span-2 flex items-end">
                             <x-base.button id="test-api-btn" variant="outline-info" class="w-full">
-                                <x-base.lucide icon="Zap" class="w-4 h-4 mr-2" /> Test API
+                                <x-base.lucide icon="Zap" class="w-4 h-4 me-2" /> Test API
                             </x-base.button>
                         </div>
                     </div>

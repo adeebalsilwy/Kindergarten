@@ -6,10 +6,10 @@
 
 @section('subcontent')
     <div class="intro-y flex items-center mt-8">
-        <h2 class="text-lg font-medium mr-auto">{{ __('global.create_new_permission') }}</h2>
+        <h2 class="text-lg font-medium me-auto">{{ __('global.create_new_permission') }}</h2>
         <div class="flex gap-2">
             <x-base.button variant="outline-secondary" as="a" href="{{ route('permissions.index') }}" class="flex items-center">
-                <x-base.lucide icon="ArrowLeft" class="w-4 h-4 mr-2" />
+                <x-base.lucide icon="ArrowLeft" class="w-4 h-4 me-2" />
                 {{ __('global.back_to_list') }}
             </x-base.button>
         </div>
@@ -24,7 +24,7 @@
                     <!-- Basic Information -->
                     <div class="border-b border-slate-200/60 dark:border-darkmode-400 pb-6 mb-6">
                         <div class="flex items-center mb-4">
-                            <div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center mr-3">
+                            <div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center me-3">
                                 <x-base.lucide icon="Key" class="w-5 h-5 text-primary" />
                             </div>
                             <h3 class="text-lg font-medium">{{ __('global.permission_details') }}</h3>
@@ -61,7 +61,7 @@
                     <!-- Preview and Validation -->
                     <div class="border-b border-slate-200/60 dark:border-darkmode-400 pb-6 mb-6">
                         <div class="flex items-center mb-4">
-                            <div class="w-8 h-8 rounded-full bg-success/10 flex items-center justify-center mr-3">
+                            <div class="w-8 h-8 rounded-full bg-success/10 flex items-center justify-center me-3">
                                 <x-base.lucide icon="Eye" class="w-5 h-5 text-success" />
                             </div>
                             <h3 class="text-lg font-medium">{{ __('global.preview') }}</h3>
@@ -83,7 +83,7 @@
                     <!-- Auto-Assignment Notice -->
                     <div class="border-b border-slate-200/60 dark:border-darkmode-400 pb-6 mb-6">
                         <div class="flex items-center mb-4">
-                            <div class="w-8 h-8 rounded-full bg-info/10 flex items-center justify-center mr-3">
+                            <div class="w-8 h-8 rounded-full bg-info/10 flex items-center justify-center me-3">
                                 <x-base.lucide icon="ShieldCheck" class="w-5 h-5 text-info" />
                             </div>
                             <h3 class="text-lg font-medium">{{ __('global.automatic_assignment') }}</h3>
@@ -91,12 +91,12 @@
                         
                         <div class="p-4 bg-info/10 border border-info/20 rounded-lg">
                             <div class="flex items-start">
-                                <x-base.lucide icon="Info" class="w-5 h-5 text-info mt-0.5 mr-3 flex-shrink-0" />
+                                <x-base.lucide icon="Info" class="w-5 h-5 text-info mt-0.5 me-3 flex-shrink-0" />
                                 <div>
                                     <p class="text-info font-medium">{{ __('global.admin_auto_assignment_notice') }}</p>
                                     <p class="text-sm text-info mt-1">{{ __('global.permission_will_be_assigned_to_admin') }}</p>
                                     <div class="mt-2 flex items-center text-xs text-info">
-                                        <x-base.lucide icon="Crown" class="w-4 h-4 mr-1" />
+                                        <x-base.lucide icon="Crown" class="w-4 h-4 me-1" />
                                         {{ __('global.admin_role') }} (ID: 1)
                                     </div>
                                 </div>
@@ -107,16 +107,16 @@
                     <!-- Form Actions -->
                     <div class="flex justify-between items-center pt-4">
                         <a href="{{ route('permissions.index') }}" class="btn btn-outline-secondary flex items-center">
-                            <x-base.lucide icon="X" class="w-4 h-4 mr-2" />
+                            <x-base.lucide icon="X" class="w-4 h-4 me-2" />
                             {{ __('global.cancel') }}
                         </a>
                         <div class="flex gap-2">
                             <x-base.button type="reset" variant="outline-secondary" class="flex items-center">
-                                <x-base.lucide icon="RotateCcw" class="w-4 h-4 mr-2" />
+                                <x-base.lucide icon="RotateCcw" class="w-4 h-4 me-2" />
                                 {{ __('global.reset') }}
                             </x-base.button>
                             <x-base.button type="submit" variant="primary" class="flex items-center">
-                                <x-base.lucide icon="Save" class="w-4 h-4 mr-2" />
+                                <x-base.lucide icon="Save" class="w-4 h-4 me-2" />
                                 {{ __('global.create_permission') }}
                             </x-base.button>
                         </div>
@@ -129,13 +129,13 @@
         <div class="intro-y col-span-12 lg:col-span-4">
             <div class="box p-5 bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-darkmode-600 dark:to-darkmode-700">
                 <h3 class="text-lg font-medium text-slate-800 dark:text-slate-200 mb-4 flex items-center">
-                    <x-base.lucide icon="HelpCircle" class="w-5 h-5 text-blue-500 mr-2" />
+                    <x-base.lucide icon="HelpCircle" class="w-5 h-5 text-blue-500 me-2" />
                     {{ __('global.creation_guide') }}
                 </h3>
                 
                 <div class="space-y-4 text-sm text-slate-600 dark:text-slate-400">
                     <div class="flex items-start">
-                        <div class="w-2 h-2 rounded-full bg-blue-500 mt-2 mr-3 flex-shrink-0"></div>
+                        <div class="w-2 h-2 rounded-full bg-blue-500 mt-2 me-3 flex-shrink-0"></div>
                         <div>
                             <strong class="text-slate-800 dark:text-slate-200">{{ __('global.naming_convention') }}</strong>
                             <p class="mt-1">{{ __('global.use_underscore_separation') }}</p>
@@ -146,7 +146,7 @@
                     </div>
                     
                     <div class="flex items-start">
-                        <div class="w-2 h-2 rounded-full bg-green-500 mt-2 mr-3 flex-shrink-0"></div>
+                        <div class="w-2 h-2 rounded-full bg-green-500 mt-2 me-3 flex-shrink-0"></div>
                         <div>
                             <strong class="text-slate-800 dark:text-slate-200">{{ __('global.guard_selection') }}</strong>
                             <p class="mt-1">{{ __('global.choose_appropriate_guard') }}</p>
@@ -158,7 +158,7 @@
                     </div>
                     
                     <div class="flex items-start">
-                        <div class="w-2 h-2 rounded-full bg-yellow-500 mt-2 mr-3 flex-shrink-0"></div>
+                        <div class="w-2 h-2 rounded-full bg-yellow-500 mt-2 me-3 flex-shrink-0"></div>
                         <div>
                             <strong class="text-slate-800 dark:text-slate-200">{{ __('global.immediate_assignment') }}</strong>
                             <p class="mt-1">{{ __('global.new_permission_auto_assigned') }}</p>

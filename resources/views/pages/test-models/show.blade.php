@@ -6,7 +6,7 @@
 
 @section('subcontent')
     <div class="intro-y flex items-center mt-8">
-        <h2 class="text-lg font-medium mr-auto">{{ __('TestModel.show') }}</h2>
+        <h2 class="text-lg font-medium me-auto">{{ __('TestModel.show') }}</h2>
     </div>
     <div class="grid grid-cols-12 gap-6 mt-5">
         <div class="intro-y col-span-12 lg:col-span-10">
@@ -20,7 +20,7 @@
                                 <div class="mt-2">
                                     @if(is_bool($value))
                                         <span class="{{ $value ? 'text-success' : 'text-danger' }}">
-                                            <x-base.lucide icon="{{ $value ? 'CheckSquare' : 'XSquare' }}" class="w-4 h-4 mr-1" />
+                                            <x-base.lucide icon="{{ $value ? 'CheckSquare' : 'XSquare' }}" class="w-4 h-4 me-1" />
                                             {{ $value ? __('global.yes') : __('global.no') }}
                                         </span>
                                     @elseif(in_array($key, ['photo_path', 'image_path', 'avatar', 'profile_image']) && $value)
@@ -36,7 +36,7 @@
                     @endforeach
                 </div>
                 <div class="flex justify-end mt-5">
-                    <a href="{{ route('test-models.index') }}" class="btn btn-outline-secondary w-24 mr-1">{{ __('global.back') }}</a>
+                    <a href="{{ route('test-models.index') }}" class="btn btn-outline-secondary w-24 me-1">{{ __('global.back') }}</a>
                     <a href="{{ route('test-models.edit', $testModel->id) }}" class="btn btn-primary w-24">{{ __('global.edit') }}</a>
                 </div>
             </div>

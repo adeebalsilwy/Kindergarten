@@ -42,11 +42,11 @@
             text-align: right;
         }
         
-        .rtl .text-right {
+        .rtl .text-end {
             text-align: left;
         }
         
-        .rtl .text-left {
+        .rtl .text-start {
             text-align: right;
         }
     </style>
@@ -54,7 +54,7 @@
 
 @section('subcontent')
 <div class="intro-y flex items-center mt-8">
-    <h2 class="text-2xl font-bold mr-auto">
+    <h2 class="text-2xl font-bold me-auto">
         <span class="ltr:inline">{{ __('global.general_ledger') }}</span>
         <span class="rtl:inline">{{ __('global.general_ledger_ar') }}</span>
     </h2>
@@ -62,16 +62,16 @@
         @if($generalLedger)
         <a href="{{ route('finance.export.excel', ['report_type' => 'general-ledger', 'account_name' => $generalLedger['account_name'], 'start_date' => request('start_date'), 'end_date' => request('end_date')]) }}" 
            class="btn btn-success flex items-center">
-            <i data-lucide="download" class="w-4 h-4 mr-2"></i>
+            <i data-lucide="download" class="w-4 h-4 me-2"></i>
             {{ __('global.export_excel') }}
         </a>
         <a href="{{ route('finance.export.pdf', ['report_type' => 'general-ledger', 'account_name' => $generalLedger['account_name'], 'start_date' => request('start_date'), 'end_date' => request('end_date')]) }}" 
            class="btn btn-primary flex items-center">
-            <i data-lucide="printer" class="w-4 h-4 mr-2"></i>
+            <i data-lucide="printer" class="w-4 h-4 me-2"></i>
             {{ __('global.export_pdf') }}
         </a>
         <button onclick="window.print()" class="btn btn-secondary flex items-center no-print">
-            <i data-lucide="printer" class="w-4 h-4 mr-2"></i>
+            <i data-lucide="printer" class="w-4 h-4 me-2"></i>
             {{ __('global.print') }}
         </button>
         @endif
@@ -132,7 +132,7 @@
                 </div>
                 <div class="col-span-12 md:col-span-2 flex items-end space-x-2">
                     <button type="submit" class="btn btn-primary w-full md:w-auto">
-                        <i data-lucide="filter" class="w-4 h-4 mr-2"></i>
+                        <i data-lucide="filter" class="w-4 h-4 me-2"></i>
                         {{ __('global.filter') }}
                     </button>
                     <a href="{{ route('finance.general-ledger') }}" class="btn btn-outline-secondary w-full md:w-auto">
@@ -162,7 +162,7 @@
             <div class="text-gray-600 dark:text-gray-400 text-sm font-medium">{{ __('global.final_balance') }}</div>
             <div class="text-xl font-bold {{ $generalLedger['final_balance'] >= 0 ? 'text-green-600' : 'text-red-600' }} mt-2">
                 {{ __('global.currency_symbol', ['amount' => number_format(abs($generalLedger['final_balance']), 2)]) }}
-                <span class="text-sm ml-1">{{ $generalLedger['final_balance'] >= 0 ? 'DR' : 'CR' }}</span>
+                <span class="text-sm ms-1">{{ $generalLedger['final_balance'] >= 0 ? 'DR' : 'CR' }}</span>
             </div>
             <div class="text-xs text-gray-500 mt-1">
                 {{ $generalLedger['final_balance'] >= 0 ? __('global.debit_balance') : __('global.credit_balance') }}
@@ -220,11 +220,11 @@
             </div>
             <div class="mt-4 md:mt-0 flex space-x-2 no-print">
                 <button onclick="toggleColumns()" class="btn btn-outline-secondary btn-sm">
-                    <i data-lucide="columns" class="w-4 h-4 mr-1"></i>
+                    <i data-lucide="columns" class="w-4 h-4 me-1"></i>
                     {{ __('global.toggle_columns') }}
                 </button>
                 <button onclick="exportVisibleData()" class="btn btn-outline-info btn-sm">
-                    <i data-lucide="download" class="w-4 h-4 mr-1"></i>
+                    <i data-lucide="download" class="w-4 h-4 me-1"></i>
                     {{ __('global.export_visible') }}
                 </button>
             </div>
@@ -234,33 +234,33 @@
             <table class="financial-table table table-striped w-full">
                 <thead class="bg-gray-50 dark:bg-dark-2 sticky top-0">
                     <tr>
-                        <th class="font-semibold text-gray-700 dark:text-gray-300 text-left">
+                        <th class="font-semibold text-gray-700 dark:text-gray-300 text-start">
                             <div class="flex items-center">
-                                <i data-lucide="calendar" class="w-4 h-4 mr-2"></i>
+                                <i data-lucide="calendar" class="w-4 h-4 me-2"></i>
                                 {{ __('global.date') }}
                             </div>
                         </th>
-                        <th class="font-semibold text-gray-700 dark:text-gray-300 text-left">
+                        <th class="font-semibold text-gray-700 dark:text-gray-300 text-start">
                             <div class="flex items-center">
-                                <i data-lucide="file-text" class="w-4 h-4 mr-2"></i>
+                                <i data-lucide="file-text" class="w-4 h-4 me-2"></i>
                                 {{ __('global.description') }}
                             </div>
                         </th>
-                        <th class="font-semibold text-gray-700 dark:text-gray-300 text-right">
+                        <th class="font-semibold text-gray-700 dark:text-gray-300 text-end">
                             <div class="flex items-center justify-end">
-                                <i data-lucide="trending-up" class="w-4 h-4 mr-2"></i>
+                                <i data-lucide="trending-up" class="w-4 h-4 me-2"></i>
                                 {{ __('global.debit') }}
                             </div>
                         </th>
-                        <th class="font-semibold text-gray-700 dark:text-gray-300 text-right">
+                        <th class="font-semibold text-gray-700 dark:text-gray-300 text-end">
                             <div class="flex items-center justify-end">
-                                <i data-lucide="trending-down" class="w-4 h-4 mr-2"></i>
+                                <i data-lucide="trending-down" class="w-4 h-4 me-2"></i>
                                 {{ __('global.credit') }}
                             </div>
                         </th>
-                        <th class="font-semibold text-gray-700 dark:text-gray-300 text-right">
+                        <th class="font-semibold text-gray-700 dark:text-gray-300 text-end">
                             <div class="flex items-center justify-end">
-                                <i data-lucide="scale" class="w-4 h-4 mr-2"></i>
+                                <i data-lucide="scale" class="w-4 h-4 me-2"></i>
                                 {{ __('global.balance') }}
                             </div>
                         </th>
@@ -274,11 +274,11 @@
                         <tr class="transaction-row hover:bg-gray-50 dark:hover:bg-dark-2 transition-colors">
                             <td class="font-medium text-gray-900 dark:text-gray-100">
                                 <div class="flex items-center">
-                                    <span class="px-2 py-1 bg-gray-100 dark:bg-dark-3 rounded text-xs mr-2">
+                                    <span class="px-2 py-1 bg-gray-100 dark:bg-dark-3 rounded text-xs me-2">
                                         {{ str_pad($index + 1, 3, '0', STR_PAD_LEFT) }}
                                     </span>
                                     {{ $entry['date']->format('Y-m-d') }}
-                                    <span class="text-xs text-gray-500 ml-2 hidden md:inline">
+                                    <span class="text-xs text-gray-500 ms-2 hidden md:inline">
                                         {{ $entry['date']->format('H:i') }}
                                     </span>
                                 </div>
@@ -288,23 +288,23 @@
                                     {{ $entry['description'] }}
                                 </div>
                             </td>
-                            <td class="text-right amount-debit font-medium">
+                            <td class="text-end amount-debit font-medium">
                                 @if($entry['debit'] > 0)
                                     <span class="px-2 py-1 bg-blue-100 text-blue-800 rounded text-sm">
                                         {{ __('global.currency_symbol', ['amount' => number_format($entry['debit'], 2)]) }}
                                     </span>
                                 @endif
                             </td>
-                            <td class="text-right amount-credit font-medium">
+                            <td class="text-end amount-credit font-medium">
                                 @if($entry['credit'] > 0)
                                     <span class="px-2 py-1 bg-orange-100 text-orange-800 rounded text-sm">
                                         {{ __('global.currency_symbol', ['amount' => number_format($entry['credit'], 2)]) }}
                                     </span>
                                 @endif
                             </td>
-                            <td class="text-right font-bold {{ $entry['balance'] >= 0 ? 'balance-positive' : 'balance-negative' }}">
+                            <td class="text-end font-bold {{ $entry['balance'] >= 0 ? 'balance-positive' : 'balance-negative' }}">
                                 {{ __('global.currency_symbol', ['amount' => number_format(abs($entry['balance']), 2)]) }}
-                                <span class="text-xs ml-1">{{ $entry['balance'] >= 0 ? 'DR' : 'CR' }}</span>
+                                <span class="text-xs ms-1">{{ $entry['balance'] >= 0 ? 'DR' : 'CR' }}</span>
                             </td>
                             <td class="text-center no-print">
                                 <div class="flex justify-center space-x-1">
@@ -337,13 +337,13 @@
                         <td colspan="2" class="px-6 py-3 text-gray-900 dark:text-gray-100">
                             {{ __('global.total') }}
                         </td>
-                        <td class="px-6 py-3 text-right amount-debit">
+                        <td class="px-6 py-3 text-end amount-debit">
                             {{ __('global.currency_symbol', ['amount' => number_format(array_sum(array_column($generalLedger['entries'], 'debit')), 2)]) }}
                         </td>
-                        <td class="px-6 py-3 text-right amount-credit">
+                        <td class="px-6 py-3 text-end amount-credit">
                             {{ __('global.currency_symbol', ['amount' => number_format(array_sum(array_column($generalLedger['entries'], 'credit')), 2)]) }}
                         </td>
-                        <td class="px-6 py-3 text-right {{ $generalLedger['final_balance'] >= 0 ? 'balance-positive' : 'balance-negative' }}">
+                        <td class="px-6 py-3 text-end {{ $generalLedger['final_balance'] >= 0 ? 'balance-positive' : 'balance-negative' }}">
                             {{ __('global.currency_symbol', ['amount' => number_format(abs($generalLedger['final_balance']), 2)]) }}
                         </td>
                         <td class="px-6 py-3 text-center no-print"></td>
@@ -398,7 +398,7 @@
                 <div class="bg-gray-100 dark:bg-dark-2 rounded-lg p-4">
                     <div class="space-y-2">
                         <div class="flex items-center">
-                            <div class="w-3 h-3 rounded-full bg-green-500 mr-2"></div>
+                            <div class="w-3 h-3 rounded-full bg-green-500 me-2"></div>
                             <span class="text-sm">{{ __('global.starting_balance') }}: 
                                 <span class="font-medium">
                                     {{ __('global.currency_symbol', ['amount' => number_format($generalLedger['entries'][0]['balance'] ?? 0, 2)]) }}
@@ -406,7 +406,7 @@
                             </span>
                         </div>
                         <div class="flex items-center">
-                            <div class="w-3 h-3 rounded-full bg-blue-500 mr-2"></div>
+                            <div class="w-3 h-3 rounded-full bg-blue-500 me-2"></div>
                             <span class="text-sm">{{ __('global.current_balance') }}: 
                                 <span class="font-medium {{ $generalLedger['final_balance'] >= 0 ? 'text-green-600' : 'text-red-600' }}">
                                     {{ __('global.currency_symbol', ['amount' => number_format(abs($generalLedger['final_balance']), 2)]) }}
@@ -447,10 +447,10 @@
                     @foreach($accounts as $account)
                         <a href="{{ route('finance.general-ledger', ['account_name' => $account]) }}" 
                            class="flex items-center p-3 bg-white dark:bg-dark-1 rounded-lg border border-gray-200 dark:border-dark-3 hover:border-blue-500 hover:shadow-md transition-all">
-                            <div class="flex-shrink-0 w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center mr-3">
+                            <div class="flex-shrink-0 w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center me-3">
                                 <i data-lucide="folder" class="w-4 h-4 text-blue-600 dark:text-blue-400"></i>
                             </div>
-                            <div class="text-left">
+                            <div class="text-start">
                                 <div class="font-medium text-gray-900 dark:text-gray-100">{{ $account }}</div>
                                 <div class="text-xs text-gray-500 dark:text-gray-400">{{ __('global.click_to_view_details') }}</div>
                             </div>
@@ -461,7 +461,7 @@
             @else
             <div class="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4 max-w-md mx-auto">
                 <div class="flex items-center">
-                    <i data-lucide="alert-circle" class="w-5 h-5 text-yellow-600 dark:text-yellow-400 mr-2"></i>
+                    <i data-lucide="alert-circle" class="w-5 h-5 text-yellow-600 dark:text-yellow-400 me-2"></i>
                     <span class="font-medium text-yellow-800 dark:text-yellow-200">
                         {{ __('global.no_accounts_available') }}
                     </span>
@@ -484,7 +484,7 @@
                     <span class="ltr:inline">{{ __('global.about_general_ledger') }}</span>
                     <span class="rtl:inline">{{ __('global.about_general_ledger_ar') }}</span>
                 </h4>
-                <ul class="list-disc pl-5 space-y-1 text-gray-600 dark:text-gray-400 text-sm">
+                <ul class="list-disc ps-5 space-y-1 text-gray-600 dark:text-gray-400 text-sm">
                     <li>{{ __('global.general_ledger_explanation') }}</li>
                     <li>{{ __('global.shows_detailed_transactions') }}</li>
                     <li>{{ __('global.running_balance_calculation') }}</li>
@@ -492,7 +492,7 @@
             </div>
             <div>
                 <h4 class="font-medium text-gray-800 dark:text-gray-200 mb-2">{{ __('global.features') }}</h4>
-                <ul class="list-disc pl-5 space-y-1 text-gray-600 dark:text-gray-400 text-sm">
+                <ul class="list-disc ps-5 space-y-1 text-gray-600 dark:text-gray-400 text-sm">
                     <li>{{ __('global.multilingual_support_note') }}</li>
                     <li>{{ __('global.rtl_layout_support') }}</li>
                     <li>{{ __('global.professional_export_formats') }}</li>

@@ -6,7 +6,7 @@
 
 @section('subcontent')
 <div class="intro-y flex items-center mt-8">
-    <h2 class="text-lg font-medium mr-auto">Profit & Loss Report</h2>
+    <h2 class="text-lg font-medium me-auto">Profit & Loss Report</h2>
 </div>
 
 <div class="grid grid-cols-12 gap-6 mt-5">

@@ -6,7 +6,7 @@
 
 @section('subcontent')
 <div class="intro-y flex items-center mt-8">
-    <h2 class="text-lg font-medium mr-auto">Cash Flow Report</h2>
+    <h2 class="text-lg font-medium me-auto">Cash Flow Report</h2>
 </div>
 
 <div class="grid grid-cols-12 gap-6 mt-5">
@@ -129,7 +129,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
                 <h4 class="font-medium mb-2">Best Performing Days</h4>
-                <ul class="list-disc pl-5 space-y-1">
+                <ul class="list-disc ps-5 space-y-1">
                     @foreach(collect($cashFlow['daily_cash_flow'] ?? [])->sortByDesc('net_cash_flow')->take(3) as $date => $flow)
                         <li>{{ $date }}: ${{ number_format($flow['net_cash_flow'], 2) }}</li>
                     @endforeach
@@ -137,7 +137,7 @@
             </div>
             <div>
                 <h4 class="font-medium mb-2">Worst Performing Days</h4>
-                <ul class="list-disc pl-5 space-y-1">
+                <ul class="list-disc ps-5 space-y-1">
                     @foreach(collect($cashFlow['daily_cash_flow'] ?? [])->sortBy('net_cash_flow')->take(3) as $date => $flow)
                         <li>{{ $date }}: ${{ number_format($flow['net_cash_flow'], 2) }}</li>
                     @endforeach

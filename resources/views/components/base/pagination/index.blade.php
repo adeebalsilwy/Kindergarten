@@ -1,5 +1,5 @@
 <nav {{ $attributes->merge($attributes->whereDoesntStartWith('class')->getAttributes()) }}>
-    <ul class="flex w-full mr-0 sm:mr-auto sm:w-auto">
+    <ul class="flex w-full me-0 sm:me-auto sm:w-auto">
         {{ $slot }}
     </ul>
 </nav>

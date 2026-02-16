@@ -8,8 +8,8 @@
     <div class="py-2 bg-gradient-to-b from-theme-1 to-theme-2 dark:from-darkmode-800 dark:to-darkmode-800">
         <div class="container">
             <!-- BEGIN: Error Page -->
-            <div class="flex flex-col items-center justify-center h-screen text-center error-page lg:flex-row lg:text-left">
-                <div class="-intro-x lg:mr-20">
+            <div class="flex flex-col items-center justify-center h-screen text-center error-page lg:flex-row lg:text-start">
+                <div class="-intro-x lg:me-20">
                     <img
                         class="h-48 w-[450px] lg:h-auto"
                         src="{{ Vite::asset('resources/images/error-illustration.svg') }}"

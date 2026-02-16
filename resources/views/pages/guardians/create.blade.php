@@ -6,7 +6,7 @@
 
 @section('subcontent')
     <div class="intro-y flex items-center mt-8">
-        <h2 class="text-lg font-medium mr-auto">{{ __('guardians.add_new') }}</h2>
+        <h2 class="text-lg font-medium me-auto">{{ __('guardians.add_new') }}</h2>
     </div>
     <div class="grid grid-cols-12 gap-6 mt-5">
         <div class="intro-y col-span-12 lg:col-span-12">
@@ -117,12 +117,12 @@
                     <div class="mb-5">
                         <div class="font-medium text-base mb-5">{{ __('guardians.sections.settings') }}</div>
                         <div class="flex flex-col sm:flex-row mt-2">
-                            <div class="form-check mr-5 mt-2 sm:mt-0">
+                            <div class="form-check me-5 mt-2 sm:mt-0">
                                 <input type="hidden" name="is_primary_guardian" value="0">
                                 <x-base.form-check.input id="is_primary_guardian" type="checkbox" name="is_primary_guardian" value="1" {{ old('is_primary_guardian') ? 'checked' : '' }} />
                                 <x-base.form-check.label for="is_primary_guardian">{{ __('guardians.fields.is_primary_guardian') }}</x-base.form-check.label>
                             </div>
-                            <div class="form-check mr-5 mt-2 sm:mt-0">
+                            <div class="form-check me-5 mt-2 sm:mt-0">
                                 <input type="hidden" name="is_primary_emergency_contact" value="0">
                                 <x-base.form-check.input id="is_primary_emergency_contact" type="checkbox" name="is_primary_emergency_contact" value="1" {{ old('is_primary_emergency_contact') ? 'checked' : '' }} />
                                 <x-base.form-check.label for="is_primary_emergency_contact">{{ __('guardians.fields.is_primary_emergency_contact') }}</x-base.form-check.label>
@@ -131,7 +131,7 @@
                     </div>
 
                     <div class="flex justify-end mt-5">
-                        <a href="{{ route('guardians.index') }}" class="btn btn-outline-secondary w-24 mr-1">{{ __('global.cancel') }}</a>
+                        <a href="{{ route('guardians.index') }}" class="btn btn-outline-secondary w-24 me-1">{{ __('global.cancel') }}</a>
                         <x-base.button type="submit" variant="primary" class="w-24">{{ __('global.save') }}</x-base.button>
                     </div>
                 </form>

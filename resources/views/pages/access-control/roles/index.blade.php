@@ -6,10 +6,10 @@
 
 @section('subcontent')
     <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
-        <h2 class="text-lg font-medium mr-auto">Roles Management</h2>
+        <h2 class="text-lg font-medium me-auto">Roles Management</h2>
         <div class="w-full sm:w-auto flex mt-4 sm:mt-0">
-            <x-base.button variant="primary" as="a" href="{{ route('roles.create') }}" class="ml-2 flex items-center">
-                <x-base.lucide icon="Plus" class="w-4 h-4 mr-2" /> Add New Role
+            <x-base.button variant="primary" as="a" href="{{ route('roles.create') }}" class="ms-2 flex items-center">
+                <x-base.lucide icon="Plus" class="w-4 h-4 me-2" /> Add New Role
             </x-base.button>
         </div>
     </div>
@@ -44,14 +44,14 @@
                             </x-base.table.td>
                             <x-base.table.td class="table-report__action w-56">
                                 <div class="flex justify-center items-center">
-                                    <x-base.button variant="outline-primary" as="a" href="{{ route('roles.edit', $role->id) }}" size="sm" class="mr-2">
-                                        <x-base.lucide icon="Pencil" class="w-4 h-4 mr-1" /> Edit
+                                    <x-base.button variant="outline-primary" as="a" href="{{ route('roles.edit', $role->id) }}" size="sm" class="me-2">
+                                        <x-base.lucide icon="Pencil" class="w-4 h-4 me-1" /> Edit
                                     </x-base.button>
                                     <form action="{{ route('roles.destroy', $role->id) }}" method="POST" onsubmit="return confirm('Are you sure?')">
                                         @csrf
                                         @method('DELETE')
                                         <x-base.button variant="outline-danger" type="submit" size="sm">
-                                            <x-base.lucide icon="Trash2" class="w-4 h-4 mr-1" /> Delete
+                                            <x-base.lucide icon="Trash2" class="w-4 h-4 me-1" /> Delete
                                         </x-base.button>
                                     </form>
                                 </div>

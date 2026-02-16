@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use OmarAlalwi\Gpdf\Facades\Gpdf;
+
 use App\Http\Requests\StoreChildrenRequest;
 use App\Http\Requests\UpdateChildrenRequest;
 use App\Services\ChildrenService;
-use Barryvdh\DomPDF\Facade\Pdf;
+use OmarAlalwi\Gpdf\Facades\Gpdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
@@ -63,7 +65,7 @@ class ChildrenController extends Controller
      */
     protected function exportToPdf($data)
     {
-        $pdf = Pdf::loadView('pages.children.export-pdf', ['data' => $data]);
+        $pdf = Gpdf::loadView('pages.children.export-pdf', ['data' => $data]);
 
         return $pdf->download('Children_export_'.date('Y-m-d_H-i-s').'.pdf');
     }

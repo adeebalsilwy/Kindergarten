@@ -11,7 +11,7 @@
         <div class="flex items-center justify-between">
             <a class="flex items-center" href="{{ route('home') }}">
                 <img class="w-6" src="{{ Vite::asset('resources/images/logo.svg') }}" alt="{{ config('app.name') }}" />
-                <span class="ml-3 text-lg font-semibold">{{ config('app.name') }}</span>
+                <span class="ms-3 text-lg font-semibold">{{ config('app.name') }}</span>
             </a>
             
             <!-- Navigation Links and Authentication -->
@@ -26,7 +26,7 @@
                 </div>
                 
                 <!-- Language Selector -->
-                <x-base.dropdown class="ml-2">
+                <x-base.dropdown class="ms-2">
                     <x-base.dropdown.button as="a" class="flex items-center gap-2 hover:bg-slate-100 rounded-lg px-3 py-2 transition-all duration-300">
                         <x-base.lucide icon="Globe" class="w-4 h-4" />
                         @php
@@ -58,19 +58,19 @@
                         </x-base.dropdown.button>
                         <x-base.dropdown.menu>
                             <x-base.dropdown.item as="a" href="{{ route('profile.index') }}" class="transition-all duration-200">
-                                <x-base.lucide icon="User" class="w-4 h-4 mr-2" /> {{ __('global.profile') }}
+                                <x-base.lucide icon="User" class="w-4 h-4 me-2" /> {{ __('global.profile') }}
                             </x-base.dropdown.item>
                             <x-base.dropdown.item as="a" href="{{ route('profile.edit') }}" class="transition-all duration-200">
-                                <x-base.lucide icon="Settings" class="w-4 h-4 mr-2" /> {{ __('global.settings') }}
+                                <x-base.lucide icon="Settings" class="w-4 h-4 me-2" /> {{ __('global.settings') }}
                             </x-base.dropdown.item>
                             <x-base.dropdown.item as="a" href="{{ route('dashboard-overview-1') }}" class="transition-all duration-200">
-                                <x-base.lucide icon="Layout" class="w-4 h-4 mr-2" /> {{ __('global.dashboard') }}
+                                <x-base.lucide icon="Layout" class="w-4 h-4 me-2" /> {{ __('global.dashboard') }}
                             </x-base.dropdown.item>
                             <x-base.dropdown.divider />
                             <x-base.dropdown.item as="a" href="{{ route('auth.logout') }}" 
                                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();" 
                                 class="text-red-600 hover:bg-red-50 transition-all duration-200">
-                                <x-base.lucide icon="LogOut" class="w-4 h-4 mr-2" /> {{ __('global.sign_out') }}
+                                <x-base.lucide icon="LogOut" class="w-4 h-4 me-2" /> {{ __('global.sign_out') }}
                             </x-base.dropdown.item>
                             <form id="logout-form" action="{{ route('auth.logout') }}" method="POST" class="hidden">
                                 @csrf
@@ -103,7 +103,7 @@
                 </p>
                 <div class="mt-6 md:mt-8 flex flex-wrap gap-3 md:gap-4 animate__animated animate__fadeInLeft animate__delay-2s">
                     <x-base.button as="a" href="{{ route('auth.register') }}" variant="primary" class="px-6 py-3 rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-lg">
-                        <x-base.lucide icon="Rocket" class="w-4 h-4 mr-2" /> {{ __('global.get_started') }}
+                        <x-base.lucide icon="Rocket" class="w-4 h-4 me-2" /> {{ __('global.get_started') }}
                     </x-base.button>
                     <x-base.button as="a" href="#features" variant="outline-primary" class="px-6 py-3 rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-lg">
                         {{ __('global.learn_more') }}
@@ -231,7 +231,7 @@
                 <div class="bg-gradient-to-br from-white to-slate-50 rounded-2xl p-6 shadow-md hover:shadow-xl transition-all duration-500 animate__animated animate__fadeInUp animate__delay-8s">
                     <div class="flex items-center mb-4">
                         <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-blue-800 font-bold text-lg">JD</div>
-                        <div class="ml-4">
+                        <div class="ms-4">
                             <h4 class="font-semibold text-gray-800">John Doe</h4>
                             <p class="text-gray-600 text-sm">{{ __('global.principal') }}</p>
                         </div>
@@ -259,7 +259,7 @@
                 <div class="bg-gradient-to-br from-white to-slate-50 rounded-2xl p-6 shadow-md hover:shadow-xl transition-all duration-500 animate__animated animate__fadeInUp animate__delay-9s">
                     <div class="flex items-center mb-4">
                         <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center text-green-800 font-bold text-lg">AS</div>
-                        <div class="ml-4">
+                        <div class="ms-4">
                             <h4 class="font-semibold text-gray-800">Ahmad Smith</h4>
                             <p class="text-gray-600 text-sm">{{ __('global.teacher') }}</p>
                         </div>
@@ -287,7 +287,7 @@
                 <div class="bg-gradient-to-br from-white to-slate-50 rounded-2xl p-6 shadow-md hover:shadow-xl transition-all duration-500 animate__animated animate__fadeInUp animate__delay-10s">
                     <div class="flex items-center mb-4">
                         <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center text-purple-800 font-bold text-lg">MJ</div>
-                        <div class="ml-4">
+                        <div class="ms-4">
                             <h4 class="font-semibold text-gray-800">Maria Johnson</h4>
                             <p class="text-gray-600 text-sm">{{ __('global.administrator') }}</p>
                         </div>

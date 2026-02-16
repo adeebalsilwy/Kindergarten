@@ -6,30 +6,30 @@
 
 @section('subcontent')
     <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
-        <h2 class="text-lg font-medium mr-auto">{{ __('global.children_management') }}</h2>
+        <h2 class="text-lg font-medium me-auto">{{ __('global.children_management') }}</h2>
         <div class="w-full sm:w-auto flex flex-wrap gap-2 mt-4 sm:mt-0">
             @can('create_children')
             <x-base.button variant="primary" as="a" href="{{ route('children.create') }}" class="flex items-center shadow-md">
-                <x-base.lucide icon="UserPlus" class="w-4 h-4 mr-2" />
+                <x-base.lucide icon="UserPlus" class="w-4 h-4 me-2" />
                 {{ __('global.add_new_child') }}
             </x-base.button>
             @endcan
             
             @can('export_children')
-            <div class="dropdown ml-2">
+            <div class="dropdown ms-2">
                 <x-base.button variant="outline-secondary" class="flex items-center">
-                    <x-base.lucide icon="Download" class="w-4 h-4 mr-2" />
+                    <x-base.lucide icon="Download" class="w-4 h-4 me-2" />
                     {{ __('global.export') }}
-                    <x-base.lucide icon="ChevronDown" class="w-4 h-4 ml-2" />
+                    <x-base.lucide icon="ChevronDown" class="w-4 h-4 ms-2" />
                 </x-base.button>
                 <div class="dropdown-menu w-40">
                     <div class="dropdown-content">
                         <a href="{{ route('children.export.pdf') }}" class="dropdown-item flex items-center">
-                            <x-base.lucide icon="FileText" class="w-4 h-4 mr-2" />
+                            <x-base.lucide icon="FileText" class="w-4 h-4 me-2" />
                             {{ __('global.export_pdf') }}
                         </a>
                         <a href="{{ route('children.export.excel') }}" class="dropdown-item flex items-center">
-                            <x-base.lucide icon="FileSpreadsheet" class="w-4 h-4 mr-2" />
+                            <x-base.lucide icon="FileSpreadsheet" class="w-4 h-4 me-2" />
                             {{ __('global.export_excel') }}
                         </a>
                     </div>
@@ -48,9 +48,9 @@
                         <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
                             <x-base.lucide icon="Users" class="w-6 h-6 text-primary" />
                         </div>
-                        <div class="ml-auto">
+                        <div class="ms-auto">
                             <div class="text-success flex items-center">
-                                <x-base.lucide icon="TrendingUp" class="w-4 h-4 mr-1" />
+                                <x-base.lucide icon="TrendingUp" class="w-4 h-4 me-1" />
                                 <span class="text-xs">{{ __('global.active') }}</span>
                             </div>
                         </div>
@@ -68,9 +68,9 @@
                         <div class="w-10 h-10 rounded-full bg-warning/10 flex items-center justify-center">
                             <x-base.lucide icon="DollarSign" class="w-6 h-6 text-warning" />
                         </div>
-                        <div class="ml-auto">
+                        <div class="ms-auto">
                             <div class="text-success flex items-center">
-                                <x-base.lucide icon="TrendingUp" class="w-4 h-4 mr-1" />
+                                <x-base.lucide icon="TrendingUp" class="w-4 h-4 me-1" />
                                 <span class="text-xs">{{ __('global.pending') }}</span>
                             </div>
                         </div>
@@ -88,9 +88,9 @@
                         <div class="w-10 h-10 rounded-full bg-info/10 flex items-center justify-center">
                             <x-base.lucide icon="Calendar" class="w-6 h-6 text-info" />
                         </div>
-                        <div class="ml-auto">
+                        <div class="ms-auto">
                             <div class="text-success flex items-center">
-                                <x-base.lucide icon="TrendingUp" class="w-4 h-4 mr-1" />
+                                <x-base.lucide icon="TrendingUp" class="w-4 h-4 me-1" />
                                 <span class="text-xs">{{ __('global.today') }}</span>
                             </div>
                         </div>
@@ -108,9 +108,9 @@
                         <div class="w-10 h-10 rounded-full bg-success/10 flex items-center justify-center">
                             <x-base.lucide icon="GraduationCap" class="w-6 h-6 text-success" />
                         </div>
-                        <div class="ml-auto">
+                        <div class="ms-auto">
                             <div class="text-success flex items-center">
-                                <x-base.lucide icon="TrendingUp" class="w-4 h-4 mr-1" />
+                                <x-base.lucide icon="TrendingUp" class="w-4 h-4 me-1" />
                                 <span class="text-xs">{{ __('global.classes') }}</span>
                             </div>
                         </div>
@@ -134,9 +134,9 @@
                             name="search"
                             value="{{ request('search') }}"
                             placeholder="{{ __('global.search_children') }}..." 
-                            class="w-full pl-10 pr-4 py-2"
+                            class="w-full ps-10 pe-4 py-2"
                         />
-                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <div class="absolute inset-y-0 left-0 ps-3 flex items-center pointer-events-none">
                             <x-base.lucide icon="Search" class="h-5 w-5 text-gray-400" />
                         </div>
                     </div>
@@ -165,11 +165,11 @@
                 <!-- Action Buttons -->
                 <div class="flex gap-2">
                     <x-base.button as="a" href="{{ route('children.index') }}" variant="secondary" class="flex items-center">
-                        <x-base.lucide icon="RotateCcw" class="w-4 h-4 mr-2" />
+                        <x-base.lucide icon="RotateCcw" class="w-4 h-4 me-2" />
                         {{ __('global.reset') }}
                     </x-base.button>
                     <x-base.button type="submit" variant="primary" class="flex items-center">
-                        <x-base.lucide icon="Filter" class="w-4 h-4 mr-2" />
+                        <x-base.lucide icon="Filter" class="w-4 h-4 me-2" />
                         {{ __('global.apply') }}
                     </x-base.button>
                 </div>
@@ -216,12 +216,12 @@
                             <h3 class="font-medium text-base truncate">{{ $child->name }}</h3>
                             <div class="text-slate-500 text-sm mt-1">
                                 <span class="flex items-center">
-                                    <x-base.lucide icon="Cake" class="w-4 h-4 mr-1" />
+                                    <x-base.lucide icon="Cake" class="w-4 h-4 me-1" />
                                     {{ $child->age }} {{ __('global.years_old') }}
                                 </span>
                             </div>
                         </div>
-                        <div class="text-right">
+                        <div class="text-end">
                             <div class="text-xs text-slate-500">{{ __('global.class') }}</div>
                             <div class="font-medium text-sm">{{ $child->class->name ?? '-' }}</div>
                         </div>
@@ -231,12 +231,12 @@
                     @if($child->parent)
                         <div class="mt-4 pt-4 border-t border-slate-200/60 dark:border-darkmode-400">
                             <div class="flex items-center text-sm">
-                                <x-base.lucide icon="User" class="w-4 h-4 mr-2 text-slate-500" />
+                                <x-base.lucide icon="User" class="w-4 h-4 me-2 text-slate-500" />
                                 <span class="truncate">{{ $child->parent->name }}</span>
                             </div>
                             @if($child->parent->phone)
                                 <div class="flex items-center text-sm mt-1">
-                                    <x-base.lucide icon="Phone" class="w-4 h-4 mr-2 text-slate-500" />
+                                    <x-base.lucide icon="Phone" class="w-4 h-4 me-2 text-slate-500" />
                                     <span>{{ $child->parent->phone }}</span>
                                 </div>
                             @endif
@@ -267,7 +267,7 @@
                                 <div class="bg-{{ $paymentPercentage >= 100 ? 'success' : ($paymentPercentage >= 50 ? 'warning' : 'danger') }} h-2 rounded-full" 
                                      style="width: {{ $paymentPercentage }}%"></div>
                             </div>
-                            <div class="text-xs text-slate-500 mt-1 text-right">
+                            <div class="text-xs text-slate-500 mt-1 text-end">
                                 {{ number_format($paymentPercentage, 1) }}%
                             </div>
                         </div>
@@ -299,7 +299,7 @@
                                 size="sm" 
                                 class="flex-1 justify-center"
                             >
-                                <x-base.lucide icon="Eye" class="w-4 h-4 mr-1" />
+                                <x-base.lucide icon="Eye" class="w-4 h-4 me-1" />
                                 {{ __('global.view') }}
                             </x-base.button>
                         @endcan
@@ -312,7 +312,7 @@
                                 size="sm" 
                                 class="flex-1 justify-center"
                             >
-                                <x-base.lucide icon="Pencil" class="w-4 h-4 mr-1" />
+                                <x-base.lucide icon="Pencil" class="w-4 h-4 me-1" />
                                 {{ __('global.edit') }}
                             </x-base.button>
                         @endcan
@@ -336,7 +336,7 @@
                             href="{{ route('children.create') }}" 
                             class="flex items-center mx-auto"
                         >
-                            <x-base.lucide icon="UserPlus" class="w-4 h-4 mr-2" />
+                            <x-base.lucide icon="UserPlus" class="w-4 h-4 me-2" />
                             {{ __('global.add_first_child') }}
                         </x-base.button>
                     @endcan
@@ -405,7 +405,7 @@
                     
                     cards.forEach(card => {
                         const nameElement = card.querySelector('h3');
-                        const classNameElement = card.querySelector('.text-right .font-medium');
+                        const classNameElement = card.querySelector('.text-end .font-medium');
                         const parentNameElement = card.querySelector('[class*="truncate"]');
                         
                         const name = nameElement?.textContent.toLowerCase() || '';

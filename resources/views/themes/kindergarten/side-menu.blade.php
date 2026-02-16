@@ -7,14 +7,14 @@
 @section('content')
     <div @class([
         'kindergarten px-5 sm:px-8 py-5',
-        "before:content-[''] before:bg-gradient-to-b before:from-pink-300 before:to-blue-300 dark:before:from-purple-900 dark:before:to-indigo-900 before:fixed before:inset-0 before:z-[-1]",
+        "before:content-[''] before:bg-[#1e293b] dark:before:bg-darkmode-900 before:fixed before:inset-0 before:z-[-1]",
     ])>
         <x-mobile-menu />
         <div class="mt-[4.7rem] flex md:mt-0">
             <!-- BEGIN: Side Menu -->
-            <nav class="side-nav hidden w-[80px] overflow-x-hidden pb-16 pr-5 md:block xl:w-[230px]">
+            <nav class="side-nav hidden w-[80px] overflow-x-hidden pb-16 pe-5 md:block xl:w-[230px]">
                 <a
-                    class="flex items-center pt-4 pl-5 intro-x"
+                    class="flex items-center pt-4 ps-5 intro-x"
                     href="{{ route('dashboard-overview-1') }}"
                 >
                     <img
@@ -22,21 +22,21 @@
                         src="{{ Vite::asset('resources/images/logo.svg') }}"
                         alt="Kindergarten Management System"
                     />
-                    <span class="hidden ml-3 text-lg font-bold text-white xl:block"> 
+                    <span class="hidden ms-3 text-lg font-bold text-white xl:block">
                         <span class="text-yellow-300">Kids</span>
                         <span class="text-green-300">Care</span>
                     </span>
                 </a>
                 <div class="my-6 side-nav__divider"></div>
                 <div class="px-5">
-                    <div class="text-xs font-medium text-white/90">Themes</div>
+                    <div class="text-xs font-medium text-white/90">{{ __('global.themes') }}</div>
                     <div class="mt-3 grid grid-cols-2 gap-2">
                         @foreach (['rubick', 'icewall', 'tinker', 'enigma', 'kindergarten'] as $theme)
                             <a
                                 href="{{ route('theme-switcher', ['activeTheme' => $theme]) }}"
                                 @class([
                                     'text-xs rounded-md px-3 py-2 block text-center',
-                                    $activeTheme == $theme ? 'bg-white/20 text-white' : 'bg-white/10 text-white/80 hover:bg-white/15',
+                                    $activeTheme == $theme ? 'bg-emerald-600 text-white' : 'bg-white/10 text-white/80 hover:bg-white/15',
                                 ])
                             >
                                 {{ ucfirst($theme) }}
@@ -44,50 +44,6 @@
                         @endforeach
                     </div>
                 </div>
-                <div class="my-6 side-nav__divider"></div>
-                <ul class="px-5">
-                    <li>
-                        <a href="{{ route('crud-builder.index') }}" class="side-menu">
-                            <div class="side-menu__icon">
-                                <x-base.lucide icon="Settings" />
-                            </div>
-                            <div class="side-menu__title"> Developer Tools </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('monitoring.index') }}" class="side-menu">
-                            <div class="side-menu__icon">
-                                <x-base.lucide icon="Activity" />
-                            </div>
-                            <div class="side-menu__title"> Monitoring </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('api-manager.index') }}" class="side-menu">
-                            <div class="side-menu__icon">
-                                <x-base.lucide icon="Server" />
-                            </div>
-                            <div class="side-menu__title"> API Manager </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('backup.index') }}" class="side-menu">
-                            <div class="side-menu__icon">
-                                <x-base.lucide icon="Database" />
-                            </div>
-                            <div class="side-menu__title"> Backup </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('database-import.index') }}" class="side-menu">
-                            <div class="side-menu__icon">
-                                <x-base.lucide icon="UploadCloud" />
-                            </div>
-                            <div class="side-menu__title"> Database Import </div>
-                        </a>
-                    </li>
-                </ul>
-                <div class="my-6 side-nav__divider"></div>
                 <ul>
                     @foreach ($mainMenu as $menuKey => $menu)
                         @if ($menu == 'divider')
@@ -176,16 +132,16 @@
             <!-- END: Side Menu -->
             <!-- BEGIN: Content -->
             <div
-                class="md:max-w-auto min-h-screen min-w-0 max-w-full flex-1 rounded-[30px] bg-gradient-to-br from-pink-50 to-blue-50 px-4 pb-10 before:block before:h-px before:w-full before:content-[''] dark:bg-darkmode-700 md:px-[22px]">
+                class="md:max-w-auto min-h-screen min-w-0 max-w-full flex-1 rounded-[30px] bg-slate-50 px-4 pb-10 before:block before:h-px before:w-full before:content-[''] dark:bg-darkmode-700 md:px-[22px]">
                 <x-themes.kindergarten.top-bar />
                 @if (session('success'))
                     <x-base.alert variant="success" class="mb-2 flex items-center">
-                        <x-base.lucide icon="CheckCircle" class="w-6 h-6 mr-2" /> {{ session('success') }}
+                        <x-base.lucide icon="CheckCircle" class="w-6 h-6 me-2" /> {{ session('success') }}
                     </x-base.alert>
                 @endif
                 @if (session('error'))
                     <x-base.alert variant="danger" class="mb-2 flex items-center">
-                        <x-base.lucide icon="AlertOctagon" class="w-6 h-6 mr-2" /> {{ session('error') }}
+                        <x-base.lucide icon="AlertOctagon" class="w-6 h-6 me-2" /> {{ session('error') }}
                     </x-base.alert>
                 @endif
                 @yield('subcontent')

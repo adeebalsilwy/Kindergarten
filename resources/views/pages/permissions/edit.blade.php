@@ -6,10 +6,10 @@
 
 @section('subcontent')
     <div class="intro-y flex items-center mt-8">
-        <h2 class="text-lg font-medium mr-auto">{{ __('global.edit_permission') }}: {{ str_replace('_', ' ', $permission->name) }}</h2>
+        <h2 class="text-lg font-medium me-auto">{{ __('global.edit_permission') }}: {{ str_replace('_', ' ', $permission->name) }}</h2>
         <div class="flex gap-2">
             <x-base.button variant="outline-secondary" as="a" href="{{ route('permissions.index') }}" class="flex items-center">
-                <x-base.lucide icon="ArrowLeft" class="w-4 h-4 mr-2" />
+                <x-base.lucide icon="ArrowLeft" class="w-4 h-4 me-2" />
                 {{ __('global.back_to_list') }}
             </x-base.button>
         </div>
@@ -25,7 +25,7 @@
                     <!-- Basic Information -->
                     <div class="border-b border-slate-200/60 dark:border-darkmode-400 pb-6 mb-6">
                         <div class="flex items-center mb-4">
-                            <div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center mr-3">
+                            <div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center me-3">
                                 <x-base.lucide icon="Key" class="w-5 h-5 text-primary" />
                             </div>
                             <h3 class="text-lg font-medium">{{ __('global.permission_details') }}</h3>
@@ -60,7 +60,7 @@
                         
                         <div class="mt-4 p-3 bg-info/10 border border-info/20 rounded-lg">
                             <div class="flex items-center text-info">
-                                <x-base.lucide icon="Info" class="w-5 h-5 mr-2" />
+                                <x-base.lucide icon="Info" class="w-5 h-5 me-2" />
                                 <span class="text-sm">{{ __('global.permission_id') }}: {{ $permission->id }} | {{ __('global.created') }}: {{ $permission->created_at->format('M d, Y') }}</span>
                             </div>
                         </div>
@@ -69,7 +69,7 @@
                     <!-- Preview and Current Status -->
                     <div class="border-b border-slate-200/60 dark:border-darkmode-400 pb-6 mb-6">
                         <div class="flex items-center mb-4">
-                            <div class="w-8 h-8 rounded-full bg-success/10 flex items-center justify-center mr-3">
+                            <div class="w-8 h-8 rounded-full bg-success/10 flex items-center justify-center me-3">
                                 <x-base.lucide icon="Eye" class="w-5 h-5 text-success" />
                             </div>
                             <h3 class="text-lg font-medium">{{ __('global.current_status') }}</h3>
@@ -99,7 +99,7 @@
                     <!-- Assignment Information -->
                     <div class="border-b border-slate-200/60 dark:border-darkmode-400 pb-6 mb-6">
                         <div class="flex items-center mb-4">
-                            <div class="w-8 h-8 rounded-full bg-info/10 flex items-center justify-center mr-3">
+                            <div class="w-8 h-8 rounded-full bg-info/10 flex items-center justify-center me-3">
                                 <x-base.lucide icon="ShieldCheck" class="w-5 h-5 text-info" />
                             </div>
                             <h3 class="text-lg font-medium">{{ __('global.assignment_information') }}</h3>
@@ -108,7 +108,7 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div class="p-4 bg-primary/5 border border-primary/20 rounded-lg">
                                 <h4 class="font-medium text-primary mb-2 flex items-center">
-                                    <x-base.lucide icon="Users" class="w-4 h-4 mr-2" />
+                                    <x-base.lucide icon="Users" class="w-4 h-4 me-2" />
                                     {{ __('global.assigned_roles') }}
                                 </h4>
                                 <div class="text-2xl font-bold">{{ $permission->roles->count() }}</div>
@@ -117,15 +117,15 @@
                             
                             <div class="p-4 bg-success/5 border border-success/20 rounded-lg">
                                 <h4 class="font-medium text-success mb-2 flex items-center">
-                                    <x-base.lucide icon="Crown" class="w-4 h-4 mr-2" />
+                                    <x-base.lucide icon="Crown" class="w-4 h-4 me-2" />
                                     {{ __('global.admin_assignment') }}
                                 </h4>
                                 <div class="flex items-center">
                                     @if($permission->roles->contains('id', 1))
-                                        <x-base.lucide icon="CheckCircle" class="w-5 h-5 text-success mr-2" />
+                                        <x-base.lucide icon="CheckCircle" class="w-5 h-5 text-success me-2" />
                                         <span class="font-medium">{{ __('global.assigned_to_admin') }}</span>
                                     @else
-                                        <x-base.lucide icon="AlertCircle" class="w-5 h-5 text-warning mr-2" />
+                                        <x-base.lucide icon="AlertCircle" class="w-5 h-5 text-warning me-2" />
                                         <span class="font-medium">{{ __('global.not_assigned_to_admin') }}</span>
                                     @endif
                                 </div>
@@ -141,7 +141,7 @@
                                     <span class="px-3 py-1 text-sm rounded-full {{ $role->id == 1 ? 'bg-yellow-100 text-yellow-800 border border-yellow-200' : 'bg-primary/10 text-primary border border-primary/20' }}">
                                         {{ $role->name }}
                                         @if($role->id == 1)
-                                            <x-base.lucide icon="Crown" class="w-3 h-3 ml-1 inline" />
+                                            <x-base.lucide icon="Crown" class="w-3 h-3 ms-1 inline" />
                                         @endif
                                     </span>
                                 @endforeach
@@ -153,16 +153,16 @@
                     <!-- Form Actions -->
                     <div class="flex justify-between items-center pt-4">
                         <a href="{{ route('permissions.index') }}" class="btn btn-outline-secondary flex items-center">
-                            <x-base.lucide icon="X" class="w-4 h-4 mr-2" />
+                            <x-base.lucide icon="X" class="w-4 h-4 me-2" />
                             {{ __('global.cancel') }}
                         </a>
                         <div class="flex gap-2">
                             <x-base.button type="reset" variant="outline-secondary" class="flex items-center">
-                                <x-base.lucide icon="RotateCcw" class="w-4 h-4 mr-2" />
+                                <x-base.lucide icon="RotateCcw" class="w-4 h-4 me-2" />
                                 {{ __('global.reset_changes') }}
                             </x-base.button>
                             <x-base.button type="submit" variant="primary" class="flex items-center">
-                                <x-base.lucide icon="Save" class="w-4 h-4 mr-2" />
+                                <x-base.lucide icon="Save" class="w-4 h-4 me-2" />
                                 {{ __('global.update_permission') }}
                             </x-base.button>
                         </div>
@@ -177,7 +177,7 @@
                 <!-- Usage Statistics -->
                 <div class="box p-5 bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-darkmode-600 dark:to-darkmode-700">
                     <h3 class="text-lg font-medium text-slate-800 dark:text-slate-200 mb-4 flex items-center">
-                        <x-base.lucide icon="BarChart3" class="w-5 h-5 text-blue-500 mr-2" />
+                        <x-base.lucide icon="BarChart3" class="w-5 h-5 text-blue-500 me-2" />
                         {{ __('global.usage_statistics') }}
                     </h3>
                     
@@ -200,23 +200,23 @@
                 <!-- Editing Guidelines -->
                 <div class="box p-5 bg-gradient-to-br from-green-50 to-emerald-50 dark:from-darkmode-600 dark:to-darkmode-700">
                     <h3 class="text-lg font-medium text-slate-800 dark:text-slate-200 mb-4 flex items-center">
-                        <x-base.lucide icon="HelpCircle" class="w-5 h-5 text-green-500 mr-2" />
+                        <x-base.lucide icon="HelpCircle" class="w-5 h-5 text-green-500 me-2" />
                         {{ __('global.editing_guidelines') }}
                     </h3>
                     
                     <div class="space-y-3 text-sm text-slate-600 dark:text-slate-400">
                         <div class="flex items-start">
-                            <x-base.lucide icon="AlertTriangle" class="w-4 h-4 text-yellow-500 mt-0.5 mr-2 flex-shrink-0" />
+                            <x-base.lucide icon="AlertTriangle" class="w-4 h-4 text-yellow-500 mt-0.5 me-2 flex-shrink-0" />
                             <span>{{ __('global.name_changes_affect_all_roles') }}</span>
                         </div>
                         
                         <div class="flex items-start">
-                            <x-base.lucide icon="Lock" class="w-4 h-4 text-red-500 mt-0.5 mr-2 flex-shrink-0" />
+                            <x-base.lucide icon="Lock" class="w-4 h-4 text-red-500 mt-0.5 me-2 flex-shrink-0" />
                             <span>{{ __('global.guard_name_cannot_be_modified') }}</span>
                         </div>
                         
                         <div class="flex items-start">
-                            <x-base.lucide icon="Info" class="w-4 h-4 text-blue-500 mt-0.5 mr-2 flex-shrink-0" />
+                            <x-base.lucide icon="Info" class="w-4 h-4 text-blue-500 mt-0.5 me-2 flex-shrink-0" />
                             <span>{{ __('global.changes_take_effect_immediately') }}</span>
                         </div>
                     </div>
@@ -226,7 +226,7 @@
                 @if($permission->roles->count() > 0)
                 <div class="box p-5 bg-gradient-to-br from-red-50 to-rose-50 dark:from-darkmode-600 dark:to-darkmode-700 border border-red-200 dark:border-red-800">
                     <h3 class="text-lg font-medium text-red-800 dark:text-red-200 mb-3 flex items-center">
-                        <x-base.lucide icon="AlertTriangle" class="w-5 h-5 text-red-500 mr-2" />
+                        <x-base.lucide icon="AlertTriangle" class="w-5 h-5 text-red-500 me-2" />
                         {{ __('global.caution_zone') }}
                     </h3>
                     

@@ -6,7 +6,7 @@
 
 @section('subcontent')
     <div class="intro-y flex items-center mt-8">
-        <h2 class="text-lg font-medium mr-auto">Edit Children</h2>
+        <h2 class="text-lg font-medium me-auto">Edit Children</h2>
     </div>
     <div class="grid grid-cols-12 gap-6 mt-5">
         <div class="intro-y col-span-12 lg:col-span-8">
@@ -21,8 +21,8 @@
                         </div>
 
                     </div>
-                    <div class="text-right mt-5">
-                        <a href="{{ route('childrens.index') }}" class="btn btn-outline-secondary w-24 mr-1">Cancel</a>
+                    <div class="text-end mt-5">
+                        <a href="{{ route('childrens.index') }}" class="btn btn-outline-secondary w-24 me-1">Cancel</a>
                         <button type="submit" class="btn btn-primary w-24">Update</button>
                     </div>
                 </form>

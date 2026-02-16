@@ -23,7 +23,7 @@
                             src="{{ Vite::asset('resources/images/logo.svg') }}"
                             alt="{{ config('app.name') }}"
                         />
-                        <span class="ml-3 text-2xl font-bold text-white"> {{ config('app.name') }} </span>
+                        <span class="ms-3 text-2xl font-bold text-white"> {{ config('app.name') }} </span>
                     </a>
                     <div class="my-auto">
                         <img
@@ -76,20 +76,20 @@
                         
                         <div class="intro-x flex justify-between items-center mb-10">
                             <div class="flex items-center">
-                                <x-base.lucide icon="Globe" class="w-5 h-5 text-slate-600 dark:text-slate-400 mr-2" />
+                                <x-base.lucide icon="Globe" class="w-5 h-5 text-slate-600 dark:text-slate-400 me-2" />
                                 <span class="text-slate-600 dark:text-slate-400 text-sm">
                                     {{ $currentLang ? $currentLang->name : app()->getLocale() }}
                                 </span>
                             </div>
                             @if($nextLang)
                             <a href="{{ route('locale.switch', $nextLang->code) }}" class="flex items-center text-slate-600 dark:text-slate-400 hover:text-primary transition-colors">
-                                <x-base.lucide icon="RefreshCw" class="w-5 h-5 mr-1" />
+                                <x-base.lucide icon="RefreshCw" class="w-5 h-5 me-1" />
                                 <span class="font-medium text-xs">{{ __('global.change_language') }}</span>
                             </a>
                             @endif
                         </div>
 
-                        <h2 class="intro-x text-center text-2xl font-bold xl:text-left xl:text-3xl">
+                        <h2 class="intro-x text-center text-2xl font-bold xl:text-start xl:text-3xl">
                             {{ __('global.login') }}
                         </h2>
                         <div class="intro-x mt-2 text-center text-slate-400 xl:hidden">
@@ -100,7 +100,7 @@
                             <!-- Security Indicator -->
                             <div class="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
                                 <div class="flex items-center">
-                                    <x-base.lucide icon="Shield" class="w-5 h-5 text-blue-500 mr-3" />
+                                    <x-base.lucide icon="Shield" class="w-5 h-5 text-blue-500 me-3" />
                                     <div>
                                         <div class="font-medium text-blue-800">{{ __('global.secure_login') }}</div>
                                         <div class="text-sm text-blue-600 mt-1">
@@ -159,7 +159,7 @@
                                     </x-base.form-label>
                                     <div class="relative">
                                         <x-base.form-input
-                                            class="intro-x block min-w-full px-4 py-3 xl:min-w-[400px] border-slate-300 focus:border-primary focus:ring-primary pr-12"
+                                            class="intro-x block min-w-full px-4 py-3 xl:min-w-[400px] border-slate-300 focus:border-primary focus:ring-primary pe-12"
                                             type="password"
                                             name="password"
                                             id="password"
@@ -167,7 +167,7 @@
                                             required
                                             autocomplete="current-password"
                                         />
-                                        <button type="button" class="absolute inset-y-0 right-0 pr-3 flex items-center" onclick="togglePasswordVisibility()">
+                                        <button type="button" class="absolute inset-y-0 right-0 pe-3 flex items-center" onclick="togglePasswordVisibility()">
                                             <x-base.lucide icon="Eye" class="w-5 h-5 text-slate-400 hover:text-slate-600" id="eye-icon" />
                                         </button>
                                     </div>
@@ -177,15 +177,15 @@
                                 </div>
 
                                 <div class="intro-x mt-4 flex text-xs text-slate-600 dark:text-slate-500 sm:text-sm">
-                                    <div class="mr-auto flex items-center">
+                                    <div class="me-auto flex items-center">
                                         <x-base.form-check.input
-                                            class="mr-2 border"
+                                            class="me-2 border"
                                             id="remember-me"
                                             type="checkbox"
                                             name="remember"
                                         />
                                         <label
-                                            class="cursor-pointer select-none ml-2"
+                                            class="cursor-pointer select-none ms-2"
                                             for="remember-me"
                                         >
                                             {{ __('global.remember_me') }}
@@ -194,13 +194,13 @@
                                     <a href="{{ route('password.request') }}" class="text-primary hover:underline">{{ __('global.forgot_password') }}</a>
                                 </div>
 
-                                <div class="intro-x mt-5 text-center xl:mt-8 xl:text-left">
+                                <div class="intro-x mt-5 text-center xl:mt-8 xl:text-start">
                                     <x-base.button
-                                        class="w-full px-4 py-3 align-top xl:mr-3 xl:w-40 flex items-center justify-center"
+                                        class="w-full px-4 py-3 align-top xl:me-3 xl:w-40 flex items-center justify-center"
                                         variant="primary"
                                         type="submit"
                                     >
-                                        <x-base.lucide icon="LogIn" class="w-4 h-4 mr-2" />
+                                        <x-base.lucide icon="LogIn" class="w-4 h-4 me-2" />
                                         {{ __('global.login') }}
                                     </x-base.button>
                                 </div>
@@ -215,7 +215,7 @@
                                     </div>
                                     <div class="mb-3">
                                         <x-base.button id="demo-toggle" variant="outline-secondary" class="w-full sm:w-auto px-3 py-2 flex items-center">
-                                            <x-base.lucide icon="ChevronUp" class="w-4 h-4 mr-2" />
+                                            <x-base.lucide icon="ChevronUp" class="w-4 h-4 me-2" />
                                             <span class="text-xs font-medium">{{ __('global.quick_login') }}</span>
                                         </x-base.button>
                                     </div>
@@ -224,13 +224,13 @@
                                             <div class="relative group">
                                                 <button
                                                     type="button"
-                                                    class="demo-account w-full p-3 rounded-lg border border-slate-200 dark:border-darkmode-400 bg-slate-50 dark:bg-darkmode-700 hover:bg-primary hover:border-primary focus:outline-none focus:ring-2 focus:ring-primary transition-all duration-200 text-left"
+                                                    class="demo-account w-full p-3 rounded-lg border border-slate-200 dark:border-darkmode-400 bg-slate-50 dark:bg-darkmode-700 hover:bg-primary hover:border-primary focus:outline-none focus:ring-2 focus:ring-primary transition-all duration-200 text-start"
                                                     data-email="{{ $acc['email'] }}"
                                                     data-password="{{ $acc['password'] }}"
                                                     title="{{ __('global.click_to_fill') }}"
                                                 >
                                                     <div class="flex items-center">
-                                                        <x-base.lucide icon="{{ $roleIcons[$acc['role_key']] ?? 'User' }}" class="w-4 h-4 mr-2 text-slate-500 group-hover:text-white" />
+                                                        <x-base.lucide icon="{{ $roleIcons[$acc['role_key']] ?? 'User' }}" class="w-4 h-4 me-2 text-slate-500 group-hover:text-white" />
                                                         <div>
                                                             <div class="text-xs font-bold text-slate-700 dark:text-slate-300 group-hover:text-white truncate">
                                                                 {{ __($acc['role_key']) }}
@@ -257,7 +257,7 @@
                             @endif
                         </div>
 
-                        <div class="intro-x mt-10 text-center text-slate-600 dark:text-slate-500 xl:mt-24 xl:text-left">
+                        <div class="intro-x mt-10 text-center text-slate-600 dark:text-slate-500 xl:mt-24 xl:text-start">
                             {{ __('global.agree_terms_prefix') }}
                             <a
                                 class="text-primary dark:text-slate-200 underline"
@@ -283,7 +283,7 @@
     <!-- Notification Container -->
     <div id="copy-notification" class="fixed bottom-5 right-5 z-[100] transform translate-y-20 transition-transform duration-300">
         <div class="bg-success text-white px-4 py-3 rounded-lg shadow-lg flex items-center">
-            <x-base.lucide icon="CheckCircle" class="w-5 h-5 mr-3" />
+            <x-base.lucide icon="CheckCircle" class="w-5 h-5 me-3" />
             <span id="notification-message">{{ __('global.copied_to_clipboard') }}</span>
         </div>
     </div>
@@ -457,7 +457,7 @@
                 // Show loading state
                 const originalContent = submitButton.innerHTML;
                 submitButton.dataset.original = originalContent;
-                submitButton.innerHTML = '<i data-lucide="loader" class="w-4 h-4 mr-2 animate-spin"></i> {{ __('global.signing_in') }}';
+                submitButton.innerHTML = '<i data-lucide="loader" class="w-4 h-4 me-2 animate-spin"></i> {{ __('global.signing_in') }}';
                 lucide.createIcons();
                 submitButton.disabled = true;
                 

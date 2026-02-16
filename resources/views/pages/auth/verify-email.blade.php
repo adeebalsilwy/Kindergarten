@@ -13,12 +13,12 @@
     <form method="POST" action="{{ route('verification.send') }}">
         @csrf
         <x-base.button type="submit" variant="primary">
-            <x-base.lucide icon="Mail" class="w-4 h-4 mr-2" /> {{ __('auth.resend_verification_link') }}
+            <x-base.lucide icon="Mail" class="w-4 h-4 me-2" /> {{ __('auth.resend_verification_link') }}
         </x-base.button>
     </form>
     <div class="mt-6">
         <x-base.button as="a" href="{{ route('dashboard-overview-1') }}" variant="outline-primary">
-            <x-base.lucide icon="Layout" class="w-4 h-4 mr-2" /> {{ __('global.dashboard') }}
+            <x-base.lucide icon="Layout" class="w-4 h-4 me-2" /> {{ __('global.dashboard') }}
         </x-base.button>
     </div>
 </div>

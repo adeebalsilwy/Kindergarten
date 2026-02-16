@@ -140,7 +140,7 @@
         </x-base.slideover.panel>
     </x-base.slideover>
     <div
-        class="fixed bottom-0 right-0 z-50 flex items-center justify-center mb-5 mr-5 text-white rounded-full shadow-lg cursor-pointer h-14 w-14 bg-theme-1"
+        class="fixed bottom-0 right-0 z-50 flex items-center justify-center mb-5 me-5 text-white rounded-full shadow-lg cursor-pointer h-14 w-14 bg-theme-1"
         data-tw-toggle="modal"
         data-tw-target="#theme-switcher"
     >

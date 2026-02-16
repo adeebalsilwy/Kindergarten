@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use OmarAlalwi\Gpdf\Facades\Gpdf;
+
 use App\Http\Requests\StoreEventRequest;
 use App\Http\Requests\UpdateEventRequest;
 use App\Services\EventService;
@@ -58,7 +60,7 @@ class EventController extends Controller
      */
     protected function exportToPdf($data)
     {
-        $pdf = Pdf::loadView('pages.events.export-pdf', ['data' => $data]);
+        $pdf = Gpdf::loadView('pages.events.export-pdf', ['data' => $data]);
 
         return $pdf->download('Event_export_'.date('Y-m-d_H-i-s').'.pdf');
     }
