@@ -6,7 +6,7 @@
 
 @section('subcontent')
     <div class="intro-y flex items-center mt-8">
-        <h2 class="text-lg font-medium mr-auto">CRUD & Command Monitoring</h2>
+        <h2 class="text-lg font-medium me-auto">CRUD & Command Monitoring</h2>
     </div>
 
     <div class="grid grid-cols-12 gap-6 mt-5">
@@ -39,18 +39,18 @@
                             </x-base.table.td>
                             <x-base.table.td class="w-40">
                                 <div class="flex items-center justify-center {{ $log->status == 'success' ? 'text-success' : ($log->status == 'failed' ? 'text-danger' : 'text-warning') }}">
-                                    <x-base.lucide icon="{{ $log->status == 'success' ? 'CheckCircle' : ($log->status == 'failed' ? 'XCircle' : 'RefreshCcw') }}" class="w-4 h-4 mr-2" />
+                                    <x-base.lucide icon="{{ $log->status == 'success' ? 'CheckCircle' : ($log->status == 'failed' ? 'XCircle' : 'RefreshCcw') }}" class="w-4 h-4 me-2" />
                                     {{ ucfirst($log->status) }}
                                 </div>
                             </x-base.table.td>
                             <x-base.table.td class="table-report__action w-56">
                                 <div class="flex justify-center items-center">
-                                    <x-base.button variant="outline-secondary" as="a" href="{{ route('monitoring.show', $log->id) }}" size="sm" class="mr-2">
-                                        <x-base.lucide icon="FileText" class="w-4 h-4 mr-1" /> View Logs
+                                    <x-base.button variant="outline-secondary" as="a" href="{{ route('monitoring.show', $log->id) }}" size="sm" class="me-2">
+                                        <x-base.lucide icon="FileText" class="w-4 h-4 me-1" /> View Logs
                                     </x-base.button>
                                     @if($log->status == 'failed')
                                         <x-base.button variant="primary" as="a" href="{{ route('monitoring.rerun', $log->id) }}" size="sm">
-                                            <x-base.lucide icon="RotateCcw" class="w-4 h-4 mr-1 text-white" /> Rerun
+                                            <x-base.lucide icon="RotateCcw" class="w-4 h-4 me-1 text-white" /> Rerun
                                         </x-base.button>
                                     @endif
                                 </div>

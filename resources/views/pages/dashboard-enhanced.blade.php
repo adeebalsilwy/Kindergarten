@@ -12,9 +12,9 @@
                 <!-- BEGIN: General Metrics -->
                 <div class="col-span-12 mt-8">
                     <div class="intro-y flex h-10 items-center">
-                        <h2 class="mr-5 truncate text-lg font-medium">{{ __('global.general_report') }}</h2>
-                        <a href="{{ route('dashboard-overview-1') }}" class="ml-auto flex items-center text-primary">
-                            <x-base.lucide class="mr-3 h-4 w-4" icon="RefreshCcw" /> {{ __('global.reload_data') }}
+                        <h2 class="me-5 truncate text-lg font-medium">{{ __('global.general_report') }}</h2>
+                        <a href="{{ route('dashboard-overview-1') }}" class="ms-auto flex items-center text-primary">
+                            <x-base.lucide class="me-3 h-4 w-4" icon="RefreshCcw" /> {{ __('global.reload_data') }}
                         </a>
                     </div>
                     <div class="mt-5 grid grid-cols-12 gap-6">
@@ -80,7 +80,7 @@
                 <!-- BEGIN: Attendance Stats -->
                 <div class="col-span-12 mt-8">
                     <div class="intro-y block h-10 items-center sm:flex">
-                        <h2 class="mr-5 truncate text-lg font-medium">{{ __('global.Attendance_Statistics') }}</h2>
+                        <h2 class="me-5 truncate text-lg font-medium">{{ __('global.Attendance_Statistics') }}</h2>
                     </div>
                     <div class="intro-y box mt-5 p-5">
                         <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
@@ -117,7 +117,7 @@
                 <!-- BEGIN: Financial Summary -->
                 <div class="col-span-12 mt-8 lg:col-span-6">
                     <div class="intro-y block h-10 items-center sm:flex">
-                        <h2 class="mr-5 truncate text-lg font-medium">{{ __('global.Financial_Reporting') }}</h2>
+                        <h2 class="me-5 truncate text-lg font-medium">{{ __('global.Financial_Reporting') }}</h2>
                     </div>
                     <div class="intro-y box mt-5 p-5">
                         <div class="flex flex-col md:flex-row md:items-center">
@@ -151,7 +151,7 @@
                 <!-- BEGIN: Class Utilization -->
                 <div class="col-span-12 mt-8 lg:col-span-6">
                     <div class="intro-y block h-10 items-center sm:flex">
-                        <h2 class="mr-5 truncate text-lg font-medium">{{ __('global.Class_Utilization') }}</h2>
+                        <h2 class="me-5 truncate text-lg font-medium">{{ __('global.Class_Utilization') }}</h2>
                     </div>
                     <div class="intro-y box mt-5 p-5">
                         <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
@@ -190,7 +190,7 @@
                                                     style="width: {{ $classStat['utilization_rate'] }}%">
                                                 </div>
                                             </div>
-                                            <span class="text-sm w-12 text-right">{{ $classStat['utilization_rate'] }}%</span>
+                                            <span class="text-sm w-12 text-end">{{ $classStat['utilization_rate'] }}%</span>
                                         </div>
                                     </div>
                                 @endforeach
@@ -203,7 +203,7 @@
                 <!-- BEGIN: Academic Performance -->
                 <div class="col-span-12 mt-8">
                     <div class="intro-y block h-10 items-center sm:flex">
-                        <h2 class="mr-5 truncate text-lg font-medium">{{ __('global.Academic_Performance') }}</h2>
+                        <h2 class="me-5 truncate text-lg font-medium">{{ __('global.Academic_Performance') }}</h2>
                     </div>
                     <div class="intro-y box mt-5 p-5">
                         <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
@@ -254,7 +254,7 @@
                 <!-- BEGIN: Recent Activities -->
                 <div class="col-span-12 mt-8">
                     <div class="intro-y flex h-10 items-center">
-                        <h2 class="mr-5 truncate text-lg font-medium">{{ __('global.Recent_Activities') }}</h2>
+                        <h2 class="me-5 truncate text-lg font-medium">{{ __('global.Recent_Activities') }}</h2>
                     </div>
                     <div class="intro-y box mt-5 p-5">
                         <div class="grid grid-cols-1 lg:grid-cols-5 gap-4">
@@ -333,11 +333,11 @@
         <!-- Sidebar -->
         <div class="col-span-12 2xl:col-span-3">
             <div class="-mb-10 pb-10 2xl:border-l">
-                <div class="grid grid-cols-12 gap-x-6 gap-y-6 2xl:gap-x-0 2xl:pl-6">
+                <div class="grid grid-cols-12 gap-x-6 gap-y-6 2xl:gap-x-0 2xl:ps-6">
                     <!-- BEGIN: Enrollment Stats -->
                     <div class="col-span-12 mt-3 md:col-span-6 xl:col-span-12 2xl:mt-8">
                         <div class="intro-y flex h-10 items-center">
-                            <h2 class="mr-5 truncate text-lg font-medium">{{ __('global.Enrollment_Stats') }}</h2>
+                            <h2 class="me-5 truncate text-lg font-medium">{{ __('global.Enrollment_Stats') }}</h2>
                         </div>
                         <div class="intro-y box mt-5 p-5">
                             <div class="grid grid-cols-2 gap-4">
@@ -365,30 +365,30 @@
                     <!-- BEGIN: Quick Actions -->
                     <div class="col-span-12 mt-3 md:col-span-6 xl:col-span-12">
                         <div class="intro-y flex h-10 items-center">
-                            <h2 class="mr-5 truncate text-lg font-medium">{{ __('global.Quick_Actions') }}</h2>
+                            <h2 class="me-5 truncate text-lg font-medium">{{ __('global.Quick_Actions') }}</h2>
                         </div>
                         <div class="mt-5 space-y-3">
                             <a href="{{ route('children.create') }}" class="block">
                                 <div class="box p-4 flex items-center hover:bg-slate-100 dark:hover:bg-darkmode-400">
-                                    <x-base.lucide icon="UserPlus" class="w-5 h-5 text-primary mr-3" />
+                                    <x-base.lucide icon="UserPlus" class="w-5 h-5 text-primary me-3" />
                                     <span class="truncate">{{ __('global.Add_New_Child') }}</span>
                                 </div>
                             </a>
                             <a href="{{ route('attendance.index') }}" class="block">
                                 <div class="box p-4 flex items-center hover:bg-slate-100 dark:hover:bg-darkmode-400">
-                                    <x-base.lucide icon="Calendar" class="w-5 h-5 text-success mr-3" />
+                                    <x-base.lucide icon="Calendar" class="w-5 h-5 text-success me-3" />
                                     <span class="truncate">{{ __('global.Record_Attendance') }}</span>
                                 </div>
                             </a>
                             <a href="{{ route('payments.create') }}" class="block">
                                 <div class="box p-4 flex items-center hover:bg-slate-100 dark:hover:bg-darkmode-400">
-                                    <x-base.lucide icon="CreditCard" class="w-5 h-5 text-warning mr-3" />
+                                    <x-base.lucide icon="CreditCard" class="w-5 h-5 text-warning me-3" />
                                     <span class="truncate">{{ __('global.Process_Payment') }}</span>
                                 </div>
                             </a>
                             <a href="{{ route('activities.create') }}" class="block">
                                 <div class="box p-4 flex items-center hover:bg-slate-100 dark:hover:bg-darkmode-400">
-                                    <x-base.lucide icon="Activity" class="w-5 h-5 text-info mr-3" />
+                                    <x-base.lucide icon="Activity" class="w-5 h-5 text-info me-3" />
                                     <span class="truncate">{{ __('global.Add_New_Activity') }}</span>
                                 </div>
                             </a>

@@ -6,25 +6,25 @@
 
 @section('subcontent')
     <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
-        <h2 class="text-lg font-medium mr-auto">{{ __('Fee.list') }}</h2>
+        <h2 class="text-lg font-medium me-auto">{{ __('Fee.list') }}</h2>
         <div class="w-full sm:w-auto flex mt-4 sm:mt-0">
             @can('export_fees')
             
                         <div class="flex gap-2">
                             <x-base.button variant="outline-primary" as="a" href="{{ route('fees.export.pdf') }}" class="flex items-center">
-                                <x-base.lucide icon="FileText" class="w-4 h-4 mr-2" />
+                                <x-base.lucide icon="FileText" class="w-4 h-4 me-2" />
                                 {{ __('global.export_pdf') }}
                             </x-base.button>
                             <x-base.button variant="outline-success" as="a" href="{{ route('fees.export.excel') }}" class="flex items-center">
-                                <x-base.lucide icon="FileSpreadsheet" class="w-4 h-4 mr-2" />
+                                <x-base.lucide icon="FileSpreadsheet" class="w-4 h-4 me-2" />
                                 {{ __('global.export_excel') }}
                             </x-base.button>
                         </div>
             @endcan
             
             @can('create_fees')
-            <x-base.button variant="primary" as="a" href="{{ route('fees.create') }}" class="ml-2 flex items-center">
-                <x-base.lucide icon="Plus" class="w-4 h-4 mr-2" />
+            <x-base.button variant="primary" as="a" href="{{ route('fees.create') }}" class="ms-2 flex items-center">
+                <x-base.lucide icon="Plus" class="w-4 h-4 me-2" />
                 {{ __('Fee.add_new') }}
             </x-base.button>
             @endcan
@@ -44,9 +44,9 @@
                                     name="search"
                                     value="{{ request('search') }}"
                                     placeholder="{{ __('global.search_fees') }}..." 
-                                    class="w-full pl-10 pr-4 py-2"
+                                    class="w-full ps-10 pe-4 py-2"
                                 />
-                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <div class="absolute inset-y-0 left-0 ps-3 flex items-center pointer-events-none">
                                     <x-base.lucide icon="Search" class="h-5 w-5 text-gray-400" />
                                 </div>
                             </div>
@@ -60,11 +60,11 @@
                         </div>
                         <div class="flex gap-2">
                             <x-base.button as="a" href="{{ route('fees.index') }}" variant="secondary" class="flex items-center">
-                                <x-base.lucide icon="RotateCcw" class="w-4 h-4 mr-2" />
+                                <x-base.lucide icon="RotateCcw" class="w-4 h-4 me-2" />
                                 {{ __('global.reset') }}
                             </x-base.button>
                             <x-base.button type="submit" variant="primary" class="flex items-center">
-                                <x-base.lucide icon="Filter" class="w-4 h-4 mr-2" />
+                                <x-base.lucide icon="Filter" class="w-4 h-4 me-2" />
                                 {{ __('global.apply') }}
                             </x-base.button>
                         </div>
@@ -98,22 +98,22 @@
                             <x-base.table.td class="text-center">{{ $fee->name ?? '-' }}</x-base.table.td>
                             <x-base.table.td class="text-center">{{ $fee->amount ?? '-' }}</x-base.table.td>
                             <x-base.table.td class="text-center">
-                                <div class="flex items-center justify-center {{ $fee->is_active ? 'text-success' : 'text-danger' }}"> <x-base.lucide icon="{{ $fee->is_active ? 'CheckSquare' : 'XSquare' }}" class="w-4 h-4 mr-2" /> {{ $fee->is_active ? __('global.yes') : __('global.no') }} </div>
+                                <div class="flex items-center justify-center {{ $fee->is_active ? 'text-success' : 'text-danger' }}"> <x-base.lucide icon="{{ $fee->is_active ? 'CheckSquare' : 'XSquare' }}" class="w-4 h-4 me-2" /> {{ $fee->is_active ? __('global.yes') : __('global.no') }} </div>
                             </x-base.table.td>
 
                             @if($canEdit || $canDelete || $canView)
                             <x-base.table.td class="table-report__action w-56">
                                 <div class="flex justify-center items-center">
                                     @can('view_fees')
-                                    <x-base.button variant="outline-secondary" as="a" href="{{ route('fees.show', $fee->id) }}" size="sm" class="mr-2">
-                                        <x-base.lucide icon="Eye" class="w-4 h-4 mr-1" />
+                                    <x-base.button variant="outline-secondary" as="a" href="{{ route('fees.show', $fee->id) }}" size="sm" class="me-2">
+                                        <x-base.lucide icon="Eye" class="w-4 h-4 me-1" />
                                         {{ __('global.view') }}
                                     </x-base.button>
                                     @endcan
                                     
                                     @can('edit_fees')
-                                    <x-base.button variant="outline-primary" as="a" href="{{ route('fees.edit', $fee->id) }}" size="sm" class="mr-2">
-                                        <x-base.lucide icon="Pencil" class="w-4 h-4 mr-1" />
+                                    <x-base.button variant="outline-primary" as="a" href="{{ route('fees.edit', $fee->id) }}" size="sm" class="me-2">
+                                        <x-base.lucide icon="Pencil" class="w-4 h-4 me-1" />
                                         {{ __('global.edit') }}
                                     </x-base.button>
                                     @endcan
@@ -123,7 +123,7 @@
                                         @csrf
                                         @method('DELETE')
                                         <x-base.button variant="outline-danger" type="submit" size="sm">
-                                            <x-base.lucide icon="Trash2" class="w-4 h-4 mr-1" />
+                                            <x-base.lucide icon="Trash2" class="w-4 h-4 me-1" />
                                             {{ __('global.delete') }}
                                         </x-base.button>
                                     </form>
@@ -141,7 +141,7 @@
                                     <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100">{{ __('global.no_data_found') }}</h3>
                                     <p class="text-gray-500 dark:text-gray-400 mt-1">{{ __('global.no_data_description') }}</p>
                                     <x-base.button variant="primary" as="a" href="{{ route('fees.create') }}" class="mt-4">
-                                        <x-base.lucide icon="Plus" class="w-4 h-4 mr-2" />
+                                        <x-base.lucide icon="Plus" class="w-4 h-4 me-2" />
                                         {{ __('Fee.add_new') }}
                                     </x-base.button>
                                 </div>
@@ -164,7 +164,7 @@
                 <div class="box p-5">
                     <div class="flex items-center">
                         <x-base.lucide icon="Database" class="w-8 h-8 text-primary" />
-                        <div class="ml-auto">
+                        <div class="ms-auto">
                             <div class="report-box__indicator bg-success"> 
                                 <x-base.lucide icon="TrendingUp" class="w-4 h-4" /> 
                             </div>
@@ -178,7 +178,7 @@
                 <div class="box p-5">
                     <div class="flex items-center">
                         <x-base.lucide icon="Activity" class="w-8 h-8 text-pending" />
-                        <div class="ml-auto">
+                        <div class="ms-auto">
                             <div class="report-box__indicator bg-success"> 
                                 <x-base.lucide icon="TrendingUp" class="w-4 h-4" /> 
                             </div>
@@ -199,7 +199,7 @@
                 <div class="box p-5">
                     <div class="flex items-center">
                         <x-base.lucide icon="Calendar" class="w-8 h-8 text-success" />
-                        <div class="ml-auto">
+                        <div class="ms-auto">
                             <div class="report-box__indicator bg-success"> 
                                 <x-base.lucide icon="TrendingUp" class="w-4 h-4" /> 
                             </div>

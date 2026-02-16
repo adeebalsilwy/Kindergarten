@@ -56,13 +56,13 @@
         .table td {
             text-align: {{ app()->getLocale() == 'ar' ? 'right' : 'left' }};
         }
-        .text-right {
+        .text-end {
             text-align: right;
         }
         .text-center {
             text-align: center;
         }
-        .text-left {
+        .text-start {
             text-align: left;
         }
         .summary-box {
@@ -129,9 +129,9 @@
             <tr>
                 <th class="text-center">{{ __('global.date') }}</th>
                 <th>{{ __('global.description') }}</th>
-                <th class="text-right">{{ __('global.debit') }}</th>
-                <th class="text-right">{{ __('global.credit') }}</th>
-                <th class="text-right">{{ __('global.balance') }}</th>
+                <th class="text-end">{{ __('global.debit') }}</th>
+                <th class="text-end">{{ __('global.credit') }}</th>
+                <th class="text-end">{{ __('global.balance') }}</th>
             </tr>
         </thead>
         <tbody>

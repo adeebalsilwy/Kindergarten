@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use OmarAlalwi\Gpdf\Facades\Gpdf;
+
 use App\Http\Requests\StoreGradeRequest;
 use App\Http\Requests\UpdateGradeRequest;
 use App\Services\GradeService;
@@ -58,7 +60,7 @@ class GradeController extends Controller
      */
     protected function exportToPdf($data)
     {
-        $pdf = Pdf::loadView('pages.grades.export-pdf', ['data' => $data]);
+        $pdf = Gpdf::loadView('pages.grades.export-pdf', ['data' => $data]);
 
         return $pdf->download('Grade_export_'.date('Y-m-d_H-i-s').'.pdf');
     }

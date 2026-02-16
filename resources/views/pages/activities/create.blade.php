@@ -6,7 +6,7 @@
 
 @section('subcontent')
     <div class="intro-y flex items-center mt-8">
-        <h2 class="text-lg font-medium mr-auto">{{ __('Activity.add_new') }}</h2>
+        <h2 class="text-lg font-medium me-auto">{{ __('Activity.add_new') }}</h2>
     </div>
     <div class="grid grid-cols-12 gap-6 mt-5">
         <div class="intro-y col-span-12 lg:col-span-10">
@@ -46,7 +46,7 @@
                             <x-base.form-label>{{ __('activities.fields.start_time') }}</x-base.form-label>
                             <div class="relative mt-2">
                                 <x-base.form-input type="time" name="start_time" value="{{ old('start_time', $activity->start_time ?? '') }}" />
-                                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                <div class="absolute inset-y-0 right-0 pe-3 flex items-center pointer-events-none">
                                     <x-base.lucide icon="Clock" class="h-5 w-5 text-gray-400" />
                                 </div>
                             </div>
@@ -55,7 +55,7 @@
                             <x-base.form-label>{{ __('activities.fields.end_time') }}</x-base.form-label>
                             <div class="relative mt-2">
                                 <x-base.form-input type="time" name="end_time" value="{{ old('end_time', $activity->end_time ?? '') }}" />
-                                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                <div class="absolute inset-y-0 right-0 pe-3 flex items-center pointer-events-none">
                                     <x-base.lucide icon="Clock" class="h-5 w-5 text-gray-400" />
                                 </div>
                             </div>
@@ -88,7 +88,7 @@
                                 <label class="relative inline-flex items-center cursor-pointer">
                                     <x-base.form-input type="checkbox" name="is_active" value="1" {{ old('is_active', $activity->is_active ?? false) ? 'checked' : '' }} class="sr-only peer" />
                                     <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary/30 dark:peer-focus:ring-primary rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-primary"></div>
-                                    <span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">{{ __('global.active') }}</span>
+                                    <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">{{ __('global.active') }}</span>
                                 </label>
                             </div>
                         </div>
@@ -111,7 +111,7 @@
 
                     </div>
                     <div class="flex justify-end mt-5">
-                        <a href="{{ route('activities.index') }}" class="btn btn-outline-secondary w-24 mr-1">{{ __('global.cancel') }}</a>
+                        <a href="{{ route('activities.index') }}" class="btn btn-outline-secondary w-24 me-1">{{ __('global.cancel') }}</a>
                         <x-base.button type="submit" variant="primary" class="w-24">{{ __('global.save') }}</x-base.button>
                     </div>
                 </form>

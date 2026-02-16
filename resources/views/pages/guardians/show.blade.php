@@ -6,15 +6,15 @@
 
 @section('subcontent')
     <div class="intro-y flex items-center mt-8">
-        <h2 class="text-lg font-medium mr-auto">{{ __('global.guardian_profile') }}</h2>
-        <div class="ml-auto flex gap-2">
+        <h2 class="text-lg font-medium me-auto">{{ __('global.guardian_profile') }}</h2>
+        <div class="ms-auto flex gap-2">
             <x-base.button variant="secondary" as="a" href="{{ route('guardians.index') }}">
-                <x-base.lucide icon="ArrowLeft" class="w-4 h-4 mr-2" />
+                <x-base.lucide icon="ArrowLeft" class="w-4 h-4 me-2" />
                 {{ __('global.back') }}
             </x-base.button>
             @can('edit_guardians')
             <x-base.button variant="primary" as="a" href="{{ route('guardians.edit', $parents->id) }}">
-                <x-base.lucide icon="Pencil" class="w-4 h-4 mr-2" />
+                <x-base.lucide icon="Pencil" class="w-4 h-4 me-2" />
                 {{ __('global.edit') }}
             </x-base.button>
             @endcan
@@ -34,13 +34,13 @@
                             </div>
                         @endif
                     </div>
-                    <div class="ml-4">
+                    <div class="ms-4">
                         <div class="text-base font-medium">{{ $parents->name }}</div>
                         <div class="text-slate-500 text-sm">
                             {{ $parents->relationship ?? __('global.not_specified') }}
                         </div>
                     </div>
-                    <div class="ml-auto">
+                    <div class="ms-auto">
                         @if($parents->is_active ?? true)
                             <span class="px-2 py-1 rounded-full text-xs bg-success/20 text-success">{{ __('global.active') }}</span>
                         @else
@@ -50,15 +50,15 @@
                 </div>
                 <div class="mt-5 space-y-2">
                     <div class="flex items-center text-sm">
-                        <x-base.lucide icon="Phone" class="w-4 h-4 mr-2" />
+                        <x-base.lucide icon="Phone" class="w-4 h-4 me-2" />
                         <span>{{ $parents->phone ?? __('global.not_provided') }}</span>
                     </div>
                     <div class="flex items-center text-sm">
-                        <x-base.lucide icon="Mail" class="w-4 h-4 mr-2" />
+                        <x-base.lucide icon="Mail" class="w-4 h-4 me-2" />
                         <span>{{ $parents->email ?? __('global.not_provided') }}</span>
                     </div>
                     <div class="flex items-center text-sm">
-                        <x-base.lucide icon="Home" class="w-4 h-4 mr-2" />
+                        <x-base.lucide icon="Home" class="w-4 h-4 me-2" />
                         <span>{{ $parents->address ?? __('global.not_provided') }}</span>
                     </div>
                 </div>

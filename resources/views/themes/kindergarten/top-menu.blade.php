@@ -23,7 +23,7 @@
                         src="{{ Vite::asset('resources/images/logo.svg') }}"
                         alt="Kindergarten Management System"
                     />
-                    <span class="ml-3 text-lg font-bold text-white"> 
+                    <span class="ms-3 text-lg font-bold text-white">
                         <span class="text-yellow-300">Kids</span>
                         <span class="text-green-300">Care</span>
                     </span>
@@ -31,7 +31,7 @@
                 <!-- END: Logo -->
                 <!-- BEGIN: Breadcrumb -->
                 <x-base.breadcrumb
-                    class="-intro-x mr-auto h-full border-white/[0.08] md:ml-10 md:border-l md:pl-10"
+                    class="-intro-x me-auto h-full border-white/[0.08] md:ms-10 md:border-l md:ps-10"
                     light
                 >
                     <x-base.breadcrumb.link :index="0">{{ __('global.kindergarten') }}</x-base.breadcrumb.link>
@@ -44,15 +44,15 @@
                 </x-base.breadcrumb>
                 <!-- END: Breadcrumb -->
                 <!-- BEGIN: Search -->
-                <div class="search intro-x relative mr-3 sm:mr-6">
+                <div class="search intro-x relative me-3 sm:me-6">
                     <div class="hidden sm:block">
                         <x-base.form-input
-                            class="w-56 rounded-full border-transparent bg-white/20 pr-8 shadow-none transition-[width] duration-300 ease-in-out focus:w-72 focus:border-transparent dark:bg-darkmode-400/70"
+                            class="w-56 rounded-full border-transparent bg-white/20 pe-8 shadow-none transition-[width] duration-300 ease-in-out focus:w-72 focus:border-transparent dark:bg-darkmode-400/70"
                             type="text"
                             placeholder="{{ __('global.search') }}..."
                         />
                         <x-base.lucide
-                            class="absolute inset-y-0 right-0 my-auto mr-3 h-5 w-5 text-white/70 dark:text-slate-300"
+                            class="absolute inset-y-0 right-0 my-auto me-3 h-5 w-5 text-white/70 dark:text-slate-300"
                             icon="Search"
                         />
                     </div>
@@ -89,7 +89,7 @@
                                             icon="Users"
                                         />
                                     </div>
-                                    <div class="ml-3">{{ __('global.children') }}</div>
+                                    <div class="ms-3">{{ __('global.children') }}</div>
                                 </a>
                                 <a
                                     class="mt-2 flex items-center"
@@ -102,7 +102,7 @@
                                             icon="User"
                                         />
                                     </div>
-                                    <div class="ml-3">{{ __('global.teachers') }}</div>
+                                    <div class="ms-3">{{ __('global.teachers') }}</div>
                                 </a>
                                 <a
                                     class="mt-2 flex items-center"
@@ -115,7 +115,7 @@
                                             icon="CreditCard"
                                         />
                                     </div>
-                                    <div class="ml-3">{{ __('global.financial_reports') }}</div>
+                                    <div class="ms-3">{{ __('global.financial_reports') }}</div>
                                 </a>
                             </div>
                             <div class="mb-2 font-medium">{{ __('global.quick_actions') }}</div>
@@ -132,7 +132,7 @@
                                             />
                                         </div>
                                     </div>
-                                    <div class="ml-3">{{ __('global.attendance') }}</div>
+                                    <div class="ms-3">{{ __('global.attendance') }}</div>
                                 </a>
                                 <a
                                     class="mt-2 flex items-center"
@@ -146,7 +146,7 @@
                                             />
                                         </div>
                                     </div>
-                                    <div class="ml-3">{{ __('global.payments') }}</div>
+                                    <div class="ms-3">{{ __('global.payments') }}</div>
                                 </a>
                             </div>
                         </div>
@@ -154,16 +154,16 @@
                 </div>
                 <!-- END: Search -->
                 <!-- BEGIN: Language Switcher -->
-                <div class="intro-x mr-4 sm:mr-6">
+                <div class="intro-x me-4 sm:me-6">
                     <x-base.dropdown>
                         <x-base.dropdown.button class="flex items-center text-white/90">
                             <x-base.lucide
-                                class="h-5 w-5 mr-1"
+                                class="h-5 w-5 me-1"
                                 icon="Globe"
                             />
                             {{ app()->getLocale() == 'ar' ? 'AR' : 'EN' }}
                             <x-base.lucide
-                                class="h-4 w-4 ml-1"
+                                class="h-4 w-4 ms-1"
                                 icon="ChevronDown"
                             />
                         </x-base.dropdown.button>
@@ -171,14 +171,14 @@
                             <x-base.dropdown.content>
                                 <x-base.dropdown.item href="{{ route('locale.switch', 'en') }}">
                                     <x-base.lucide
-                                        class="h-4 w-4 mr-2"
+                                        class="h-4 w-4 me-2"
                                         icon="Globe"
                                     />
                                     English
                                 </x-base.dropdown.item>
                                 <x-base.dropdown.item href="{{ route('locale.switch', 'ar') }}">
                                     <x-base.lucide
-                                        class="h-4 w-4 mr-2"
+                                        class="h-4 w-4 me-2"
                                         icon="Globe"
                                     />
                                     العربية
@@ -189,7 +189,7 @@
                 </div>
                 <!-- END: Language Switcher -->
                 <!-- BEGIN: Notifications -->
-                <x-base.popover class="intro-x mr-4 sm:mr-6">
+                <x-base.popover class="intro-x me-4 sm:me-6">
                     <x-base.popover.button
                         class="relative block text-white/70 outline-none before:absolute before:right-0 before:top-[-2px] before:h-[8px] before:w-[8px] before:rounded-full before:bg-danger before:content-['']"
                     >
@@ -201,7 +201,7 @@
                     <x-base.popover.panel class="mt-2 w-[280px] p-5 sm:w-[350px] bg-white/90 backdrop-blur">
                         <div class="mb-5 font-medium">{{ __('global.notifications') }}</div>
                         <div class="cursor-pointer relative flex items-center mt-2">
-                            <div class="image-fit relative mr-1 h-10 w-10 flex-none">
+                            <div class="image-fit relative me-1 h-10 w-10 flex-none">
                                 <div class="flex h-10 w-10 items-center justify-center rounded-full bg-green-500/20 text-green-600">
                                     <x-base.lucide
                                         class="h-5 w-5"
@@ -209,9 +209,9 @@
                                     />
                                 </div>
                             </div>
-                            <div class="ml-2 overflow-hidden">
+                            <div class="ms-2 overflow-hidden">
                                 <div class="flex items-center">
-                                    <div class="mr-5 truncate font-medium">
+                                    <div class="me-5 truncate font-medium">
                                         {{ __('global.new_student_enrolled') }}
                                     </div>
                                 </div>
@@ -221,7 +221,7 @@
                             </div>
                         </div>
                         <div class="cursor-pointer relative flex items-center mt-3">
-                            <div class="image-fit relative mr-1 h-10 w-10 flex-none">
+                            <div class="image-fit relative me-1 h-10 w-10 flex-none">
                                 <div class="flex h-10 w-10 items-center justify-center rounded-full bg-yellow-500/20 text-yellow-600">
                                     <x-base.lucide
                                         class="h-5 w-5"
@@ -229,9 +229,9 @@
                                     />
                                 </div>
                             </div>
-                            <div class="ml-2 overflow-hidden">
+                            <div class="ms-2 overflow-hidden">
                                 <div class="flex items-center">
-                                    <div class="mr-5 truncate font-medium">
+                                    <div class="me-5 truncate font-medium">
                                         {{ __('global.payment_received') }}
                                     </div>
                                 </div>
@@ -267,20 +267,20 @@
                         <x-base.menu.divider class="bg-slate-200" />
                         <x-base.menu.item class="hover:bg-slate-100">
                             <x-base.lucide
-                                class="mr-2 h-4 w-4"
+                                class="me-2 h-4 w-4"
                                 icon="User"
                             /> {{ __('global.profile') }}
                         </x-base.menu.item>
                         <x-base.menu.item class="hover:bg-slate-100">
                             <x-base.lucide
-                                class="mr-2 h-4 w-4"
+                                class="me-2 h-4 w-4"
                                 icon="Settings"
                             /> {{ __('global.settings') }}
                         </x-base.menu.item>
                         <x-base.menu.divider class="bg-slate-200" />
                         <x-base.menu.item class="hover:bg-slate-100">
                             <x-base.lucide
-                                class="mr-2 h-4 w-4"
+                                class="me-2 h-4 w-4"
                                 icon="LogOut"
                             /> {{ __('global.logout') }}
                         </x-base.menu.item>

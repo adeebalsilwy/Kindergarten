@@ -6,15 +6,15 @@
 
 @section('subcontent')
     <div class="intro-y flex items-center mt-8">
-        <h2 class="text-lg font-medium mr-auto">{{ __('global.class_profile') }}</h2>
-        <div class="ml-auto flex gap-2">
+        <h2 class="text-lg font-medium me-auto">{{ __('global.class_profile') }}</h2>
+        <div class="ms-auto flex gap-2">
             <x-base.button variant="secondary" as="a" href="{{ route('classes.index') }}">
-                <x-base.lucide icon="ArrowLeft" class="w-4 h-4 mr-2" />
+                <x-base.lucide icon="ArrowLeft" class="w-4 h-4 me-2" />
                 {{ __('global.back') }}
             </x-base.button>
             @can('edit_classes')
             <x-base.button variant="primary" as="a" href="{{ route('classes.edit', $classes->id) }}">
-                <x-base.lucide icon="Pencil" class="w-4 h-4 mr-2" />
+                <x-base.lucide icon="Pencil" class="w-4 h-4 me-2" />
                 {{ __('global.edit') }}
             </x-base.button>
             @endcan
@@ -29,7 +29,7 @@
                         <div class="text-base font-medium">{{ $classes->name }}</div>
                         <div class="text-slate-500 text-sm">{{ $classes->code }}</div>
                     </div>
-                    <div class="ml-auto">
+                    <div class="ms-auto">
                         @if($classes->is_active)
                             <span class="px-2 py-1 rounded-full text-xs bg-success/20 text-success">{{ __('global.active') }}</span>
                         @else
@@ -60,19 +60,19 @@
                         $fillPercent = $classes->capacity > 0 ? min(100, ($classes->enrollment_count / $classes->capacity) * 100) : 0;
                     @endphp
                     <x-base.progress.bar :value="$fillPercent" />
-                    <div class="text-xs text-right mt-1">{{ number_format($fillPercent, 1) }}%</div>
+                    <div class="text-xs text-end mt-1">{{ number_format($fillPercent, 1) }}%</div>
                 </div>
                 <div class="mt-5 space-y-2 text-sm">
                     <div class="flex items-center">
-                        <x-base.lucide icon="Clock" class="w-4 h-4 mr-2" />
+                        <x-base.lucide icon="Clock" class="w-4 h-4 me-2" />
                         <span>{{ $classes->start_time }} - {{ $classes->end_time }}</span>
                     </div>
                     <div class="flex items-center">
-                        <x-base.lucide icon="MapPin" class="w-4 h-4 mr-2" />
+                        <x-base.lucide icon="MapPin" class="w-4 h-4 me-2" />
                         <span>{{ $classes->room_number ?? $classes->location ?? '-' }}</span>
                     </div>
                     <div class="flex items-center">
-                        <x-base.lucide icon="DollarSign" class="w-4 h-4 mr-2" />
+                        <x-base.lucide icon="DollarSign" class="w-4 h-4 me-2" />
                         <span>{{ number_format($classes->monthly_fee ?? 0, 2) }}</span>
                     </div>
                 </div>

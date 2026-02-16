@@ -7,7 +7,7 @@
 ])>
     <div class="flex h-[70px] items-center px-3 sm:px-8">
         <a
-            class="mr-auto flex"
+            class="me-auto flex"
             href=""
         >
             <img
@@ -29,12 +29,12 @@
     <div @class([
         'scrollable h-screen z-20 top-0 left-0 w-[270px] -ml-[100%] bg-primary transition-all duration-300 ease-in-out dark:bg-darkmode-800',
         '[&[data-simplebar]]:fixed [&_.simplebar-scrollbar]:before:bg-black/50',
-        'group-[.mobile-menu--active]:ml-0',
+        'group-[.mobile-menu--active]:ms-0',
     ])>
         <a
             href="#"
             @class([
-                'fixed top-0 right-0 mt-4 mr-4 transition-opacity duration-200 ease-in-out',
+                'fixed top-0 right-0 mt-4 me-4 transition-opacity duration-200 ease-in-out',
                 'invisible opacity-0',
                 'group-[.mobile-menu--active]:visible group-[.mobile-menu--active]:opacity-100',
             ])

@@ -7,12 +7,12 @@
 @section('subcontent')
     <div class="mt-8 flex items-center justify-between">
         <div>
-            <h2 class="intro-y text-2xl font-bold mr-auto text-slate-800 dark:text-slate-200">New Module Builder</h2>
+            <h2 class="intro-y text-2xl font-bold me-auto text-slate-800 dark:text-slate-200">New Module Builder</h2>
             <div class="text-slate-500 text-sm mt-1">Create a new module with Model, Migration, and CRUD views.</div>
         </div>
         <a href="{{ route('crud-builder.edit') }}">
             <x-base.button variant="outline-secondary" class="px-4 py-2">
-                <x-base.lucide icon="Edit" class="w-4 h-4 mr-2" /> Edit Existing Model
+                <x-base.lucide icon="Edit" class="w-4 h-4 me-2" /> Edit Existing Model
             </x-base.button>
         </a>
     </div>
@@ -26,7 +26,7 @@
                 <div class="col-span-12 intro-y">
                     <div class="box p-6 border border-slate-200/60 shadow-lg dark:border-darkmode-400 bg-gradient-to-br from-slate-50 to-white dark:from-darkmode-500/20 dark:to-darkmode-600">
                         <div class="flex items-center border-b border-slate-200/60 pb-4 mb-5 dark:border-darkmode-400">
-                            <div class="w-10 h-10 bg-gradient-to-r from-blue-500 to-blue-600 text-white flex items-center justify-center rounded-lg mr-4 shadow-md">
+                            <div class="w-10 h-10 bg-gradient-to-r from-blue-500 to-blue-600 text-white flex items-center justify-center rounded-lg me-4 shadow-md">
                                 <x-base.lucide icon="Box" class="w-5 h-5" />
                             </div>
                             <div>
@@ -74,7 +74,7 @@
                     <div class="box p-6 border border-slate-200/60 shadow-lg dark:border-darkmode-400 bg-gradient-to-br from-slate-50 to-white dark:from-darkmode-500/20 dark:to-darkmode-600">
                         <div class="flex items-center justify-between border-b border-slate-200/60 pb-4 mb-5 dark:border-darkmode-400">
                             <div class="flex items-center">
-                                <div class="w-10 h-10 bg-gradient-to-r from-blue-500 to-blue-600 text-white flex items-center justify-center rounded-lg mr-4 shadow-md">
+                                <div class="w-10 h-10 bg-gradient-to-r from-blue-500 to-blue-600 text-white flex items-center justify-center rounded-lg me-4 shadow-md">
                                     <x-base.lucide icon="List" class="w-5 h-5" />
                                 </div>
                                 <div>
@@ -83,7 +83,7 @@
                                 </div>
                             </div>
                             <x-base.button type="button" id="add-field" variant="primary" size="sm" class="shadow-md px-4 py-2">
-                                <x-base.lucide icon="Plus" class="w-4 h-4 mr-2" /> Add Field
+                                <x-base.lucide icon="Plus" class="w-4 h-4 me-2" /> Add Field
                             </x-base.button>
                         </div>
                         
@@ -115,13 +115,13 @@
                                 </div>
                                 <div class="col-span-12 md:col-span-3 flex items-center space-x-5 pt-6">
                                     <label class="flex items-center text-sm cursor-pointer">
-                                        <x-base.form-check.input name="fields[0][nullable]" value="1" class="mr-2 w-4 h-4" /> <x-base.form-label class="mb-0 text-slate-600 dark:text-slate-300">Nullable</x-base.form-label>
+                                        <x-base.form-check.input name="fields[0][nullable]" value="1" class="me-2 w-4 h-4" /> <x-base.form-label class="mb-0 text-slate-600 dark:text-slate-300">Nullable</x-base.form-label>
                                     </label>
                                     <label class="flex items-center text-sm cursor-pointer">
-                                        <x-base.form-check.input name="fields[0][unique]" value="1" class="mr-2 w-4 h-4" /> <x-base.form-label class="mb-0 text-slate-600 dark:text-slate-300">Unique</x-base.form-label>
+                                        <x-base.form-check.input name="fields[0][unique]" value="1" class="me-2 w-4 h-4" /> <x-base.form-label class="mb-0 text-slate-600 dark:text-slate-300">Unique</x-base.form-label>
                                     </label>
                                 </div>
-                                <div class="col-span-12 md:col-span-1 text-right pt-4 md:pt-0">
+                                <div class="col-span-12 md:col-span-1 text-end pt-4 md:pt-0">
                                     <x-base.button type="button" class="text-slate-400 hover:text-danger transition-colors remove-field p-2 rounded-full hover:bg-red-50 dark:hover:bg-red-500/10" variant="soft-danger">
                                         <x-base.lucide icon="Trash2" class="w-4 h-4" />
                                     </x-base.button>
@@ -136,7 +136,7 @@
                     <div class="box p-6 border border-slate-200/60 shadow-lg dark:border-darkmode-400 bg-gradient-to-br from-slate-50 to-white dark:from-darkmode-500/20 dark:to-darkmode-600">
                         <div class="flex items-center justify-between border-b border-slate-200/60 pb-4 mb-5 dark:border-darkmode-400">
                             <div class="flex items-center">
-                                <div class="w-10 h-10 bg-gradient-to-r from-green-500 to-green-600 text-white flex items-center justify-center rounded-lg mr-4 shadow-md">
+                                <div class="w-10 h-10 bg-gradient-to-r from-green-500 to-green-600 text-white flex items-center justify-center rounded-lg me-4 shadow-md">
                                     <x-base.lucide icon="Link" class="w-5 h-5" />
                                 </div>
                                 <div>
@@ -145,7 +145,7 @@
                                 </div>
                             </div>
                             <x-base.button type="button" id="add-relationship" variant="success" size="sm" class="shadow-md px-4 py-2">
-                                <x-base.lucide icon="Plus" class="w-4 h-4 mr-2" /> Add Relationship
+                                <x-base.lucide icon="Plus" class="w-4 h-4 me-2" /> Add Relationship
                             </x-base.button>
                         </div>
                         <div class="space-y-4" id="relationships-container">
@@ -165,7 +165,7 @@
                         <p class="text-blue-100">This will create the Migration, Model, Controller, and Views.</p>
                     </div>
                     <x-base.button type="submit" variant="primary" size="lg" class="w-44 shadow-xl bg-white text-blue-600 hover:bg-slate-100 font-bold px-4 py-3">
-                        <x-base.lucide icon="Zap" class="w-5 h-5 mr-2" /> Generate Module
+                        <x-base.lucide icon="Zap" class="w-5 h-5 me-2" /> Generate Module
                     </x-base.button>
                 </div>
             </div>
@@ -230,13 +230,13 @@
                     </div>
                     <div class="col-span-12 md:col-span-3 flex items-center space-x-5 pt-6">
                         <label class="flex items-center text-sm cursor-pointer">
-                            <input type="checkbox" name="fields[${index}][nullable]" value="1" class="form-check-input mr-2 w-4 h-4" /> <span class="mb-0 text-slate-600 dark:text-slate-300">Nullable</span>
+                            <input type="checkbox" name="fields[${index}][nullable]" value="1" class="form-check-input me-2 w-4 h-4" /> <span class="mb-0 text-slate-600 dark:text-slate-300">Nullable</span>
                         </label>
                         <label class="flex items-center text-sm cursor-pointer">
-                            <input type="checkbox" name="fields[${index}][unique]" value="1" class="form-check-input mr-2 w-4 h-4" /> <span class="mb-0 text-slate-600 dark:text-slate-300">Unique</span>
+                            <input type="checkbox" name="fields[${index}][unique]" value="1" class="form-check-input me-2 w-4 h-4" /> <span class="mb-0 text-slate-600 dark:text-slate-300">Unique</span>
                         </label>
                     </div>
-                    <div class="col-span-12 md:col-span-1 text-right pt-4 md:pt-0">
+                    <div class="col-span-12 md:col-span-1 text-end pt-4 md:pt-0">
                         <button type="button" class="text-slate-400 hover:text-danger transition-colors remove-field p-2 rounded-full hover:bg-red-50 dark:hover:bg-red-500/10">
                             <i data-lucide="trash-2" class="w-4 h-4"></i>
                         </button>
@@ -314,7 +314,7 @@
                         <input type="text" name="relationships[${index}][foreign_key]" class="form-control form-control-sm py-2 px-3 text-sm rounded-lg border-2 border-slate-200 focus:border-green-500 dark:border-darkmode-300 dark:bg-darkmode-700 dark:text-slate-200" placeholder="e.g. user_id">
                          <div class="form-help text-[10px] text-slate-400 mt-1">Foreign Key (BelongsTo) or Local Key (HasMany)</div>
                     </div>
-                    <div class="col-span-12 md:col-span-1 text-right pt-4 md:pt-0">
+                    <div class="col-span-12 md:col-span-1 text-end pt-4 md:pt-0">
                         <button type="button" class="text-slate-400 hover:text-danger transition-colors remove-rel p-2 rounded-full hover:bg-red-50 dark:hover:bg-red-500/10">
                             <i data-lucide="x" class="w-4 h-4"></i>
                         </button>

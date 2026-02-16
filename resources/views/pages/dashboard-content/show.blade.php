@@ -2,7 +2,7 @@
 
 @section('subcontent')
 <div class="intro-y flex items-center mt-8">
-    <h2 class="text-lg font-medium mr-auto">{{ __('global.view_dashboard_content') }}</h2>
+    <h2 class="text-lg font-medium me-auto">{{ __('global.view_dashboard_content') }}</h2>
 </div>
 
 <div class="grid grid-cols-12 gap-6 mt-5">
@@ -59,7 +59,7 @@
                     </div>
 
                     <div class="mt-5">
-                        <a href="{{ route('dashboard-content.index') }}" class="btn btn-outline-secondary w-24 mr-1">{{ __('global.back') }}</a>
+                        <a href="{{ route('dashboard-content.index') }}" class="btn btn-outline-secondary w-24 me-1">{{ __('global.back') }}</a>
                         <a href="{{ route('dashboard-content.edit', $dashboardContent) }}" class="btn btn-primary w-24">{{ __('global.edit') }}</a>
                     </div>
                 </div>

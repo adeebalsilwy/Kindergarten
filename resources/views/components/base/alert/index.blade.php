@@ -122,7 +122,7 @@
                 $variant == 'soft-pending' ? $softPending : null,
                 $variant == 'soft-danger' ? $softDanger : null,
                 $variant == 'soft-dark' ? $softDark : null,
-                $dismissible ? 'pl-5 pr-16' : null,
+                $dismissible ? 'ps-5 pe-16' : null,
             ]),
         )->merge($attributes->whereDoesntStartWith('class')->getAttributes()) }}
 >{{ $slot }}</{{ $as }}>

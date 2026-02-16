@@ -6,10 +6,10 @@
 
 @section('subcontent')
     <div class="intro-y flex items-center mt-8">
-        <h2 class="text-lg font-medium mr-auto">{{ __('global.create_new_role') }}</h2>
+        <h2 class="text-lg font-medium me-auto">{{ __('global.create_new_role') }}</h2>
         <div class="flex gap-2">
             <x-base.button variant="outline-secondary" as="a" href="{{ route('roles.index') }}" class="flex items-center">
-                <x-base.lucide icon="ArrowLeft" class="w-4 h-4 mr-2" />
+                <x-base.lucide icon="ArrowLeft" class="w-4 h-4 me-2" />
                 {{ __('global.back_to_list') }}
             </x-base.button>
         </div>
@@ -24,7 +24,7 @@
                     <!-- Basic Information -->
                     <div class="border-b border-slate-200/60 dark:border-darkmode-400 pb-6 mb-6">
                         <div class="flex items-center mb-4">
-                            <div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center mr-3">
+                            <div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center me-3">
                                 <x-base.lucide icon="Shield" class="w-5 h-5 text-primary" />
                             </div>
                             <h3 class="text-lg font-medium">{{ __('global.basic_information') }}</h3>
@@ -63,7 +63,7 @@
                     <div class="border-b border-slate-200/60 dark:border-darkmode-400 pb-6 mb-6">
                         <div class="flex items-center justify-between mb-4">
                             <div class="flex items-center">
-                                <div class="w-8 h-8 rounded-full bg-success/10 flex items-center justify-center mr-3">
+                                <div class="w-8 h-8 rounded-full bg-success/10 flex items-center justify-center me-3">
                                     <x-base.lucide icon="Key" class="w-5 h-5 text-success" />
                                 </div>
                                 <h3 class="text-lg font-medium">{{ __('global.assign_permissions') }}</h3>
@@ -72,11 +72,11 @@
                             <!-- Select All Controls -->
                             <div class="flex gap-2">
                                 <x-base.button type="button" variant="outline-primary" size="sm" onclick="selectAllPermissions()" class="flex items-center">
-                                    <x-base.lucide icon="CheckSquare" class="w-4 h-4 mr-1" />
+                                    <x-base.lucide icon="CheckSquare" class="w-4 h-4 me-1" />
                                     {{ __('global.select_all') }}
                                 </x-base.button>
                                 <x-base.button type="button" variant="outline-secondary" size="sm" onclick="deselectAllPermissions()" class="flex items-center">
-                                    <x-base.lucide icon="Square" class="w-4 h-4 mr-1" />
+                                    <x-base.lucide icon="Square" class="w-4 h-4 me-1" />
                                     {{ __('global.deselect_all') }}
                                 </x-base.button>
                             </div>
@@ -123,11 +123,11 @@
                                         >
                                         <label 
                                             for="permission_{{ $permission->id }}" 
-                                            class="ml-3 text-sm font-medium text-slate-700 dark:text-slate-300 cursor-pointer flex-1"
+                                            class="ms-3 text-sm font-medium text-slate-700 dark:text-slate-300 cursor-pointer flex-1"
                                         >
                                             {{ str_replace('_', ' ', $permission->name) }}
                                         </label>
-                                        <span class="text-xs text-slate-500 ml-2">ID: {{ $permission->id }}</span>
+                                        <span class="text-xs text-slate-500 ms-2">ID: {{ $permission->id }}</span>
                                     </div>
                                     @endforeach
                                 </div>
@@ -138,7 +138,7 @@
                         <!-- Selected Count -->
                         <div class="mt-4 p-3 bg-primary/5 border border-primary/20 rounded-lg">
                             <div class="flex items-center text-primary">
-                                <x-base.lucide icon="Info" class="w-5 h-5 mr-2" />
+                                <x-base.lucide icon="Info" class="w-5 h-5 me-2" />
                                 <span id="selectedCount">{{ __('global.no_permissions_selected') }}</span>
                             </div>
                         </div>
@@ -147,16 +147,16 @@
                     <!-- Form Actions -->
                     <div class="flex justify-between items-center pt-4">
                         <a href="{{ route('roles.index') }}" class="btn btn-outline-secondary flex items-center">
-                            <x-base.lucide icon="X" class="w-4 h-4 mr-2" />
+                            <x-base.lucide icon="X" class="w-4 h-4 me-2" />
                             {{ __('global.cancel') }}
                         </a>
                         <div class="flex gap-2">
                             <x-base.button type="reset" variant="outline-secondary" class="flex items-center">
-                                <x-base.lucide icon="RotateCcw" class="w-4 h-4 mr-2" />
+                                <x-base.lucide icon="RotateCcw" class="w-4 h-4 me-2" />
                                 {{ __('global.reset') }}
                             </x-base.button>
                             <x-base.button type="submit" variant="primary" class="flex items-center">
-                                <x-base.lucide icon="Save" class="w-4 h-4 mr-2" />
+                                <x-base.lucide icon="Save" class="w-4 h-4 me-2" />
                                 {{ __('global.create_role') }}
                             </x-base.button>
                         </div>
@@ -169,13 +169,13 @@
         <div class="intro-y col-span-12 lg:col-span-4">
             <div class="box p-5 bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-darkmode-600 dark:to-darkmode-700">
                 <h3 class="text-lg font-medium text-slate-800 dark:text-slate-200 mb-4 flex items-center">
-                    <x-base.lucide icon="HelpCircle" class="w-5 h-5 text-blue-500 mr-2" />
+                    <x-base.lucide icon="HelpCircle" class="w-5 h-5 text-blue-500 me-2" />
                     {{ __('global.help_guide') }}
                 </h3>
                 
                 <div class="space-y-4 text-sm text-slate-600 dark:text-slate-400">
                     <div class="flex items-start">
-                        <div class="w-2 h-2 rounded-full bg-blue-500 mt-2 mr-3 flex-shrink-0"></div>
+                        <div class="w-2 h-2 rounded-full bg-blue-500 mt-2 me-3 flex-shrink-0"></div>
                         <div>
                             <strong class="text-slate-800 dark:text-slate-200">{{ __('global.role_name_required') }}</strong>
                             <p class="mt-1">{{ __('global.role_name_explanation') }}</p>
@@ -183,7 +183,7 @@
                     </div>
                     
                     <div class="flex items-start">
-                        <div class="w-2 h-2 rounded-full bg-green-500 mt-2 mr-3 flex-shrink-0"></div>
+                        <div class="w-2 h-2 rounded-full bg-green-500 mt-2 me-3 flex-shrink-0"></div>
                         <div>
                             <strong class="text-slate-800 dark:text-slate-200">{{ __('global.permissions_optional') }}</strong>
                             <p class="mt-1">{{ __('global.permissions_explanation') }}</p>
@@ -191,7 +191,7 @@
                     </div>
                     
                     <div class="flex items-start">
-                        <div class="w-2 h-2 rounded-full bg-yellow-500 mt-2 mr-3 flex-shrink-0"></div>
+                        <div class="w-2 h-2 rounded-full bg-yellow-500 mt-2 me-3 flex-shrink-0"></div>
                         <div>
                             <strong class="text-slate-800 dark:text-slate-200">{{ __('global.admin_auto_assign') }}</strong>
                             <p class="mt-1">{{ __('global.admin_auto_assign_explanation') }}</p>

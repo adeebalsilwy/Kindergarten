@@ -6,26 +6,12 @@
 
 @section('subcontent')
     <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
-        <h2 class="text-lg font-medium mr-auto">{{ __('AccountingEntry.list') }}</h2>
-        <div class="w-full sm:w-auto flex mt-4 sm:mt-0">
-            @can('export_accounting_entries')
-            
-                        <div class="flex gap-2">
-                            <x-base.button variant="outline-primary" as="a" href="{{ route('accounting_entries.export.pdf') }}" class="flex items-center">
-                                <x-base.lucide icon="FileText" class="w-4 h-4 mr-2" />
-                                {{ __('global.export_pdf') }}
-                            </x-base.button>
-                            <x-base.button variant="outline-success" as="a" href="{{ route('accounting_entries.export.excel') }}" class="flex items-center">
-                                <x-base.lucide icon="FileSpreadsheet" class="w-4 h-4 mr-2" />
-                                {{ __('global.export_excel') }}
-                            </x-base.button>
-                        </div>
-            @endcan
-            
+        <h2 class="text-lg font-medium me-auto">{{ __('global.accounting_entries') }}</h2>
+        <div class="w-full sm:w-auto flex mt-4 sm:mt-0 gap-2">
             @can('create_accounting_entries')
-            <x-base.button variant="primary" as="a" href="{{ route('accounting_entries.create') }}" class="ml-2 flex items-center">
-                <x-base.lucide icon="Plus" class="w-4 h-4 mr-2" />
-                {{ __('AccountingEntry.add_new') }}
+            <x-base.button variant="primary" as="a" href="{{ route('accounting_entries.create') }}" class="flex items-center">
+                <x-base.lucide icon="Plus" class="w-4 h-4 me-2" />
+                {{ __('global.create') }} {{ __('global.entry') }}
             </x-base.button>
             @endcan
         </div>
@@ -35,162 +21,97 @@
         <!-- Filter Section -->
         <div class="intro-y col-span-12">
             <div class="box p-5">
-                <div class="flex flex-col sm:flex-row gap-4">
-                    <div class="flex-1">
-                        <x-base.form-input type="text" placeholder="{{ __('global.search') }}" class="w-full" />
+                <form class="flex flex-col lg:flex-row gap-4">
+                    <div class="relative flex-1">
+                        <x-base.lucide icon="Search" class="absolute inset-y-0 start-0 z-10 my-auto ms-3 h-4 w-4 text-slate-500" />
+                        <x-base.form-input type="text" placeholder="{{ __('global.search_reference') }}..." class="ps-10" />
                     </div>
-                    <x-base.button variant="secondary" class="flex items-center">
-                        <x-base.lucide icon="Filter" class="w-4 h-4 mr-2" />
-                        {{ __('global.filter') }}
-                    </x-base.button>
-                </div>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+                        <x-base.form-input type="date" class="w-full" placeholder="{{ __('global.from_date') }}" />
+                        <x-base.form-input type="date" class="w-full" placeholder="{{ __('global.to_date') }}" />
+                        <x-base.form-select class="w-full">
+                            <option value="">{{ __('global.account_type') }}</option>
+                            <option value="asset">{{ __('global.asset') }}</option>
+                            <option value="liability">{{ __('global.liability') }}</option>
+                            <option value="equity">{{ __('global.equity') }}</option>
+                            <option value="revenue">{{ __('global.revenue') }}</option>
+                            <option value="expense">{{ __('global.expense') }}</option>
+                        </x-base.form-select>
+                        <x-base.button variant="secondary" type="submit" class="flex items-center justify-center">
+                            <x-base.lucide icon="Filter" class="w-4 h-4 me-2" />
+                            {{ __('global.filter') }}
+                        </x-base.button>
+                    </div>
+                </form>
             </div>
         </div>
 
         <!-- Data List -->
         <div class="intro-y col-span-12 overflow-auto lg:overflow-visible">
-            <x-base.table class="table-report -mt-2">
-                <x-base.table.thead>
-                    <x-base.table.tr>
-@php
-    $canEdit = auth()->user()->can('edit_accounting_entries');
-    $canDelete = auth()->user()->can('delete_accounting_entries');
-    $canView = auth()->user()->can('view_accounting_entries');
-@endphp
-                            <x-base.table.th class="whitespace-nowrap text-center">{{ __('accounting-entries.fields.debit') }}</x-base.table.th>
-                            <x-base.table.th class="whitespace-nowrap text-center">{{ __('accounting-entries.fields.credit') }}</x-base.table.th>
-                            <x-base.table.th class="whitespace-nowrap text-center">{{ __('accounting-entries.fields.entry_date') }}</x-base.table.th>
-                            <x-base.table.th class="whitespace-nowrap text-center">{{ __('accounting-entries.fields.reference') }}</x-base.table.th>
-                            <x-base.table.th class="whitespace-nowrap text-center">{{ __('accounting-entries.fields.account_type') }}</x-base.table.th>
-
-                        @if($canEdit || $canDelete || $canView)
-                        <x-base.table.th class="text-center whitespace-nowrap">{{ __('global.actions') }}</x-base.table.th>
-                        @endif
-                    </x-base.table.tr>
-                </x-base.table.thead>
-                <x-base.table.tbody>
-                    @forelse($accountingEntries as $accountingEntry)
-                        <x-base.table.tr class="intro-x">
-                            <x-base.table.td class="text-center">{{ $accountingEntry->debit ?? '-' }}</x-base.table.td>
-                            <x-base.table.td class="text-center">{{ $accountingEntry->credit ?? '-' }}</x-base.table.td>
-                            <x-base.table.td class="text-center">{{ $accountingEntry->entry_date ?? '-' }}</x-base.table.td>
-                            <x-base.table.td class="text-center">{{ $accountingEntry->reference ?? '-' }}</x-base.table.td>
-                            <x-base.table.td class="text-center">{{ $accountingEntry->account_type ?? '-' }}</x-base.table.td>
-
-                            @if($canEdit || $canDelete || $canView)
-                            <x-base.table.td class="table-report__action w-56">
-                                <div class="flex justify-center items-center">
-                                    @can('view_accounting_entries')
-                                    <x-base.button variant="outline-secondary" as="a" href="{{ route('accounting_entries.show', $accountingEntry->id) }}" size="sm" class="mr-2">
-                                        <x-base.lucide icon="Eye" class="w-4 h-4 mr-1" />
-                                        {{ __('global.view') }}
-                                    </x-base.button>
-                                    @endcan
-                                    
-                                    @can('edit_accounting_entries')
-                                    <x-base.button variant="outline-primary" as="a" href="{{ route('accounting_entries.edit', $accountingEntry->id) }}" size="sm" class="mr-2">
-                                        <x-base.lucide icon="Pencil" class="w-4 h-4 mr-1" />
-                                        {{ __('global.edit') }}
-                                    </x-base.button>
-                                    @endcan
-                                    
-                                    @can('delete_accounting_entries')
-                                    <form action="{{ route('accounting_entries.destroy', $accountingEntry->id) }}" method="POST" onsubmit="return confirm('{{ __('global.confirm_delete') }}')" class="inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <x-base.button variant="outline-danger" type="submit" size="sm">
-                                            <x-base.lucide icon="Trash2" class="w-4 h-4 mr-1" />
-                                            {{ __('global.delete') }}
-                                        </x-base.button>
-                                    </form>
-                                    @endcan
-                                </div>
-                            </x-base.table.td>
-                            @endif
-                        </x-base.table.tr>
-
-                    @empty
+            <div class="box p-5">
+                <x-base.table class="table-auto w-full">
+                    <x-base.table.thead class="bg-slate-50 dark:bg-darkmode-800 border-b border-slate-200">
                         <x-base.table.tr>
-                            <x-base.table.td colspan="{{ 5 + ($canEdit || $canDelete || $canView ? 1 : 0) }}" class="text-center py-10">
-                                <div class="flex flex-col items-center justify-center">
-                                    <x-base.lucide icon="Inbox" class="w-16 h-16 text-gray-400 mb-4" />
-                                    <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100">{{ __('global.no_data_found') }}</h3>
-                                    <p class="text-gray-500 dark:text-gray-400 mt-1">{{ __('global.no_data_description') }}</p>
-                                    <x-base.button variant="primary" as="a" href="{{ route('accounting_entries.create') }}" class="mt-4">
-                                        <x-base.lucide icon="Plus" class="w-4 h-4 mr-2" />
-                                        {{ __('AccountingEntry.add_new') }}
-                                    </x-base.button>
-                                </div>
-                            </x-base.table.td>
+                            <x-base.table.th class="whitespace-nowrap text-start">{{ __('global.date') }}</x-base.table.th>
+                            <x-base.table.th class="whitespace-nowrap text-start">{{ __('global.reference') }}</x-base.table.th>
+                            <x-base.table.th class="whitespace-nowrap text-start">{{ __('global.description') }}</x-base.table.th>
+                            <x-base.table.th class="whitespace-nowrap text-end">{{ __('global.debit') }}</x-base.table.th>
+                            <x-base.table.th class="whitespace-nowrap text-end">{{ __('global.credit') }}</x-base.table.th>
+                            <x-base.table.th class="text-center whitespace-nowrap">{{ __('global.actions') }}</x-base.table.th>
                         </x-base.table.tr>
-                    @endforelse
-                </x-base.table.tbody>
-            </x-base.table>
+                    </x-base.table.thead>
+                    <x-base.table.tbody>
+                        @forelse($accountingEntries as $entry)
+                            <x-base.table.tr class="hover:bg-slate-50 dark:hover:bg-darkmode-600 transition-colors border-b border-slate-100 dark:border-darkmode-400">
+                                <x-base.table.td class="text-xs text-slate-500">{{ $entry->entry_date }}</x-base.table.td>
+                                <x-base.table.td class="font-medium text-primary">{{ $entry->reference ?? '-' }}</x-base.table.td>
+                                <x-base.table.td class="max-w-xs truncate text-slate-600" title="{{ $entry->description }}">
+                                    {{ $entry->description ?? '-' }}
+                                </x-base.table.td>
+                                <x-base.table.td class="text-end text-danger font-medium">
+                                    {{ $entry->debit > 0 ? number_format($entry->debit, 2) : '-' }}
+                                </x-base.table.td>
+                                <x-base.table.td class="text-end text-success font-medium">
+                                    {{ $entry->credit > 0 ? number_format($entry->credit, 2) : '-' }}
+                                </x-base.table.td>
+                                <x-base.table.td class="w-40">
+                                    <div class="flex justify-center items-center gap-2">
+                                        <a href="{{ route('accounting_entries.show', $entry->id) }}" class="text-primary" title="{{ __('global.view') }}">
+                                            <x-base.lucide icon="Eye" class="w-4 h-4" />
+                                        </a>
+                                        <a href="{{ route('accounting_entries.edit', $entry->id) }}" class="text-pending" title="{{ __('global.edit') }}">
+                                            <x-base.lucide icon="Pencil" class="w-4 h-4" />
+                                        </a>
+                                        @can('delete_accounting_entries')
+                                        <form action="{{ route('accounting_entries.destroy', $entry->id) }}" method="POST" onsubmit="return confirm('{{ __('global.confirm_delete') }}')" class="inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="text-danger">
+                                                <x-base.lucide icon="Trash2" class="w-4 h-4" />
+                                            </button>
+                                        </form>
+                                        @endcan
+                                    </div>
+                                </x-base.table.td>
+                            </x-base.table.tr>
+                        @empty
+                            <x-base.table.tr>
+                                <x-base.table.td colspan="6" class="text-center py-10">
+                                    <div class="flex flex-col items-center">
+                                        <x-base.lucide icon="Inbox" class="w-12 h-12 text-slate-300 mb-2" />
+                                        <div class="text-slate-500">{{ __('global.no_data_found') }}</div>
+                                    </div>
+                                </x-base.table.td>
+                            </x-base.table.tr>
+                        @endforelse
+                    </x-base.table.tbody>
+                </x-base.table>
+            </div>
         </div>
 
         <!-- Pagination -->
         <div class="intro-y col-span-12 flex flex-wrap sm:flex-row sm:flex-nowrap items-center">
             {!! $accountingEntries->links() !!}
         </div>
-
-        <!-- Summary Cards -->
-        @if($accountingEntries->count() > 0)
-        <div class="intro-y col-span-12 grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
-            <div class="report-box zoom-in">
-                <div class="box p-5">
-                    <div class="flex items-center">
-                        <x-base.lucide icon="Database" class="w-8 h-8 text-primary" />
-                        <div class="ml-auto">
-                            <div class="report-box__indicator bg-success"> 
-                                <x-base.lucide icon="TrendingUp" class="w-4 h-4" /> 
-                            </div>
-                        </div>
-                    </div>
-                    <div class="text-3xl font-bold leading-8 mt-6">{{ $accountingEntries->count() }}</div>
-                    <div class="text-base text-slate-500 mt-1">{{ __('global.total_records') }}</div>
-                </div>
-            </div>
-            <div class="report-box zoom-in">
-                <div class="box p-5">
-                    <div class="flex items-center">
-                        <x-base.lucide icon="Activity" class="w-8 h-8 text-pending" />
-                        <div class="ml-auto">
-                            <div class="report-box__indicator bg-success"> 
-                                <x-base.lucide icon="TrendingUp" class="w-4 h-4" /> 
-                            </div>
-                        </div>
-                    </div>
-                    <div class="text-3xl font-bold leading-8 mt-6">
-                        @php
-                            $recentCount = $accountingEntries->filter(function($item) {
-                                return $item->created_at >= \Carbon\Carbon::now()->subDays(7);
-                            })->count();
-                        @endphp
-                        {{ $recentCount }}
-                    </div>
-                    <div class="text-base text-slate-500 mt-1">{{ __('global.added_this_week') }}</div>
-                </div>
-            </div>
-            <div class="report-box zoom-in">
-                <div class="box p-5">
-                    <div class="flex items-center">
-                        <x-base.lucide icon="Calendar" class="w-8 h-8 text-success" />
-                        <div class="ml-auto">
-                            <div class="report-box__indicator bg-success"> 
-                                <x-base.lucide icon="TrendingUp" class="w-4 h-4" /> 
-                            </div>
-                        </div>
-                    </div>
-                    <div class="text-3xl font-bold leading-8 mt-6">
-                        @php
-                            $todayCount = $accountingEntries->filter(fn($item) => \Carbon\Carbon::parse($item->created_at)->isToday())->count();
-                        @endphp
-                        {{ $todayCount }}
-                    </div>
-                    <div class="text-base text-slate-500 mt-1">{{ __('global.added_today') }}</div>
-                </div>
-            </div>
-        </div>
-        @endif
     </div>
 @endsection

@@ -6,7 +6,7 @@
 
 @section('subcontent')
     <div class="intro-y flex items-center mt-8">
-        <h2 class="text-lg font-medium mr-auto">{{ __('global.bulk_attendance') }}</h2>
+        <h2 class="text-lg font-medium me-auto">{{ __('global.bulk_attendance') }}</h2>
     </div>
 
     <div class="grid grid-cols-12 gap-6 mt-5">
@@ -50,7 +50,7 @@
                                         <tr class="intro-x">
                                             <td class="whitespace-nowrap">
                                                 <div class="flex items-center">
-                                                    <div class="w-8 h-8 image-fit mr-3">
+                                                    <div class="w-8 h-8 image-fit me-3">
                                                         <img alt="{{ $child->name }}" class="rounded-full" src="{{ $child->photo_path ? asset($child->photo_path) : 'https://ui-avatars.com/api/?name=' . urlencode($child->name) }}">
                                                     </div>
                                                     <div class="font-medium">{{ $child->name }}</div>
@@ -60,15 +60,15 @@
                                                 <div class="flex justify-center gap-4">
                                                     <div class="flex items-center">
                                                         <input type="radio" name="attendance[{{ $child->id }}][status]" value="present" id="present-{{ $child->id }}" class="form-check-input" checked>
-                                                        <label class="form-check-label ml-1 text-success" for="present-{{ $child->id }}">{{ __('global.present') }}</label>
+                                                        <label class="form-check-label ms-1 text-success" for="present-{{ $child->id }}">{{ __('global.present') }}</label>
                                                     </div>
-                                                    <div class="flex items-center ml-2">
+                                                    <div class="flex items-center ms-2">
                                                         <input type="radio" name="attendance[{{ $child->id }}][status]" value="absent" id="absent-{{ $child->id }}" class="form-check-input">
-                                                        <label class="form-check-label ml-1 text-danger" for="absent-{{ $child->id }}">{{ __('global.absent') }}</label>
+                                                        <label class="form-check-label ms-1 text-danger" for="absent-{{ $child->id }}">{{ __('global.absent') }}</label>
                                                     </div>
-                                                    <div class="flex items-center ml-2">
+                                                    <div class="flex items-center ms-2">
                                                         <input type="radio" name="attendance[{{ $child->id }}][status]" value="late" id="late-{{ $child->id }}" class="form-check-input">
-                                                        <label class="form-check-label ml-1 text-warning" for="late-{{ $child->id }}">{{ __('global.late') }}</label>
+                                                        <label class="form-check-label ms-1 text-warning" for="late-{{ $child->id }}">{{ __('global.late') }}</label>
                                                     </div>
                                                 </div>
                                             </td>
@@ -82,7 +82,7 @@
                         </div>
                         <div class="flex justify-end mt-5">
                             <x-base.button type="submit" variant="primary" class="w-40">
-                                <x-base.lucide icon="Save" class="w-4 h-4 mr-2" /> {{ __('global.save_attendance') }}
+                                <x-base.lucide icon="Save" class="w-4 h-4 me-2" /> {{ __('global.save_attendance') }}
                             </x-base.button>
                         </div>
                     </form>

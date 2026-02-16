@@ -32,13 +32,13 @@
             <div class="flex-shrink-0">
                 <x-base.lucide class="h-8 w-8" icon="{{ $icon }}" />
             </div>
-            <div class="ml-4">
+            <div class="ms-4">
                 <h3 class="text-lg font-medium">{{ $title }}</h3>
                 @if($description)
                     <p class="mt-1 text-sm opacity-90">{{ $description }}</p>
                 @endif
             </div>
-            <div class="ml-auto">
+            <div class="ms-auto">
                 <x-base.lucide class="h-5 w-5" icon="ArrowRight" />
             </div>
         </div>
@@ -49,13 +49,13 @@
             <div class="flex-shrink-0">
                 <x-base.lucide class="h-8 w-8" icon="{{ $icon }}" />
             </div>
-            <div class="ml-4">
+            <div class="ms-4">
                 <h3 class="text-lg font-medium">{{ $title }}</h3>
                 @if($description)
                     <p class="mt-1 text-sm">{{ $description }}</p>
                 @endif
             </div>
-            <div class="ml-auto">
+            <div class="ms-auto">
                 <x-base.lucide class="h-5 w-5" icon="Lock" />
             </div>
         </div>

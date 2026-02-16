@@ -6,15 +6,15 @@
 
 @section('subcontent')
     <div class="intro-y flex items-center mt-8">
-        <h2 class="text-lg font-medium mr-auto">{{ __('global.attendance_record') }}</h2>
-        <div class="ml-auto flex gap-2">
+        <h2 class="text-lg font-medium me-auto">{{ __('global.attendance_record') }}</h2>
+        <div class="ms-auto flex gap-2">
             <x-base.button variant="secondary" as="a" href="{{ route('attendances.index') }}">
-                <x-base.lucide icon="ArrowLeft" class="w-4 h-4 mr-2" />
+                <x-base.lucide icon="ArrowLeft" class="w-4 h-4 me-2" />
                 {{ __('global.back') }}
             </x-base.button>
             @can('edit_attendances')
             <x-base.button variant="primary" as="a" href="{{ route('attendances.edit', $attendance->id) }}">
-                <x-base.lucide icon="Pencil" class="w-4 h-4 mr-2" />
+                <x-base.lucide icon="Pencil" class="w-4 h-4 me-2" />
                 {{ __('global.edit') }}
             </x-base.button>
             @endcan
@@ -35,7 +35,7 @@
                             {{ optional($attendance->child->class)->name ?? '-' }}
                         </div>
                     </div>
-                    <div class="ml-auto">
+                    <div class="ms-auto">
                         @php
                             $status = $attendance->status;
                             $badgeColor = match($status) {
@@ -51,12 +51,12 @@
                 </div>
                 <div class="mt-5 space-y-2 text-sm">
                     <div class="flex items-center">
-                        <x-base.lucide icon="Calendar" class="w-4 h-4 mr-2" />
+                        <x-base.lucide icon="Calendar" class="w-4 h-4 me-2" />
                         <span>{{ \Carbon\Carbon::parse($attendance->date)->format('Y-m-d') }}</span>
                     </div>
                     @if($attendance->check_in || $attendance->check_out)
                     <div class="flex items-center">
-                        <x-base.lucide icon="Clock" class="w-4 h-4 mr-2" />
+                        <x-base.lucide icon="Clock" class="w-4 h-4 me-2" />
                         <span>{{ $attendance->check_in ?? '--:--' }} / {{ $attendance->check_out ?? '--:--' }}</span>
                     </div>
                     @endif

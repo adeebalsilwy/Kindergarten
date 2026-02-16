@@ -6,15 +6,15 @@
 
 @section('subcontent')
     <div class="intro-y flex items-center mt-8">
-        <h2 class="text-lg font-medium mr-auto">{{ __('global.child_profile') }}</h2>
-        <div class="ml-auto flex gap-2">
+        <h2 class="text-lg font-medium me-auto">{{ __('global.child_profile') }}</h2>
+        <div class="ms-auto flex gap-2">
             <x-base.button variant="secondary" as="a" href="{{ route('children.index') }}">
-                <x-base.lucide icon="ArrowLeft" class="w-4 h-4 mr-2" />
+                <x-base.lucide icon="ArrowLeft" class="w-4 h-4 me-2" />
                 {{ __('global.back') }}
             </x-base.button>
             @can('edit_children')
             <x-base.button variant="primary" as="a" href="{{ route('children.edit', $children->id) }}">
-                <x-base.lucide icon="Pencil" class="w-4 h-4 mr-2" />
+                <x-base.lucide icon="Pencil" class="w-4 h-4 me-2" />
                 {{ __('global.edit') }}
             </x-base.button>
             @endcan
@@ -34,14 +34,14 @@
                             </div>
                         @endif
                     </div>
-                    <div class="ml-4">
+                    <div class="ms-4">
                         <div class="text-base font-medium">{{ $children->name }}</div>
                         <div class="text-slate-500 text-sm">
-                            <x-base.lucide icon="Cake" class="w-4 h-4 inline mr-1" />
+                            <x-base.lucide icon="Cake" class="w-4 h-4 inline me-1" />
                             {{ $children->age }} {{ __('global.years_old') }}
                         </div>
                     </div>
-                    <div class="ml-auto">
+                    <div class="ms-auto">
                         <span class="px-2 py-1 rounded-full text-xs bg-slate-200">
                             {{ $children->enrollment_status }}
                         </span>
@@ -64,7 +64,7 @@
                         $paymentPercentage = $children->fees_required > 0 ? min(100, ($children->fees_paid / $children->fees_required) * 100) : 0;
                     @endphp
                     <x-base.progress.bar :value="$paymentPercentage" />
-                    <div class="text-xs text-right mt-1">{{ number_format($paymentPercentage, 1) }}%</div>
+                    <div class="text-xs text-end mt-1">{{ number_format($paymentPercentage, 1) }}%</div>
                 </div>
             </div>
 
@@ -73,7 +73,7 @@
                 <div class="space-y-3">
                     @if($children->parent)
                         <div class="flex items-center">
-                            <x-base.lucide icon="User" class="w-4 h-4 mr-2" />
+                            <x-base.lucide icon="User" class="w-4 h-4 me-2" />
                             <div>
                                 <div class="font-medium">{{ $children->parent->name }}</div>
                                 @if($children->parent->phone)
@@ -84,7 +84,7 @@
                     @endif
                     @if($children->secondParent)
                         <div class="flex items-center">
-                            <x-base.lucide icon="User" class="w-4 h-4 mr-2" />
+                            <x-base.lucide icon="User" class="w-4 h-4 me-2" />
                             <div>
                                 <div class="font-medium">{{ $children->secondParent->name }}</div>
                                 @if($children->secondParent->phone)

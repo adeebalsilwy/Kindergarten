@@ -11,9 +11,9 @@
                 <!-- BEGIN: General Report -->
                 <div class="col-span-12 mt-8">
                     <div class="intro-y flex h-10 items-center">
-                        <h2 class="mr-5 truncate text-lg font-medium">{{ __('global.general_report') }}</h2>
-                        <a href="{{ route('dashboard-overview-1') }}" class="ml-auto flex items-center text-primary">
-                            <x-base.lucide class="mr-3 h-4 w-4" icon="RefreshCcw" /> {{ __('global.reload_data') }}
+                        <h2 class="me-5 truncate text-lg font-medium">{{ __('global.general_report') }}</h2>
+                        <a href="{{ route('dashboard-overview-1') }}" class="ms-auto flex items-center text-primary">
+                            <x-base.lucide class="me-3 h-4 w-4" icon="RefreshCcw" /> {{ __('global.reload_data') }}
                         </a>
                     </div>
                     <div class="mt-5 grid grid-cols-12 gap-6">
@@ -23,7 +23,7 @@
                                 <div class="box p-5">
                                     <div class="flex">
                                         <x-base.lucide class="h-8 w-8 text-primary" icon="Users" />
-                                        <div class="ml-auto">
+                                        <div class="ms-auto">
                                             <x-base.tippy class="cursor-pointer bg-primary/10 rounded-full px-2 py-1 text-xs font-medium text-primary" content="{{ __('global.active_students') }}">
                                                 {{ $enhancedMetrics['active_students'] ?? 0 }} {{ __('global.active') }}
                                             </x-base.tippy>
@@ -40,10 +40,10 @@
                                 <div class="box p-5">
                                     <div class="flex">
                                         <x-base.lucide class="h-8 w-8 text-success" icon="UserCheck" />
-                                        <div class="ml-auto">
+                                        <div class="ms-auto">
                                             <div class="flex items-center text-success">
                                                 {{ $attendanceStats['today']['attendance_rate'] ?? 0 }}%
-                                                <x-base.lucide class="ml-1 h-4 w-4" icon="ChevronUp" />
+                                                <x-base.lucide class="ms-1 h-4 w-4" icon="ChevronUp" />
                                             </div>
                                         </div>
                                     </div>
@@ -83,7 +83,7 @@
                 <!-- BEGIN: Class Utilization -->
                 <div class="col-span-12 mt-8 lg:col-span-6">
                     <div class="intro-y block h-10 items-center sm:flex">
-                        <h2 class="mr-5 truncate text-lg font-medium">{{ __('global.class_utilization') }}</h2>
+                        <h2 class="me-5 truncate text-lg font-medium">{{ __('global.class_utilization') }}</h2>
                     </div>
                     <div class="intro-y box mt-12 p-5 sm:mt-5">
                         <div class="flex flex-col md:flex-row md:items-center">
@@ -107,7 +107,7 @@
                             @foreach(array_slice($classStats['utilization_rates'] ?? [], 0, 5) as $class)
                             <div class="mt-4">
                                 <div class="flex">
-                                    <div class="mr-auto">{{ $class['class_name'] }}</div>
+                                    <div class="me-auto">{{ $class['class_name'] }}</div>
                                     <div>{{ $class['utilization_rate'] }}% ({{ $class['student_count'] }}/{{ $class['capacity'] }})</div>
                                 </div>
                                 <div class="mt-2 h-1 w-full rounded-full bg-slate-200 dark:bg-darkmode-400">
@@ -123,21 +123,21 @@
                 <!-- BEGIN: Attendance Chart -->
                 <div class="col-span-12 mt-8 sm:col-span-6 lg:col-span-6">
                     <div class="intro-y flex h-10 items-center">
-                        <h2 class="mr-5 truncate text-lg font-medium">{{ __('global.attendance_overview') }}</h2>
+                        <h2 class="me-5 truncate text-lg font-medium">{{ __('global.attendance_overview') }}</h2>
                     </div>
                     <div class="intro-y box mt-5 p-5">
                         <div class="flex flex-col md:flex-row md:items-center">
                             <div class="flex">
-                                <div class="flex items-center mr-4">
-                                    <div class="w-2 h-2 bg-success rounded-full mr-2"></div>
+                                <div class="flex items-center me-4">
+                                    <div class="w-2 h-2 bg-success rounded-full me-2"></div>
                                     <span class="text-slate-500">{{ __('global.present') }}: {{ $attendanceStats['today']['present'] ?? 0 }}</span>
                                 </div>
-                                <div class="flex items-center mr-4">
-                                    <div class="w-2 h-2 bg-danger rounded-full mr-2"></div>
+                                <div class="flex items-center me-4">
+                                    <div class="w-2 h-2 bg-danger rounded-full me-2"></div>
                                     <span class="text-slate-500">{{ __('global.absent') }}: {{ $attendanceStats['today']['absent'] ?? 0 }}</span>
                                 </div>
                                 <div class="flex items-center">
-                                    <div class="w-2 h-2 bg-warning rounded-full mr-2"></div>
+                                    <div class="w-2 h-2 bg-warning rounded-full me-2"></div>
                                     <span class="text-slate-500">{{ __('global.late') }}: {{ $attendanceStats['today']['late'] ?? 0 }}</span>
                                 </div>
                             </div>
@@ -161,7 +161,7 @@
                 <!-- BEGIN: Recent Activities -->
                 <div class="col-span-12 mt-6">
                     <div class="intro-y block h-10 items-center sm:flex">
-                        <h2 class="mr-5 truncate text-lg font-medium">{{ __('global.recent_activities') }}</h2>
+                        <h2 class="me-5 truncate text-lg font-medium">{{ __('global.recent_activities') }}</h2>
                     </div>
                     <div class="intro-y overflow-auto lg:overflow-visible mt-8 sm:mt-0">
                         <table class="table table-report sm:mt-2">
@@ -183,7 +183,7 @@
                                                     {{ substr($attendance->child->name ?? 'S', 0, 1) }}
                                                 </div>
                                             </div>
-                                            <div class="ml-4">
+                                            <div class="ms-4">
                                                 <a href="" class="font-medium whitespace-nowrap">{{ $attendance->child->name ?? 'Student' }}</a>
                                                 <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ $attendance->child->class->name ?? 'Class' }}</div>
                                             </div>
@@ -193,7 +193,7 @@
                                     <td class="text-center">{{ $attendance->date }}</td>
                                     <td class="w-40">
                                         <div class="flex items-center justify-center {{ $attendance->status == 'present' ? 'text-success' : 'text-danger' }}">
-                                            <x-base.lucide class="w-4 h-4 mr-2" icon="{{ $attendance->status == 'present' ? 'CheckSquare' : 'XSquare' }}" /> {{ ucfirst($attendance->status) }}
+                                            <x-base.lucide class="w-4 h-4 me-2" icon="{{ $attendance->status == 'present' ? 'CheckSquare' : 'XSquare' }}" /> {{ ucfirst($attendance->status) }}
                                         </div>
                                     </td>
                                 </tr>
@@ -208,7 +208,7 @@
                                                     $
                                                 </div>
                                             </div>
-                                            <div class="ml-4">
+                                            <div class="ms-4">
                                                 <a href="" class="font-medium whitespace-nowrap">{{ $payment->child->name ?? 'Student' }}</a>
                                                 <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ __('global.payment') }}</div>
                                             </div>
@@ -218,7 +218,7 @@
                                     <td class="text-center">{{ $payment->payment_date }}</td>
                                     <td class="w-40">
                                         <div class="flex items-center justify-center text-success">
-                                            <x-base.lucide class="w-4 h-4 mr-2" icon="CheckCircle" /> {{ number_format($payment->amount) }}
+                                            <x-base.lucide class="w-4 h-4 me-2" icon="CheckCircle" /> {{ number_format($payment->amount) }}
                                         </div>
                                     </td>
                                 </tr>
@@ -233,19 +233,19 @@
         
         <div class="col-span-12 2xl:col-span-3">
             <div class="2xl:border-l -mb-10 pb-10">
-                <div class="2xl:pl-6 grid grid-cols-12 gap-6">
+                <div class="2xl:ps-6 grid grid-cols-12 gap-6">
                     <!-- BEGIN: Financial Summary -->
                     <div class="col-span-12 md:col-span-6 xl:col-span-4 2xl:col-span-12 mt-3 2xl:mt-8">
                         <div class="intro-x flex items-center h-10">
-                            <h2 class="text-lg font-medium truncate mr-5">{{ __('global.financial_summary') }}</h2>
+                            <h2 class="text-lg font-medium truncate me-5">{{ __('global.financial_summary') }}</h2>
                         </div>
                         <div class="mt-5">
                             <div class="intro-x box p-5">
                                 <div class="flex">
                                     <x-base.lucide class="w-6 h-6 text-primary" icon="DollarSign" />
-                                    <div class="ml-auto">
+                                    <div class="ms-auto">
                                         <div class="text-success flex items-center">
-                                            {{ $financialStats['growth_rate'] ?? 0 }}% <x-base.lucide class="w-4 h-4 ml-1" icon="ChevronUp" />
+                                            {{ $financialStats['growth_rate'] ?? 0 }}% <x-base.lucide class="w-4 h-4 ms-1" icon="ChevronUp" />
                                         </div>
                                     </div>
                                 </div>
@@ -266,7 +266,7 @@
                     <!-- BEGIN: Upcoming Events -->
                     <div class="col-span-12 md:col-span-6 xl:col-span-4 2xl:col-span-12 mt-3">
                         <div class="intro-x flex items-center h-10">
-                            <h2 class="text-lg font-medium truncate mr-5">{{ __('global.upcoming_events') }}</h2>
+                            <h2 class="text-lg font-medium truncate me-5">{{ __('global.upcoming_events') }}</h2>
                         </div>
                         <div class="mt-5">
                             @forelse($recentActivities['events'] ?? [] as $event)
@@ -277,7 +277,7 @@
                                             {{ \Carbon\Carbon::parse($event->start_datetime)->format('d') }}
                                         </div>
                                     </div>
-                                    <div class="ml-4 mr-auto">
+                                    <div class="ms-4 me-auto">
                                         <div class="font-medium">{{ $event->title }}</div>
                                         <div class="text-slate-500 text-xs mt-0.5">{{ \Carbon\Carbon::parse($event->start_datetime)->format('M d, H:i') }}</div>
                                     </div>
@@ -296,12 +296,12 @@
                     <!-- BEGIN: Quick Actions -->
                     <div class="col-span-12 md:col-span-6 xl:col-span-4 2xl:col-span-12 mt-3">
                         <div class="intro-x flex items-center h-10">
-                            <h2 class="text-lg font-medium truncate mr-5">{{ __('global.quick_actions') }}</h2>
+                            <h2 class="text-lg font-medium truncate me-5">{{ __('global.quick_actions') }}</h2>
                         </div>
                         <div class="mt-5 grid grid-cols-2 gap-4">
                             @foreach($quickActions as $action)
                             <a href="{{ route($action['route']) }}" class="intro-x box p-5 flex items-center transition-all duration-200 hover:scale-[1.01]">
-                                <x-base.lucide class="w-6 h-6 mr-3 text-{{ $action['color'] }}" icon="{{ $action['icon'] }}" />
+                                <x-base.lucide class="w-6 h-6 me-3 text-{{ $action['color'] }}" icon="{{ $action['icon'] }}" />
                                 <div class="font-medium">{{ __($action['title']) }}</div>
                             </a>
                             @endforeach

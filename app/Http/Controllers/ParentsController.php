@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use OmarAlalwi\Gpdf\Facades\Gpdf;
+
 use App\Http\Requests\StoreParentRequest;
 use App\Http\Requests\UpdateParentRequest;
 use App\Services\ParentService;
@@ -63,7 +65,7 @@ class ParentsController extends Controller
      */
     protected function exportToPdf($data)
     {
-        $pdf = Pdf::loadView('pages.parents.export-pdf', ['data' => $data]);
+        $pdf = Gpdf::loadView('pages.parents.export-pdf', ['data' => $data]);
 
         return $pdf->download('Parent_export_'.date('Y-m-d_H-i-s').'.pdf');
     }

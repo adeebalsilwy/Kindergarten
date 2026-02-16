@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use OmarAlalwi\Gpdf\Facades\Gpdf;
+
 use App\Http\Requests\StoreLanguageRequest;
 use App\Http\Requests\UpdateLanguageRequest;
 use App\Services\LanguageService;
@@ -58,7 +60,7 @@ class LanguageController extends Controller
      */
     protected function exportToPdf($data)
     {
-        $pdf = Pdf::loadView('pages.languages.export-pdf', ['data' => $data]);
+        $pdf = Gpdf::loadView('pages.languages.export-pdf', ['data' => $data]);
 
         return $pdf->download('Language_export_'.date('Y-m-d_H-i-s').'.pdf');
     }

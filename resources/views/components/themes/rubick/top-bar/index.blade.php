@@ -1,7 +1,7 @@
 <!-- BEGIN: Top Bar -->
 <div class="relative z-[51] flex h-[67px] items-center border-b border-slate-200">
     <!-- BEGIN: Breadcrumb -->
-    <x-base.breadcrumb class="-intro-x mr-auto hidden sm:flex">
+    <x-base.breadcrumb class="-intro-x me-auto hidden sm:flex">
         <x-base.breadcrumb.link :index="0">Application</x-base.breadcrumb.link>
         <x-base.breadcrumb.link
             :index="1"
@@ -12,15 +12,15 @@
     </x-base.breadcrumb>
     <!-- END: Breadcrumb -->
     <!-- BEGIN: Search -->
-    <div class="search intro-x relative mr-3 sm:mr-6">
+    <div class="search intro-x relative me-3 sm:me-6">
         <div class="relative hidden sm:block">
             <x-base.form-input
-                class="w-56 rounded-full border-transparent bg-slate-300/50 pr-8 shadow-none transition-[width] duration-300 ease-in-out focus:w-72 focus:border-transparent dark:bg-darkmode-400/70"
+                class="w-56 rounded-full border-transparent bg-slate-300/50 pe-8 shadow-none transition-[width] duration-300 ease-in-out focus:w-72 focus:border-transparent dark:bg-darkmode-400/70"
                 type="text"
                 placeholder="Search..."
             />
             <x-base.lucide
-                class="absolute inset-y-0 right-0 my-auto mr-3 h-5 w-5 text-slate-600 dark:text-slate-500"
+                class="absolute inset-y-0 right-0 my-auto me-3 h-5 w-5 text-slate-600 dark:text-slate-500"
                 icon="Search"
             />
         </div>
@@ -57,7 +57,7 @@
                                 icon="Inbox"
                             />
                         </div>
-                        <div class="ml-3">Mail Settings</div>
+                        <div class="ms-3">Mail Settings</div>
                     </a>
                     <a
                         class="mt-2 flex items-center"
@@ -69,7 +69,7 @@
                                 icon="Users"
                             />
                         </div>
-                        <div class="ml-3">Users & Permissions</div>
+                        <div class="ms-3">Users & Permissions</div>
                     </a>
                     <a
                         class="mt-2 flex items-center"
@@ -82,7 +82,7 @@
                                 icon="CreditCard"
                             />
                         </div>
-                        <div class="ml-3">Transactions Report</div>
+                        <div class="ms-3">Transactions Report</div>
                     </a>
                 </div>
                 <div class="mb-2 font-medium">Users</div>
@@ -99,8 +99,8 @@
                                     alt="Midone - Tailwind Admin Dashboard Template"
                                 />
                             </div>
-                            <div class="ml-3">{{ $faker['users'][0]['name'] }}</div>
-                            <div class="ml-auto w-48 truncate text-right text-xs text-slate-500">
+                            <div class="ms-3">{{ $faker['users'][0]['name'] }}</div>
+                            <div class="ms-auto w-48 truncate text-end text-xs text-slate-500">
                                 {{ $faker['users'][0]['email'] }}
                             </div>
                         </a>
@@ -119,8 +119,8 @@
                                 alt="Midone - Tailwind Admin Dashboard Template"
                             />
                         </div>
-                        <div class="ml-3">{{ $faker['products'][0]['name'] }}</div>
-                        <div class="ml-auto w-48 truncate text-right text-xs text-slate-500">
+                        <div class="ms-3">{{ $faker['products'][0]['name'] }}</div>
+                        <div class="ms-auto w-48 truncate text-end text-xs text-slate-500">
                             {{ $faker['products'][0]['category'] }}
                         </div>
                     </a>
@@ -130,7 +130,7 @@
     </div>
     <!-- END: Search  -->
     <!-- BEGIN: Notifications -->
-    <x-base.popover class="intro-x mr-auto sm:mr-6">
+    <x-base.popover class="intro-x me-auto sm:me-6">
         <x-base.popover.button
             class="relative block text-slate-600 outline-none before:absolute before:right-0 before:top-[-2px] before:h-[8px] before:w-[8px] before:rounded-full before:bg-danger before:content-['']"
         >
@@ -146,7 +146,7 @@
                     'cursor-pointer relative flex items-center',
                     'mt-5' => $fakerKey,
                 ])>
-                    <div class="image-fit relative mr-1 h-12 w-12 flex-none">
+                    <div class="image-fit relative me-1 h-12 w-12 flex-none">
                         <img
                             class="rounded-full"
                             src="{{ Vite::asset($faker['photos'][0]) }}"
@@ -156,15 +156,15 @@
                             class="absolute bottom-0 right-0 h-3 w-3 rounded-full border-2 border-white bg-success dark:border-darkmode-600">
                         </div>
                     </div>
-                    <div class="ml-2 overflow-hidden">
+                    <div class="ms-2 overflow-hidden">
                         <div class="flex items-center">
                             <a
-                                class="mr-5 truncate font-medium"
+                                class="me-5 truncate font-medium"
                                 href=""
                             >
                                 {{ $faker['users'][0]['name'] }}
                             </a>
-                            <div class="ml-auto whitespace-nowrap text-xs text-slate-400">
+                            <div class="ms-auto whitespace-nowrap text-xs text-slate-400">
                                 {{ $faker['times'][0] }}
                             </div>
                         </div>
@@ -178,9 +178,9 @@
     </x-base.popover>
     <!-- END: Notifications  -->
     <!-- BEGIN: Locale Switcher -->
-    <x-base.dropdown class="intro-x mr-3 sm:mr-6">
+    <x-base.dropdown class="intro-x me-3 sm:me-6">
         <x-base.dropdown.button class="flex items-center text-slate-700 dark:text-slate-300">
-            <x-base.lucide class="h-5 w-5 mr-2" icon="Globe" />
+            <x-base.lucide class="h-5 w-5 me-2" icon="Globe" />
             @php
                 $activeLangs = \App\Models\Language::where('is_active', true)->get();
                 $currentLang = $activeLangs->where('code', app()->getLocale())->first() ?? $activeLangs->first();
@@ -193,7 +193,7 @@
                     <span class="text-slate-500 dark:text-slate-400">{{ $otherLangs->first()->name }}</span>
                 @endif
             </span>
-            <x-base.lucide class="h-4 w-4 ml-2" icon="ChevronDown"/>
+            <x-base.lucide class="h-4 w-4 ms-2" icon="ChevronDown"/>
         </x-base.dropdown.button>
         <x-base.dropdown.menu>
             @foreach($activeLangs as $lang)
@@ -222,13 +222,13 @@
             <x-base.menu.divider class="bg-white/[0.08]" />
             <x-base.menu.item class="hover:bg-white/5" as="a" href="{{ route('profile.index') }}">
                 <x-base.lucide
-                    class="mr-2 h-4 w-4"
+                    class="me-2 h-4 w-4"
                     icon="User"
                 /> {{ __('global.profile') }}
             </x-base.menu.item>
             <x-base.menu.item class="hover:bg-white/5" as="a" href="{{ route('change-password') }}">
                 <x-base.lucide
-                    class="mr-2 h-4 w-4"
+                    class="me-2 h-4 w-4"
                     icon="Lock"
                 /> {{ __('global.change_password') }}
             </x-base.menu.item>
@@ -237,10 +237,10 @@
                 <form action="{{ route('auth.logout') }}" method="POST" class="w-full flex items-center">
                     @csrf
                     <x-base.lucide
-                        class="mr-2 h-4 w-4"
+                        class="me-2 h-4 w-4"
                         icon="ToggleRight"
                     /> 
-                    <button type="submit" class="w-full text-left">{{ __('global.logout') }}</button>
+                    <button type="submit" class="w-full text-start">{{ __('global.logout') }}</button>
                 </form>
             </x-base.menu.item>
         </x-base.menu.items>

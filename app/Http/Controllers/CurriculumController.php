@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use OmarAlalwi\Gpdf\Facades\Gpdf;
+
 use App\Http\Requests\StoreCurriculumRequest;
 use App\Http\Requests\UpdateCurriculumRequest;
 use App\Services\CurriculumService;
@@ -58,7 +60,7 @@ class CurriculumController extends Controller
      */
     protected function exportToPdf($data)
     {
-        $pdf = Pdf::loadView('pages.curricula.export-pdf', ['data' => $data]);
+        $pdf = Gpdf::loadView('pages.curricula.export-pdf', ['data' => $data]);
 
         return $pdf->download('Curriculum_export_'.date('Y-m-d_H-i-s').'.pdf');
     }

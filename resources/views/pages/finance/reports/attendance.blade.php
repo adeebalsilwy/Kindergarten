@@ -6,7 +6,7 @@
 
 @section('subcontent')
     <div class="intro-y flex items-center mt-8">
-        <h2 class="text-lg font-medium mr-auto">{{ __('global.attendance_report') }}</h2>
+        <h2 class="text-lg font-medium me-auto">{{ __('global.attendance_report') }}</h2>
     </div>
 
     <!-- Filters -->
@@ -81,10 +81,10 @@
     <!-- Details Table -->
     <div class="intro-y box p-5 mt-5">
         <div class="flex items-center border-b border-slate-200/60 dark:border-darkmode-400 pb-5 mb-5">
-            <div class="font-medium text-base mr-auto">{{ __('global.attendance_records') }}</div>
+            <div class="font-medium text-base me-auto">{{ __('global.attendance_records') }}</div>
             <div class="flex gap-2">
                 <x-base.button variant="outline-secondary" size="sm" onclick="window.print()">
-                    <x-base.lucide icon="Printer" class="w-4 h-4 mr-2" /> {{ __('global.print') }}
+                    <x-base.lucide icon="Printer" class="w-4 h-4 me-2" /> {{ __('global.print') }}
                 </x-base.button>
             </div>
         </div>

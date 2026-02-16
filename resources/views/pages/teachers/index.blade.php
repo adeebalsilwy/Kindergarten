@@ -6,11 +6,11 @@
 
 @section('subcontent')
     <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
-        <h2 class="text-lg font-medium mr-auto">{{ __('Teacher.list') }}</h2>
+        <h2 class="text-lg font-medium me-auto">{{ __('Teacher.list') }}</h2>
         <div class="w-full sm:w-auto flex flex-wrap gap-2 mt-4 sm:mt-0">
             @can('create_teachers')
             <x-base.button variant="primary" as="a" href="{{ route('teachers.create') }}" class="flex items-center shadow-md">
-                <x-base.lucide icon="UserPlus" class="w-4 h-4 mr-2" />
+                <x-base.lucide icon="UserPlus" class="w-4 h-4 me-2" />
                 {{ __('Teacher.add_new') }}
             </x-base.button>
             @endcan
@@ -18,18 +18,18 @@
             @can('export_teachers')
             <div class="dropdown">
                 <x-base.button variant="outline-secondary" class="flex items-center">
-                    <x-base.lucide icon="Download" class="w-4 h-4 mr-2" />
+                    <x-base.lucide icon="Download" class="w-4 h-4 me-2" />
                     {{ __('global.export') }}
-                    <x-base.lucide icon="ChevronDown" class="w-4 h-4 ml-2" />
+                    <x-base.lucide icon="ChevronDown" class="w-4 h-4 ms-2" />
                 </x-base.button>
                 <div class="dropdown-menu w-40">
                     <div class="dropdown-content">
                         <a href="{{ route('teachers.export.pdf') }}" class="dropdown-item flex items-center">
-                            <x-base.lucide icon="FileText" class="w-4 h-4 mr-2" />
+                            <x-base.lucide icon="FileText" class="w-4 h-4 me-2" />
                             {{ __('global.export_pdf') }}
                         </a>
                         <a href="{{ route('teachers.export.excel') }}" class="dropdown-item flex items-center">
-                            <x-base.lucide icon="FileSpreadsheet" class="w-4 h-4 mr-2" />
+                            <x-base.lucide icon="FileSpreadsheet" class="w-4 h-4 me-2" />
                             {{ __('global.export_excel') }}
                         </a>
                     </div>
@@ -48,9 +48,9 @@
                         <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
                             <x-base.lucide icon="Users" class="w-6 h-6 text-primary" />
                         </div>
-                        <div class="ml-auto">
+                        <div class="ms-auto">
                             <div class="text-success flex items-center">
-                                <x-base.lucide icon="TrendingUp" class="w-4 h-4 mr-1" />
+                                <x-base.lucide icon="TrendingUp" class="w-4 h-4 me-1" />
                                 <span class="text-xs">{{ __('global.total') }}</span>
                             </div>
                         </div>
@@ -68,9 +68,9 @@
                         <div class="w-10 h-10 rounded-full bg-info/10 flex items-center justify-center">
                             <x-base.lucide icon="GraduationCap" class="w-6 h-6 text-info" />
                         </div>
-                        <div class="ml-auto">
+                        <div class="ms-auto">
                             <div class="text-success flex items-center">
-                                <x-base.lucide icon="TrendingUp" class="w-4 h-4 mr-1" />
+                                <x-base.lucide icon="TrendingUp" class="w-4 h-4 me-1" />
                                 <span class="text-xs">{{ __('global.qualified') }}</span>
                             </div>
                         </div>
@@ -95,9 +95,9 @@
                         <div class="w-10 h-10 rounded-full bg-warning/10 flex items-center justify-center">
                             <x-base.lucide icon="Briefcase" class="w-6 h-6 text-warning" />
                         </div>
-                        <div class="ml-auto">
+                        <div class="ms-auto">
                             <div class="text-success flex items-center">
-                                <x-base.lucide icon="TrendingUp" class="w-4 h-4 mr-1" />
+                                <x-base.lucide icon="TrendingUp" class="w-4 h-4 me-1" />
                                 <span class="text-xs">{{ __('global.experienced') }}</span>
                             </div>
                         </div>
@@ -122,9 +122,9 @@
                         <div class="w-10 h-10 rounded-full bg-success/10 flex items-center justify-center">
                             <x-base.lucide icon="DollarSign" class="w-6 h-6 text-success" />
                         </div>
-                        <div class="ml-auto">
+                        <div class="ms-auto">
                             <div class="text-success flex items-center">
-                                <x-base.lucide icon="TrendingUp" class="w-4 h-4 mr-1" />
+                                <x-base.lucide icon="TrendingUp" class="w-4 h-4 me-1" />
                                 <span class="text-xs">{{ __('global.average') }}</span>
                             </div>
                         </div>
@@ -156,9 +156,9 @@
                                     name="search" 
                                     value="{{ request('search') }}"
                                     placeholder="{{ __('global.search_teachers') }}..." 
-                                    class="w-full pl-10 pr-4 py-2" 
+                                    class="w-full ps-10 pe-4 py-2"
                                 />
-                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <div class="absolute inset-y-0 left-0 ps-3 flex items-center pointer-events-none">
                                     <x-base.lucide icon="Search" class="h-5 w-5 text-gray-400" />
                                 </div>
                             </div>
@@ -177,11 +177,11 @@
                         </select>
                         <div class="flex gap-2">
                             <x-base.button as="a" href="{{ route('teachers.index') }}" variant="secondary" class="flex items-center">
-                                <x-base.lucide icon="RotateCcw" class="w-4 h-4 mr-2" />
+                                <x-base.lucide icon="RotateCcw" class="w-4 h-4 me-2" />
                                 {{ __('global.reset') }}
                             </x-base.button>
                             <x-base.button type="submit" variant="primary" class="flex items-center">
-                                <x-base.lucide icon="Filter" class="w-4 h-4 mr-2" />
+                                <x-base.lucide icon="Filter" class="w-4 h-4 me-2" />
                                 {{ __('global.apply') }}
                             </x-base.button>
                         </div>
@@ -200,7 +200,7 @@
                             <img alt="{{ $teacher->name }}" class="rounded-full border-2 border-white shadow-md" 
                                  src="{{ $teacher->photo_path ? asset('storage/' . $teacher->photo_path) : asset('dist/images/profile-2.jpg') }}">
                         </div>
-                        <div class="ml-4 mr-auto">
+                        <div class="ms-4 me-auto">
                             <div class="font-medium text-base">{{ $teacher->name ?? '-' }}</div>
                             <div class="text-slate-500 text-xs mt-1">
                                 {{ $teacher->qualification ? ucfirst($teacher->qualification) : __('global.no_qualification') }}
@@ -208,10 +208,10 @@
                         </div>
                         <div class="flex items-center">
                             @if($teacher->is_active)
-                                <div class="w-3 h-3 rounded-full bg-success mr-2"></div>
+                                <div class="w-3 h-3 rounded-full bg-success me-2"></div>
                                 <span class="text-xs text-success">{{ __('global.active') }}</span>
                             @else
-                                <div class="w-3 h-3 rounded-full bg-danger mr-2"></div>
+                                <div class="w-3 h-3 rounded-full bg-danger me-2"></div>
                                 <span class="text-xs text-danger">{{ __('global.inactive') }}</span>
                             @endif
                         </div>
@@ -219,11 +219,11 @@
                     <div class="px-5 py-3 border-t border-slate-200/60 dark:border-darkmode-400">
                         <div class="flex flex-wrap gap-2 mb-3">
                             <div class="flex items-center text-xs text-slate-600 dark:text-slate-300">
-                                <x-base.lucide icon="Phone" class="w-3 h-3 mr-1" />
+                                <x-base.lucide icon="Phone" class="w-3 h-3 me-1" />
                                 {{ $teacher->phone ?? __('global.not_provided') }}
                             </div>
-                            <div class="flex items-center text-xs text-slate-600 dark:text-slate-300 ml-3">
-                                <x-base.lucide icon="Mail" class="w-3 h-3 mr-1" />
+                            <div class="flex items-center text-xs text-slate-600 dark:text-slate-300 ms-3">
+                                <x-base.lucide icon="Mail" class="w-3 h-3 me-1" />
                                 {{ $teacher->email ?? __('global.not_provided') }}
                             </div>
                         </div>
@@ -296,7 +296,7 @@
                         <p class="text-slate-600 dark:text-slate-400 mb-6">{{ __('global.start_by_adding_teacher') }}</p>
                         @can('create_teachers')
                         <x-base.button variant="primary" as="a" href="{{ route('teachers.create') }}" class="flex items-center mx-auto">
-                            <x-base.lucide icon="UserPlus" class="w-4 h-4 mr-2" />
+                            <x-base.lucide icon="UserPlus" class="w-4 h-4 me-2" />
                             {{ __('global.add_first_teacher') }}
                         </x-base.button>
                         @endcan
@@ -318,7 +318,7 @@
                 <div class="box p-5 border border-primary/20 bg-primary/5">
                     <div class="flex items-center">
                         <x-base.lucide icon="Database" class="w-8 h-8 text-primary" />
-                        <div class="ml-auto">
+                        <div class="ms-auto">
                             <div class="report-box__indicator bg-success"> 
                                 <x-base.lucide icon="TrendingUp" class="w-4 h-4" /> 
                             </div>
@@ -333,7 +333,7 @@
                 <div class="box p-5 border border-info/20 bg-info/5">
                     <div class="flex items-center">
                         <x-base.lucide icon="Activity" class="w-8 h-8 text-info" />
-                        <div class="ml-auto">
+                        <div class="ms-auto">
                             <div class="report-box__indicator bg-success"> 
                                 <x-base.lucide icon="TrendingUp" class="w-4 h-4" /> 
                             </div>
@@ -355,7 +355,7 @@
                 <div class="box p-5 border border-warning/20 bg-warning/5">
                     <div class="flex items-center">
                         <x-base.lucide icon="Calendar" class="w-8 h-8 text-warning" />
-                        <div class="ml-auto">
+                        <div class="ms-auto">
                             <div class="report-box__indicator bg-success"> 
                                 <x-base.lucide icon="TrendingUp" class="w-4 h-4" /> 
                             </div>
@@ -377,7 +377,7 @@
                 <div class="box p-5 border border-success/20 bg-success/5">
                     <div class="flex items-center">
                         <x-base.lucide icon="GraduationCap" class="w-8 h-8 text-success" />
-                        <div class="ml-auto">
+                        <div class="ms-auto">
                             <div class="report-box__indicator bg-success"> 
                                 <x-base.lucide icon="TrendingUp" class="w-4 h-4" /> 
                             </div>

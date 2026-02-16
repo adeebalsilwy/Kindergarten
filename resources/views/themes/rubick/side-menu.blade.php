@@ -12,9 +12,9 @@
         <x-mobile-menu />
         <div class="mt-[4.7rem] flex md:mt-0">
             <!-- BEGIN: Side Menu -->
-            <nav class="side-nav hidden w-[80px] overflow-x-hidden pb-16 pr-5 md:block xl:w-[230px]">
+            <nav class="side-nav hidden w-[80px] overflow-x-hidden pb-16 pe-5 md:block xl:w-[230px]">
                 <a
-                    class="flex items-center pt-4 pl-5 intro-x"
+                    class="flex items-center pt-4 ps-5 intro-x"
                     href="{{ route('dashboard-overview-1') }}"
                 >
                     <img
@@ -22,7 +22,7 @@
                         src="{{ Vite::asset('resources/images/logo.svg') }}"
                         alt="Deebo Kindergarten"
                     />
-                    <span class="hidden ml-3 text-lg text-white xl:block"> {{ __('global.kindergarten') }} </span>
+                    <span class="hidden ms-3 text-lg text-white xl:block"> {{ __('global.kindergarten') }} </span>
                 </a>
                 <div class="my-6 side-nav__divider"></div>
                 <ul>
@@ -117,12 +117,12 @@
                 <x-themes.rubick.top-bar />
                 @if (session('success'))
                     <x-base.alert variant="success" class="mb-2 flex items-center">
-                        <x-base.lucide icon="CheckCircle" class="w-6 h-6 mr-2" /> {{ session('success') }}
+                        <x-base.lucide icon="CheckCircle" class="w-6 h-6 me-2" /> {{ session('success') }}
                     </x-base.alert>
                 @endif
                 @if (session('error'))
                     <x-base.alert variant="danger" class="mb-2 flex items-center">
-                        <x-base.lucide icon="AlertOctagon" class="w-6 h-6 mr-2" /> {{ session('error') }}
+                        <x-base.lucide icon="AlertOctagon" class="w-6 h-6 me-2" /> {{ session('error') }}
                     </x-base.alert>
                 @endif
                 @yield('subcontent')

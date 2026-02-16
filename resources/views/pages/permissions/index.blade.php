@@ -6,27 +6,27 @@
 
 @section('subcontent')
     <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
-        <h2 class="text-lg font-medium mr-auto">{{ __('global.permission_management') }}</h2>
+        <h2 class="text-lg font-medium me-auto">{{ __('global.permission_management') }}</h2>
         <div class="w-full sm:w-auto flex flex-wrap gap-2 mt-4 sm:mt-0">
             <x-base.button variant="primary" as="a" href="{{ route('permissions.create') }}" class="flex items-center shadow-md">
-                <x-base.lucide icon="Key" class="w-4 h-4 mr-2" />
+                <x-base.lucide icon="Key" class="w-4 h-4 me-2" />
                 {{ __('global.add_new_permission') }}
             </x-base.button>
             
             <div class="dropdown">
                 <x-base.button variant="outline-secondary" class="flex items-center">
-                    <x-base.lucide icon="Download" class="w-4 h-4 mr-2" />
+                    <x-base.lucide icon="Download" class="w-4 h-4 me-2" />
                     {{ __('global.export') }}
-                    <x-base.lucide icon="ChevronDown" class="w-4 h-4 ml-2" />
+                    <x-base.lucide icon="ChevronDown" class="w-4 h-4 ms-2" />
                 </x-base.button>
                 <div class="dropdown-menu w-40">
                     <div class="dropdown-content">
                         <a href="{{ route('permissions.export.pdf') }}" class="dropdown-item flex items-center">
-                            <x-base.lucide icon="FileText" class="w-4 h-4 mr-2" />
+                            <x-base.lucide icon="FileText" class="w-4 h-4 me-2" />
                             {{ __('global.export_pdf') }}
                         </a>
                         <a href="{{ route('permissions.export.excel') }}" class="dropdown-item flex items-center">
-                            <x-base.lucide icon="FileSpreadsheet" class="w-4 h-4 mr-2" />
+                            <x-base.lucide icon="FileSpreadsheet" class="w-4 h-4 me-2" />
                             {{ __('global.export_excel') }}
                         </a>
                     </div>
@@ -44,9 +44,9 @@
                         <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
                             <x-base.lucide icon="Key" class="w-6 h-6 text-primary" />
                         </div>
-                        <div class="ml-auto">
+                        <div class="ms-auto">
                             <div class="text-success flex items-center">
-                                <x-base.lucide icon="TrendingUp" class="w-4 h-4 mr-1" />
+                                <x-base.lucide icon="TrendingUp" class="w-4 h-4 me-1" />
                                 <span class="text-xs">{{ __('global.total') }}</span>
                             </div>
                         </div>
@@ -64,9 +64,9 @@
                         <div class="w-10 h-10 rounded-full bg-info/10 flex items-center justify-center">
                             <x-base.lucide icon="Shield" class="w-6 h-6 text-info" />
                         </div>
-                        <div class="ml-auto">
+                        <div class="ms-auto">
                             <div class="text-success flex items-center">
-                                <x-base.lucide icon="TrendingUp" class="w-4 h-4 mr-1" />
+                                <x-base.lucide icon="TrendingUp" class="w-4 h-4 me-1" />
                                 <span class="text-xs">{{ __('global.assigned') }}</span>
                             </div>
                         </div>
@@ -91,9 +91,9 @@
                         <div class="w-10 h-10 rounded-full bg-warning/10 flex items-center justify-center">
                             <x-base.lucide icon="Users" class="w-6 h-6 text-warning" />
                         </div>
-                        <div class="ml-auto">
+                        <div class="ms-auto">
                             <div class="text-success flex items-center">
-                                <x-base.lucide icon="TrendingUp" class="w-4 h-4 mr-1" />
+                                <x-base.lucide icon="TrendingUp" class="w-4 h-4 me-1" />
                                 <span class="text-xs">{{ __('global.roles') }}</span>
                             </div>
                         </div>
@@ -118,9 +118,9 @@
                         <div class="w-10 h-10 rounded-full bg-success/10 flex items-center justify-center">
                             <x-base.lucide icon="Crown" class="w-6 h-6 text-success" />
                         </div>
-                        <div class="ml-auto">
+                        <div class="ms-auto">
                             <div class="text-success flex items-center">
-                                <x-base.lucide icon="TrendingUp" class="w-4 h-4 mr-1" />
+                                <x-base.lucide icon="TrendingUp" class="w-4 h-4 me-1" />
                                 <span class="text-xs">{{ __('global.admin') }}</span>
                             </div>
                         </div>
@@ -152,7 +152,7 @@
                         <option value="unassigned">{{ __('global.unassigned') }}</option>
                     </select>
                     <x-base.button variant="secondary" class="flex items-center" onclick="applyFilters()">
-                        <x-base.lucide icon="Filter" class="w-4 h-4 mr-2" />
+                        <x-base.lucide icon="Filter" class="w-4 h-4 me-2" />
                         {{ __('global.filter') }}
                     </x-base.button>
                 </div>
@@ -168,7 +168,7 @@
                         <div class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
                             <x-base.lucide icon="Key" class="w-6 h-6 text-primary" />
                         </div>
-                        <div class="ml-4 mr-auto">
+                        <div class="ms-4 me-auto">
                             <div class="font-medium text-base">{{ str_replace('_', ' ', $permission->name) }}</div>
                             <div class="text-slate-500 text-xs mt-1">{{ $permission->guard_name }}</div>
                         </div>
@@ -212,7 +212,7 @@
                                     <span class="px-2 py-1 text-xs rounded-full {{ $role->id == 1 ? 'bg-yellow-100 text-yellow-800 border border-yellow-200' : 'bg-primary/10 text-primary border border-primary/20' }}">
                                         {{ Str::limit($role->name, 12) }}
                                         @if($role->id == 1)
-                                            <x-base.lucide icon="Crown" class="w-3 h-3 ml-1 inline" />
+                                            <x-base.lucide icon="Crown" class="w-3 h-3 ms-1 inline" />
                                         @endif
                                     </span>
                                 @endforeach
@@ -255,7 +255,7 @@
                         <h3 class="text-xl font-medium text-slate-800 dark:text-slate-200 mb-2">{{ __('global.no_permissions_found') }}</h3>
                         <p class="text-slate-600 dark:text-slate-400 mb-6">{{ __('global.start_by_adding_permission') }}</p>
                         <x-base.button variant="primary" as="a" href="{{ route('permissions.create') }}" class="flex items-center mx-auto">
-                            <x-base.lucide icon="Key" class="w-4 h-4 mr-2" />
+                            <x-base.lucide icon="Key" class="w-4 h-4 me-2" />
                             {{ __('global.add_first_permission') }}
                         </x-base.button>
                     </div>
@@ -276,7 +276,7 @@
                 <div class="box p-5 border border-primary/20 bg-primary/5">
                     <div class="flex items-center">
                         <x-base.lucide icon="Database" class="w-8 h-8 text-primary" />
-                        <div class="ml-auto">
+                        <div class="ms-auto">
                             <div class="report-box__indicator bg-success"> 
                                 <x-base.lucide icon="TrendingUp" class="w-4 h-4" /> 
                             </div>
@@ -291,7 +291,7 @@
                 <div class="box p-5 border border-info/20 bg-info/5">
                     <div class="flex items-center">
                         <x-base.lucide icon="Activity" class="w-8 h-8 text-info" />
-                        <div class="ml-auto">
+                        <div class="ms-auto">
                             <div class="report-box__indicator bg-success"> 
                                 <x-base.lucide icon="TrendingUp" class="w-4 h-4" /> 
                             </div>
@@ -313,7 +313,7 @@
                 <div class="box p-5 border border-warning/20 bg-warning/5">
                     <div class="flex items-center">
                         <x-base.lucide icon="Calendar" class="w-8 h-8 text-warning" />
-                        <div class="ml-auto">
+                        <div class="ms-auto">
                             <div class="report-box__indicator bg-success"> 
                                 <x-base.lucide icon="TrendingUp" class="w-4 h-4" /> 
                             </div>
@@ -333,7 +333,7 @@
                 <div class="box p-5 border border-success/20 bg-success/5">
                     <div class="flex items-center">
                         <x-base.lucide icon="ShieldCheck" class="w-8 h-8 text-success" />
-                        <div class="ml-auto">
+                        <div class="ms-auto">
                             <div class="report-box__indicator bg-success"> 
                                 <x-base.lucide icon="TrendingUp" class="w-4 h-4" /> 
                             </div>

@@ -9,7 +9,7 @@
         <div class="container relative z-10 sm:px-10">
             <div class="my-10 flex h-screen py-5 xl:my-0 xl:h-auto xl:py-0">
                 <div class="mx-auto my-auto w-full rounded-md bg-white px-5 py-8 shadow-md dark:bg-darkmode-600 sm:w-3/4 sm:px-8 lg:w-2/4 xl:w-auto xl:bg-transparent xl:p-0 xl:shadow-none">
-                    <h2 class="text-center text-2xl font-bold xl:text-left xl:text-3xl">
+                    <h2 class="text-center text-2xl font-bold xl:text-start xl:text-3xl">
                         {{ __('global.reset_password') }}
                     </h2>
                     <form method="POST" action="{{ route('password.update') }}" class="mt-6">
@@ -46,7 +46,7 @@
                         @error('password_confirmation')
                             <x-base.form-help class="text-danger mt-2">{{ $message }}</x-base.form-help>
                         @enderror
-                        <div class="mt-5 text-center xl:text-left">
+                        <div class="mt-5 text-center xl:text-start">
                             <x-base.button class="w-full px-4 py-3 xl:w-40" variant="primary" type="submit">
                                 {{ __('global.reset_password') }}
                             </x-base.button>

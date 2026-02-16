@@ -5,7 +5,7 @@
 @endsection
 
 @section('subcontent')
-    <h2 class="intro-y mt-8 text-lg font-medium mr-auto">{{ __('kindergarten.attendance.title') }}: {{ $date }}</h2>
+    <h2 class="intro-y mt-8 text-lg font-medium me-auto">{{ __('kindergarten.attendance.title') }}: {{ $date }}</h2>
     
     @if(session('success'))
         <div class="alert alert-success show mb-2">{{ session('success') }}</div>
@@ -56,7 +56,7 @@
                 </table>
             </div>
 
-            <div class="mt-5 text-right">
+            <div class="mt-5 text-end">
                 <button type="submit" class="btn btn-primary w-40">{{ __('kindergarten.attendance.save') }}</button>
             </div>
         </form>

@@ -50,13 +50,13 @@
         .table td {
             text-align: {{ app()->getLocale() == 'ar' ? 'right' : 'left' }};
         }
-        .text-right {
+        .text-end {
             text-align: right;
         }
         .text-center {
             text-align: center;
         }
-        .text-left {
+        .text-start {
             text-align: left;
         }
         .section-header {

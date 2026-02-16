@@ -11,9 +11,9 @@
                 <!-- BEGIN: Financial Overview -->
                 <div class="col-span-12 mt-8">
                     <div class="intro-y flex h-10 items-center">
-                        <h2 class="mr-5 truncate text-lg font-medium">{{ __('global.financial_overview') }}</h2>
-                        <a href="" class="ml-auto flex items-center text-primary">
-                            <x-base.lucide class="mr-3 h-4 w-4" icon="RefreshCcw" /> {{ __('global.reload_data') }}
+                        <h2 class="me-5 truncate text-lg font-medium">{{ __('global.financial_overview') }}</h2>
+                        <a href="" class="ms-auto flex items-center text-primary">
+                            <x-base.lucide class="me-3 h-4 w-4" icon="RefreshCcw" /> {{ __('global.reload_data') }}
                         </a>
                     </div>
                     <div class="mt-5 grid grid-cols-12 gap-6">
@@ -25,9 +25,9 @@
                                         <div class="w-10 h-10 rounded-full bg-success/10 flex items-center justify-center">
                                             <x-base.lucide class="h-6 w-6 text-success" icon="TrendingUp" />
                                         </div>
-                                        <div class="ml-auto">
+                                        <div class="ms-auto">
                                             <div class="report-box__indicator bg-success flex items-center">
-                                                <x-base.lucide class="mr-1 h-4 w-4" icon="ChevronUp" />
+                                                <x-base.lucide class="me-1 h-4 w-4" icon="ChevronUp" />
                                                 <span class="text-xs">{{ __('global.this_month') }}</span>
                                             </div>
                                         </div>
@@ -48,9 +48,9 @@
                                         <div class="w-10 h-10 rounded-full bg-danger/10 flex items-center justify-center">
                                             <x-base.lucide class="h-6 w-6 text-danger" icon="TrendingDown" />
                                         </div>
-                                        <div class="ml-auto">
+                                        <div class="ms-auto">
                                             <div class="report-box__indicator bg-danger flex items-center">
-                                                <x-base.lucide class="mr-1 h-4 w-4" icon="ChevronUp" />
+                                                <x-base.lucide class="me-1 h-4 w-4" icon="ChevronUp" />
                                                 <span class="text-xs">{{ __('global.this_month') }}</span>
                                             </div>
                                         </div>
@@ -71,9 +71,9 @@
                                         <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
                                             <x-base.lucide class="h-6 w-6 text-primary" icon="BarChart3" />
                                         </div>
-                                        <div class="ml-auto">
+                                        <div class="ms-auto">
                                             <div class="report-box__indicator {{ ($currentMonth['revenue']['total_revenue'] - $currentMonth['expenses']['total_expenses']) >= 0 ? 'bg-success' : 'bg-danger' }} flex items-center">
-                                                <x-base.lucide class="mr-1 h-4 w-4" icon="{{ ($currentMonth['revenue']['total_revenue'] - $currentMonth['expenses']['total_expenses']) >= 0 ? 'ChevronUp' : 'ChevronDown' }}" />
+                                                <x-base.lucide class="me-1 h-4 w-4" icon="{{ ($currentMonth['revenue']['total_revenue'] - $currentMonth['expenses']['total_expenses']) >= 0 ? 'ChevronUp' : 'ChevronDown' }}" />
                                                 <span class="text-xs">{{ __('global.net') }}</span>
                                             </div>
                                         </div>
@@ -94,9 +94,9 @@
                                         <div class="w-10 h-10 rounded-full bg-info/10 flex items-center justify-center">
                                             <x-base.lucide class="h-6 w-6 text-info" icon="Percent" />
                                         </div>
-                                        <div class="ml-auto">
+                                        <div class="ms-auto">
                                             <div class="report-box__indicator bg-success flex items-center">
-                                                <x-base.lucide class="mr-1 h-4 w-4" icon="ChevronUp" />
+                                                <x-base.lucide class="me-1 h-4 w-4" icon="ChevronUp" />
                                                 <span class="text-xs">{{ __('global.rate') }}</span>
                                             </div>
                                         </div>
@@ -118,8 +118,8 @@
                 <!-- BEGIN: Financial Trends -->
                 <div class="col-span-12 mt-8">
                     <div class="intro-y flex h-10 items-center">
-                        <h2 class="mr-5 truncate text-lg font-medium">{{ __('global.financial_trends') }}</h2>
-                        <div class="ml-auto flex gap-2">
+                        <h2 class="me-5 truncate text-lg font-medium">{{ __('global.financial_trends') }}</h2>
+                        <div class="ms-auto flex gap-2">
                             <select id="trendPeriod" class="form-select w-32 text-xs" onchange="updateTrendChart()">
                                 <option value="7">{{ __('global.last_7_days') }}</option>
                                 <option value="30" selected>{{ __('global.last_30_days') }}</option>
@@ -155,7 +155,7 @@
                 <!-- BEGIN: Revenue vs Expenses Breakdown -->
                 <div class="col-span-12 mt-8 lg:col-span-6">
                     <div class="intro-y flex h-10 items-center">
-                        <h2 class="mr-5 truncate text-lg font-medium">{{ __('global.revenue_breakdown') }}</h2>
+                        <h2 class="me-5 truncate text-lg font-medium">{{ __('global.revenue_breakdown') }}</h2>
                     </div>
                     <div class="intro-y box mt-5 p-5">
                         <div class="h-[300px]">
@@ -177,7 +177,7 @@
                 <!-- BEGIN: Expense Categories -->
                 <div class="col-span-12 mt-8 lg:col-span-6">
                     <div class="intro-y flex h-10 items-center">
-                        <h2 class="mr-5 truncate text-lg font-medium">{{ __('global.expense_categories') }}</h2>
+                        <h2 class="me-5 truncate text-lg font-medium">{{ __('global.expense_categories') }}</h2>
                     </div>
                     <div class="intro-y box mt-5 p-5">
                         <div class="h-[300px]">
@@ -208,16 +208,16 @@
                 <!-- BEGIN: Recent Activities -->
                 <div class="col-span-12 mt-8">
                     <div class="intro-y flex h-10 items-center">
-                        <h2 class="mr-5 truncate text-lg font-medium">{{ __('global.recent_activities') }}</h2>
-                        <a href="#" class="ml-auto text-primary text-sm">{{ __('global.view_all') }}</a>
+                        <h2 class="me-5 truncate text-lg font-medium">{{ __('global.recent_activities') }}</h2>
+                        <a href="#" class="ms-auto text-primary text-sm">{{ __('global.view_all') }}</a>
                     </div>
                     <div class="intro-y box mt-5">
                         <div class="p-5">
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                                 <!-- Recent Payments -->
-                                <div class="border-r border-slate-200 pr-5 dark:border-darkmode-400">
+                                <div class="border-r border-slate-200 pe-5 dark:border-darkmode-400">
                                     <h3 class="font-medium text-base mb-4 flex items-center">
-                                        <x-base.lucide icon="DollarSign" class="w-5 h-5 text-success mr-2" />
+                                        <x-base.lucide icon="DollarSign" class="w-5 h-5 text-success me-2" />
                                         {{ __('global.recent_payments') }}
                                     </h3>
                                     <div class="space-y-3 max-h-64 overflow-y-auto">
@@ -227,7 +227,7 @@
                                         @forelse($recentPayments as $payment)
                                             <div class="flex items-center justify-between p-3 bg-success/5 rounded-lg border border-success/10">
                                                 <div class="flex items-center">
-                                                    <div class="w-8 h-8 rounded-full bg-success/10 flex items-center justify-center mr-3">
+                                                    <div class="w-8 h-8 rounded-full bg-success/10 flex items-center justify-center me-3">
                                                         <x-base.lucide icon="DollarSign" class="w-4 h-4 text-success" />
                                                     </div>
                                                     <div>
@@ -244,9 +244,9 @@
                                 </div>
                                 
                                 <!-- Recent Expenses -->
-                                <div class="border-r border-slate-200 pr-5 pl-5 dark:border-darkmode-400">
+                                <div class="border-r border-slate-200 pe-5 ps-5 dark:border-darkmode-400">
                                     <h3 class="font-medium text-base mb-4 flex items-center">
-                                        <x-base.lucide icon="CreditCard" class="w-5 h-5 text-danger mr-2" />
+                                        <x-base.lucide icon="CreditCard" class="w-5 h-5 text-danger me-2" />
                                         {{ __('global.recent_expenses') }}
                                     </h3>
                                     <div class="space-y-3 max-h-64 overflow-y-auto">
@@ -256,7 +256,7 @@
                                         @forelse($recentExpenses as $expense)
                                             <div class="flex items-center justify-between p-3 bg-danger/5 rounded-lg border border-danger/10">
                                                 <div class="flex items-center">
-                                                    <div class="w-8 h-8 rounded-full bg-danger/10 flex items-center justify-center mr-3">
+                                                    <div class="w-8 h-8 rounded-full bg-danger/10 flex items-center justify-center me-3">
                                                         <x-base.lucide icon="CreditCard" class="w-4 h-4 text-danger" />
                                                     </div>
                                                     <div>
@@ -273,9 +273,9 @@
                                 </div>
                                 
                                 <!-- Upcoming Due Dates -->
-                                <div class="pl-5">
+                                <div class="ps-5">
                                     <h3 class="font-medium text-base mb-4 flex items-center">
-                                        <x-base.lucide icon="Calendar" class="w-5 h-5 text-warning mr-2" />
+                                        <x-base.lucide icon="Calendar" class="w-5 h-5 text-warning me-2" />
                                         {{ __('global.upcoming_due_dates') }}
                                     </h3>
                                     <div class="space-y-3 max-h-64 overflow-y-auto">
@@ -285,7 +285,7 @@
                                         @forelse($upcomingFees as $fee)
                                             <div class="flex items-center justify-between p-3 bg-warning/5 rounded-lg border border-warning/10">
                                                 <div class="flex items-center">
-                                                    <div class="w-8 h-8 rounded-full bg-warning/10 flex items-center justify-center mr-3">
+                                                    <div class="w-8 h-8 rounded-full bg-warning/10 flex items-center justify-center me-3">
                                                         <x-base.lucide icon="Calendar" class="w-4 h-4 text-warning" />
                                                     </div>
                                                     <div>
@@ -293,7 +293,7 @@
                                                         <div class="text-xs text-slate-500">{{ $fee->fee_type }}</div>
                                                     </div>
                                                 </div>
-                                                <div class="text-right">
+                                                <div class="text-end">
                                                     <div class="font-bold text-warning">{{ number_format($fee->amount) }}</div>
                                                     <div class="text-xs text-slate-500">{{ $fee->due_date->format('M d') }}</div>
                                                 </div>
@@ -314,11 +314,11 @@
         <!-- BEGIN: Financial Sidebar -->
         <div class="col-span-12 2xl:col-span-3">
             <div class="-mb-10 pb-10 2xl:border-l border-slate-200 dark:border-darkmode-400">
-                <div class="grid grid-cols-12 gap-x-6 gap-y-6 2xl:gap-x-0 2xl:pl-6">
+                <div class="grid grid-cols-12 gap-x-6 gap-y-6 2xl:gap-x-0 2xl:ps-6">
                     <!-- Financial Summary -->
                     <div class="col-span-12 mt-3 md:col-span-6 xl:col-span-4 2xl:col-span-12 2xl:mt-8">
                         <div class="intro-x flex h-10 items-center">
-                            <h2 class="mr-5 truncate text-lg font-medium">{{ __('global.financial_summary') }}</h2>
+                            <h2 class="me-5 truncate text-lg font-medium">{{ __('global.financial_summary') }}</h2>
                         </div>
                         <div class="mt-5 space-y-4">
                             <div class="box p-4 bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-darkmode-600 dark:to-darkmode-700">
@@ -359,36 +359,36 @@
                     <!-- Quick Financial Actions -->
                     <div class="col-span-12 mt-3 md:col-span-6 xl:col-span-4 2xl:col-span-12">
                         <div class="intro-x flex h-10 items-center">
-                            <h2 class="mr-5 truncate text-lg font-medium">{{ __('global.quick_financial_actions') }}</h2>
+                            <h2 class="me-5 truncate text-lg font-medium">{{ __('global.quick_financial_actions') }}</h2>
                         </div>
                         <div class="mt-5 grid grid-cols-1 gap-3">
                             <x-base.button as="a" href="{{ route('payments.create') }}" variant="outline-success" class="w-full flex items-center p-3 bg-white dark:bg-darkmode-600 border border-success/30 hover:bg-success/5">
-                                <x-base.lucide icon="PlusCircle" class="w-5 h-5 text-success mr-3" />
-                                <div class="text-left">
+                                <x-base.lucide icon="PlusCircle" class="w-5 h-5 text-success me-3" />
+                                <div class="text-start">
                                     <div class="font-medium">{{ __('global.record_payment') }}</div>
                                     <div class="text-xs text-slate-500">{{ __('global.add_new_payment') }}</div>
                                 </div>
                             </x-base.button>
                             
                             <x-base.button as="a" href="{{ route('expenses.create') }}" variant="outline-danger" class="w-full flex items-center p-3 bg-white dark:bg-darkmode-600 border border-danger/30 hover:bg-danger/5">
-                                <x-base.lucide icon="MinusCircle" class="w-5 h-5 text-danger mr-3" />
-                                <div class="text-left">
+                                <x-base.lucide icon="MinusCircle" class="w-5 h-5 text-danger me-3" />
+                                <div class="text-start">
                                     <div class="font-medium">{{ __('global.record_expense') }}</div>
                                     <div class="text-xs text-slate-500">{{ __('global.add_new_expense') }}</div>
                                 </div>
                             </x-base.button>
                             
                             <x-base.button as="a" href="{{ route('fees.create') }}" variant="outline-warning" class="w-full flex items-center p-3 bg-white dark:bg-darkmode-600 border border-warning/30 hover:bg-warning/5">
-                                <x-base.lucide icon="FileText" class="w-5 h-5 text-warning mr-3" />
-                                <div class="text-left">
+                                <x-base.lucide icon="FileText" class="w-5 h-5 text-warning me-3" />
+                                <div class="text-start">
                                     <div class="font-medium">{{ __('global.create_invoice') }}</div>
                                     <div class="text-xs text-slate-500">{{ __('global.generate_fee_invoice') }}</div>
                                 </div>
                             </x-base.button>
                             
                             <x-base.button as="a" href="{{ route('reports.index') }}" variant="outline-info" class="w-full flex items-center p-3 bg-white dark:bg-darkmode-600 border border-info/30 hover:bg-info/5">
-                                <x-base.lucide icon="BarChart3" class="w-5 h-5 text-info mr-3" />
-                                <div class="text-left">
+                                <x-base.lucide icon="BarChart3" class="w-5 h-5 text-info me-3" />
+                                <div class="text-start">
                                     <div class="font-medium">{{ __('global.view_reports') }}</div>
                                     <div class="text-xs text-slate-500">{{ __('global.financial_reports') }}</div>
                                 </div>
@@ -399,7 +399,7 @@
                     <!-- Financial Alerts -->
                     <div class="col-span-12 mt-3 md:col-span-6 xl:col-span-4 2xl:col-span-12">
                         <div class="intro-x flex h-10 items-center">
-                            <h2 class="mr-5 truncate text-lg font-medium">{{ __('global.financial_alerts') }}</h2>
+                            <h2 class="me-5 truncate text-lg font-medium">{{ __('global.financial_alerts') }}</h2>
                         </div>
                         <div class="mt-5 space-y-3">
                             @php
@@ -411,7 +411,7 @@
                             @if($overdueFees > 0)
                                 <div class="p-3 bg-danger/10 border border-danger/20 rounded-lg">
                                     <div class="flex items-center">
-                                        <x-base.lucide icon="AlertTriangle" class="w-5 h-5 text-danger mr-2" />
+                                        <x-base.lucide icon="AlertTriangle" class="w-5 h-5 text-danger me-2" />
                                         <div>
                                             <div class="font-medium text-sm text-danger">{{ $overdueFees }} {{ __('global.overdue_payments') }}</div>
                                             <div class="text-xs text-slate-600">{{ __('global.action_required') }}</div>
@@ -423,7 +423,7 @@
                             @if($lowInventory > 0)
                                 <div class="p-3 bg-warning/10 border border-warning/20 rounded-lg">
                                     <div class="flex items-center">
-                                        <x-base.lucide icon="Package" class="w-5 h-5 text-warning mr-2" />
+                                        <x-base.lucide icon="Package" class="w-5 h-5 text-warning me-2" />
                                         <div>
                                             <div class="font-medium text-sm text-warning">{{ $lowInventory }} {{ __('global.low_inventory_items') }}</div>
                                             <div class="text-xs text-slate-600">{{ __('global.needs_attention') }}</div>

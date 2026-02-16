@@ -68,6 +68,17 @@
       0 => 'Termwind\\Laravel\\TermwindServiceProvider',
     ),
   ),
+  'omaralalwi/gpdf' =>
+  array (
+    'aliases' =>
+    array (
+      'Gpdf' => 'Omaralalwi\\Gpdf\\Facade\\Gpdf',
+    ),
+    'providers' =>
+    array (
+      0 => 'Omaralalwi\\Gpdf\\GpdfServiceProvider',
+    ),
+  ),
   'spatie/laravel-activitylog' => 
   array (
     'providers' => 
