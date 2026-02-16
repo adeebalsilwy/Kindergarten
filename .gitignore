@@ -19,3 +19,7 @@ yarn-error.log
 /.idea
 /.vscode
 /.zed
+/.zip
+/.DS_Store
+/.env.testing
+/.rar
