@@ -23,6 +23,7 @@ class Classes extends Model
         'code',
         'description',
         'teacher_id',
+        'grade_level_id',
         'age_group',
         'capacity',
         'current_students',
@@ -65,10 +66,10 @@ class Classes extends Model
         return $this->belongsTo(Teacher::class, 'teacher_id');
     }
 
-    // public function grade(): BelongsTo
-    // {
-    //     return $this->belongsTo(Grade::class, 'grade_id');
-    // }
+    public function gradeLevel(): BelongsTo
+    {
+        return $this->belongsTo(GradeLevel::class, 'grade_level_id');
+    }
 
     public function children(): HasMany
     {
@@ -82,12 +83,12 @@ class Classes extends Model
 
     public function activities(): HasMany
     {
-        return $this->hasMany(Activity::class);
+        return $this->hasMany(Activity::class, 'class_id');
     }
 
     public function events(): HasMany
     {
-        return $this->hasMany(Event::class);
+        return $this->hasMany(Event::class, 'class_id');
     }
 
     // public function curriculum(): BelongsTo
@@ -127,6 +128,11 @@ class Classes extends Model
     {
         // Capitalize first letter of each word while preserving existing capitalization
         $this->attributes['name'] = ucwords($value);
+    }
+
+    public function getGradeLevelNameAttribute(): string
+    {
+        return $this->gradeLevel->name ?? '';
     }
 
 

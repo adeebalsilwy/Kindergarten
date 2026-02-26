@@ -11,7 +11,7 @@
         {{ $attributes->class(merge(['py-1 px-2 copy-code', $attributes->whereStartsWith('class')->first()]))->merge($attributes->whereDoesntStartWith('class')->getAttributes()) }}
     >
         <x-base.lucide
-            class="copy-code mr-2 h-4 w-4"
+            class="copy-code me-2 h-4 w-4"
             icon="File"
         /> Copy example code
     </x-base.button>

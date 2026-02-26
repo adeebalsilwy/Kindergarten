@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use OmarAlalwi\Gpdf\Facades\Gpdf;
+
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Services\UserService;
@@ -63,7 +65,7 @@ class UserController extends Controller
      */
     protected function exportToPdf($data)
     {
-        $pdf = Pdf::loadView('pages.users.export-pdf', ['data' => $data]);
+        $pdf = Gpdf::loadView('pages.users.export-pdf', ['data' => $data]);
 
         return $pdf->download('User_export_'.date('Y-m-d_H-i-s').'.pdf');
     }

@@ -1,152 +1,282 @@
 @extends('../themes/' . $activeTheme . '/' . $activeLayout)
 
 @section('head')
-    <title>{{ __('Teacher.add_new') }} - Laravel</title>
+    <title>{{ __('teachers.add_new') }} - {{ config('app.name') }}</title>
+    <style>
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .tab-button.active { 
+            background-color: var(--primary); 
+            color: white; 
+            border-color: var(--primary);
+        }
+    </style>
 @endsection
 
 @section('subcontent')
-    <div class="intro-y flex items-center mt-8">
-        <h2 class="text-lg font-medium mr-auto">{{ __('Teacher.add_new') }}</h2>
+<div class="intro-y flex items-center mt-8">
+    <h2 class="text-lg font-medium me-auto">{{ __('teachers.add_new') }}</h2>
+    <div class="flex gap-2">
+        <x-base.button variant="outline-secondary" onclick="window.history.back()">
+            <x-base.lucide icon="ArrowLeft" class="w-4 h-4 me-2" />
+            {{ __('global.back') }}
+        </x-base.button>
     </div>
-    <div class="grid grid-cols-12 gap-6 mt-5">
-        <div class="intro-y col-span-12 lg:col-span-10">
-            <div class="intro-y box p-5">
-                <form action="{{ route('teachers.store') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <div class="grid grid-cols-12 gap-4">
-                        <div class="col-span-12 sm:col-span-6">
-                            <x-base.form-label>{{ __('teachers.fields.name') }}</x-base.form-label>
-                            <x-base.form-input type="text" name="name" value="{{ old('name', $teacher->name ?? '') }}" class="mt-2" />
-                            @error('name')
-                                <div class="text-danger mt-2">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="col-span-12 sm:col-span-6">
-                            <x-base.form-label>{{ __('teachers.fields.email') }}</x-base.form-label>
-                            <div class="relative mt-2">
-                                <x-base.form-input type="email" name="email" value="{{ old('email', $teacher->email ?? '') }}" />
-                                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                                    <x-base.lucide icon="Mail" class="h-5 w-5 text-gray-400" />
-                                </div>
-                            </div>
-                            @error('email')
-                                <div class="text-danger mt-2">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="col-span-12 sm:col-span-6">
-                            <x-base.form-label>{{ __('teachers.fields.phone') }}</x-base.form-label>
-                            <div class="relative mt-2">
-                                <x-base.form-input type="tel" name="phone" value="{{ old('phone', $teacher->phone ?? '') }}" />
-                                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                                    <x-base.lucide icon="Phone" class="h-5 w-5 text-gray-400" />
-                                </div>
-                            </div>
-                            @error('phone')
-                                <div class="text-danger mt-2">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="col-span-12">
-                            <x-base.form-label>{{ __('teachers.fields.address') }}</x-base.form-label>
-                            <x-base.form-textarea name="address" rows="4" class="resize-none">{{ old('address', $teacher->address ?? '') }}</x-base.form-textarea>
-                            @error('address')
-                                <div class="text-danger mt-2">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="col-span-12 sm:col-span-6">
-                            <x-base.form-label>{{ __('teachers.fields.date_of_birth') }}</x-base.form-label>
-                            <div class="relative mt-2">
-                                <x-base.form-input type="date" name="date_of_birth" value="{{ old('date_of_birth', $teacher->date_of_birth ?? '') }}" />
-                                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                                    <x-base.lucide icon="Calendar" class="h-5 w-5 text-gray-400" />
-                                </div>
-                            </div>
-                            @error('date_of_birth')
-                                <div class="text-danger mt-2">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="col-span-12 sm:col-span-6">
-                            <x-base.form-label>{{ __('teachers.fields.gender') }}</x-base.form-label>
-                            <x-base.tom-select name="gender" class="mt-2">
-                                <option value="">{{ __('global.select_option') }}</option>
-                                <option value="male" {{ old('gender', $teacher->gender ?? '') == 'male' ? 'selected' : '' }}>{{ __('global.male') }}</option>
-                                <option value="female" {{ old('gender', $teacher->gender ?? '') == 'female' ? 'selected' : '' }}>{{ __('global.female') }}</option>
-                            </x-base.tom-select>
-                            @error('gender')
-                                <div class="text-danger mt-2">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="col-span-12 sm:col-span-6">
-                            <x-base.form-label>{{ __('teachers.fields.qualification') }}</x-base.form-label>
-                            <x-base.form-input type="text" name="qualification" value="{{ old('qualification', $teacher->qualification ?? '') }}" class="mt-2" />
-                            @error('qualification')
-                                <div class="text-danger mt-2">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="col-span-12">
-                            <x-base.form-label>{{ __('teachers.fields.experience') }}</x-base.form-label>
-                            <x-base.form-textarea name="experience" rows="4" class="resize-none">{{ old('experience', $teacher->experience ?? '') }}</x-base.form-textarea>
-                            @error('experience')
-                                <div class="text-danger mt-2">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="col-span-12 sm:col-span-6">
-                            <x-base.form-label>{{ __('teachers.fields.salary') }}</x-base.form-label>
-                            <div class="relative mt-2">
-                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                    <span class="text-gray-500 sm:text-sm">{{ config('app.currency', 'USD') }}</span>
-                                </div>
-                                <x-base.form-input type="number" step="0.01" min="0" name="salary" value="{{ old('salary', $teacher->salary ?? '') }}" class="pl-12" />
-                            </div>
-                            @error('salary')
-                                <div class="text-danger mt-2">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="col-span-12 sm:col-span-6">
-                            <x-base.form-label>{{ __('teachers.fields.hire_date') }}</x-base.form-label>
-                            <x-base.form-input type="date" name="hire_date" value="{{ old('hire_date', $teacher->hire_date ?? '') }}" class="mt-2" />
-                            @error('hire_date')
-                                <div class="text-danger mt-2">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="col-span-12 sm:col-span-6">
-                            <x-base.form-label>{{ __('teachers.fields.photo_path') }}</x-base.form-label>
-                            <div class="mt-2 flex items-center">
-                                <x-base.form-input type="file" name="photo_path" accept="image/*" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-white hover:file:bg-primary/90" />
-                            </div>
-                            @if($teacher->photo_path)
-                                <div class="mt-2 flex items-center">
-                                    <img src="{{ asset('storage/' . $teacher->photo_path) }}" alt="Current Photo" class="w-16 h-16 object-cover rounded border-2 border-gray-200">
-                                    <span class="ml-3 text-sm text-gray-500">{{ __('global.current_image') }}</span>
-                                </div>
-                            @endif
-                            @error('photo_path')
-                                <div class="text-danger mt-2">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="col-span-12 sm:col-span-6">
-                            <x-base.form-label>{{ __('teachers.fields.is_active') }}</x-base.form-label>
-                            <div class="mt-2 space-y-2">
-                                <!-- Hidden input to send 0 if unchecked -->
-                                <input type="hidden" name="is_active" value="0">
-                                <label class="relative inline-flex items-center cursor-pointer">
-                                    <x-base.form-input type="checkbox" name="is_active" value="1" {{ old('is_active', $teacher->is_active ?? false) ? 'checked' : '' }} class="sr-only peer" />
-                                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary/30 dark:peer-focus:ring-primary rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-primary"></div>
-                                    <span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">{{ __('global.active') }}</span>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-span-12">
-                            <x-base.form-label>{{ __('teachers.fields.notes') }}</x-base.form-label>
-                            <x-base.form-textarea name="notes" rows="4" class="resize-none">{{ old('notes', $teacher->notes ?? '') }}</x-base.form-textarea>
-                        </div>
+</div>
 
-                    </div>
-                    <div class="flex justify-end mt-5">
-                        <a href="{{ route('teachers.index') }}" class="btn btn-outline-secondary w-24 mr-1">{{ __('global.cancel') }}</a>
-                        <x-base.button type="submit" variant="primary" class="w-24">{{ __('global.save') }}</x-base.button>
-                    </div>
-                </form>
+<div class="grid grid-cols-12 gap-6 mt-5">
+    <div class="intro-y col-span-12">
+        <!-- Tab Navigation -->
+        <div class="intro-y box p-5 mb-6">
+            <div class="flex flex-wrap gap-2 border-b border-slate-200 pb-4">
+                <button type="button" class="tab-button active px-4 py-2 rounded-t-lg border border-b-0 font-medium transition-colors" 
+                        data-tab="personal">
+                    <x-base.lucide icon="User" class="w-4 h-4 me-2 inline" />
+                    {{ __('teachers.tabs.personal_info') }}
+                </button>
+                <button type="button" class="tab-button px-4 py-2 rounded-t-lg border border-b-0 font-medium transition-colors" 
+                        data-tab="professional">
+                    <x-base.lucide icon="Briefcase" class="w-4 h-4 me-2 inline" />
+                    {{ __('teachers.tabs.professional_info') }}
+                </button>
+                <button type="button" class="tab-button px-4 py-2 rounded-t-lg border border-b-0 font-medium transition-colors" 
+                        data-tab="employment">
+                    <x-base.lucide icon="Calendar" class="w-4 h-4 me-2 inline" />
+                    {{ __('teachers.tabs.employment_info') }}
+                </button>
             </div>
         </div>
+
+        <form action="{{ route('teachers.store') }}" method="POST" enctype="multipart/form-data" class="intro-y box p-5">
+            @csrf
+            
+            <!-- Personal Information Tab -->
+            <div id="tab-personal" class="tab-content active">
+                <x-form-section title="{{ __('teachers.sections.personal_info') }}" 
+                               description="{{ __('teachers.descriptions.personal_info') }}" 
+                               icon="User">
+                    <div class="grid grid-cols-12 gap-4">
+                        <x-form-field name="name" 
+                                     label="{{ __('teachers.fields.name') }}" 
+                                     type="text" 
+                                     :required="true" 
+                                     :value="old('name', $teacher->name ?? '')" 
+                                     placeholder="{{ __('teachers.placeholders.name') }}" 
+                                     class="col-span-12 sm:col-span-6" />
+                        
+                        <x-form-field name="email" 
+                                     label="{{ __('teachers.fields.email') }}" 
+                                     type="email" 
+                                     :required="true" 
+                                     :value="old('email', $teacher->email ?? '')" 
+                                     placeholder="{{ __('teachers.placeholders.email') }}" 
+                                     icon="Mail" 
+                                     class="col-span-12 sm:col-span-6" />
+                        
+                        <x-form-field name="phone" 
+                                     label="{{ __('teachers.fields.phone') }}" 
+                                     type="tel" 
+                                     :required="true" 
+                                     :value="old('phone', $teacher->phone ?? '')" 
+                                     placeholder="{{ __('teachers.placeholders.phone') }}" 
+                                     icon="Phone" 
+                                     class="col-span-12 sm:col-span-6" />
+                        
+                        <x-form-field name="date_of_birth" 
+                                     label="{{ __('teachers.fields.date_of_birth') }}" 
+                                     type="date" 
+                                     :value="old('date_of_birth', $teacher->date_of_birth ?? '')" 
+                                     icon="Calendar" 
+                                     class="col-span-12 sm:col-span-6" />
+                        
+                        <x-form-field name="gender" 
+                                     label="{{ __('teachers.fields.gender') }}" 
+                                     type="select" 
+                                     :value="old('gender', $teacher->gender ?? '')" 
+                                     :options="[
+                                         'male' => __('global.male'),
+                                         'female' => __('global.female')
+                                     ]" 
+                                     placeholder="{{ __('global.select_option') }}" 
+                                     class="col-span-12 sm:col-span-6" />
+                        
+                        <x-form-field name="address" 
+                                     label="{{ __('teachers.fields.address') }}" 
+                                     type="textarea" 
+                                     :value="old('address', $teacher->address ?? '')" 
+                                     placeholder="{{ __('teachers.placeholders.address') }}" 
+                                     rows="4" 
+                                     class="col-span-12" />
+                        
+                        <x-form-field name="photo_path" 
+                                     label="{{ __('teachers.fields.photo_path') }}" 
+                                     type="file" 
+                                     accept="image/*" 
+                                     :value="$teacher->photo_path ?? ''" 
+                                     class="col-span-12 sm:col-span-6" />
+                    </div>
+                </x-form-section>
+            </div>
+            
+            <!-- Professional Information Tab -->
+            <div id="tab-professional" class="tab-content">
+                <x-form-section title="{{ __('teachers.sections.professional_info') }}" 
+                               description="{{ __('teachers.descriptions.professional_info') }}" 
+                               icon="GraduationCap">
+                    <div class="grid grid-cols-12 gap-4">
+                        <x-form-field name="qualification" 
+                                     label="{{ __('teachers.fields.qualification') }}" 
+                                     type="text" 
+                                     :value="old('qualification', $teacher->qualification ?? '')" 
+                                     placeholder="{{ __('teachers.placeholders.qualification') }}" 
+                                     class="col-span-12 sm:col-span-6" />
+                        
+                        <x-form-field name="specialization" 
+                                     label="{{ __('teachers.fields.specialization') }}" 
+                                     type="text" 
+                                     :value="old('specialization', $teacher->specialization ?? '')" 
+                                     placeholder="{{ __('teachers.placeholders.specialization') }}" 
+                                     class="col-span-12 sm:col-span-6" />
+                        
+                        <x-form-field name="experience_years" 
+                                     label="{{ __('teachers.fields.experience_years') }}" 
+                                     type="number" 
+                                     min="0" 
+                                     :value="old('experience_years', $teacher->experience_years ?? '')" 
+                                     placeholder="{{ __('teachers.placeholders.experience_years') }}" 
+                                     class="col-span-12 sm:col-span-6" />
+                        
+                        <x-form-field name="bio" 
+                                     label="{{ __('teachers.fields.bio') }}" 
+                                     type="textarea" 
+                                     :value="old('bio', $teacher->bio ?? '')" 
+                                     placeholder="{{ __('teachers.placeholders.bio') }}" 
+                                     rows="4" 
+                                     class="col-span-12" />
+                    </div>
+                </x-form-section>
+            </div>
+            
+            <!-- Employment Information Tab -->
+            <div id="tab-employment" class="tab-content">
+                <x-form-section title="{{ __('teachers.sections.employment_info') }}" 
+                               description="{{ __('teachers.descriptions.employment_info') }}" 
+                               icon="Building">
+                    <div class="grid grid-cols-12 gap-4">
+                        <x-form-field name="hire_date" 
+                                     label="{{ __('teachers.fields.hire_date') }}" 
+                                     type="date" 
+                                     :required="true" 
+                                     :value="old('hire_date', $teacher->hire_date ?? '')" 
+                                     class="col-span-12 sm:col-span-6" />
+                        
+                        <x-form-field name="salary" 
+                                     label="{{ __('teachers.fields.salary') }}" 
+                                     type="number" 
+                                     step="0.01" 
+                                     min="0" 
+                                     :value="old('salary', $teacher->salary ?? '')" 
+                                     addon="{{ config('app.currency', 'USD') }}" 
+                                     class="col-span-12 sm:col-span-6" />
+                        
+                        <x-form-field name="user_id" 
+                                     label="{{ __('teachers.fields.user_id') }}" 
+                                     type="select" 
+                                     :value="old('user_id', $teacher->user_id ?? '')" 
+                                     :options="$users->pluck('name', 'id')" 
+                                     placeholder="{{ __('global.select_option') }}" 
+                                     help="{{ __('teachers.help.user_assignment') }}" 
+                                     class="col-span-12" />
+                        
+                        <div class="col-span-12">
+                            <div class="flex items-center">
+                                <input type="hidden" name="is_active" value="0">
+                                <x-base.form-check-input id="is_active" 
+                                                         type="checkbox" 
+                                                         name="is_active" 
+                                                         value="1" 
+                                                         {{ old('is_active', $teacher->is_active ?? true) ? 'checked' : '' }} 
+                                                         class="me-3" />
+                                <x-base.form-label for="is_active" class="mb-0">
+                                    {{ __('teachers.fields.is_active') }}
+                                </x-base.form-label>
+                            </div>
+                        </div>
+                        
+                        <x-form-field name="notes" 
+                                     label="{{ __('teachers.fields.notes') }}" 
+                                     type="textarea" 
+                                     :value="old('notes', $teacher->notes ?? '')" 
+                                     placeholder="{{ __('teachers.placeholders.notes') }}" 
+                                     rows="3" 
+                                     class="col-span-12" />
+                    </div>
+                </x-form-section>
+            </div>
+            
+            <!-- Form Actions -->
+            <x-form-actions :back-url="route('teachers.index')" 
+                           submit-text="{{ __('global.save') }}" />
+        </form>
     </div>
+</div>
+
+<script>
+    // Tab switching functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        tabButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const tabId = this.getAttribute('data-tab');
+                
+                // Remove active class from all buttons and contents
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+                
+                // Add active class to clicked button and corresponding content
+                this.classList.add('active');
+                document.getElementById(`tab-${tabId}`).classList.add('active');
+            });
+        });
+        
+        // Form validation
+        const form = document.querySelector('form');
+        form.addEventListener('submit', function(e) {
+            let isValid = true;
+            const requiredFields = form.querySelectorAll('[required]');
+            
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    isValid = false;
+                    field.classList.add('border-danger');
+                    // Add error message
+                    if (!field.parentNode.querySelector('.text-danger')) {
+                        const errorDiv = document.createElement('div');
+                        errorDiv.className = 'text-danger text-sm mt-1';
+                        errorDiv.textContent = '{{ __('global.field_required') }}';
+                        field.parentNode.appendChild(errorDiv);
+                    }
+                } else {
+                    field.classList.remove('border-danger');
+                    const errorDiv = field.parentNode.querySelector('.text-danger');
+                    if (errorDiv) errorDiv.remove();
+                }
+            });
+            
+            if (!isValid) {
+                e.preventDefault();
+                // Switch to first tab with errors
+                const firstErrorTab = document.querySelector('.tab-content .border-danger');
+                if (firstErrorTab) {
+                    const tabContent = firstErrorTab.closest('.tab-content');
+                    const tabId = tabContent.id.replace('tab-', '');
+                    document.querySelector(`[data-tab="${tabId}"]`).click();
+                }
+                return false;
+            }
+        });
+    });
+</script>
 @endsection

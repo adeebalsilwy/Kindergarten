@@ -24,6 +24,5 @@ class ViewServiceProvider extends ServiceProvider
         View::composer('*', 'App\View\Composers\LayoutComposer');
         View::composer('*', 'App\View\Composers\MenuComposer');
         View::composer('*', 'App\View\Composers\FakerComposer');
-        View::composer('*', 'App\View\Composers\LanguageComposer');
     }
 }

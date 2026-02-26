@@ -24,12 +24,12 @@
                         src="{{ Vite::asset('resources/images/logo.svg') }}"
                         alt="Midone Tailwind HTML Admin Template"
                     />
-                    <span class="ml-3 text-lg text-white"> Tinker </span>
+                    <span class="ms-3 text-lg text-white"> Tinker </span>
                 </a>
                 <!-- END: Logo -->
                 <!-- BEGIN: Breadcrumb -->
                 <x-base.breadcrumb
-                    class="-intro-x mr-auto h-full border-white/[0.08] md:ml-10 md:border-l md:pl-10"
+                    class="-intro-x me-auto h-full border-white/[0.08] md:ms-10 md:border-l md:ps-10"
                     light
                 >
                     <x-base.breadcrumb.link :index="0">Application</x-base.breadcrumb.link>
@@ -42,15 +42,15 @@
                 </x-base.breadcrumb>
                 <!-- END: Breadcrumb -->
                 <!-- BEGIN: Search -->
-                <div class="intro-x relative mr-3 sm:mr-6">
+                <div class="intro-x relative me-3 sm:me-6">
                     <div class="search hidden sm:block">
                         <x-base.form-input
-                            class="w-56 rounded-full border-transparent bg-slate-200 pr-8 shadow-none transition-[width] duration-300 ease-in-out focus:w-72 focus:border-transparent dark:bg-darkmode-400/70"
+                            class="w-56 rounded-full border-transparent bg-slate-200 pe-8 shadow-none transition-[width] duration-300 ease-in-out focus:w-72 focus:border-transparent dark:bg-darkmode-400/70"
                             type="text"
                             placeholder="Search..."
                         />
                         <x-base.lucide
-                            class="absolute inset-y-0 right-0 my-auto mr-3 h-5 w-5 text-slate-600 dark:text-slate-500"
+                            class="absolute inset-y-0 right-0 my-auto me-3 h-5 w-5 text-slate-600 dark:text-slate-500"
                             icon="Search"
                         />
                     </div>
@@ -87,7 +87,7 @@
                                             icon="Inbox"
                                         />
                                     </div>
-                                    <div class="ml-3">Mail Settings</div>
+                                    <div class="ms-3">Mail Settings</div>
                                 </a>
                                 <a
                                     class="mt-2 flex items-center"
@@ -100,7 +100,7 @@
                                             icon="Users"
                                         />
                                     </div>
-                                    <div class="ml-3">Users & Permissions</div>
+                                    <div class="ms-3">Users & Permissions</div>
                                 </a>
                                 <a
                                     class="mt-2 flex items-center"
@@ -113,7 +113,7 @@
                                             icon="CreditCard"
                                         />
                                     </div>
-                                    <div class="ml-3">Transactions Report</div>
+                                    <div class="ms-3">Transactions Report</div>
                                 </a>
                             </div>
                             <div class="mb-2 font-medium">Users</div>
@@ -130,8 +130,8 @@
                                                 alt="Midone Tailwind HTML Admin Template"
                                             />
                                         </div>
-                                        <div class="ml-3">{{ $faker['users'][0]['name'] }}</div>
-                                        <div class="ml-auto w-48 truncate text-right text-xs text-slate-500">
+                                        <div class="ms-3">{{ $faker['users'][0]['name'] }}</div>
+                                        <div class="ms-auto w-48 truncate text-end text-xs text-slate-500">
                                             {{ $faker['users'][0]['email'] }}
                                         </div>
                                     </a>
@@ -150,8 +150,8 @@
                                             alt="Midone Tailwind HTML Admin Template"
                                         />
                                     </div>
-                                    <div class="ml-3">{{ $faker['products'][0]['name'] }}</div>
-                                    <div class="ml-auto w-48 truncate text-right text-xs text-slate-500">
+                                    <div class="ms-3">{{ $faker['products'][0]['name'] }}</div>
+                                    <div class="ms-auto w-48 truncate text-end text-xs text-slate-500">
                                         {{ $faker['products'][0]['category'] }}
                                     </div>
                                 </a>
@@ -161,7 +161,7 @@
                 </div>
                 <!-- END: Search -->
                 <!-- BEGIN: Notifications -->
-                <x-base.popover class="intro-x mr-4 sm:mr-6">
+                <x-base.popover class="intro-x me-4 sm:me-6">
                     <x-base.popover.button
                         class="relative block text-white/70 outline-none before:absolute before:right-0 before:top-[-2px] before:h-[8px] before:w-[8px] before:rounded-full before:bg-danger before:content-['']"
                     >
@@ -177,7 +177,7 @@
                                 'cursor-pointer relative flex items-center',
                                 'mt-5' => $fakerKey,
                             ])>
-                                <div class="image-fit relative mr-1 h-12 w-12 flex-none">
+                                <div class="image-fit relative me-1 h-12 w-12 flex-none">
                                     <img
                                         class="rounded-full"
                                         src="{{ Vite::asset($faker['photos'][0]) }}"
@@ -187,15 +187,15 @@
                                         class="absolute bottom-0 right-0 h-3 w-3 rounded-full border-2 border-white bg-success dark:border-darkmode-600">
                                     </div>
                                 </div>
-                                <div class="ml-2 overflow-hidden">
+                                <div class="ms-2 overflow-hidden">
                                     <div class="flex items-center">
                                         <a
-                                            class="mr-5 truncate font-medium"
+                                            class="me-5 truncate font-medium"
                                             href=""
                                         >
                                             {{ $faker['users'][0]['name'] }}
                                         </a>
-                                        <div class="ml-auto whitespace-nowrap text-xs text-slate-400">
+                                        <div class="ms-auto whitespace-nowrap text-xs text-slate-400">
                                             {{ $faker['times'][0] }}
                                         </div>
                                     </div>
@@ -230,32 +230,32 @@
                         <x-base.menu.divider class="bg-white/[0.08]" />
                         <x-base.menu.item class="hover:bg-white/5">
                             <x-base.lucide
-                                class="mr-2 h-4 w-4"
+                                class="me-2 h-4 w-4"
                                 icon="User"
                             /> Profile
                         </x-base.menu.item>
                         <x-base.menu.item class="hover:bg-white/5">
                             <x-base.lucide
-                                class="mr-2 h-4 w-4"
+                                class="me-2 h-4 w-4"
                                 icon="Edit"
                             /> Add Account
                         </x-base.menu.item>
                         <x-base.menu.item class="hover:bg-white/5">
                             <x-base.lucide
-                                class="mr-2 h-4 w-4"
+                                class="me-2 h-4 w-4"
                                 icon="Lock"
                             /> Reset Password
                         </x-base.menu.item>
                         <x-base.menu.item class="hover:bg-white/5">
                             <x-base.lucide
-                                class="mr-2 h-4 w-4"
+                                class="me-2 h-4 w-4"
                                 icon="HelpCircle"
                             /> Help
                         </x-base.menu.item>
                         <x-base.menu.divider class="bg-white/[0.08]" />
                         <x-base.menu.item class="hover:bg-white/5">
                             <x-base.lucide
-                                class="mr-2 h-4 w-4"
+                                class="me-2 h-4 w-4"
                                 icon="ToggleRight"
                             /> Logout
                         </x-base.menu.item>

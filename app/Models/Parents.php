@@ -5,15 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Traits\Filterable;
 
 class Parents extends Model
 {
-    use HasFactory, SoftDeletes, Filterable;
+    use HasFactory, SoftDeletes;
 
     protected $table = 'guardians';
-
-    protected $searchable = ['name', 'phone', 'email', 'national_id', 'passport_number'];
 
     protected $fillable = [
         'name',

@@ -35,6 +35,9 @@ class Event extends Model
         'reminder_hours_before',
         'documents',
         'notes',
+        'max_attendees',
+        'cost',
+        'registration_deadline',
     ];
 
     protected $casts = [
@@ -44,11 +47,14 @@ class Event extends Model
         'requires_confirmation' => 'boolean',
         'is_public' => 'boolean',
         'is_recurring' => 'boolean',
-        'recurrence_end_date' => 'date',
+        'recurrence_end_date' => 'datetime',
         'recurring_days' => 'array',
         'send_reminders' => 'boolean',
         'reminder_hours_before' => 'integer',
         'documents' => 'array',
+        'max_attendees' => 'integer',
+        'cost' => 'decimal:2',
+        'registration_deadline' => 'datetime',
         'deleted_at' => 'datetime',
     ];
 
@@ -56,7 +62,6 @@ class Event extends Model
         'slug',
         'attendee_count',
         'is_full',
-        'is_ongoing',
         'is_registration_open',
     ];
 
@@ -102,11 +107,6 @@ class Event extends Model
     public function getIsFullAttribute(): bool
     {
         return $this->max_attendees && $this->attendee_count >= $this->max_attendees;
-    }
-
-    public function getIsOngoingAttribute(): bool
-    {
-        return now()->between($this->start_datetime, $this->end_datetime);
     }
 
     public function getIsRegistrationOpenAttribute(): bool

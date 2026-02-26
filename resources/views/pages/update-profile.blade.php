@@ -6,7 +6,7 @@
 
 @section('subcontent')
     <div class="intro-y mt-8 flex items-center">
-        <h2 class="mr-auto text-lg font-medium">Update Profile</h2>
+        <h2 class="me-auto text-lg font-medium">Update Profile</h2>
     </div>
     <div class="grid grid-cols-12 gap-6">
         <!-- BEGIN: Profile Menu -->
@@ -20,7 +20,7 @@
                             alt="Midone - Tailwind Admin Dashboard Template"
                         />
                     </div>
-                    <div class="ml-4 mr-auto">
+                    <div class="ms-4 me-auto">
                         <div class="text-base font-medium">
                             {{ $fakers[0]['users'][0]['name'] }}
                         </div>
@@ -42,31 +42,31 @@
                             <x-base.menu.divider />
                             <x-base.menu.item>
                                 <x-base.lucide
-                                    class="mr-2 h-4 w-4"
+                                    class="me-2 h-4 w-4"
                                     icon="Activity"
                                 />
                                 English
                             </x-base.menu.item>
                             <x-base.menu.item>
                                 <x-base.lucide
-                                    class="mr-2 h-4 w-4"
+                                    class="me-2 h-4 w-4"
                                     icon="Box"
                                 />
                                 Indonesia
-                                <div class="ml-auto rounded-full bg-danger px-1 text-xs text-white">
+                                <div class="ms-auto rounded-full bg-danger px-1 text-xs text-white">
                                     10
                                 </div>
                             </x-base.menu.item>
                             <x-base.menu.item>
                                 <x-base.lucide
-                                    class="mr-2 h-4 w-4"
+                                    class="me-2 h-4 w-4"
                                     icon="Layout"
                                 />
                                 English
                             </x-base.menu.item>
                             <x-base.menu.item>
                                 <x-base.lucide
-                                    class="mr-2 h-4 w-4"
+                                    class="me-2 h-4 w-4"
                                     icon="Sidebar"
                                 />
                                 Indonesia
@@ -81,7 +81,7 @@
                                     Settings
                                 </x-base.button>
                                 <x-base.button
-                                    class="ml-auto px-2 py-1"
+                                    class="ms-auto px-2 py-1"
                                     type="button"
                                     variant="secondary"
                                 >
@@ -97,7 +97,7 @@
                         href=""
                     >
                         <x-base.lucide
-                            class="mr-2 h-4 w-4"
+                            class="me-2 h-4 w-4"
                             icon="Activity"
                         /> Personal
                         Information
@@ -107,7 +107,7 @@
                         href=""
                     >
                         <x-base.lucide
-                            class="mr-2 h-4 w-4"
+                            class="me-2 h-4 w-4"
                             icon="Box"
                         /> Account Settings
                     </a>
@@ -116,7 +116,7 @@
                         href=""
                     >
                         <x-base.lucide
-                            class="mr-2 h-4 w-4"
+                            class="me-2 h-4 w-4"
                             icon="Lock"
                         /> Change Password
                     </a>
@@ -125,7 +125,7 @@
                         href=""
                     >
                         <x-base.lucide
-                            class="mr-2 h-4 w-4"
+                            class="me-2 h-4 w-4"
                             icon="Settings"
                         /> User
                         Settings
@@ -137,7 +137,7 @@
                         href=""
                     >
                         <x-base.lucide
-                            class="mr-2 h-4 w-4"
+                            class="me-2 h-4 w-4"
                             icon="Activity"
                         /> Email
                         Settings
@@ -147,7 +147,7 @@
                         href=""
                     >
                         <x-base.lucide
-                            class="mr-2 h-4 w-4"
+                            class="me-2 h-4 w-4"
                             icon="Box"
                         /> Saved Credit
                         Cards
@@ -157,7 +157,7 @@
                         href=""
                     >
                         <x-base.lucide
-                            class="mr-2 h-4 w-4"
+                            class="me-2 h-4 w-4"
                             icon="Lock"
                         /> Social Networks
                     </a>
@@ -166,7 +166,7 @@
                         href=""
                     >
                         <x-base.lucide
-                            class="mr-2 h-4 w-4"
+                            class="me-2 h-4 w-4"
                             icon="Settings"
                         /> Tax
                         Information
@@ -181,7 +181,7 @@
                         New Group
                     </x-base.button>
                     <x-base.button
-                        class="ml-auto px-2 py-1"
+                        class="ms-auto px-2 py-1"
                         type="button"
                         variant="outline-secondary"
                     >
@@ -195,7 +195,7 @@
             <!-- BEGIN: Display Information -->
             <div class="intro-y box lg:mt-5">
                 <div class="flex items-center border-b border-slate-200/60 p-5 dark:border-darkmode-400">
-                    <h2 class="mr-auto text-base font-medium">
+                    <h2 class="me-auto text-base font-medium">
                         Display Information
                     </h2>
                 </div>
@@ -292,7 +292,7 @@
                                 Save
                             </x-base.button>
                         </div>
-                        <div class="mx-auto w-52 xl:ml-6 xl:mr-0">
+                        <div class="mx-auto w-52 xl:ms-6 xl:me-0">
                             <div
                                 class="rounded-md border-2 border-dashed border-slate-200/60 p-5 shadow-sm dark:border-darkmode-400">
                                 <div class="image-fit zoom-in relative mx-auto h-40 cursor-pointer">
@@ -302,7 +302,7 @@
                                         alt="Midone - Tailwind Admin Dashboard Template"
                                     />
                                     <x-base.tippy
-                                        class="absolute right-0 top-0 -mr-2 -mt-2 flex h-5 w-5 items-center justify-center rounded-full bg-danger text-white"
+                                        class="absolute right-0 top-0 -me-2 -mt-2 flex h-5 w-5 items-center justify-center rounded-full bg-danger text-white"
                                         as="div"
                                         content="Remove this profile photo?"
                                     >
@@ -334,7 +334,7 @@
             <!-- BEGIN: Personal Information -->
             <div class="intro-y box mt-5">
                 <div class="flex items-center border-b border-slate-200/60 p-5 dark:border-darkmode-400">
-                    <h2 class="mr-auto text-base font-medium">
+                    <h2 class="me-auto text-base font-medium">
                         Personal Information
                     </h2>
                 </div>
@@ -433,7 +433,7 @@
                     </div>
                     <div class="mt-4 flex justify-end">
                         <x-base.button
-                            class="mr-auto w-20"
+                            class="me-auto w-20"
                             type="button"
                             variant="primary"
                         >
@@ -444,7 +444,7 @@
                             href=""
                         >
                             <x-base.lucide
-                                class="mr-1 h-4 w-4"
+                                class="me-1 h-4 w-4"
                                 icon="Trash"
                             /> Delete
                             Account

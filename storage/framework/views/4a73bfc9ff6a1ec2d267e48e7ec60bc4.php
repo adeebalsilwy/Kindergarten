@@ -21,7 +21,7 @@
                             src="<?php echo e(Vite::asset('resources/images/logo.svg')); ?>"
                             alt="<?php echo e(config('app.name')); ?>"
                         />
-                        <span class="ml-3 text-2xl font-bold text-white"> <?php echo e(config('app.name')); ?> </span>
+                        <span class="ms-3 text-2xl font-bold text-white"> <?php echo e(config('app.name')); ?> </span>
                     </a>
                     <div class="my-auto">
                         <img
@@ -78,14 +78,14 @@
                             <div class="flex items-center">
                                 <?php if (isset($component)) { $__componentOriginal16b2e62e74cde9150905c2d0c2cb6800 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal16b2e62e74cde9150905c2d0c2cb6800 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.base.lucide.index','data' => ['icon' => 'Globe','class' => 'w-5 h-5 text-slate-600 dark:text-slate-400 mr-2']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.base.lucide.index','data' => ['icon' => 'Globe','class' => 'w-5 h-5 text-slate-600 dark:text-slate-400 me-2']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('base.lucide'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['icon' => 'Globe','class' => 'w-5 h-5 text-slate-600 dark:text-slate-400 mr-2']); ?>
+<?php $component->withAttributes(['icon' => 'Globe','class' => 'w-5 h-5 text-slate-600 dark:text-slate-400 me-2']); ?>
 <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginal16b2e62e74cde9150905c2d0c2cb6800)): ?>
@@ -105,14 +105,14 @@
                             <a href="<?php echo e(route('locale.switch', $nextLang->code)); ?>" class="flex items-center text-slate-600 dark:text-slate-400 hover:text-primary transition-colors">
                                 <?php if (isset($component)) { $__componentOriginal16b2e62e74cde9150905c2d0c2cb6800 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal16b2e62e74cde9150905c2d0c2cb6800 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.base.lucide.index','data' => ['icon' => 'RefreshCw','class' => 'w-5 h-5 mr-1']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.base.lucide.index','data' => ['icon' => 'RefreshCw','class' => 'w-5 h-5 me-1']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('base.lucide'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['icon' => 'RefreshCw','class' => 'w-5 h-5 mr-1']); ?>
+<?php $component->withAttributes(['icon' => 'RefreshCw','class' => 'w-5 h-5 me-1']); ?>
 <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginal16b2e62e74cde9150905c2d0c2cb6800)): ?>
@@ -128,7 +128,7 @@
                             <?php endif; ?>
                         </div>
 
-                        <h2 class="intro-x text-center text-2xl font-bold xl:text-left xl:text-3xl">
+                        <h2 class="intro-x text-center text-2xl font-bold xl:text-start xl:text-3xl">
                             <?php echo e(__('global.login')); ?>
 
                         </h2>
@@ -143,14 +143,14 @@
                                 <div class="flex items-center">
                                     <?php if (isset($component)) { $__componentOriginal16b2e62e74cde9150905c2d0c2cb6800 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal16b2e62e74cde9150905c2d0c2cb6800 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.base.lucide.index','data' => ['icon' => 'Shield','class' => 'w-5 h-5 text-blue-500 mr-3']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.base.lucide.index','data' => ['icon' => 'Shield','class' => 'w-5 h-5 text-blue-500 me-3']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('base.lucide'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['icon' => 'Shield','class' => 'w-5 h-5 text-blue-500 mr-3']); ?>
+<?php $component->withAttributes(['icon' => 'Shield','class' => 'w-5 h-5 text-blue-500 me-3']); ?>
 <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginal16b2e62e74cde9150905c2d0c2cb6800)): ?>
@@ -341,14 +341,14 @@
                                     <div class="relative">
                                         <?php if (isset($component)) { $__componentOriginal40054831fd8fc1521987609af4b37cc0 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal40054831fd8fc1521987609af4b37cc0 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.base.form-input.index','data' => ['class' => 'intro-x block min-w-full px-4 py-3 xl:min-w-[400px] border-slate-300 focus:border-primary focus:ring-primary pr-12','type' => 'password','name' => 'password','id' => 'password','placeholder' => ''.e(__('global.enter_your_password')).'','required' => true,'autocomplete' => 'current-password']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.base.form-input.index','data' => ['class' => 'intro-x block min-w-full px-4 py-3 xl:min-w-[400px] border-slate-300 focus:border-primary focus:ring-primary pe-12','type' => 'password','name' => 'password','id' => 'password','placeholder' => ''.e(__('global.enter_your_password')).'','required' => true,'autocomplete' => 'current-password']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('base.form-input'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['class' => 'intro-x block min-w-full px-4 py-3 xl:min-w-[400px] border-slate-300 focus:border-primary focus:ring-primary pr-12','type' => 'password','name' => 'password','id' => 'password','placeholder' => ''.e(__('global.enter_your_password')).'','required' => true,'autocomplete' => 'current-password']); ?>
+<?php $component->withAttributes(['class' => 'intro-x block min-w-full px-4 py-3 xl:min-w-[400px] border-slate-300 focus:border-primary focus:ring-primary pe-12','type' => 'password','name' => 'password','id' => 'password','placeholder' => ''.e(__('global.enter_your_password')).'','required' => true,'autocomplete' => 'current-password']); ?>
 <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginal40054831fd8fc1521987609af4b37cc0)): ?>
@@ -359,7 +359,7 @@
 <?php $component = $__componentOriginal40054831fd8fc1521987609af4b37cc0; ?>
 <?php unset($__componentOriginal40054831fd8fc1521987609af4b37cc0); ?>
 <?php endif; ?>
-                                        <button type="button" class="absolute inset-y-0 right-0 pr-3 flex items-center" onclick="togglePasswordVisibility()">
+                                        <button type="button" class="absolute inset-y-0 right-0 pe-3 flex items-center" onclick="togglePasswordVisibility()">
                                             <?php if (isset($component)) { $__componentOriginal16b2e62e74cde9150905c2d0c2cb6800 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal16b2e62e74cde9150905c2d0c2cb6800 = $attributes; } ?>
 <?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.base.lucide.index','data' => ['icon' => 'Eye','class' => 'w-5 h-5 text-slate-400 hover:text-slate-600','id' => 'eye-icon']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
@@ -406,17 +406,17 @@
                                 </div>
 
                                 <div class="intro-x mt-4 flex text-xs text-slate-600 dark:text-slate-500 sm:text-sm">
-                                    <div class="mr-auto flex items-center">
+                                    <div class="me-auto flex items-center">
                                         <?php if (isset($component)) { $__componentOriginal45dc70583f76c3df9e7383efd567b5fd = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal45dc70583f76c3df9e7383efd567b5fd = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.base.form-check.input','data' => ['class' => 'mr-2 border','id' => 'remember-me','type' => 'checkbox','name' => 'remember']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.base.form-check.input','data' => ['class' => 'me-2 border','id' => 'remember-me','type' => 'checkbox','name' => 'remember']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('base.form-check.input'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['class' => 'mr-2 border','id' => 'remember-me','type' => 'checkbox','name' => 'remember']); ?>
+<?php $component->withAttributes(['class' => 'me-2 border','id' => 'remember-me','type' => 'checkbox','name' => 'remember']); ?>
 <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginal45dc70583f76c3df9e7383efd567b5fd)): ?>
@@ -428,7 +428,7 @@
 <?php unset($__componentOriginal45dc70583f76c3df9e7383efd567b5fd); ?>
 <?php endif; ?>
                                         <label
-                                            class="cursor-pointer select-none ml-2"
+                                            class="cursor-pointer select-none ms-2"
                                             for="remember-me"
                                         >
                                             <?php echo e(__('global.remember_me')); ?>
@@ -438,27 +438,27 @@
                                     <a href="<?php echo e(route('password.request')); ?>" class="text-primary hover:underline"><?php echo e(__('global.forgot_password')); ?></a>
                                 </div>
 
-                                <div class="intro-x mt-5 text-center xl:mt-8 xl:text-left">
+                                <div class="intro-x mt-5 text-center xl:mt-8 xl:text-start">
                                     <?php if (isset($component)) { $__componentOriginale00eb601fbe667f0da582732d70c41c5 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginale00eb601fbe667f0da582732d70c41c5 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.base.button.index','data' => ['class' => 'w-full px-4 py-3 align-top xl:mr-3 xl:w-40 flex items-center justify-center','variant' => 'primary','type' => 'submit']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.base.button.index','data' => ['class' => 'w-full px-4 py-3 align-top xl:me-3 xl:w-40 flex items-center justify-center','variant' => 'primary','type' => 'submit']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('base.button'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['class' => 'w-full px-4 py-3 align-top xl:mr-3 xl:w-40 flex items-center justify-center','variant' => 'primary','type' => 'submit']); ?>
+<?php $component->withAttributes(['class' => 'w-full px-4 py-3 align-top xl:me-3 xl:w-40 flex items-center justify-center','variant' => 'primary','type' => 'submit']); ?>
                                         <?php if (isset($component)) { $__componentOriginal16b2e62e74cde9150905c2d0c2cb6800 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal16b2e62e74cde9150905c2d0c2cb6800 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.base.lucide.index','data' => ['icon' => 'LogIn','class' => 'w-4 h-4 mr-2']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.base.lucide.index','data' => ['icon' => 'LogIn','class' => 'w-4 h-4 me-2']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('base.lucide'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['icon' => 'LogIn','class' => 'w-4 h-4 mr-2']); ?>
+<?php $component->withAttributes(['icon' => 'LogIn','class' => 'w-4 h-4 me-2']); ?>
 <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginal16b2e62e74cde9150905c2d0c2cb6800)): ?>
@@ -504,14 +504,14 @@
 <?php $component->withAttributes(['id' => 'demo-toggle','variant' => 'outline-secondary','class' => 'w-full sm:w-auto px-3 py-2 flex items-center']); ?>
                                             <?php if (isset($component)) { $__componentOriginal16b2e62e74cde9150905c2d0c2cb6800 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal16b2e62e74cde9150905c2d0c2cb6800 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.base.lucide.index','data' => ['icon' => 'ChevronUp','class' => 'w-4 h-4 mr-2']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.base.lucide.index','data' => ['icon' => 'ChevronUp','class' => 'w-4 h-4 me-2']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('base.lucide'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['icon' => 'ChevronUp','class' => 'w-4 h-4 mr-2']); ?>
+<?php $component->withAttributes(['icon' => 'ChevronUp','class' => 'w-4 h-4 me-2']); ?>
 <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginal16b2e62e74cde9150905c2d0c2cb6800)): ?>
@@ -539,7 +539,7 @@
                                             <div class="relative group">
                                                 <button
                                                     type="button"
-                                                    class="demo-account w-full p-3 rounded-lg border border-slate-200 dark:border-darkmode-400 bg-slate-50 dark:bg-darkmode-700 hover:bg-primary hover:border-primary focus:outline-none focus:ring-2 focus:ring-primary transition-all duration-200 text-left"
+                                                    class="demo-account w-full p-3 rounded-lg border border-slate-200 dark:border-darkmode-400 bg-slate-50 dark:bg-darkmode-700 hover:bg-primary hover:border-primary focus:outline-none focus:ring-2 focus:ring-primary transition-all duration-200 text-start"
                                                     data-email="<?php echo e($acc['email']); ?>"
                                                     data-password="<?php echo e($acc['password']); ?>"
                                                     title="<?php echo e(__('global.click_to_fill')); ?>"
@@ -547,14 +547,14 @@
                                                     <div class="flex items-center">
                                                         <?php if (isset($component)) { $__componentOriginal16b2e62e74cde9150905c2d0c2cb6800 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal16b2e62e74cde9150905c2d0c2cb6800 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.base.lucide.index','data' => ['icon' => ''.e($roleIcons[$acc['role_key']] ?? 'User').'','class' => 'w-4 h-4 mr-2 text-slate-500 group-hover:text-white']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.base.lucide.index','data' => ['icon' => ''.e($roleIcons[$acc['role_key']] ?? 'User').'','class' => 'w-4 h-4 me-2 text-slate-500 group-hover:text-white']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('base.lucide'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['icon' => ''.e($roleIcons[$acc['role_key']] ?? 'User').'','class' => 'w-4 h-4 mr-2 text-slate-500 group-hover:text-white']); ?>
+<?php $component->withAttributes(['icon' => ''.e($roleIcons[$acc['role_key']] ?? 'User').'','class' => 'w-4 h-4 me-2 text-slate-500 group-hover:text-white']); ?>
 <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginal16b2e62e74cde9150905c2d0c2cb6800)): ?>
@@ -612,7 +612,7 @@
                             <?php endif; ?>
                         </div>
 
-                        <div class="intro-x mt-10 text-center text-slate-600 dark:text-slate-500 xl:mt-24 xl:text-left">
+                        <div class="intro-x mt-10 text-center text-slate-600 dark:text-slate-500 xl:mt-24 xl:text-start">
                             <?php echo e(__('global.agree_terms_prefix')); ?>
 
                             <a
@@ -643,14 +643,14 @@
         <div class="bg-success text-white px-4 py-3 rounded-lg shadow-lg flex items-center">
             <?php if (isset($component)) { $__componentOriginal16b2e62e74cde9150905c2d0c2cb6800 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal16b2e62e74cde9150905c2d0c2cb6800 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.base.lucide.index','data' => ['icon' => 'CheckCircle','class' => 'w-5 h-5 mr-3']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.base.lucide.index','data' => ['icon' => 'CheckCircle','class' => 'w-5 h-5 me-3']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('base.lucide'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['icon' => 'CheckCircle','class' => 'w-5 h-5 mr-3']); ?>
+<?php $component->withAttributes(['icon' => 'CheckCircle','class' => 'w-5 h-5 me-3']); ?>
 <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginal16b2e62e74cde9150905c2d0c2cb6800)): ?>
@@ -665,7 +665,7 @@
         </div>
     </div>
 
-<?php if (! $__env->hasRenderedOnce('21c414fe-2009-4326-ae64-49252107b731')): $__env->markAsRenderedOnce('21c414fe-2009-4326-ae64-49252107b731');
+<?php if (! $__env->hasRenderedOnce('a80f7e2e-26da-44d4-abc7-791689fb3111')): $__env->markAsRenderedOnce('a80f7e2e-26da-44d4-abc7-791689fb3111');
 $__env->startPush('scripts'); ?>
     <script>
         // Password visibility toggle
@@ -835,7 +835,7 @@ $__env->startPush('scripts'); ?>
                 // Show loading state
                 const originalContent = submitButton.innerHTML;
                 submitButton.dataset.original = originalContent;
-                submitButton.innerHTML = '<i data-lucide="loader" class="w-4 h-4 mr-2 animate-spin"></i> <?php echo e(__('global.signing_in')); ?>';
+                submitButton.innerHTML = '<i data-lucide="loader" class="w-4 h-4 me-2 animate-spin"></i> <?php echo e(__('global.signing_in')); ?>';
                 lucide.createIcons();
                 submitButton.disabled = true;
                 

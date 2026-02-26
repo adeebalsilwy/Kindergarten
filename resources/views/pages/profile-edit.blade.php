@@ -6,7 +6,7 @@
 
 @section('subcontent')
 <div class="intro-y mt-8 flex items-center">
-    <h2 class="mr-auto text-lg font-medium">{{ __('global.edit_profile') }}</h2>
+    <h2 class="me-auto text-lg font-medium">{{ __('global.edit_profile') }}</h2>
 </div>
 <div class="grid grid-cols-12 gap-6">
     <!-- BEGIN: Profile Menu -->
@@ -21,7 +21,7 @@
                         onerror="this.src='{{ Vite::asset('resources/images/avatar-default.png') }}';"
                     />
                 </div>
-                <div class="ml-4 mr-auto">
+                <div class="ms-4 me-auto">
                     <div class="text-base font-medium">
                         {{ $user->name }}
                     </div>
@@ -49,13 +49,13 @@
                         <x-base.menu.divider />
                         <x-base.menu.item>
                             <a href="{{ route('profile.index') }}" class="flex items-center">
-                                <x-base.lucide class="mr-2 h-4 w-4" icon="User" />
+                                <x-base.lucide class="me-2 h-4 w-4" icon="User" />
                                 {{ __('global.view_profile') }}
                             </a>
                         </x-base.menu.item>
                         <x-base.menu.item>
                             <a href="{{ route('profile.change-password') }}" class="flex items-center">
-                                <x-base.lucide class="mr-2 h-4 w-4" icon="Lock" />
+                                <x-base.lucide class="me-2 h-4 w-4" icon="Lock" />
                                 {{ __('global.change_password') }}
                             </a>
                         </x-base.menu.item>
@@ -78,7 +78,7 @@
                     href="{{ route('profile.index') }}"
                 >
                     <x-base.lucide
-                        class="mr-2 h-4 w-4"
+                        class="me-2 h-4 w-4"
                         icon="Activity"
                     /> {{ __('global.personal_information') }}
                 </a>
@@ -87,7 +87,7 @@
                     href="{{ route('profile.edit') }}"
                 >
                     <x-base.lucide
-                        class="mr-2 h-4 w-4"
+                        class="me-2 h-4 w-4"
                         icon="Edit"
                     /> {{ __('global.edit_profile') }}
                 </a>
@@ -96,7 +96,7 @@
                     href="{{ route('profile.change-password') }}"
                 >
                     <x-base.lucide
-                        class="mr-2 h-4 w-4"
+                        class="me-2 h-4 w-4"
                         icon="Lock"
                     /> {{ __('global.change_password') }}
                 </a>
@@ -108,14 +108,14 @@
         <!-- BEGIN: Edit Profile Form -->
         <div class="intro-y box lg:mt-5">
             <div class="flex items-center border-b border-slate-200/60 p-5 dark:border-darkmode-400">
-                <h2 class="mr-auto text-base font-medium">
+                <h2 class="me-auto text-base font-medium">
                     {{ __('global.update_personal_information') }}
                 </h2>
             </div>
             <div class="p-5">
                 @if(session('success'))
                     <div class="alert alert-success alert-dismissible show mb-4 flex items-center" role="alert">
-                        <x-base.lucide icon="CheckCircle" class="w-4 h-4 mr-2" />
+                        <x-base.lucide icon="CheckCircle" class="w-4 h-4 me-2" />
                         {{ session('success') }}
                         <button type="button" class="btn-close" data-tw-dismiss="alert" aria-label="Close">
                             <x-base.lucide icon="X" class="w-4 h-4" />
@@ -167,11 +167,11 @@
                                 <x-base.button
                                     type="submit"
                                     variant="primary"
-                                    class="w-24 ml-2"
+                                    class="w-24 ms-2"
                                 >
                                     {{ __('global.save') }}
                                 </x-base.button>
-                                <a href="{{ route('profile.index') }}" class="btn btn-outline-secondary w-24 ml-2">
+                                <a href="{{ route('profile.index') }}" class="btn btn-outline-secondary w-24 ms-2">
                                     {{ __('global.cancel') }}
                                 </a>
                             </div>

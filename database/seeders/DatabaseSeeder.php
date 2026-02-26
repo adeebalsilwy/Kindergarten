@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             RolePermissionSeeder::class,
             DashboardContentSeeder::class,
             KindergartenDemoSeeder::class,
+            UpdateGradeColumnSeeder::class,
         ]);
     }
 }

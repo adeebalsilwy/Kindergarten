@@ -6,26 +6,12 @@
 
 @section('subcontent')
     <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
-        <h2 class="text-lg font-medium mr-auto">{{ __('FinancialReport.list') }}</h2>
-        <div class="w-full sm:w-auto flex mt-4 sm:mt-0">
-            @can('export_financial_reports')
-            
-                        <div class="flex gap-2">
-                            <x-base.button variant="outline-primary" as="a" href="{{ route('financial_reports.export.pdf') }}" class="flex items-center">
-                                <x-base.lucide icon="FileText" class="w-4 h-4 mr-2" />
-                                {{ __('global.export_pdf') }}
-                            </x-base.button>
-                            <x-base.button variant="outline-success" as="a" href="{{ route('financial_reports.export.excel') }}" class="flex items-center">
-                                <x-base.lucide icon="FileSpreadsheet" class="w-4 h-4 mr-2" />
-                                {{ __('global.export_excel') }}
-                            </x-base.button>
-                        </div>
-            @endcan
-            
+        <h2 class="text-lg font-medium me-auto">{{ __('global.financial_reporting') }}</h2>
+        <div class="w-full sm:w-auto flex mt-4 sm:mt-0 gap-2">
             @can('create_financial_reports')
-            <x-base.button variant="primary" as="a" href="{{ route('financial_reports.create') }}" class="ml-2 flex items-center">
-                <x-base.lucide icon="Plus" class="w-4 h-4 mr-2" />
-                {{ __('FinancialReport.add_new') }}
+            <x-base.button variant="primary" as="a" href="{{ route('financial_reports.create') }}" class="flex items-center">
+                <x-base.lucide icon="Plus" class="w-4 h-4 me-2" />
+                {{ __('global.create') }} {{ __('global.report') }}
             </x-base.button>
             @endcan
         </div>
@@ -35,154 +21,98 @@
         <!-- Filter Section -->
         <div class="intro-y col-span-12">
             <div class="box p-5">
-                <div class="flex flex-col sm:flex-row gap-4">
-                    <div class="flex-1">
-                        <x-base.form-input type="text" placeholder="{{ __('global.search') }}" class="w-full" />
+                <form class="flex flex-col sm:flex-row gap-4">
+                    <div class="relative flex-1">
+                        <x-base.lucide icon="Search" class="absolute inset-y-0 start-0 z-10 my-auto ms-3 h-4 w-4 text-slate-500" />
+                        <x-base.form-input type="text" placeholder="{{ __('global.search') }}..." class="ps-10" />
                     </div>
-                    <x-base.button variant="secondary" class="flex items-center">
-                        <x-base.lucide icon="Filter" class="w-4 h-4 mr-2" />
-                        {{ __('global.filter') }}
-                    </x-base.button>
-                </div>
+                    <div class="flex gap-2">
+                        <x-base.form-select class="w-full sm:w-48">
+                            <option value="">{{ __('global.report_type') }}</option>
+                            <option value="general">{{ __('global.general') }}</option>
+                            <option value="income">{{ __('global.income') }}</option>
+                            <option value="expense">{{ __('global.expense') }}</option>
+                        </x-base.form-select>
+                        <x-base.button variant="secondary" type="submit" class="flex items-center">
+                            <x-base.lucide icon="Filter" class="w-4 h-4 me-2" />
+                            {{ __('global.filter') }}
+                        </x-base.button>
+                    </div>
+                </form>
             </div>
         </div>
 
         <!-- Data List -->
         <div class="intro-y col-span-12 overflow-auto lg:overflow-visible">
-            <x-base.table class="table-report -mt-2">
-                <x-base.table.thead>
-                    <x-base.table.tr>
-@php
-    $canEdit = auth()->user()->can('edit_financial_reports');
-    $canDelete = auth()->user()->can('delete_financial_reports');
-    $canView = auth()->user()->can('view_financial_reports');
-@endphp
-                            <x-base.table.th class="whitespace-nowrap text-center">{{ __('financial-reports.fields.name') }}</x-base.table.th>
-
-                        @if($canEdit || $canDelete || $canView)
-                        <x-base.table.th class="text-center whitespace-nowrap">{{ __('global.actions') }}</x-base.table.th>
-                        @endif
-                    </x-base.table.tr>
-                </x-base.table.thead>
-                <x-base.table.tbody>
-                    @forelse($financialReports as $financialReport)
-                        <x-base.table.tr class="intro-x">
-                            <x-base.table.td class="text-center">{{ $financialReport->name ?? '-' }}</x-base.table.td>
-
-                            @if($canEdit || $canDelete || $canView)
-                            <x-base.table.td class="table-report__action w-56">
-                                <div class="flex justify-center items-center">
-                                    @can('view_financial_reports')
-                                    <x-base.button variant="outline-secondary" as="a" href="{{ route('financial_reports.show', $financialReport->id) }}" size="sm" class="mr-2">
-                                        <x-base.lucide icon="Eye" class="w-4 h-4 mr-1" />
-                                        {{ __('global.view') }}
-                                    </x-base.button>
-                                    @endcan
-                                    
-                                    @can('edit_financial_reports')
-                                    <x-base.button variant="outline-primary" as="a" href="{{ route('financial_reports.edit', $financialReport->id) }}" size="sm" class="mr-2">
-                                        <x-base.lucide icon="Pencil" class="w-4 h-4 mr-1" />
-                                        {{ __('global.edit') }}
-                                    </x-base.button>
-                                    @endcan
-                                    
-                                    @can('delete_financial_reports')
-                                    <form action="{{ route('financial_reports.destroy', $financialReport->id) }}" method="POST" onsubmit="return confirm('{{ __('global.confirm_delete') }}')" class="inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <x-base.button variant="outline-danger" type="submit" size="sm">
-                                            <x-base.lucide icon="Trash2" class="w-4 h-4 mr-1" />
-                                            {{ __('global.delete') }}
-                                        </x-base.button>
-                                    </form>
-                                    @endcan
-                                </div>
-                            </x-base.table.td>
-                            @endif
-                        </x-base.table.tr>
-
-                    @empty
+            <div class="box p-5">
+                <x-base.table class="table-auto w-full">
+                    <x-base.table.thead class="bg-slate-50 dark:bg-darkmode-800">
                         <x-base.table.tr>
-                        <x-base.table.td colspan="{{ 1 + ($canEdit || $canDelete || $canView ? 1 : 0) }}" class="text-center py-10">
-                                <div class="flex flex-col items-center justify-center">
-                                    <x-base.lucide icon="Inbox" class="w-16 h-16 text-gray-400 mb-4" />
-                                    <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100">{{ __('global.no_data_found') }}</h3>
-                                    <p class="text-gray-500 dark:text-gray-400 mt-1">{{ __('global.no_data_description') }}</p>
-                                    <x-base.button variant="primary" as="a" href="{{ route('financial_reports.create') }}" class="mt-4">
-                                        <x-base.lucide icon="Plus" class="w-4 h-4 mr-2" />
-                                        {{ __('FinancialReport.add_new') }}
-                                    </x-base.button>
-                                </div>
-                            </x-base.table.td>
+                            <x-base.table.th class="whitespace-nowrap">{{ __('global.name') }}</x-base.table.th>
+                            <x-base.table.th class="whitespace-nowrap text-center">{{ __('global.type') }}</x-base.table.th>
+                            <x-base.table.th class="whitespace-nowrap text-center">{{ __('global.period') }}</x-base.table.th>
+                            <x-base.table.th class="whitespace-nowrap text-center">{{ __('global.generated_by') }}</x-base.table.th>
+                            <x-base.table.th class="text-center whitespace-nowrap">{{ __('global.actions') }}</x-base.table.th>
                         </x-base.table.tr>
-                    @endforelse
-                </x-base.table.tbody>
-            </x-base.table>
+                    </x-base.table.thead>
+                    <x-base.table.tbody>
+                        @forelse($financialReports as $report)
+                            <x-base.table.tr class="hover:bg-slate-50 dark:hover:bg-darkmode-600 transition-colors">
+                                <x-base.table.td class="font-medium">
+                                    <div class="flex items-center">
+                                        <x-base.lucide icon="FileText" class="w-4 h-4 me-2 text-slate-500" />
+                                        {{ $report->name }}
+                                    </div>
+                                </x-base.table.td>
+                                <x-base.table.td class="text-center">
+                                    <span class="px-2 py-1 rounded text-xs bg-slate-100 text-slate-600">
+                                        {{ __('global.'.$report->report_type) }}
+                                    </span>
+                                </x-base.table.td>
+                                <x-base.table.td class="text-center text-xs text-slate-500">
+                                    {{ $report->period_start->format('Y/m/d') }} - {{ $report->period_end->format('Y/m/d') }}
+                                </x-base.table.td>
+                                <x-base.table.td class="text-center">
+                                    {{ optional($report->generatedBy)->name ?? '-' }}
+                                </x-base.table.td>
+                                <x-base.table.td class="w-40">
+                                    <div class="flex justify-center items-center gap-2">
+                                        <a href="{{ route('financial_reports.show', $report->id) }}" class="text-primary" title="{{ __('global.view') }}">
+                                            <x-base.lucide icon="Eye" class="w-4 h-4" />
+                                        </a>
+                                        <a href="#" class="text-slate-500" title="{{ __('global.print') }}">
+                                            <x-base.lucide icon="Printer" class="w-4 h-4" />
+                                        </a>
+                                        @can('delete_financial_reports')
+                                        <form action="{{ route('financial_reports.destroy', $report->id) }}" method="POST" onsubmit="return confirm('{{ __('global.confirm_delete') }}')" class="inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="text-danger">
+                                                <x-base.lucide icon="Trash2" class="w-4 h-4" />
+                                            </button>
+                                        </form>
+                                        @endcan
+                                    </div>
+                                </x-base.table.td>
+                            </x-base.table.tr>
+                        @empty
+                            <x-base.table.tr>
+                                <x-base.table.td colspan="5" class="text-center py-10">
+                                    <div class="flex flex-col items-center">
+                                        <x-base.lucide icon="Inbox" class="w-12 h-12 text-slate-300 mb-2" />
+                                        <div class="text-slate-500">{{ __('global.no_data_found') }}</div>
+                                    </div>
+                                </x-base.table.td>
+                            </x-base.table.tr>
+                        @endforelse
+                    </x-base.table.tbody>
+                </x-base.table>
+            </div>
         </div>
 
         <!-- Pagination -->
         <div class="intro-y col-span-12 flex flex-wrap sm:flex-row sm:flex-nowrap items-center">
             {!! $financialReports->links() !!}
         </div>
-
-        <!-- Summary Cards -->
-        @if($financialReports->count() > 0)
-        <div class="intro-y col-span-12 grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
-            <div class="report-box zoom-in">
-                <div class="box p-5">
-                    <div class="flex items-center">
-                        <x-base.lucide icon="Database" class="w-8 h-8 text-primary" />
-                        <div class="ml-auto">
-                            <div class="report-box__indicator bg-success"> 
-                                <x-base.lucide icon="TrendingUp" class="w-4 h-4" /> 
-                            </div>
-                        </div>
-                    </div>
-                    <div class="text-3xl font-bold leading-8 mt-6">{{ $financialReports->count() }}</div>
-                    <div class="text-base text-slate-500 mt-1">{{ __('global.total_records') }}</div>
-                </div>
-            </div>
-            <div class="report-box zoom-in">
-                <div class="box p-5">
-                    <div class="flex items-center">
-                        <x-base.lucide icon="Activity" class="w-8 h-8 text-pending" />
-                        <div class="ml-auto">
-                            <div class="report-box__indicator bg-success"> 
-                                <x-base.lucide icon="TrendingUp" class="w-4 h-4" /> 
-                            </div>
-                        </div>
-                    </div>
-                    <div class="text-3xl font-bold leading-8 mt-6">
-                        @php
-                            $recentCount = $financialReports->filter(function($item) {
-                                return $item->created_at >= \Carbon\Carbon::now()->subDays(7);
-                            })->count();
-                        @endphp
-                        {{ $recentCount }}
-                    </div>
-                    <div class="text-base text-slate-500 mt-1">{{ __('global.added_this_week') }}</div>
-                </div>
-            </div>
-            <div class="report-box zoom-in">
-                <div class="box p-5">
-                    <div class="flex items-center">
-                        <x-base.lucide icon="Calendar" class="w-8 h-8 text-success" />
-                        <div class="ml-auto">
-                            <div class="report-box__indicator bg-success"> 
-                                <x-base.lucide icon="TrendingUp" class="w-4 h-4" /> 
-                            </div>
-                        </div>
-                    </div>
-                    <div class="text-3xl font-bold leading-8 mt-6">
-                        @php
-                            $todayCount = $financialReports->filter(fn($item) => \Carbon\Carbon::parse($item->created_at)->isToday())->count();
-                        @endphp
-                        {{ $todayCount }}
-                    </div>
-                    <div class="text-base text-slate-500 mt-1">{{ __('global.added_today') }}</div>
-                </div>
-            </div>
-        </div>
-        @endif
     </div>
 @endsection

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use OmarAlalwi\Gpdf\Facades\Gpdf;
+
 use App\Http\Requests\StoreTestModelRequest;
 use App\Http\Requests\UpdateTestModelRequest;
 use App\Services\TestModelService;
@@ -58,7 +60,7 @@ class TestModelController extends Controller
      */
     protected function exportToPdf($data)
     {
-        $pdf = Pdf::loadView('pages.test_models.export-pdf', ['data' => $data]);
+        $pdf = Gpdf::loadView('pages.test_models.export-pdf', ['data' => $data]);
 
         return $pdf->download('TestModel_export_'.date('Y-m-d_H-i-s').'.pdf');
     }

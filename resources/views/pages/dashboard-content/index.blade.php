@@ -2,20 +2,20 @@
 
 @section('subcontent')
 <div class="intro-y flex items-center mt-8">
-    <h2 class="text-lg font-medium mr-auto">{{ __('global.dashboard_content_management') }}</h2>
+    <h2 class="text-lg font-medium me-auto">{{ __('global.dashboard_content_management') }}</h2>
 </div>
 
 <div class="grid grid-cols-12 gap-6 mt-5">
     <div class="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2">
-        <a href="{{ route('dashboard-content.create') }}" class="btn btn-primary shadow-md mr-2">
-            <i data-lucide="plus" class="w-4 h-4 mr-2"></i> {{ __('global.add_content') }}
+        <a href="{{ route('dashboard-content.create') }}" class="btn btn-primary shadow-md me-2">
+            <i data-lucide="plus" class="w-4 h-4 me-2"></i> {{ __('global.add_content') }}
         </a>
         <div class="hidden md:block mx-auto text-slate-500"></div>
-        <div class="w-full sm:w-auto mt-3 sm:mt-0 sm:ml-auto md:ml-0">
+        <div class="w-full sm:w-auto mt-3 sm:mt-0 sm:ms-auto md:ms-0">
             <div class="w-56 relative text-slate-500">
                 <form method="GET" action="{{ route('dashboard-content.index') }}">
-                    <input type="text" name="search" class="form-control w-56 box pr-10" placeholder="{{ __('global.search') }}" value="{{ request('search') }}">
-                    <i data-lucide="search" class="w-4 h-4 absolute left-0 top-0 my-auto mx-auto ml-3"></i>
+                    <input type="text" name="search" class="form-control w-56 box pe-10" placeholder="{{ __('global.search') }}" value="{{ request('search') }}">
+                    <i data-lucide="search" class="w-4 h-4 absolute left-0 top-0 my-auto mx-auto ms-3"></i>
                 </form>
             </div>
         </div>
@@ -44,21 +44,21 @@
                     <td class="w-40 text-center">
                         @if($content->is_active)
                         <div class="flex items-center justify-center text-success">
-                            <i data-lucide="check-square" class="w-4 h-4 mr-2"></i> {{ __('global.active') }}
+                            <i data-lucide="check-square" class="w-4 h-4 me-2"></i> {{ __('global.active') }}
                         </div>
                         @else
                         <div class="flex items-center justify-center text-danger">
-                            <i data-lucide="x-square" class="w-4 h-4 mr-2"></i> {{ __('global.inactive') }}
+                            <i data-lucide="x-square" class="w-4 h-4 me-2"></i> {{ __('global.inactive') }}
                         </div>
                         @endif
                     </td>
                     <td class="table-report__action w-56">
                         <div class="flex justify-center gap-2">
-                            <a class="flex items-center mr-3" href="{{ route('dashboard-content.edit', $content) }}">
-                                <i data-lucide="check-square" class="w-4 h-4 mr-1"></i> {{ __('global.edit') }}
+                            <a class="flex items-center me-3" href="{{ route('dashboard-content.edit', $content) }}">
+                                <i data-lucide="check-square" class="w-4 h-4 me-1"></i> {{ __('global.edit') }}
                             </a>
                             <a class="flex items-center text-danger" href="javascript:;" data-tw-toggle="modal" data-tw-target="#delete-confirmation-modal" data-id="{{ $content->id }}">
-                                <i data-lucide="trash-2" class="w-4 h-4 mr-1"></i> {{ __('global.delete') }}
+                                <i data-lucide="trash-2" class="w-4 h-4 me-1"></i> {{ __('global.delete') }}
                             </a>
                         </div>
                     </td>
@@ -96,7 +96,7 @@
                         </div>
                     </div>
                     <div class="px-5 pb-8 text-center">
-                        <button type="button" data-tw-dismiss="modal" class="btn btn-outline-secondary w-24 mr-1">{{ __('global.cancel') }}</button>
+                        <button type="button" data-tw-dismiss="modal" class="btn btn-outline-secondary w-24 me-1">{{ __('global.cancel') }}</button>
                         <button type="submit" class="btn btn-danger w-24">{{ __('global.delete') }}</button>
                     </div>
                 </form>

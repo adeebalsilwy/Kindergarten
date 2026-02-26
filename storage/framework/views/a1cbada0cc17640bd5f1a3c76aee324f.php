@@ -7,7 +7,7 @@
 ]); ?>">
     <div class="flex h-[70px] items-center px-3 sm:px-8">
         <a
-            class="mr-auto flex"
+            class="me-auto flex"
             href=""
         >
             <img
@@ -45,12 +45,12 @@
     <div class="<?php echo \Illuminate\Support\Arr::toCssClasses([
         'scrollable h-screen z-20 top-0 left-0 w-[270px] -ml-[100%] bg-primary transition-all duration-300 ease-in-out dark:bg-darkmode-800',
         '[&[data-simplebar]]:fixed [&_.simplebar-scrollbar]:before:bg-black/50',
-        'group-[.mobile-menu--active]:ml-0',
+        'group-[.mobile-menu--active]:ms-0',
     ]); ?>">
         <a
             href="#"
             class="<?php echo \Illuminate\Support\Arr::toCssClasses([
-                'fixed top-0 right-0 mt-4 mr-4 transition-opacity duration-200 ease-in-out',
+                'fixed top-0 right-0 mt-4 me-4 transition-opacity duration-200 ease-in-out',
                 'invisible opacity-0',
                 'group-[.mobile-menu--active]:visible group-[.mobile-menu--active]:opacity-100',
             ]); ?>"
@@ -249,18 +249,18 @@
 </div>
 <!-- END: Mobile Menu -->
 
-<?php if (! $__env->hasRenderedOnce('e6f9af2d-7ccb-40b3-adb4-4f465ff5129d')): $__env->markAsRenderedOnce('e6f9af2d-7ccb-40b3-adb4-4f465ff5129d');
+<?php if (! $__env->hasRenderedOnce('02916017-f5c0-4274-a6a7-1936080a5c19')): $__env->markAsRenderedOnce('02916017-f5c0-4274-a6a7-1936080a5c19');
 $__env->startPush('styles'); ?>
     <?php echo app('Illuminate\Foundation\Vite')('resources/css/vendors/simplebar.css'); ?>
     <?php echo app('Illuminate\Foundation\Vite')('resources/css/components/mobile-menu.css'); ?>
 <?php $__env->stopPush(); endif; ?>
 
-<?php if (! $__env->hasRenderedOnce('40700e9c-2383-4c9a-9e82-9c5c403558ad')): $__env->markAsRenderedOnce('40700e9c-2383-4c9a-9e82-9c5c403558ad');
+<?php if (! $__env->hasRenderedOnce('5a1da2f9-dedf-42ca-980f-845eff8a647e')): $__env->markAsRenderedOnce('5a1da2f9-dedf-42ca-980f-845eff8a647e');
 $__env->startPush('vendors'); ?>
     <?php echo app('Illuminate\Foundation\Vite')('resources/js/vendors/simplebar.js'); ?>
 <?php $__env->stopPush(); endif; ?>
 
-<?php if (! $__env->hasRenderedOnce('af9c0431-a35c-43b6-96b5-d78dacf9ab17')): $__env->markAsRenderedOnce('af9c0431-a35c-43b6-96b5-d78dacf9ab17');
+<?php if (! $__env->hasRenderedOnce('25e91492-580d-4bea-a9b6-8cd3ee4585e0')): $__env->markAsRenderedOnce('25e91492-580d-4bea-a9b6-8cd3ee4585e0');
 $__env->startPush('scripts'); ?>
     <?php echo app('Illuminate\Foundation\Vite')('resources/js/components/mobile-menu.js'); ?>
 <?php $__env->stopPush(); endif; ?>

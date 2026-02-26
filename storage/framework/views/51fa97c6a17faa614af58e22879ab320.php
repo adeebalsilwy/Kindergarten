@@ -35,7 +35,7 @@ unset($__defined_vars); ?>
 <li
     <?php echo e($attributes->whereStartsWith('class')->class(
             merge([
-                $index > 0 ? 'relative ml-5 pl-0.5' : null,
+                $index > 0 ? 'relative ms-5 ps-0.5' : null,
 
                 !$light && $index > 0
                     ? "before:content-[''] before:w-[14px] before:h-[14px] before:bg-chevron-black before:transform before:rotate-[-90deg] before:bg-[length:100%] before:-ml-[1.125rem] before:absolute before:my-auto before:inset-y-0"

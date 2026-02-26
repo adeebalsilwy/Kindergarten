@@ -33,6 +33,11 @@ class Activity extends Model
         'outcomes',
         'completed_at',
         'notes',
+        'status',
+        'category',
+        'materials_needed',
+        'assessment_criteria',
+        'max_participants',
     ];
 
     protected $casts = [
@@ -63,6 +68,7 @@ class Activity extends Model
         parent::boot();
 
         static::creating(function ($activity) {
+            $activity->status = $activity->status ?? 'active';
             $activity->is_active = $activity->is_active ?? true;
         });
     }
@@ -111,5 +117,8 @@ class Activity extends Model
         $this->attributes['title'] = ucwords(strtolower($value));
     }
 
-
+    public function setStatusAttribute($value)
+    {
+        $this->attributes['status'] = strtolower($value);
+    }
 }

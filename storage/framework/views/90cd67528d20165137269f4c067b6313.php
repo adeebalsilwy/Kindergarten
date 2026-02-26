@@ -28,7 +28,7 @@ foreach ($attributes->all() as $__key => $__value) {
 
 unset($__defined_vars); ?>
 
-<?php if (! $__env->hasRenderedOnce('7a2c52a0-9973-46d0-aa31-7e6a0e0a2a4f')): $__env->markAsRenderedOnce('7a2c52a0-9973-46d0-aa31-7e6a0e0a2a4f');
+<?php if (! $__env->hasRenderedOnce('17cb0a23-9a0a-4f2d-a5c4-ab29f4f7d68f')): $__env->markAsRenderedOnce('17cb0a23-9a0a-4f2d-a5c4-ab29f4f7d68f');
 $__env->startPush('vendors'); ?>
     <?php echo app('Illuminate\Foundation\Vite')('resources/js/vendors/alert.js'); ?>
 <?php $__env->stopPush(); endif; ?>
@@ -152,7 +152,7 @@ $__env->startPush('vendors'); ?>
                 $variant == 'soft-pending' ? $softPending : null,
                 $variant == 'soft-danger' ? $softDanger : null,
                 $variant == 'soft-dark' ? $softDark : null,
-                $dismissible ? 'pl-5 pr-16' : null,
+                $dismissible ? 'ps-5 pe-16' : null,
             ]),
         )->merge($attributes->whereDoesntStartWith('class')->getAttributes())); ?>
 

@@ -30,7 +30,7 @@ unset($__defined_vars); ?>
 
 <table
     data-tw-merge
-    <?php echo e($attributes->class(merge(['w-full text-left', $dark ? 'bg-dark text-white dark:bg-black/30' : null]))->merge($attributes->whereDoesntStartWith('class')->getAttributes())); ?>
+    <?php echo e($attributes->class(merge(['w-full text-start', $dark ? 'bg-dark text-white dark:bg-black/30' : null]))->merge($attributes->whereDoesntStartWith('class')->getAttributes())); ?>
 
 >
     <?php echo e($slot); ?>

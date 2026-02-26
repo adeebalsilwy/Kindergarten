@@ -7,7 +7,7 @@
 @section('subcontent')
     <div class="mt-8 flex items-center justify-between">
         <div>
-            <h2 class="intro-y text-lg font-medium mr-auto">Backup Manager</h2>
+            <h2 class="intro-y text-lg font-medium me-auto">Backup Manager</h2>
             <div class="text-slate-500 text-xs mt-1">Manage backups of your models and related files.</div>
         </div>
     </div>
@@ -18,7 +18,7 @@
             <div class="col-span-12 intro-y">
                 <div class="box p-5 border border-slate-200/60 shadow-sm dark:border-darkmode-400">
                     <div class="flex items-center border-b border-slate-200/60 pb-3 mb-4 dark:border-darkmode-400">
-                        <div class="w-8 h-8 bg-primary/10 text-primary flex items-center justify-center rounded-full mr-3">
+                        <div class="w-8 h-8 bg-primary/10 text-primary flex items-center justify-center rounded-full me-3">
                             <x-base.lucide icon="DatabaseBackup" class="w-4 h-4" />
                         </div>
                         <div>
@@ -35,7 +35,7 @@
                         </div>
                         <div class="col-span-12 md:col-span-4 flex items-end">
                             <x-base.button id="create-backup-btn" variant="primary" class="w-full">
-                                <x-base.lucide icon="Save" class="w-4 h-4 mr-2" /> Create Backup
+                                <x-base.lucide icon="Save" class="w-4 h-4 me-2" /> Create Backup
                             </x-base.button>
                         </div>
                     </div>
@@ -47,7 +47,7 @@
                 <div class="box p-5 border border-slate-200/60 shadow-sm dark:border-darkmode-400">
                     <div class="flex items-center justify-between border-b border-slate-200/60 pb-3 mb-4 dark:border-darkmode-400">
                         <div class="flex items-center">
-                            <div class="w-8 h-8 bg-success/10 text-success flex items-center justify-center rounded-full mr-3">
+                            <div class="w-8 h-8 bg-success/10 text-success flex items-center justify-center rounded-full me-3">
                                 <x-base.lucide icon="Server" class="w-4 h-4" />
                             </div>
                             <div>

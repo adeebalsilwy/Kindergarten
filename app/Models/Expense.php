@@ -10,15 +10,8 @@ class Expense extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $appends = [
-        'formatted_amount',
-        'expense_date_formatted',
-        'category_label',
-    ];
-
     protected $fillable = [
         'title',
-        'category',
         'description',
         'amount',
         'expense_date',
@@ -33,7 +26,7 @@ class Expense extends Model
 
     protected $casts = [
         'amount' => 'decimal:2',
-        'expense_date' => 'date',
+        'expense_date' => 'datetime',
         'deleted_at' => 'datetime',
     ];
 
@@ -45,30 +38,5 @@ class Expense extends Model
     public function assignedTo()
     {
         return $this->belongsTo(User::class, 'assigned_to');
-    }
-
-    public function creator()
-    {
-        return $this->belongsTo(User::class, 'created_by');
-    }
-
-    public function assignee()
-    {
-        return $this->belongsTo(User::class, 'assigned_to');
-    }
-
-    public function getFormattedAmountAttribute()
-    {
-        return '$' . number_format($this->amount, 2);
-    }
-
-    public function getExpenseDateFormattedAttribute()
-    {
-        return $this->expense_date ? $this->expense_date->format('Y-m-d') : null;
-    }
-
-    public function getCategoryLabelAttribute()
-    {
-        return ucfirst($this->category);
     }
 }

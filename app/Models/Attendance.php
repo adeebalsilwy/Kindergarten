@@ -15,27 +15,16 @@ class Attendance extends Model
         'date',
         'status',
         'notes',
-        'check_in_time',
-        'check_out_time',
+        'check_in',
+        'check_out',
         'absence_reason',
-        'duration_minutes',
-        'check_in_location',
-        'check_out_location',
-        'check_in_status',
-        'check_out_status',
-        'attendance_type',
     ];
 
-    protected function casts(): array
-    {
-        return [
-            'date' => 'datetime',
-            'check_in_time' => 'datetime',
-            'check_out_time' => 'datetime',
-            'duration_minutes' => 'integer',
-            'deleted_at' => 'datetime',
-        ];
-    }
+    protected $casts = [
+        'date' => 'datetime',
+        'check_in' => 'datetime',
+        'check_out' => 'datetime',
+    ];
 
     public function child()
     {
@@ -45,5 +34,15 @@ class Attendance extends Model
     public function getClassAttribute()
     {
         return $this->child->class; // Assuming child has a class relationship
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'date' => 'datetime',
+            'check_in' => 'datetime',
+            'check_out' => 'datetime',
+            'deleted_at' => 'datetime',
+        ];
     }
 }

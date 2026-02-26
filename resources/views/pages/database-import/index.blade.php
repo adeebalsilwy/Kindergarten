@@ -8,22 +8,22 @@
     <div class="mt-8 mb-6">
         <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div>
-                <h2 class="intro-y text-2xl font-bold text-slate-800 dark:text-slate-200 mr-auto flex items-center">
-                    <x-base.lucide icon="Database" class="w-6 h-6 mr-3 text-primary" />
+                <h2 class="intro-y text-2xl font-bold text-slate-800 dark:text-slate-200 me-auto flex items-center">
+                    <x-base.lucide icon="Database" class="w-6 h-6 me-3 text-primary" />
                     Database Import Manager
                 </h2>
                 <div class="text-slate-600 dark:text-slate-400 text-sm mt-2 flex items-center">
-                    <x-base.lucide icon="Info" class="w-4 h-4 mr-2" />
+                    <x-base.lucide icon="Info" class="w-4 h-4 me-2" />
                     Import existing database tables and generate complete CRUD modules with relationships
                 </div>
             </div>
             <div class="flex flex-wrap gap-3">
                 <x-base.button id="configure-db-btn" variant="primary" class="px-4 py-2.5 flex items-center shadow-md">
-                    <x-base.lucide icon="Settings" class="w-4 h-4 mr-2" /> Configure Connection
+                    <x-base.lucide icon="Settings" class="w-4 h-4 me-2" /> Configure Connection
                 </x-base.button>
                 <a href="{{ route('crud-builder.index') }}">
                     <x-base.button variant="outline-primary" class="px-4 py-2.5 flex items-center">
-                        <x-base.lucide icon="ArrowLeft" class="w-4 h-4 mr-2" /> Back to Builder
+                        <x-base.lucide icon="ArrowLeft" class="w-4 h-4 me-2" /> Back to Builder
                     </x-base.button>
                 </a>
             </div>
@@ -36,17 +36,17 @@
             <ul class="nav nav-tabs" role="tablist">
                 <li id="schema-tab" class="nav-item active" role="presentation">
                     <button class="nav-link w-full text-slate-600 dark:text-slate-300 hover:text-slate-800 dark:hover:text-slate-200 active" data-toggle="tab" data-target="#schema-content" type="button" role="tab">
-                        <x-base.lucide icon="Table" class="w-4 h-4 mr-2" /> Schema Explorer
+                        <x-base.lucide icon="Table" class="w-4 h-4 me-2" /> Schema Explorer
                     </button>
                 </li>
                 <li id="import-tab" class="nav-item" role="presentation">
                     <button class="nav-link w-full text-slate-600 dark:text-slate-300 hover:text-slate-800 dark:hover:text-slate-200" data-toggle="tab" data-target="#import-content" type="button" role="tab">
-                        <x-base.lucide icon="Download" class="w-4 h-4 mr-2" /> Import Settings
+                        <x-base.lucide icon="Download" class="w-4 h-4 me-2" /> Import Settings
                     </button>
                 </li>
                 <li id="preview-tab" class="nav-item" role="presentation">
                     <button class="nav-link w-full text-slate-600 dark:text-slate-300 hover:text-slate-800 dark:hover:text-slate-200" data-toggle="tab" data-target="#preview-content" type="button" role="tab">
-                        <x-base.lucide icon="Eye" class="w-4 h-4 mr-2" /> Preview
+                        <x-base.lucide icon="Eye" class="w-4 h-4 me-2" /> Preview
                     </button>
                 </li>
             </ul>
@@ -60,16 +60,16 @@
                     <div class="col-span-12 lg:col-span-12 intro-y">
                         <div class="box p-5 border border-slate-200/60 shadow-sm dark:border-darkmode-400 bg-gradient-to-br from-slate-50 to-white dark:from-darkmode-500/20 dark:to-darkmode-600">
                             <div class="flex items-center border-b border-slate-200/60 pb-3 mb-4 dark:border-darkmode-400">
-                                <div class="w-8 h-8 bg-primary/10 text-primary flex items-center justify-center rounded-full mr-3 shadow-md">
+                                <div class="w-8 h-8 bg-primary/10 text-primary flex items-center justify-center rounded-full me-3 shadow-md">
                                     <x-base.lucide icon="Database" class="w-4 h-4" />
                                 </div>
                                 <div>
                                     <h3 class="font-medium text-base text-slate-800 dark:text-slate-200">Database Schema</h3>
                                     <div class="text-slate-500 text-xs">Available tables in your database</div>
                                 </div>
-                                <div class="ml-auto">
+                                <div class="ms-auto">
                                     <x-base.button id="refresh-schema-btn" variant="primary" size="sm" class="shadow-md">
-                                        <x-base.lucide icon="RefreshCw" class="w-4 h-4 mr-1" /> Refresh
+                                        <x-base.lucide icon="RefreshCw" class="w-4 h-4 me-1" /> Refresh
                                     </x-base.button>
                                 </div>
                             </div>
@@ -97,10 +97,10 @@
                                             <x-base.table.th class="whitespace-nowrap w-12 text-center sticky left-0 bg-inherit z-20 border-r border-slate-200 dark:border-darkmode-400">
                                                 <x-base.form-check.input id="select-all-tables" class="form-check-input" type="checkbox" />
                                             </x-base.table.th>
-                                            <x-base.table.th class="whitespace-nowrap px-4 py-3 text-left font-semibold border-b border-slate-200 dark:border-darkmode-400">Table Name</x-base.table.th>
-                                            <x-base.table.th class="whitespace-nowrap text-center px-4 py-3 text-left font-semibold border-b border-slate-200 dark:border-darkmode-400">Columns</x-base.table.th>
-                                            <x-base.table.th class="whitespace-nowrap text-center px-4 py-3 text-left font-semibold border-b border-slate-200 dark:border-darkmode-400">Relationships</x-base.table.th>
-                                            <x-base.table.th class="whitespace-nowrap text-center px-4 py-3 text-left font-semibold border-b border-slate-200 dark:border-darkmode-400">Actions</x-base.table.th>
+                                            <x-base.table.th class="whitespace-nowrap px-4 py-3 text-start font-semibold border-b border-slate-200 dark:border-darkmode-400">Table Name</x-base.table.th>
+                                            <x-base.table.th class="whitespace-nowrap text-center px-4 py-3 text-start font-semibold border-b border-slate-200 dark:border-darkmode-400">Columns</x-base.table.th>
+                                            <x-base.table.th class="whitespace-nowrap text-center px-4 py-3 text-start font-semibold border-b border-slate-200 dark:border-darkmode-400">Relationships</x-base.table.th>
+                                            <x-base.table.th class="whitespace-nowrap text-center px-4 py-3 text-start font-semibold border-b border-slate-200 dark:border-darkmode-400">Actions</x-base.table.th>
                                         </x-base.table.tr>
                                     </x-base.table.thead>
                                     <x-base.table.tbody id="tables-list" class="divide-y divide-slate-200 dark:divide-darkmode-400">
@@ -116,12 +116,12 @@
                             
                             <div class="mt-4 flex justify-between items-center bg-slate-50 dark:bg-darkmode/30 p-4 rounded-lg border border-slate-200/60 dark:border-darkmode-400">
                                 <div class="text-sm text-slate-600 dark:text-slate-400 flex items-center">
-                                    <x-base.lucide icon="Info" class="w-4 h-4 mr-2 text-primary" />
+                                    <x-base.lucide icon="Info" class="w-4 h-4 me-2 text-primary" />
                                     <span id="selected-count">0</span> of <span id="total-count">0</span> tables selected
                                 </div>
                                 <div>
                                     <x-base.button id="import-selected-btn" variant="primary" disabled class="px-4 py-2 shadow-md">
-                                        <x-base.lucide icon="Download" class="w-4 h-4 mr-2" /> Import Selected Tables
+                                        <x-base.lucide icon="Download" class="w-4 h-4 me-2" /> Import Selected Tables
                                     </x-base.button>
                                 </div>
                             </div>
@@ -136,7 +136,7 @@
                     <div class="col-span-12 lg:col-span-8 intro-y">
                         <div class="box p-5 border border-slate-200/60 shadow-sm dark:border-darkmode-400 bg-gradient-to-br from-slate-50 to-white dark:from-darkmode-500/20 dark:to-darkmode-600">
                             <div class="flex items-center border-b border-slate-200/60 pb-3 mb-4 dark:border-darkmode-400">
-                                <div class="w-8 h-8 bg-success/10 text-success flex items-center justify-center rounded-full mr-3 shadow-md">
+                                <div class="w-8 h-8 bg-success/10 text-success flex items-center justify-center rounded-full me-3 shadow-md">
                                     <x-base.lucide icon="Settings" class="w-4 h-4" />
                                 </div>
                                 <div>
@@ -154,7 +154,7 @@
                                 <div class="border-t border-slate-200/60 pt-4 mt-4 dark:border-darkmode-400">
                                     <div class="flex items-center">
                                         <x-base.form-check.input id="generate-crud-checkbox" class="form-check-input" type="checkbox" checked />
-                                        <x-base.form-label for="generate-crud-checkbox" class="ml-2 font-medium text-slate-700 dark:text-slate-300">Generate Full CRUD</x-base.form-label>
+                                        <x-base.form-label for="generate-crud-checkbox" class="ms-2 font-medium text-slate-700 dark:text-slate-300">Generate Full CRUD</x-base.form-label>
                                     </div>
                                     <div class="text-xs text-slate-500 mt-1">Generate model, controller, views, and routes for selected tables.</div>
                                 </div>
@@ -162,14 +162,14 @@
                                 <div class="border-t border-slate-200/60 pt-4 mt-4 dark:border-darkmode-400">
                                     <div class="flex items-center">
                                         <x-base.form-check.input id="overwrite-existing" class="form-check-input" type="checkbox" />
-                                        <x-base.form-label for="overwrite-existing" class="ml-2 font-medium text-slate-700 dark:text-slate-300">Overwrite Existing Files</x-base.form-label>
+                                        <x-base.form-label for="overwrite-existing" class="ms-2 font-medium text-slate-700 dark:text-slate-300">Overwrite Existing Files</x-base.form-label>
                                     </div>
                                     <div class="text-xs text-slate-500 mt-1">Overwrite existing models/controllers if they exist.</div>
                                 </div>
                                 
                                 <div class="pt-4">
                                     <x-base.button id="bulk-import-btn" variant="primary" class="w-full shadow-md py-3" disabled>
-                                        <x-base.lucide icon="Download" class="w-4 h-4 mr-2" /> Bulk Import Selected Tables
+                                        <x-base.lucide icon="Download" class="w-4 h-4 me-2" /> Bulk Import Selected Tables
                                     </x-base.button>
                                 </div>
                             </div>
@@ -179,7 +179,7 @@
                     <div class="col-span-12 lg:col-span-4 intro-y">
                         <div class="box p-5 border border-slate-200/60 shadow-sm dark:border-darkmode-400 bg-gradient-to-br from-slate-50 to-white dark:from-darkmode-500/20 dark:to-darkmode-600">
                             <div class="flex items-center border-b border-slate-200/60 pb-3 mb-4 dark:border-darkmode-400">
-                                <div class="w-8 h-8 bg-info/10 text-info flex items-center justify-center rounded-full mr-3 shadow-md">
+                                <div class="w-8 h-8 bg-info/10 text-info flex items-center justify-center rounded-full me-3 shadow-md">
                                     <x-base.lucide icon="Info" class="w-4 h-4" />
                                 </div>
                                 <div>
@@ -191,7 +191,7 @@
                             <div class="space-y-3">
                                 <div class="p-4 bg-slate-50 dark:bg-darkmode-500/30 rounded-lg border border-slate-200/60 dark:border-darkmode-400">
                                     <h4 class="font-medium text-slate-700 dark:text-slate-300 mb-2 flex items-center">
-                                        <x-base.lucide icon="Info" class="w-4 h-4 mr-2 text-blue-500" /> Import Status
+                                        <x-base.lucide icon="Info" class="w-4 h-4 me-2 text-blue-500" /> Import Status
                                     </h4>
                                     <div class="text-sm text-slate-600 dark:text-slate-400 space-y-1">
                                         <p><span class="font-medium">Tables Selected:</span> <span id="import-status-selected" class="text-primary">0</span></p>
@@ -202,7 +202,7 @@
                                 
                                 <div class="p-4 bg-slate-50 dark:bg-darkmode-500/30 rounded-lg border border-slate-200/60 dark:border-darkmode-400">
                                     <h4 class="font-medium text-slate-700 dark:text-slate-300 mb-2 flex items-center">
-                                        <x-base.lucide icon="History" class="w-4 h-4 mr-2 text-purple-500" /> Recent Imports
+                                        <x-base.lucide icon="History" class="w-4 h-4 me-2 text-purple-500" /> Recent Imports
                                     </h4>
                                     <div class="text-sm text-slate-600 dark:text-slate-400 space-y-1">
                                         <p class="text-xs italic">No recent imports</p>
@@ -220,7 +220,7 @@
                     <div class="col-span-12 lg:col-span-12 intro-y">
                         <div class="box p-5 border border-slate-200/60 shadow-sm dark:border-darkmode-400 bg-gradient-to-br from-slate-50 to-white dark:from-darkmode-500/20 dark:to-darkmode-600">
                             <div class="flex items-center border-b border-slate-200/60 pb-3 mb-4 dark:border-darkmode-400">
-                                <div class="w-8 h-8 bg-info/10 text-info flex items-center justify-center rounded-full mr-3 shadow-md">
+                                <div class="w-8 h-8 bg-info/10 text-info flex items-center justify-center rounded-full me-3 shadow-md">
                                     <x-base.lucide icon="Eye" class="w-4 h-4" />
                                 </div>
                                 <div>
@@ -247,7 +247,7 @@
         <div class="bg-white p-6 rounded-xl shadow-2xl dark:bg-darkmode-600 transform scale-100 max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto">
             <div class="flex items-center justify-between border-b border-slate-200 dark:border-darkmode-400 pb-4 mb-4">
                 <h3 class="text-xl font-bold text-slate-800 dark:text-white flex items-center">
-                    <x-base.lucide icon="Server" class="w-6 h-6 mr-2 text-primary" /> Database Configuration
+                    <x-base.lucide icon="Server" class="w-6 h-6 me-2 text-primary" /> Database Configuration
                 </h3>
                 <button id="close-config-modal" class="text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200">
                     <x-base.lucide icon="X" class="w-6 h-6" />
@@ -258,7 +258,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <x-base.form-label for="db-type" class="font-medium text-slate-700 dark:text-slate-300 mb-2 flex items-center">
-                            <x-base.lucide icon="HardDrive" class="w-4 h-4 mr-2" /> Database Type
+                            <x-base.lucide icon="HardDrive" class="w-4 h-4 me-2" /> Database Type
                         </x-base.form-label>
                         <x-base.tom-select id="db-type" class="w-full rounded-lg" name="db_type">
                             <option value="mysql">MySQL</option>
@@ -269,19 +269,19 @@
                     </div>
                     <div>
                         <x-base.form-label for="db-server" class="font-medium text-slate-700 dark:text-slate-300 mb-2 flex items-center">
-                            <x-base.lucide icon="Globe" class="w-4 h-4 mr-2" /> Server Host
+                            <x-base.lucide icon="Globe" class="w-4 h-4 me-2" /> Server Host
                         </x-base.form-label>
                         <x-base.form-input id="db-server" type="text" placeholder="localhost" value="localhost" class="py-3 px-4 text-sm rounded-lg border-2 border-slate-200 focus:border-blue-500 dark:border-darkmode-300 dark:bg-darkmode-700 dark:text-slate-200 w-full" />
                     </div>
                     <div>
                         <x-base.form-label for="db-port" class="font-medium text-slate-700 dark:text-slate-300 mb-2 flex items-center">
-                            <x-base.lucide icon="Plug" class="w-4 h-4 mr-2" /> Port
+                            <x-base.lucide icon="Plug" class="w-4 h-4 me-2" /> Port
                         </x-base.form-label>
                         <x-base.form-input id="db-port" type="number" placeholder="3306" value="3306" class="py-3 px-4 text-sm rounded-lg border-2 border-slate-200 focus:border-blue-500 dark:border-darkmode-300 dark:bg-darkmode-700 dark:text-slate-200 w-full" />
                     </div>
                     <div>
                         <x-base.form-label for="db-name" class="font-medium text-slate-700 dark:text-slate-300 mb-2 flex items-center">
-                            <x-base.lucide icon="Database" class="w-4 h-4 mr-2" /> Database Name
+                            <x-base.lucide icon="Database" class="w-4 h-4 me-2" /> Database Name
                         </x-base.form-label>
                         <x-base.form-input id="db-name" type="text" placeholder="my_database" class="py-3 px-4 text-sm rounded-lg border-2 border-slate-200 focus:border-blue-500 dark:border-darkmode-300 dark:bg-darkmode-700 dark:text-slate-200 w-full" />
                     </div>
@@ -290,13 +290,13 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <x-base.form-label for="db-user" class="font-medium text-slate-700 dark:text-slate-300 mb-2 flex items-center">
-                            <x-base.lucide icon="User" class="w-4 h-4 mr-2" /> Username
+                            <x-base.lucide icon="User" class="w-4 h-4 me-2" /> Username
                         </x-base.form-label>
                         <x-base.form-input id="db-user" type="text" placeholder="root" class="py-3 px-4 text-sm rounded-lg border-2 border-slate-200 focus:border-blue-500 dark:border-darkmode-300 dark:bg-darkmode-700 dark:text-slate-200 w-full" />
                     </div>
                     <div>
                         <x-base.form-label for="db-password" class="font-medium text-slate-700 dark:text-slate-300 mb-2 flex items-center">
-                            <x-base.lucide icon="Lock" class="w-4 h-4 mr-2" /> Password
+                            <x-base.lucide icon="Lock" class="w-4 h-4 me-2" /> Password
                         </x-base.form-label>
                         <x-base.form-input id="db-password" type="password" placeholder="••••••••" class="py-3 px-4 text-sm rounded-lg border-2 border-slate-200 focus:border-blue-500 dark:border-darkmode-300 dark:bg-darkmode-700 dark:text-slate-200 w-full" />
                     </div>
@@ -304,7 +304,7 @@
                 
                 <div class="p-4 bg-slate-50 dark:bg-darkmode-500/30 rounded-lg border border-slate-200/60 dark:border-darkmode-400">
                     <h4 class="font-medium text-slate-700 dark:text-slate-300 mb-2 flex items-center">
-                        <x-base.lucide icon="Info" class="w-4 h-4 mr-2 text-blue-500" /> Connection Details
+                        <x-base.lucide icon="Info" class="w-4 h-4 me-2 text-blue-500" /> Connection Details
                     </h4>
                     <div class="text-sm text-slate-600 dark:text-slate-400 space-y-1">
                         <p><span class="font-medium">Current Connection:</span> <span id="current-connection" class="text-primary">Using application default</span></p>
@@ -315,10 +315,10 @@
             
             <div class="flex justify-end gap-3 pt-4 border-t border-slate-200 dark:border-darkmode-400">
                 <x-base.button id="test-connection-btn" variant="secondary" class="px-4 py-2 shadow-md flex items-center">
-                    <x-base.lucide icon="Zap" class="w-4 h-4 mr-2" /> Test Connection
+                    <x-base.lucide icon="Zap" class="w-4 h-4 me-2" /> Test Connection
                 </x-base.button>
                 <x-base.button id="save-config-btn" variant="primary" class="px-4 py-2 shadow-md flex items-center">
-                    <x-base.lucide icon="Save" class="w-4 h-4 mr-2" /> Save Configuration
+                    <x-base.lucide icon="Save" class="w-4 h-4 me-2" /> Save Configuration
                 </x-base.button>
             </div>
         </div>
@@ -428,7 +428,7 @@
 
                 // Show testing state
                 const originalText = testConnectionBtn.innerHTML;
-                testConnectionBtn.innerHTML = '<i data-lucide="Loader" class="w-4 h-4 mr-2 animate-spin"></i> Testing...';
+                testConnectionBtn.innerHTML = '<i data-lucide="Loader" class="w-4 h-4 me-2 animate-spin"></i> Testing...';
                 testConnectionBtn.disabled = true;
                 
                 if(window.lucide) lucide.createIcons();
@@ -482,7 +482,7 @@
 
                 // Show saving state
                 const originalText = saveConfigBtn.innerHTML;
-                saveConfigBtn.innerHTML = '<i data-lucide="Loader" class="w-4 h-4 mr-2 animate-spin"></i> Saving...';
+                saveConfigBtn.innerHTML = '<i data-lucide="Loader" class="w-4 h-4 me-2 animate-spin"></i> Saving...';
                 saveConfigBtn.disabled = true;
                 
                 if(window.lucide) lucide.createIcons();
@@ -581,7 +581,7 @@
                                 </td>
                                 <td class="font-medium px-4 py-3 text-slate-500 border-b border-slate-200 dark:border-darkmode-400">
                                     <div class="flex items-center">
-                                        <i data-lucide="Table" class="w-4 h-4 mr-2 text-primary"></i>
+                                        <i data-lucide="Table" class="w-4 h-4 me-2 text-primary"></i>
                                         ${table.table_name}
                                     </div>
                                 </td>
@@ -702,14 +702,14 @@
                     .then(data => {
                         let html = '<div class="space-y-3">';
 
-                        html += `<div class="font-medium text-sm text-slate-600 dark:text-slate-300 mb-2 flex items-center"><i data-lucide="List" class="w-4 h-4 mr-2"></i>Columns (${data.fields.length}):</div>`;
+                        html += `<div class="font-medium text-sm text-slate-600 dark:text-slate-300 mb-2 flex items-center"><i data-lucide="List" class="w-4 h-4 me-2"></i>Columns (${data.fields.length}):</div>`;
                         html += '<div class="space-y-2 max-h-60 overflow-y-auto border border-slate-200 dark:border-darkmode-400 rounded-lg p-3 bg-slate-50 dark:bg-darkmode/20">';
 
                         data.fields.forEach(field => {
                             html += `
                                 <div class="flex justify-between items-center p-2 bg-white dark:bg-darkmode-500 rounded text-sm border border-slate-200 dark:border-darkmode-400 shadow-sm">
                                     <div class="flex items-center">
-                                        <i data-lucide="Database" class="w-4 h-4 mr-2 text-primary"></i>
+                                        <i data-lucide="Database" class="w-4 h-4 me-2 text-primary"></i>
                                         <span class="font-medium">${field.name}</span>
                                     </div>
                                     <span class="text-xs bg-slate-200 dark:bg-darkmode-600 px-2 py-1 rounded">${field.type}</span>
@@ -720,14 +720,14 @@
                         html += '</div>';
 
                         if (data.relationships && data.relationships.length > 0) {
-                            html += `<div class="font-medium text-sm text-slate-600 dark:text-slate-300 mt-3 mb-2 flex items-center"><i data-lucide="GitBranch" class="w-4 h-4 mr-2"></i>Detected Relationships (${data.relationships.length}):</div>`;
+                            html += `<div class="font-medium text-sm text-slate-600 dark:text-slate-300 mt-3 mb-2 flex items-center"><i data-lucide="GitBranch" class="w-4 h-4 me-2"></i>Detected Relationships (${data.relationships.length}):</div>`;
                             html += '<div class="space-y-2 max-h-40 overflow-y-auto border border-slate-200 dark:border-darkmode-400 rounded-lg p-3 bg-slate-50 dark:bg-darkmode/20">';
 
                             data.relationships.forEach(rel => {
                                 html += `
                                     <div class="flex justify-between items-center p-2 bg-success/10 dark:bg-success/20 rounded text-sm border border-success/20 shadow-sm">
                                         <div class="flex items-center">
-                                            <i data-lucide="Link" class="w-4 h-4 mr-2 text-success"></i>
+                                            <i data-lucide="Link" class="w-4 h-4 me-2 text-success"></i>
                                             <span class="font-medium">${rel.type}</span>
                                             <span class="mx-1">→</span>
                                             <span class="font-medium">${rel.related_table}</span>
@@ -739,7 +739,7 @@
 
                             html += '</div>';
                         } else {
-                            html += '<div class="text-xs text-slate-500 mt-3 p-3 bg-slate-50 dark:bg-darkmode/20 rounded-lg border border-slate-200 dark:border-darkmode-400 flex items-center"><i data-lucide="Info" class="w-4 h-4 mr-2"></i>No relationships detected for this table.</div>';
+                            html += '<div class="text-xs text-slate-500 mt-3 p-3 bg-slate-50 dark:bg-darkmode/20 rounded-lg border border-slate-200 dark:border-darkmode-400 flex items-center"><i data-lucide="Info" class="w-4 h-4 me-2"></i>No relationships detected for this table.</div>';
                         }
 
                         html += '</div>';

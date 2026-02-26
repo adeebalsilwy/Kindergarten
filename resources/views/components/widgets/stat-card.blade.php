@@ -20,7 +20,7 @@
                     <x-base.lucide class="h-8 w-8 text-{{ $color }}" icon="{{ $icon }}" />
                 @endif
                 @if($description)
-                    <div class="ml-auto">
+                    <div class="ms-auto">
                         <div class="report-box__indicator bg-success"> 
                             <x-base.lucide icon="TrendingUp" class="w-4 h-4" /> 
                         </div>

@@ -14,7 +14,7 @@
             <!-- BEGIN: Side Menu -->
             <nav class="side-nav z-10 hidden overflow-x-hidden px-5 pb-16 md:block md:w-[100px] xl:w-[250px]">
                 <a
-                    class="flex items-center pt-4 pl-5 mt-3 intro-x"
+                    class="flex items-center pt-4 ps-5 mt-3 intro-x"
                     href=""
                 >
                     <img
@@ -22,7 +22,7 @@
                         src="{{ Vite::asset('resources/images/logo.svg') }}"
                         alt="Tinker Tailwind HTML Admin Template"
                     />
-                    <span class="hidden ml-3 text-lg text-white xl:block">
+                    <span class="hidden ms-3 text-lg text-white xl:block">
                         Tinker
                     </span>
                 </a>
@@ -115,19 +115,19 @@
             <!-- END: Side Menu -->
             <!-- BEGIN: Content -->
             <div @class([
-                'rounded-[30px] md:rounded-[35px/50px_0px_0px_0px] min-w-0 min-h-screen max-w-full md:max-w-none bg-slate-100 flex-1 pb-10 px-4 md:px-6 relative md:ml-4 dark:bg-darkmode-700',
+                'rounded-[30px] md:rounded-[35px/50px_0px_0px_0px] min-w-0 min-h-screen max-w-full md:max-w-none bg-slate-100 flex-1 pb-10 px-4 md:px-6 relative md:ms-4 dark:bg-darkmode-700',
                 "before:content-[''] before:w-full before:h-px before:block",
-                "after:content-[''] after:z-[-1] after:rounded-[40px_0px_0px_0px] after:w-full after:inset-y-0 after:absolute after:left-0 after:bg-white/10 after:mt-8 after:-ml-4 after:dark:bg-darkmode-400/50 after:hidden md:after:block",
+                "after:content-[''] after:z-[-1] after:rounded-[40px_0px_0px_0px] after:w-full after:inset-y-0 after:absolute after:left-0 after:bg-white/10 after:mt-8 after:-ms-4 after:dark:bg-darkmode-400/50 after:hidden md:after:block",
             ])>
                 <x-themes.tinker.top-bar />
                 @if (session('success'))
                     <x-base.alert variant="success" class="mb-2 flex items-center">
-                        <x-base.lucide icon="CheckCircle" class="w-6 h-6 mr-2" /> {{ session('success') }}
+                        <x-base.lucide icon="CheckCircle" class="w-6 h-6 me-2" /> {{ session('success') }}
                     </x-base.alert>
                 @endif
                 @if (session('error'))
                     <x-base.alert variant="danger" class="mb-2 flex items-center">
-                        <x-base.lucide icon="AlertOctagon" class="w-6 h-6 mr-2" /> {{ session('error') }}
+                        <x-base.lucide icon="AlertOctagon" class="w-6 h-6 me-2" /> {{ session('error') }}
                     </x-base.alert>
                 @endif
                 @yield('subcontent')

@@ -114,12 +114,12 @@
                     class="md:max-w-auto min-h-screen min-w-0 max-w-full flex-1 rounded-[1.3rem] bg-slate-100 px-4 pb-10 shadow-sm before:block before:h-px before:w-full before:content-[''] dark:bg-darkmode-700 md:px-[22px]">
                     @if (session('success'))
                         <x-base.alert variant="success" class="mb-2 flex items-center">
-                            <x-base.lucide icon="CheckCircle" class="w-6 h-6 mr-2" /> {{ session('success') }}
+                            <x-base.lucide icon="CheckCircle" class="w-6 h-6 me-2" /> {{ session('success') }}
                         </x-base.alert>
                     @endif
                     @if (session('error'))
                         <x-base.alert variant="danger" class="mb-2 flex items-center">
-                            <x-base.lucide icon="AlertOctagon" class="w-6 h-6 mr-2" /> {{ session('error') }}
+                            <x-base.lucide icon="AlertOctagon" class="w-6 h-6 me-2" /> {{ session('error') }}
                         </x-base.alert>
                     @endif
                     @yield('subcontent')

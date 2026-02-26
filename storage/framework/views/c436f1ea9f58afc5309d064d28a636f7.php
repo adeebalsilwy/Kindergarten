@@ -4,7 +4,7 @@
 
 <?php $__env->startSection('subcontent'); ?>
     <div class="intro-y flex items-center mt-8">
-        <h2 class="text-lg font-medium mr-auto"><?php echo e(__('User.add_new')); ?></h2>
+        <h2 class="text-lg font-medium me-auto"><?php echo e(__('User.add_new')); ?></h2>
     </div>
     <div class="grid grid-cols-12 gap-6 mt-5">
         <div class="intro-y col-span-12 lg:col-span-10">
@@ -104,7 +104,7 @@ unset($__errorArgs, $__bag); ?>
 <?php $component = $__componentOriginal40054831fd8fc1521987609af4b37cc0; ?>
 <?php unset($__componentOriginal40054831fd8fc1521987609af4b37cc0); ?>
 <?php endif; ?>
-                                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                <div class="absolute inset-y-0 right-0 pe-3 flex items-center pointer-events-none">
                                     <?php if (isset($component)) { $__componentOriginal16b2e62e74cde9150905c2d0c2cb6800 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal16b2e62e74cde9150905c2d0c2cb6800 = $attributes; } ?>
 <?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.base.lucide.index','data' => ['icon' => 'Mail','class' => 'h-5 w-5 text-gray-400']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
@@ -547,7 +547,7 @@ unset($__errorArgs, $__bag); ?>
 
                     </div>
                     <div class="flex justify-end mt-5">
-                        <a href="<?php echo e(route('users.index')); ?>" class="btn btn-outline-secondary w-24 mr-1"><?php echo e(__('global.cancel')); ?></a>
+                        <a href="<?php echo e(route('users.index')); ?>" class="btn btn-outline-secondary w-24 me-1"><?php echo e(__('global.cancel')); ?></a>
                         <?php if (isset($component)) { $__componentOriginale00eb601fbe667f0da582732d70c41c5 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginale00eb601fbe667f0da582732d70c41c5 = $attributes; } ?>
 <?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.base.button.index','data' => ['type' => 'submit','variant' => 'primary','class' => 'w-24']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>

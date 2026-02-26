@@ -79,7 +79,7 @@
             height: auto;
             margin-bottom: 15px;
         }
-        .text-right {
+        .text-end {
             text-align: right;
         }
         .text-center {

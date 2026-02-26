@@ -75,7 +75,7 @@ class AttendanceService
      */
     public function update($attendance, array $data): Attendance
     {
-        if (is_int($attendance)) {
+        if (is_numeric($attendance)) {
             $model = Attendance::findOrFail($attendance);
             $model->update($data);
 
@@ -91,7 +91,7 @@ class AttendanceService
      */
     public function delete($attendance): bool
     {
-        if (is_int($attendance)) {
+        if (is_numeric($attendance)) {
             $model = Attendance::findOrFail($attendance);
 
             return $model->delete();

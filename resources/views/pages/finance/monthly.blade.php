@@ -6,7 +6,7 @@
 
 @section('subcontent')
 <div class="intro-y flex items-center mt-8">
-    <h2 class="text-lg font-medium mr-auto">Monthly Report - {{ $monthlyReport['period']['formatted'] ?? '' }}</h2>
+    <h2 class="text-lg font-medium me-auto">Monthly Report - {{ $monthlyReport['period']['formatted'] ?? '' }}</h2>
 </div>
 
 <div class="grid grid-cols-12 gap-6 mt-5">
@@ -77,7 +77,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
                 <h4 class="font-medium mb-2">Revenue Summary</h4>
-                <ul class="list-disc pl-5 space-y-1">
+                <ul class="list-disc ps-5 space-y-1">
                     <li>Total Revenue: ${{ number_format($monthlyReport['revenue']['total_revenue'] ?? 0, 2) }}</li>
                     <li>Total Transactions: {{ $monthlyReport['revenue']['total_transactions'] ?? 0 }}</li>
                     <li>Average Transaction: ${{ number_format($monthlyReport['revenue']['total_transactions'] > 0 ? ($monthlyReport['revenue']['total_revenue'] / $monthlyReport['revenue']['total_transactions']) : 0, 2) }}</li>
@@ -85,7 +85,7 @@
             </div>
             <div>
                 <h4 class="font-medium mb-2">Top Payment Methods</h4>
-                <ul class="list-disc pl-5 space-y-1">
+                <ul class="list-disc ps-5 space-y-1">
                     @foreach(($monthlyReport['revenue']['payment_methods'] ?? collect([]))->take(3) as $method => $count)
                         <li>{{ ucfirst($method) }}: {{ $count }} transactions</li>
                     @endforeach
@@ -100,7 +100,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
                 <h4 class="font-medium mb-2">Expense Summary</h4>
-                <ul class="list-disc pl-5 space-y-1">
+                <ul class="list-disc ps-5 space-y-1">
                     <li>Total Expenses: ${{ number_format($monthlyReport['expenses']['total_expenses'] ?? 0, 2) }}</li>
                     <li>Total Expenses Count: {{ $monthlyReport['expenses']['total_expenses_count'] ?? 0 }}</li>
                     <li>Average Expense: ${{ number_format($monthlyReport['expenses']['total_expenses_count'] > 0 ? ($monthlyReport['expenses']['total_expenses'] / $monthlyReport['expenses']['total_expenses_count']) : 0, 2) }}</li>
@@ -108,7 +108,7 @@
             </div>
             <div>
                 <h4 class="font-medium mb-2">Expenses by Category</h4>
-                <ul class="list-disc pl-5 space-y-1">
+                <ul class="list-disc ps-5 space-y-1">
                     @foreach(($monthlyReport['expenses']['by_category'] ?? collect([]))->take(3) as $category => $amount)
                         <li>{{ ucfirst($category) }}: ${{ number_format($amount, 2) }}</li>
                     @endforeach

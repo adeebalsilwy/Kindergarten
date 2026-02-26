@@ -5,16 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Traits\Filterable;
 
 class AccountingEntry extends Model
 {
-    use HasFactory, SoftDeletes, Filterable;
-
-    protected $searchable = [
-        'description',
-        'reference',
-    ];
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'description',
@@ -32,5 +26,8 @@ class AccountingEntry extends Model
         'deleted_at' => 'datetime',
     ];
 
-
+    public function createdBy()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
 }

@@ -7,20 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
-use App\Traits\Filterable;
 
 class Guardian extends Model
 {
-    use HasFactory, SoftDeletes, Filterable;
-
-    protected $searchable = ['name', 'phone', 'email', 'national_id'];
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'name',
         'phone',
+        'email',
         'address',
         'relationship',
-        'email',
         'secondary_phone',
         'occupation',
         'workplace',
@@ -36,22 +33,24 @@ class Guardian extends Model
         'passport_number',
         'is_active',
         'last_login_at',
+        'notes',
     ];
 
     protected $casts = [
-        'date_of_birth' => 'date',
-        'last_login_at' => 'datetime',
-        'is_primary_emergency_contact' => 'boolean',
         'is_primary_guardian' => 'boolean',
-        'is_active' => 'boolean',
+        'is_primary_emergency_contact' => 'boolean',
         'receives_sms_notifications' => 'boolean',
         'receives_email_notifications' => 'boolean',
+        'is_active' => 'boolean',
+        'date_of_birth' => 'date',
+        'last_login_at' => 'datetime',
         'deleted_at' => 'datetime',
     ];
 
     protected $appends = [
         'slug',
-        'full_name',
+        'full_address',
+        'children_count',
     ];
 
     // Model Events
@@ -81,11 +80,6 @@ class Guardian extends Model
         return Str::slug($this->name);
     }
 
-    public function getFullNameAttribute(): string
-    {
-        return $this->name;
-    }
-
     public function getFullAddressAttribute(): string
     {
         return trim($this->address ?? '');
@@ -99,20 +93,11 @@ class Guardian extends Model
     // Mutators
     public function setPhoneAttribute($value)
     {
-        // Add '+' prefix if not already present
-        if ($value && !str_starts_with($value, '+')) {
-            $value = '+' . $value;
-        }
-        $this->attributes['phone'] = $value;
+        $this->attributes['phone'] = preg_replace('/[^0-9]/', '', $value);
     }
 
     public function setEmailAttribute($value)
     {
         $this->attributes['email'] = strtolower(trim($value));
-    }
-
-    public function setNameAttribute($value)
-    {
-        $this->attributes['name'] = ucwords(strtolower($value));
     }
 }

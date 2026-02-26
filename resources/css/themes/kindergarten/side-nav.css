@@ -1,49 +1,61 @@
 /* Kindergarten Theme Side Navigation Styles */
 
 .kindergarten {
-  /* Custom background gradient for kindergarten theme */
-  background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+  /* Professional background for kindergarten theme */
+  background: #1e293b;
 }
 
 .kindergarten.dark {
-  background: linear-gradient(135deg, #4a148c 0%, #303f9f 100%);
+  background: #0f172a;
 }
 
 /* Side navigation styling for kindergarten theme */
 .side-nav {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  border-right: 1px solid rgba(255, 255, 255, 0.2);
+  background: transparent;
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .side-nav .side-menu {
-  color: white;
+  color: #94a3b8;
   transition: all 0.3s ease;
+  border-radius: 0.5rem;
+  margin: 0.2rem 0;
 }
 
 .side-nav .side-menu:hover {
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(16, 185, 129, 0.1);
+  color: white;
   transform: translateX(5px);
 }
 
+[dir="rtl"] .side-nav .side-menu:hover {
+  transform: translateX(-5px);
+}
+
 .side-nav .side-menu--active {
-  background: rgba(255, 255, 255, 0.25);
-  border-left: 3px solid #ffd700;
+  background: #10b981 !important;
+  color: white !important;
   font-weight: 600;
+  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.25);
+  border-left: none !important;
+}
+
+.side-nav .side-menu--active .side-menu__icon {
+  color: white;
 }
 
 /* Custom scrollbar for side navigation */
 .side-nav::-webkit-scrollbar {
-  width: 6px;
+  width: 4px;
 }
 
 .side-nav::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.1);
+  background: transparent;
 }
 
 .side-nav::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.3);
-  border-radius: 3px;
+  background: rgba(148, 163, 184, 0.2);
+  border-radius: 10px;
 }
 
 /* Logo styling */
@@ -53,48 +65,28 @@
 
 /* Divider styling */
 .side-nav__divider {
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
-  margin: 1rem 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  margin: 1.5rem 0;
 }
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .side-nav {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(20px);
+    background: #1e293b;
   }
   
   .side-nav .side-menu {
-    color: #333;
-  }
-  
-  .side-nav .side-menu:hover {
-    background: rgba(139, 195, 74, 0.1);
-  }
-  
-  .side-nav .side-menu--active {
-    background: rgba(139, 195, 74, 0.2);
-    color: #333;
+    color: #94a3b8;
   }
 }
 
 /* Dark mode adjustments */
 .dark .side-nav {
-  background: rgba(30, 30, 46, 0.8);
-  border-right: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.dark .side-nav .side-menu {
-  color: #e2e8f0;
-}
-
-.dark .side-nav .side-menu:hover {
-  background: rgba(139, 195, 74, 0.15);
+  background: transparent;
 }
 
 .dark .side-nav .side-menu--active {
-  background: rgba(139, 195, 74, 0.25);
-  border-left: 3px solid #a7f3d0;
+  background: #10b981 !important;
 }
 
 /* Animation for menu items */
@@ -108,18 +100,11 @@
 
 /* Sub-menu styling */
 .side-menu__sub-open {
-  background: rgba(255, 255, 255, 0.05);
-}
-
-.dark .side-menu__sub-open {
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 0.5rem;
 }
 
 /* Active sub-menu indicator */
 .side-menu__sub-icon {
   transition: transform 0.3s ease;
-}
-
-.side-menu__sub-open .side-menu__sub-icon {
-  transform: rotate(180deg);
 }

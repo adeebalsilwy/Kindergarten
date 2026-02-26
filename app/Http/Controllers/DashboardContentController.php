@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use OmarAlalwi\Gpdf\Facades\Gpdf;
+
 use App\Http\Requests\StoreDashboardContentRequest;
 use App\Http\Requests\UpdateDashboardContentRequest;
 use App\Services\DashboardContentService;
@@ -58,7 +60,7 @@ class DashboardContentController extends Controller
      */
     protected function exportToPdf($data)
     {
-        $pdf = Pdf::loadView('pages.dashboard_contents.export-pdf', ['data' => $data]);
+        $pdf = Gpdf::loadView('pages.dashboard_contents.export-pdf', ['data' => $data]);
 
         return $pdf->download('DashboardContent_export_'.date('Y-m-d_H-i-s').'.pdf');
     }

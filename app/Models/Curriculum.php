@@ -29,6 +29,7 @@ class Curriculum extends Model
         'is_active',
         'published_at',
         'created_by',
+        'status',
         'prerequisites',
         'syllabus',
         'learning_objectives',
@@ -62,16 +63,12 @@ class Curriculum extends Model
         parent::boot();
 
         static::creating(function ($curriculum) {
+            $curriculum->status = $curriculum->status ?? 'active';
             $curriculum->is_active = $curriculum->is_active ?? false;
         });
     }
 
     public function teacher(): BelongsTo
-    {
-        return $this->belongsTo(User::class, 'created_by');
-    }
-
-    public function createdBy(): BelongsTo
     {
         return $this->belongsTo(User::class, 'created_by');
     }
@@ -103,5 +100,8 @@ class Curriculum extends Model
         $this->attributes['name'] = ucwords(strtolower($value));
     }
 
-
+    public function setStatusAttribute($value)
+    {
+        $this->attributes['status'] = strtolower($value);
+    }
 }

@@ -7,15 +7,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Support\Str;
 use Spatie\Permission\Traits\HasRoles;
-use App\Traits\Filterable;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasFactory, HasRoles, Notifiable, SoftDeletes, Filterable;
-
-    protected $searchable = ['name', 'email'];
+    use HasFactory, HasRoles, Notifiable, SoftDeletes;
 
     protected $fillable = [
         'name',
@@ -35,8 +31,6 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
         'is_active' => 'boolean',
         'last_activity' => 'integer',
-        'password' => 'hashed',
-        'deleted_at' => 'datetime',
     ];
 
     protected $hidden = [
@@ -52,17 +46,25 @@ class User extends Authenticatable implements MustVerifyEmail
         'slug',
     ];
 
-    // Accessors
-    public function getSlugAttribute(): string
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
     {
-        return \Str::slug($this->name);
+        return [
+            'email_verified_at' => 'datetime',
+            'password' => 'hashed',
+            'deleted_at' => 'datetime',
+        ];
     }
 
     // Roles and Permissions are handled by HasRoles trait
 
     public function accountingEntries()
     {
-        return $this->hasMany(AccountingEntry::class);
+        return $this->hasMany(AccountingEntry::class, 'created_by');
     }
 
     public function expensesCreated()

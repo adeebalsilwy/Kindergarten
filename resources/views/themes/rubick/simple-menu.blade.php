@@ -12,9 +12,9 @@
         <x-mobile-menu />
         <div class="mt-[4.7rem] flex md:mt-0">
             <!-- BEGIN: Simple Menu -->
-            <nav class="side-nav side-nav--simple hidden w-[80px] overflow-x-hidden pb-16 pr-5 md:block">
+            <nav class="side-nav side-nav--simple hidden w-[80px] overflow-x-hidden pb-16 pe-5 md:block">
                 <a
-                    class="intro-x flex items-center pl-5 pt-4"
+                    class="intro-x flex items-center ps-5 pt-4"
                     href=""
                 >
                     <img
@@ -116,12 +116,12 @@
                 <x-themes.rubick.top-bar />
                 @if (session('success'))
                     <x-base.alert variant="success" class="mb-2 flex items-center">
-                        <x-base.lucide icon="CheckCircle" class="w-6 h-6 mr-2" /> {{ session('success') }}
+                        <x-base.lucide icon="CheckCircle" class="w-6 h-6 me-2" /> {{ session('success') }}
                     </x-base.alert>
                 @endif
                 @if (session('error'))
                     <x-base.alert variant="danger" class="mb-2 flex items-center">
-                        <x-base.lucide icon="AlertOctagon" class="w-6 h-6 mr-2" /> {{ session('error') }}
+                        <x-base.lucide icon="AlertOctagon" class="w-6 h-6 me-2" /> {{ session('error') }}
                     </x-base.alert>
                 @endif
                 @yield('subcontent')

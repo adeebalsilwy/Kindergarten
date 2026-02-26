@@ -1,5 +1,3 @@
-
-
 <?php $__env->startSection('subhead'); ?>
     <title><?php echo e(__('global.dashboard')); ?> - <?php echo e(config('app.name')); ?></title>
 <?php $__env->stopSection(); ?>
@@ -11,18 +9,18 @@
                 <!-- BEGIN: Financial Overview -->
                 <div class="col-span-12 mt-8">
                     <div class="intro-y flex h-10 items-center">
-                        <h2 class="mr-5 truncate text-lg font-medium"><?php echo e(__('global.financial_overview')); ?></h2>
-                        <a href="" class="ml-auto flex items-center text-primary">
+                        <h2 class="me-5 truncate text-lg font-medium"><?php echo e(__('global.financial_overview')); ?></h2>
+                        <a href="" class="ms-auto flex items-center text-primary">
                             <?php if (isset($component)) { $__componentOriginal16b2e62e74cde9150905c2d0c2cb6800 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal16b2e62e74cde9150905c2d0c2cb6800 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.base.lucide.index','data' => ['class' => 'mr-3 h-4 w-4','icon' => 'RefreshCcw']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.base.lucide.index','data' => ['class' => 'me-3 h-4 w-4','icon' => 'RefreshCcw']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('base.lucide'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['class' => 'mr-3 h-4 w-4','icon' => 'RefreshCcw']); ?>
+<?php $component->withAttributes(['class' => 'me-3 h-4 w-4','icon' => 'RefreshCcw']); ?>
 <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginal16b2e62e74cde9150905c2d0c2cb6800)): ?>
@@ -64,18 +62,18 @@
 <?php unset($__componentOriginal16b2e62e74cde9150905c2d0c2cb6800); ?>
 <?php endif; ?>
                                         </div>
-                                        <div class="ml-auto">
+                                        <div class="ms-auto">
                                             <div class="report-box__indicator bg-success flex items-center">
                                                 <?php if (isset($component)) { $__componentOriginal16b2e62e74cde9150905c2d0c2cb6800 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal16b2e62e74cde9150905c2d0c2cb6800 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.base.lucide.index','data' => ['class' => 'mr-1 h-4 w-4','icon' => 'ChevronUp']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.base.lucide.index','data' => ['class' => 'me-1 h-4 w-4','icon' => 'ChevronUp']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('base.lucide'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['class' => 'mr-1 h-4 w-4','icon' => 'ChevronUp']); ?>
+<?php $component->withAttributes(['class' => 'me-1 h-4 w-4','icon' => 'ChevronUp']); ?>
 <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginal16b2e62e74cde9150905c2d0c2cb6800)): ?>
@@ -126,18 +124,18 @@
 <?php unset($__componentOriginal16b2e62e74cde9150905c2d0c2cb6800); ?>
 <?php endif; ?>
                                         </div>
-                                        <div class="ml-auto">
+                                        <div class="ms-auto">
                                             <div class="report-box__indicator bg-danger flex items-center">
                                                 <?php if (isset($component)) { $__componentOriginal16b2e62e74cde9150905c2d0c2cb6800 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal16b2e62e74cde9150905c2d0c2cb6800 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.base.lucide.index','data' => ['class' => 'mr-1 h-4 w-4','icon' => 'ChevronUp']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.base.lucide.index','data' => ['class' => 'me-1 h-4 w-4','icon' => 'ChevronUp']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('base.lucide'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['class' => 'mr-1 h-4 w-4','icon' => 'ChevronUp']); ?>
+<?php $component->withAttributes(['class' => 'me-1 h-4 w-4','icon' => 'ChevronUp']); ?>
 <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginal16b2e62e74cde9150905c2d0c2cb6800)): ?>
@@ -188,18 +186,18 @@
 <?php unset($__componentOriginal16b2e62e74cde9150905c2d0c2cb6800); ?>
 <?php endif; ?>
                                         </div>
-                                        <div class="ml-auto">
+                                        <div class="ms-auto">
                                             <div class="report-box__indicator <?php echo e(($currentMonth['revenue']['total_revenue'] - $currentMonth['expenses']['total_expenses']) >= 0 ? 'bg-success' : 'bg-danger'); ?> flex items-center">
                                                 <?php if (isset($component)) { $__componentOriginal16b2e62e74cde9150905c2d0c2cb6800 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal16b2e62e74cde9150905c2d0c2cb6800 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.base.lucide.index','data' => ['class' => 'mr-1 h-4 w-4','icon' => ''.e(($currentMonth['revenue']['total_revenue'] - $currentMonth['expenses']['total_expenses']) >= 0 ? 'ChevronUp' : 'ChevronDown').'']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.base.lucide.index','data' => ['class' => 'me-1 h-4 w-4','icon' => ''.e(($currentMonth['revenue']['total_revenue'] - $currentMonth['expenses']['total_expenses']) >= 0 ? 'ChevronUp' : 'ChevronDown').'']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('base.lucide'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['class' => 'mr-1 h-4 w-4','icon' => ''.e(($currentMonth['revenue']['total_revenue'] - $currentMonth['expenses']['total_expenses']) >= 0 ? 'ChevronUp' : 'ChevronDown').'']); ?>
+<?php $component->withAttributes(['class' => 'me-1 h-4 w-4','icon' => ''.e(($currentMonth['revenue']['total_revenue'] - $currentMonth['expenses']['total_expenses']) >= 0 ? 'ChevronUp' : 'ChevronDown').'']); ?>
 <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginal16b2e62e74cde9150905c2d0c2cb6800)): ?>
@@ -250,18 +248,18 @@
 <?php unset($__componentOriginal16b2e62e74cde9150905c2d0c2cb6800); ?>
 <?php endif; ?>
                                         </div>
-                                        <div class="ml-auto">
+                                        <div class="ms-auto">
                                             <div class="report-box__indicator bg-success flex items-center">
                                                 <?php if (isset($component)) { $__componentOriginal16b2e62e74cde9150905c2d0c2cb6800 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal16b2e62e74cde9150905c2d0c2cb6800 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.base.lucide.index','data' => ['class' => 'mr-1 h-4 w-4','icon' => 'ChevronUp']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.base.lucide.index','data' => ['class' => 'me-1 h-4 w-4','icon' => 'ChevronUp']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('base.lucide'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['class' => 'mr-1 h-4 w-4','icon' => 'ChevronUp']); ?>
+<?php $component->withAttributes(['class' => 'me-1 h-4 w-4','icon' => 'ChevronUp']); ?>
 <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginal16b2e62e74cde9150905c2d0c2cb6800)): ?>
@@ -293,8 +291,8 @@
                 <!-- BEGIN: Financial Trends -->
                 <div class="col-span-12 mt-8">
                     <div class="intro-y flex h-10 items-center">
-                        <h2 class="mr-5 truncate text-lg font-medium"><?php echo e(__('global.financial_trends')); ?></h2>
-                        <div class="ml-auto flex gap-2">
+                        <h2 class="me-5 truncate text-lg font-medium"><?php echo e(__('global.financial_trends')); ?></h2>
+                        <div class="ms-auto flex gap-2">
                             <select id="trendPeriod" class="form-select w-32 text-xs" onchange="updateTrendChart()">
                                 <option value="7"><?php echo e(__('global.last_7_days')); ?></option>
                                 <option value="30" selected><?php echo e(__('global.last_30_days')); ?></option>
@@ -330,7 +328,7 @@
                 <!-- BEGIN: Revenue vs Expenses Breakdown -->
                 <div class="col-span-12 mt-8 lg:col-span-6">
                     <div class="intro-y flex h-10 items-center">
-                        <h2 class="mr-5 truncate text-lg font-medium"><?php echo e(__('global.revenue_breakdown')); ?></h2>
+                        <h2 class="me-5 truncate text-lg font-medium"><?php echo e(__('global.revenue_breakdown')); ?></h2>
                     </div>
                     <div class="intro-y box mt-5 p-5">
                         <div class="h-[300px]">
@@ -352,7 +350,7 @@
                 <!-- BEGIN: Expense Categories -->
                 <div class="col-span-12 mt-8 lg:col-span-6">
                     <div class="intro-y flex h-10 items-center">
-                        <h2 class="mr-5 truncate text-lg font-medium"><?php echo e(__('global.expense_categories')); ?></h2>
+                        <h2 class="me-5 truncate text-lg font-medium"><?php echo e(__('global.expense_categories')); ?></h2>
                     </div>
                     <div class="intro-y box mt-5 p-5">
                         <div class="h-[300px]">
@@ -383,25 +381,25 @@
                 <!-- BEGIN: Recent Activities -->
                 <div class="col-span-12 mt-8">
                     <div class="intro-y flex h-10 items-center">
-                        <h2 class="mr-5 truncate text-lg font-medium"><?php echo e(__('global.recent_activities')); ?></h2>
-                        <a href="#" class="ml-auto text-primary text-sm"><?php echo e(__('global.view_all')); ?></a>
+                        <h2 class="me-5 truncate text-lg font-medium"><?php echo e(__('global.recent_activities')); ?></h2>
+                        <a href="#" class="ms-auto text-primary text-sm"><?php echo e(__('global.view_all')); ?></a>
                     </div>
                     <div class="intro-y box mt-5">
                         <div class="p-5">
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                                 <!-- Recent Payments -->
-                                <div class="border-r border-slate-200 pr-5 dark:border-darkmode-400">
+                                <div class="border-r border-slate-200 pe-5 dark:border-darkmode-400">
                                     <h3 class="font-medium text-base mb-4 flex items-center">
                                         <?php if (isset($component)) { $__componentOriginal16b2e62e74cde9150905c2d0c2cb6800 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal16b2e62e74cde9150905c2d0c2cb6800 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.base.lucide.index','data' => ['icon' => 'DollarSign','class' => 'w-5 h-5 text-success mr-2']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.base.lucide.index','data' => ['icon' => 'DollarSign','class' => 'w-5 h-5 text-success me-2']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('base.lucide'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['icon' => 'DollarSign','class' => 'w-5 h-5 text-success mr-2']); ?>
+<?php $component->withAttributes(['icon' => 'DollarSign','class' => 'w-5 h-5 text-success me-2']); ?>
 <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginal16b2e62e74cde9150905c2d0c2cb6800)): ?>
@@ -422,7 +420,7 @@
                                         <?php $__empty_1 = true; $__currentLoopData = $recentPayments; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $payment): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                                             <div class="flex items-center justify-between p-3 bg-success/5 rounded-lg border border-success/10">
                                                 <div class="flex items-center">
-                                                    <div class="w-8 h-8 rounded-full bg-success/10 flex items-center justify-center mr-3">
+                                                    <div class="w-8 h-8 rounded-full bg-success/10 flex items-center justify-center me-3">
                                                         <?php if (isset($component)) { $__componentOriginal16b2e62e74cde9150905c2d0c2cb6800 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal16b2e62e74cde9150905c2d0c2cb6800 = $attributes; } ?>
 <?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.base.lucide.index','data' => ['icon' => 'DollarSign','class' => 'w-4 h-4 text-success']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
@@ -458,18 +456,18 @@
                                 </div>
                                 
                                 <!-- Recent Expenses -->
-                                <div class="border-r border-slate-200 pr-5 pl-5 dark:border-darkmode-400">
+                                <div class="border-r border-slate-200 pe-5 ps-5 dark:border-darkmode-400">
                                     <h3 class="font-medium text-base mb-4 flex items-center">
                                         <?php if (isset($component)) { $__componentOriginal16b2e62e74cde9150905c2d0c2cb6800 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal16b2e62e74cde9150905c2d0c2cb6800 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.base.lucide.index','data' => ['icon' => 'CreditCard','class' => 'w-5 h-5 text-danger mr-2']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.base.lucide.index','data' => ['icon' => 'CreditCard','class' => 'w-5 h-5 text-danger me-2']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('base.lucide'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['icon' => 'CreditCard','class' => 'w-5 h-5 text-danger mr-2']); ?>
+<?php $component->withAttributes(['icon' => 'CreditCard','class' => 'w-5 h-5 text-danger me-2']); ?>
 <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginal16b2e62e74cde9150905c2d0c2cb6800)): ?>
@@ -490,7 +488,7 @@
                                         <?php $__empty_1 = true; $__currentLoopData = $recentExpenses; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $expense): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                                             <div class="flex items-center justify-between p-3 bg-danger/5 rounded-lg border border-danger/10">
                                                 <div class="flex items-center">
-                                                    <div class="w-8 h-8 rounded-full bg-danger/10 flex items-center justify-center mr-3">
+                                                    <div class="w-8 h-8 rounded-full bg-danger/10 flex items-center justify-center me-3">
                                                         <?php if (isset($component)) { $__componentOriginal16b2e62e74cde9150905c2d0c2cb6800 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal16b2e62e74cde9150905c2d0c2cb6800 = $attributes; } ?>
 <?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.base.lucide.index','data' => ['icon' => 'CreditCard','class' => 'w-4 h-4 text-danger']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
@@ -526,18 +524,18 @@
                                 </div>
                                 
                                 <!-- Upcoming Due Dates -->
-                                <div class="pl-5">
+                                <div class="ps-5">
                                     <h3 class="font-medium text-base mb-4 flex items-center">
                                         <?php if (isset($component)) { $__componentOriginal16b2e62e74cde9150905c2d0c2cb6800 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal16b2e62e74cde9150905c2d0c2cb6800 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.base.lucide.index','data' => ['icon' => 'Calendar','class' => 'w-5 h-5 text-warning mr-2']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.base.lucide.index','data' => ['icon' => 'Calendar','class' => 'w-5 h-5 text-warning me-2']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('base.lucide'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['icon' => 'Calendar','class' => 'w-5 h-5 text-warning mr-2']); ?>
+<?php $component->withAttributes(['icon' => 'Calendar','class' => 'w-5 h-5 text-warning me-2']); ?>
 <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginal16b2e62e74cde9150905c2d0c2cb6800)): ?>
@@ -558,7 +556,7 @@
                                         <?php $__empty_1 = true; $__currentLoopData = $upcomingFees; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $fee): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                                             <div class="flex items-center justify-between p-3 bg-warning/5 rounded-lg border border-warning/10">
                                                 <div class="flex items-center">
-                                                    <div class="w-8 h-8 rounded-full bg-warning/10 flex items-center justify-center mr-3">
+                                                    <div class="w-8 h-8 rounded-full bg-warning/10 flex items-center justify-center me-3">
                                                         <?php if (isset($component)) { $__componentOriginal16b2e62e74cde9150905c2d0c2cb6800 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal16b2e62e74cde9150905c2d0c2cb6800 = $attributes; } ?>
 <?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.base.lucide.index','data' => ['icon' => 'Calendar','class' => 'w-4 h-4 text-warning']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
@@ -585,7 +583,7 @@
                                                         <div class="text-xs text-slate-500"><?php echo e($fee->fee_type); ?></div>
                                                     </div>
                                                 </div>
-                                                <div class="text-right">
+                                                <div class="text-end">
                                                     <div class="font-bold text-warning"><?php echo e(number_format($fee->amount)); ?></div>
                                                     <div class="text-xs text-slate-500"><?php echo e($fee->due_date->format('M d')); ?></div>
                                                 </div>
@@ -606,11 +604,11 @@
         <!-- BEGIN: Financial Sidebar -->
         <div class="col-span-12 2xl:col-span-3">
             <div class="-mb-10 pb-10 2xl:border-l border-slate-200 dark:border-darkmode-400">
-                <div class="grid grid-cols-12 gap-x-6 gap-y-6 2xl:gap-x-0 2xl:pl-6">
+                <div class="grid grid-cols-12 gap-x-6 gap-y-6 2xl:gap-x-0 2xl:ps-6">
                     <!-- Financial Summary -->
                     <div class="col-span-12 mt-3 md:col-span-6 xl:col-span-4 2xl:col-span-12 2xl:mt-8">
                         <div class="intro-x flex h-10 items-center">
-                            <h2 class="mr-5 truncate text-lg font-medium"><?php echo e(__('global.financial_summary')); ?></h2>
+                            <h2 class="me-5 truncate text-lg font-medium"><?php echo e(__('global.financial_summary')); ?></h2>
                         </div>
                         <div class="mt-5 space-y-4">
                             <div class="box p-4 bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-darkmode-600 dark:to-darkmode-700">
@@ -652,7 +650,7 @@
                     <!-- Quick Financial Actions -->
                     <div class="col-span-12 mt-3 md:col-span-6 xl:col-span-4 2xl:col-span-12">
                         <div class="intro-x flex h-10 items-center">
-                            <h2 class="mr-5 truncate text-lg font-medium"><?php echo e(__('global.quick_financial_actions')); ?></h2>
+                            <h2 class="me-5 truncate text-lg font-medium"><?php echo e(__('global.quick_financial_actions')); ?></h2>
                         </div>
                         <div class="mt-5 grid grid-cols-1 gap-3">
                             <?php if (isset($component)) { $__componentOriginale00eb601fbe667f0da582732d70c41c5 = $component; } ?>
@@ -667,14 +665,14 @@
 <?php $component->withAttributes(['as' => 'a','href' => ''.e(route('payments.create')).'','variant' => 'outline-success','class' => 'w-full flex items-center p-3 bg-white dark:bg-darkmode-600 border border-success/30 hover:bg-success/5']); ?>
                                 <?php if (isset($component)) { $__componentOriginal16b2e62e74cde9150905c2d0c2cb6800 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal16b2e62e74cde9150905c2d0c2cb6800 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.base.lucide.index','data' => ['icon' => 'PlusCircle','class' => 'w-5 h-5 text-success mr-3']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.base.lucide.index','data' => ['icon' => 'PlusCircle','class' => 'w-5 h-5 text-success me-3']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('base.lucide'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['icon' => 'PlusCircle','class' => 'w-5 h-5 text-success mr-3']); ?>
+<?php $component->withAttributes(['icon' => 'PlusCircle','class' => 'w-5 h-5 text-success me-3']); ?>
 <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginal16b2e62e74cde9150905c2d0c2cb6800)): ?>
@@ -685,7 +683,7 @@
 <?php $component = $__componentOriginal16b2e62e74cde9150905c2d0c2cb6800; ?>
 <?php unset($__componentOriginal16b2e62e74cde9150905c2d0c2cb6800); ?>
 <?php endif; ?>
-                                <div class="text-left">
+                                <div class="text-start">
                                     <div class="font-medium"><?php echo e(__('global.record_payment')); ?></div>
                                     <div class="text-xs text-slate-500"><?php echo e(__('global.add_new_payment')); ?></div>
                                 </div>
@@ -712,14 +710,14 @@
 <?php $component->withAttributes(['as' => 'a','href' => ''.e(route('expenses.create')).'','variant' => 'outline-danger','class' => 'w-full flex items-center p-3 bg-white dark:bg-darkmode-600 border border-danger/30 hover:bg-danger/5']); ?>
                                 <?php if (isset($component)) { $__componentOriginal16b2e62e74cde9150905c2d0c2cb6800 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal16b2e62e74cde9150905c2d0c2cb6800 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.base.lucide.index','data' => ['icon' => 'MinusCircle','class' => 'w-5 h-5 text-danger mr-3']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.base.lucide.index','data' => ['icon' => 'MinusCircle','class' => 'w-5 h-5 text-danger me-3']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('base.lucide'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['icon' => 'MinusCircle','class' => 'w-5 h-5 text-danger mr-3']); ?>
+<?php $component->withAttributes(['icon' => 'MinusCircle','class' => 'w-5 h-5 text-danger me-3']); ?>
 <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginal16b2e62e74cde9150905c2d0c2cb6800)): ?>
@@ -730,7 +728,7 @@
 <?php $component = $__componentOriginal16b2e62e74cde9150905c2d0c2cb6800; ?>
 <?php unset($__componentOriginal16b2e62e74cde9150905c2d0c2cb6800); ?>
 <?php endif; ?>
-                                <div class="text-left">
+                                <div class="text-start">
                                     <div class="font-medium"><?php echo e(__('global.record_expense')); ?></div>
                                     <div class="text-xs text-slate-500"><?php echo e(__('global.add_new_expense')); ?></div>
                                 </div>
@@ -757,14 +755,14 @@
 <?php $component->withAttributes(['as' => 'a','href' => ''.e(route('fees.create')).'','variant' => 'outline-warning','class' => 'w-full flex items-center p-3 bg-white dark:bg-darkmode-600 border border-warning/30 hover:bg-warning/5']); ?>
                                 <?php if (isset($component)) { $__componentOriginal16b2e62e74cde9150905c2d0c2cb6800 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal16b2e62e74cde9150905c2d0c2cb6800 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.base.lucide.index','data' => ['icon' => 'FileText','class' => 'w-5 h-5 text-warning mr-3']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.base.lucide.index','data' => ['icon' => 'FileText','class' => 'w-5 h-5 text-warning me-3']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('base.lucide'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['icon' => 'FileText','class' => 'w-5 h-5 text-warning mr-3']); ?>
+<?php $component->withAttributes(['icon' => 'FileText','class' => 'w-5 h-5 text-warning me-3']); ?>
 <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginal16b2e62e74cde9150905c2d0c2cb6800)): ?>
@@ -775,7 +773,7 @@
 <?php $component = $__componentOriginal16b2e62e74cde9150905c2d0c2cb6800; ?>
 <?php unset($__componentOriginal16b2e62e74cde9150905c2d0c2cb6800); ?>
 <?php endif; ?>
-                                <div class="text-left">
+                                <div class="text-start">
                                     <div class="font-medium"><?php echo e(__('global.create_invoice')); ?></div>
                                     <div class="text-xs text-slate-500"><?php echo e(__('global.generate_fee_invoice')); ?></div>
                                 </div>
@@ -802,14 +800,14 @@
 <?php $component->withAttributes(['as' => 'a','href' => ''.e(route('reports.index')).'','variant' => 'outline-info','class' => 'w-full flex items-center p-3 bg-white dark:bg-darkmode-600 border border-info/30 hover:bg-info/5']); ?>
                                 <?php if (isset($component)) { $__componentOriginal16b2e62e74cde9150905c2d0c2cb6800 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal16b2e62e74cde9150905c2d0c2cb6800 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.base.lucide.index','data' => ['icon' => 'BarChart3','class' => 'w-5 h-5 text-info mr-3']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.base.lucide.index','data' => ['icon' => 'BarChart3','class' => 'w-5 h-5 text-info me-3']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('base.lucide'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['icon' => 'BarChart3','class' => 'w-5 h-5 text-info mr-3']); ?>
+<?php $component->withAttributes(['icon' => 'BarChart3','class' => 'w-5 h-5 text-info me-3']); ?>
 <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginal16b2e62e74cde9150905c2d0c2cb6800)): ?>
@@ -820,7 +818,7 @@
 <?php $component = $__componentOriginal16b2e62e74cde9150905c2d0c2cb6800; ?>
 <?php unset($__componentOriginal16b2e62e74cde9150905c2d0c2cb6800); ?>
 <?php endif; ?>
-                                <div class="text-left">
+                                <div class="text-start">
                                     <div class="font-medium"><?php echo e(__('global.view_reports')); ?></div>
                                     <div class="text-xs text-slate-500"><?php echo e(__('global.financial_reports')); ?></div>
                                 </div>
@@ -840,7 +838,7 @@
                     <!-- Financial Alerts -->
                     <div class="col-span-12 mt-3 md:col-span-6 xl:col-span-4 2xl:col-span-12">
                         <div class="intro-x flex h-10 items-center">
-                            <h2 class="mr-5 truncate text-lg font-medium"><?php echo e(__('global.financial_alerts')); ?></h2>
+                            <h2 class="me-5 truncate text-lg font-medium"><?php echo e(__('global.financial_alerts')); ?></h2>
                         </div>
                         <div class="mt-5 space-y-3">
                             <?php
@@ -854,14 +852,14 @@
                                     <div class="flex items-center">
                                         <?php if (isset($component)) { $__componentOriginal16b2e62e74cde9150905c2d0c2cb6800 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal16b2e62e74cde9150905c2d0c2cb6800 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.base.lucide.index','data' => ['icon' => 'AlertTriangle','class' => 'w-5 h-5 text-danger mr-2']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.base.lucide.index','data' => ['icon' => 'AlertTriangle','class' => 'w-5 h-5 text-danger me-2']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('base.lucide'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['icon' => 'AlertTriangle','class' => 'w-5 h-5 text-danger mr-2']); ?>
+<?php $component->withAttributes(['icon' => 'AlertTriangle','class' => 'w-5 h-5 text-danger me-2']); ?>
 <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginal16b2e62e74cde9150905c2d0c2cb6800)): ?>
@@ -885,14 +883,14 @@
                                     <div class="flex items-center">
                                         <?php if (isset($component)) { $__componentOriginal16b2e62e74cde9150905c2d0c2cb6800 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal16b2e62e74cde9150905c2d0c2cb6800 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.base.lucide.index','data' => ['icon' => 'Package','class' => 'w-5 h-5 text-warning mr-2']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.base.lucide.index','data' => ['icon' => 'Package','class' => 'w-5 h-5 text-warning me-2']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('base.lucide'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['icon' => 'Package','class' => 'w-5 h-5 text-warning mr-2']); ?>
+<?php $component->withAttributes(['icon' => 'Package','class' => 'w-5 h-5 text-warning me-2']); ?>
 <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginal16b2e62e74cde9150905c2d0c2cb6800)): ?>

@@ -15,7 +15,7 @@
             <nav
                 class="side-nav side-nav--simple z-10 hidden overflow-x-hidden px-5 pb-16 md:block md:w-[100px] xl:w-[100px]">
                 <a
-                    class="intro-x mt-3 flex items-center pl-5 pt-4"
+                    class="intro-x mt-3 flex items-center ps-5 pt-4"
                     href=""
                 >
                     <img
@@ -113,9 +113,9 @@
             <!-- END: Simple Menu -->
             <!-- BEGIN: Content -->
             <div @class([
-                'rounded-[30px] md:rounded-[35px/50px_0px_0px_0px] min-w-0 min-h-screen max-w-full md:max-w-none bg-slate-100 flex-1 pb-10 px-4 md:px-6 relative md:ml-4 dark:bg-darkmode-700',
+                'rounded-[30px] md:rounded-[35px/50px_0px_0px_0px] min-w-0 min-h-screen max-w-full md:max-w-none bg-slate-100 flex-1 pb-10 px-4 md:px-6 relative md:ms-4 dark:bg-darkmode-700',
                 "before:content-[''] before:w-full before:h-px before:block",
-                "after:content-[''] after:z-[-1] after:rounded-[40px_0px_0px_0px] after:w-full after:inset-y-0 after:absolute after:left-0 after:bg-white/10 after:mt-8 after:-ml-4 after:dark:bg-darkmode-400/50 after:hidden md:after:block",
+                "after:content-[''] after:z-[-1] after:rounded-[40px_0px_0px_0px] after:w-full after:inset-y-0 after:absolute after:left-0 after:bg-white/10 after:mt-8 after:-ms-4 after:dark:bg-darkmode-400/50 after:hidden md:after:block",
             ])>
                 <x-themes.tinker.top-bar />
                 @yield('subcontent')

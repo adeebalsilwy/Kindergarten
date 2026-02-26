@@ -1,5 +1,3 @@
-
-
 <?php $__env->startSection('subhead'); ?>
     <title><?php echo e(__('global.kindergarten_management_system')); ?> - <?php echo e(__('global.kindergarten_management_system')); ?></title>
 <?php $__env->stopSection(); ?>
@@ -11,7 +9,7 @@
         <div class="flex items-center justify-between">
             <a class="flex items-center" href="<?php echo e(route('home')); ?>">
                 <img class="w-6" src="<?php echo e(Vite::asset('resources/images/logo.svg')); ?>" alt="<?php echo e(config('app.name')); ?>" />
-                <span class="ml-3 text-lg font-semibold"><?php echo e(config('app.name')); ?></span>
+                <span class="ms-3 text-lg font-semibold"><?php echo e(config('app.name')); ?></span>
             </a>
             
             <!-- Navigation Links and Authentication -->
@@ -47,14 +45,14 @@
                 <!-- Language Selector -->
                 <?php if (isset($component)) { $__componentOriginal7f18f43b3d2bacb563c64f2b49c801bc = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal7f18f43b3d2bacb563c64f2b49c801bc = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.base.dropdown.index','data' => ['class' => 'ml-2']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.base.dropdown.index','data' => ['class' => 'ms-2']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('base.dropdown'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['class' => 'ml-2']); ?>
+<?php $component->withAttributes(['class' => 'ms-2']); ?>
                     <?php if (isset($component)) { $__componentOriginalba58e9a4a9c2e9003cffbe68273c0c5f = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginalba58e9a4a9c2e9003cffbe68273c0c5f = $attributes; } ?>
 <?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.base.dropdown.button','data' => ['as' => 'a','class' => 'flex items-center gap-2 hover:bg-slate-100 rounded-lg px-3 py-2 transition-all duration-300']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
@@ -217,14 +215,14 @@
 <?php $component->withAttributes(['as' => 'a','href' => ''.e(route('profile.index')).'','class' => 'transition-all duration-200']); ?>
                                 <?php if (isset($component)) { $__componentOriginal16b2e62e74cde9150905c2d0c2cb6800 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal16b2e62e74cde9150905c2d0c2cb6800 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.base.lucide.index','data' => ['icon' => 'User','class' => 'w-4 h-4 mr-2']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.base.lucide.index','data' => ['icon' => 'User','class' => 'w-4 h-4 me-2']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('base.lucide'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['icon' => 'User','class' => 'w-4 h-4 mr-2']); ?>
+<?php $component->withAttributes(['icon' => 'User','class' => 'w-4 h-4 me-2']); ?>
 <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginal16b2e62e74cde9150905c2d0c2cb6800)): ?>
@@ -258,14 +256,14 @@
 <?php $component->withAttributes(['as' => 'a','href' => ''.e(route('profile.edit')).'','class' => 'transition-all duration-200']); ?>
                                 <?php if (isset($component)) { $__componentOriginal16b2e62e74cde9150905c2d0c2cb6800 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal16b2e62e74cde9150905c2d0c2cb6800 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.base.lucide.index','data' => ['icon' => 'Settings','class' => 'w-4 h-4 mr-2']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.base.lucide.index','data' => ['icon' => 'Settings','class' => 'w-4 h-4 me-2']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('base.lucide'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['icon' => 'Settings','class' => 'w-4 h-4 mr-2']); ?>
+<?php $component->withAttributes(['icon' => 'Settings','class' => 'w-4 h-4 me-2']); ?>
 <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginal16b2e62e74cde9150905c2d0c2cb6800)): ?>
@@ -299,14 +297,14 @@
 <?php $component->withAttributes(['as' => 'a','href' => ''.e(route('dashboard-overview-1')).'','class' => 'transition-all duration-200']); ?>
                                 <?php if (isset($component)) { $__componentOriginal16b2e62e74cde9150905c2d0c2cb6800 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal16b2e62e74cde9150905c2d0c2cb6800 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.base.lucide.index','data' => ['icon' => 'Layout','class' => 'w-4 h-4 mr-2']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.base.lucide.index','data' => ['icon' => 'Layout','class' => 'w-4 h-4 me-2']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('base.lucide'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['icon' => 'Layout','class' => 'w-4 h-4 mr-2']); ?>
+<?php $component->withAttributes(['icon' => 'Layout','class' => 'w-4 h-4 me-2']); ?>
 <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginal16b2e62e74cde9150905c2d0c2cb6800)): ?>
@@ -360,14 +358,14 @@
 <?php $component->withAttributes(['as' => 'a','href' => ''.e(route('auth.logout')).'','onclick' => 'event.preventDefault(); document.getElementById(\'logout-form\').submit();','class' => 'text-red-600 hover:bg-red-50 transition-all duration-200']); ?>
                                 <?php if (isset($component)) { $__componentOriginal16b2e62e74cde9150905c2d0c2cb6800 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal16b2e62e74cde9150905c2d0c2cb6800 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.base.lucide.index','data' => ['icon' => 'LogOut','class' => 'w-4 h-4 mr-2']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.base.lucide.index','data' => ['icon' => 'LogOut','class' => 'w-4 h-4 me-2']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('base.lucide'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['icon' => 'LogOut','class' => 'w-4 h-4 mr-2']); ?>
+<?php $component->withAttributes(['icon' => 'LogOut','class' => 'w-4 h-4 me-2']); ?>
 <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginal16b2e62e74cde9150905c2d0c2cb6800)): ?>
@@ -489,14 +487,14 @@
 <?php $component->withAttributes(['as' => 'a','href' => ''.e(route('auth.register')).'','variant' => 'primary','class' => 'px-6 py-3 rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-lg']); ?>
                         <?php if (isset($component)) { $__componentOriginal16b2e62e74cde9150905c2d0c2cb6800 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal16b2e62e74cde9150905c2d0c2cb6800 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.base.lucide.index','data' => ['icon' => 'Rocket','class' => 'w-4 h-4 mr-2']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.base.lucide.index','data' => ['icon' => 'Rocket','class' => 'w-4 h-4 me-2']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('base.lucide'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['icon' => 'Rocket','class' => 'w-4 h-4 mr-2']); ?>
+<?php $component->withAttributes(['icon' => 'Rocket','class' => 'w-4 h-4 me-2']); ?>
 <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginal16b2e62e74cde9150905c2d0c2cb6800)): ?>
@@ -663,7 +661,7 @@
                 <div class="bg-gradient-to-br from-white to-slate-50 rounded-2xl p-6 shadow-md hover:shadow-xl transition-all duration-500 animate__animated animate__fadeInUp animate__delay-8s">
                     <div class="flex items-center mb-4">
                         <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-blue-800 font-bold text-lg">JD</div>
-                        <div class="ml-4">
+                        <div class="ms-4">
                             <h4 class="font-semibold text-gray-800">John Doe</h4>
                             <p class="text-gray-600 text-sm"><?php echo e(__('global.principal')); ?></p>
                         </div>
@@ -691,7 +689,7 @@
                 <div class="bg-gradient-to-br from-white to-slate-50 rounded-2xl p-6 shadow-md hover:shadow-xl transition-all duration-500 animate__animated animate__fadeInUp animate__delay-9s">
                     <div class="flex items-center mb-4">
                         <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center text-green-800 font-bold text-lg">AS</div>
-                        <div class="ml-4">
+                        <div class="ms-4">
                             <h4 class="font-semibold text-gray-800">Ahmad Smith</h4>
                             <p class="text-gray-600 text-sm"><?php echo e(__('global.teacher')); ?></p>
                         </div>
@@ -719,7 +717,7 @@
                 <div class="bg-gradient-to-br from-white to-slate-50 rounded-2xl p-6 shadow-md hover:shadow-xl transition-all duration-500 animate__animated animate__fadeInUp animate__delay-10s">
                     <div class="flex items-center mb-4">
                         <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center text-purple-800 font-bold text-lg">MJ</div>
-                        <div class="ml-4">
+                        <div class="ms-4">
                             <h4 class="font-semibold text-gray-800">Maria Johnson</h4>
                             <p class="text-gray-600 text-sm"><?php echo e(__('global.administrator')); ?></p>
                         </div>
@@ -907,7 +905,7 @@
         </div>
     </div>
 </div>
-<?php if (! $__env->hasRenderedOnce('f1fc1af1-c503-45b1-9563-4943106e2697')): $__env->markAsRenderedOnce('f1fc1af1-c503-45b1-9563-4943106e2697');
+<?php if (! $__env->hasRenderedOnce('432a42b5-6dcf-4e3f-92eb-ddf9d2f67792')): $__env->markAsRenderedOnce('432a42b5-6dcf-4e3f-92eb-ddf9d2f67792');
 $__env->startPush('scripts'); ?>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -939,14 +937,14 @@ document.addEventListener('DOMContentLoaded', function() {
 <?php $__env->stopPush(); endif; ?>
 <?php $__env->stopSection(); ?>
 
-<?php if (! $__env->hasRenderedOnce('3ddc7aff-4df5-4b13-a82e-acaafd38cf87')): $__env->markAsRenderedOnce('3ddc7aff-4df5-4b13-a82e-acaafd38cf87');
+<?php if (! $__env->hasRenderedOnce('8a7e4d20-04e5-4938-9ba8-80c84f445908')): $__env->markAsRenderedOnce('8a7e4d20-04e5-4938-9ba8-80c84f445908');
 $__env->startPush('vendors'); ?>
     <?php echo app('Illuminate\Foundation\Vite')('resources/js/vendors/tiny-slider.js'); ?>
     <!-- Animate.css for animations -->
     <?php echo app('Illuminate\Foundation\Vite')('node_modules/animate.css/animate.min.css'); ?>
 <?php $__env->stopPush(); endif; ?>
 
-<?php if (! $__env->hasRenderedOnce('bc6083aa-8795-4cbd-b20a-f5c6e2c105a2')): $__env->markAsRenderedOnce('bc6083aa-8795-4cbd-b20a-f5c6e2c105a2');
+<?php if (! $__env->hasRenderedOnce('43ea032f-343b-46a5-bb36-183ae2795b14')): $__env->markAsRenderedOnce('43ea032f-343b-46a5-bb36-183ae2795b14');
 $__env->startPush('scripts'); ?>
     <script>
         document.addEventListener('DOMContentLoaded', function () {

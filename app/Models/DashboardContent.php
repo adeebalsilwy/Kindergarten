@@ -26,14 +26,4 @@ class DashboardContent extends Model
         'metadata' => 'array',
         'deleted_at' => 'datetime',
     ];
-
-    protected $appends = [
-        'slug',
-    ];
-
-    // Accessors
-    public function getSlugAttribute(): string
-    {
-        return $this->section . '-' . $this->key;
-    }
 }

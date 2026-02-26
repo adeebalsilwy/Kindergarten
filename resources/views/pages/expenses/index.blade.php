@@ -6,25 +6,25 @@
 
 @section('subcontent')
     <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
-        <h2 class="text-lg font-medium mr-auto">{{ __('Expense.list') }}</h2>
+        <h2 class="text-lg font-medium me-auto">{{ __('Expense.list') }}</h2>
         <div class="w-full sm:w-auto flex mt-4 sm:mt-0">
             @can('export_expenses')
             
                         <div class="flex gap-2">
                             <x-base.button variant="outline-primary" as="a" href="{{ route('expenses.export.pdf') }}" class="flex items-center">
-                                <x-base.lucide icon="FileText" class="w-4 h-4 mr-2" />
+                                <x-base.lucide icon="FileText" class="w-4 h-4 me-2" />
                                 {{ __('global.export_pdf') }}
                             </x-base.button>
                             <x-base.button variant="outline-success" as="a" href="{{ route('expenses.export.excel') }}" class="flex items-center">
-                                <x-base.lucide icon="FileSpreadsheet" class="w-4 h-4 mr-2" />
+                                <x-base.lucide icon="FileSpreadsheet" class="w-4 h-4 me-2" />
                                 {{ __('global.export_excel') }}
                             </x-base.button>
                         </div>
             @endcan
             
             @can('create_expenses')
-            <x-base.button variant="primary" as="a" href="{{ route('expenses.create') }}" class="ml-2 flex items-center">
-                <x-base.lucide icon="Plus" class="w-4 h-4 mr-2" />
+            <x-base.button variant="primary" as="a" href="{{ route('expenses.create') }}" class="ms-2 flex items-center">
+                <x-base.lucide icon="Plus" class="w-4 h-4 me-2" />
                 {{ __('Expense.add_new') }}
             </x-base.button>
             @endcan
@@ -40,7 +40,7 @@
                         <x-base.form-input type="text" placeholder="{{ __('global.search') }}" class="w-full" />
                     </div>
                     <x-base.button variant="secondary" class="flex items-center">
-                        <x-base.lucide icon="Filter" class="w-4 h-4 mr-2" />
+                        <x-base.lucide icon="Filter" class="w-4 h-4 me-2" />
                         {{ __('global.filter') }}
                     </x-base.button>
                 </div>
@@ -91,15 +91,15 @@
                             <x-base.table.td class="table-report__action w-56">
                                 <div class="flex justify-center items-center">
                                     @can('view_expenses')
-                                    <x-base.button variant="outline-secondary" as="a" href="{{ route('expenses.show', $expense->id) }}" size="sm" class="mr-2">
-                                        <x-base.lucide icon="Eye" class="w-4 h-4 mr-1" />
+                                    <x-base.button variant="outline-secondary" as="a" href="{{ route('expenses.show', $expense->id) }}" size="sm" class="me-2">
+                                        <x-base.lucide icon="Eye" class="w-4 h-4 me-1" />
                                         {{ __('global.view') }}
                                     </x-base.button>
                                     @endcan
                                     
                                     @can('edit_expenses')
-                                    <x-base.button variant="outline-primary" as="a" href="{{ route('expenses.edit', $expense->id) }}" size="sm" class="mr-2">
-                                        <x-base.lucide icon="Pencil" class="w-4 h-4 mr-1" />
+                                    <x-base.button variant="outline-primary" as="a" href="{{ route('expenses.edit', $expense->id) }}" size="sm" class="me-2">
+                                        <x-base.lucide icon="Pencil" class="w-4 h-4 me-1" />
                                         {{ __('global.edit') }}
                                     </x-base.button>
                                     @endcan
@@ -109,7 +109,7 @@
                                         @csrf
                                         @method('DELETE')
                                         <x-base.button variant="outline-danger" type="submit" size="sm">
-                                            <x-base.lucide icon="Trash2" class="w-4 h-4 mr-1" />
+                                            <x-base.lucide icon="Trash2" class="w-4 h-4 me-1" />
                                             {{ __('global.delete') }}
                                         </x-base.button>
                                     </form>
@@ -127,7 +127,7 @@
                                     <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100">{{ __('global.no_data_found') }}</h3>
                                     <p class="text-gray-500 dark:text-gray-400 mt-1">{{ __('global.no_data_description') }}</p>
                                     <x-base.button variant="primary" as="a" href="{{ route('expenses.create') }}" class="mt-4">
-                                        <x-base.lucide icon="Plus" class="w-4 h-4 mr-2" />
+                                        <x-base.lucide icon="Plus" class="w-4 h-4 me-2" />
                                         {{ __('Expense.add_new') }}
                                     </x-base.button>
                                 </div>
@@ -150,7 +150,7 @@
                 <div class="box p-5">
                     <div class="flex items-center">
                         <x-base.lucide icon="Database" class="w-8 h-8 text-primary" />
-                        <div class="ml-auto">
+                        <div class="ms-auto">
                             <div class="report-box__indicator bg-success"> 
                                 <x-base.lucide icon="TrendingUp" class="w-4 h-4" /> 
                             </div>
@@ -164,7 +164,7 @@
                 <div class="box p-5">
                     <div class="flex items-center">
                         <x-base.lucide icon="Activity" class="w-8 h-8 text-pending" />
-                        <div class="ml-auto">
+                        <div class="ms-auto">
                             <div class="report-box__indicator bg-success"> 
                                 <x-base.lucide icon="TrendingUp" class="w-4 h-4" /> 
                             </div>
@@ -185,7 +185,7 @@
                 <div class="box p-5">
                     <div class="flex items-center">
                         <x-base.lucide icon="Calendar" class="w-8 h-8 text-success" />
-                        <div class="ml-auto">
+                        <div class="ms-auto">
                             <div class="report-box__indicator bg-success"> 
                                 <x-base.lucide icon="TrendingUp" class="w-4 h-4" /> 
                             </div>

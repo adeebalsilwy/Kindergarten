@@ -25,23 +25,5 @@ class Language extends Model
 
     protected $appends = [
         'slug',
-        'display_name',
-        'direction',
     ];
-
-    // Accessors
-    public function getSlugAttribute(): string
-    {
-        return \Illuminate\Support\Str::slug($this->name);
-    }
-
-    public function getDisplayNameAttribute(): string
-    {
-        return $this->name;
-    }
-
-    public function getDirectionAttribute(): string
-    {
-        return $this->is_rtl ? 'rtl' : 'ltr';
-    }
 }

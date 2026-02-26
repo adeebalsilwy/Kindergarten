@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use OmarAlalwi\Gpdf\Facades\Gpdf;
+
 use App\Http\Requests\StoreFinancialReportRequest;
 use App\Http\Requests\UpdateFinancialReportRequest;
 use App\Services\FinancialReportService;
-use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
@@ -58,7 +59,7 @@ class FinancialReportController extends Controller
      */
     protected function exportToPdf($data)
     {
-        $pdf = Pdf::loadView('pages.financial_reports.export-pdf', ['data' => $data]);
+        $pdf = Gpdf::loadView('pages.financial_reports.export-pdf', ['data' => $data]);
 
         return $pdf->download('FinancialReport_export_'.date('Y-m-d_H-i-s').'.pdf');
     }

@@ -48,7 +48,7 @@ class ChildrenApiController extends BaseApiController
      */
     public function index(Request $request): JsonResponse
     {
-        $childrens = $this->service->getAll();
+        $childrens = $this->service->all();
 
         return $this->sendResponse(ChildrenResource::collection($childrens), __('children.messages.retrieved'));
     }

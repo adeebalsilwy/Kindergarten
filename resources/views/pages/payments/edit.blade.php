@@ -6,7 +6,7 @@
 
 @section('subcontent')
     <div class="intro-y flex items-center mt-8">
-        <h2 class="text-lg font-medium mr-auto">{{ __('Payment.edit') }}</h2>
+        <h2 class="text-lg font-medium me-auto">{{ __('Payment.edit') }}</h2>
     </div>
     <div class="grid grid-cols-12 gap-6 mt-5">
         <div class="intro-y col-span-12 lg:col-span-10">
@@ -40,17 +40,17 @@
                         <div class="col-span-12 sm:col-span-6">
                             <x-base.form-label>{{ __('payments.fields.amount') }}</x-base.form-label>
                             <div class="relative mt-2">
-                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <div class="absolute inset-y-0 left-0 ps-3 flex items-center pointer-events-none">
                                     <span class="text-gray-500 sm:text-sm">{{ config('app.currency', 'USD') }}</span>
                                 </div>
-                                <x-base.form-input type="number" step="0.01" min="0" name="amount" value="{{ old('amount', $payment->amount ?? '') }}" class="pl-12" />
+                                <x-base.form-input type="number" step="0.01" min="0" name="amount" value="{{ old('amount', $payment->amount ?? '') }}" class="ps-12" />
                             </div>
                         </div>
                         <div class="col-span-12 sm:col-span-6">
                             <x-base.form-label>{{ __('payments.fields.payment_date') }}</x-base.form-label>
                             <div class="relative mt-2">
                                 <x-base.form-input type="date" name="payment_date" value="{{ old('payment_date', $payment->payment_date ?? '') }}" />
-                                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                <div class="absolute inset-y-0 right-0 pe-3 flex items-center pointer-events-none">
                                     <x-base.lucide icon="Calendar" class="h-5 w-5 text-gray-400" />
                                 </div>
                             </div>
@@ -87,7 +87,7 @@
 
                     </div>
                     <div class="flex justify-end mt-5">
-                        <a href="{{ route('payments.index') }}" class="btn btn-outline-secondary w-24 mr-1">{{ __('global.cancel') }}</a>
+                        <a href="{{ route('payments.index') }}" class="btn btn-outline-secondary w-24 me-1">{{ __('global.cancel') }}</a>
                         <x-base.button type="submit" variant="primary" class="w-24">{{ __('global.update') }}</x-base.button>
                     </div>
                 </form>

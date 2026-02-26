@@ -14,6 +14,11 @@ class ClassesService
         $this->repository = $repository;
     }
 
+    public function all()
+    {
+        return $this->getAll();
+    }
+
     public function getAll()
     {
         return $this->repository->all();
@@ -47,7 +52,7 @@ class ClassesService
     {
         $model = $this->repository->findById($id);
 
-        return $model->load(['teacher', 'grade', 'curriculum', 'children', 'activities', 'events', 'attendances']);
+        return $model->load(['teacher', 'children', 'activities', 'events', 'attendances']);
     }
 
     public function update($id, array $data)

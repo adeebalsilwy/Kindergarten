@@ -23,7 +23,7 @@
                             src="{{ Vite::asset('resources/images/logo.svg') }}"
                             alt="{{ config('app.name') }}"
                         />
-                        <span class="ml-3 text-lg text-white"> {{ config('app.name') }} </span>
+                        <span class="ms-3 text-lg text-white"> {{ config('app.name') }} </span>
                     </a>
                     <div class="my-auto">
                         <img
@@ -43,7 +43,7 @@
                 <!-- BEGIN: Register Form -->
                 <div class="my-10 flex h-screen py-5 xl:my-0 xl:h-auto xl:py-0">
                     <div
-                        class="mx-auto my-auto w-full rounded-md bg-white px-5 py-8 shadow-md dark:bg-darkmode-600 sm:w-3/4 sm:px-8 lg:w-2/4 xl:ml-20 xl:w-auto xl:bg-transparent xl:p-0 xl:shadow-none">
+                        class="mx-auto my-auto w-full rounded-md bg-white px-5 py-8 shadow-md dark:bg-darkmode-600 sm:w-3/4 sm:px-8 lg:w-2/4 xl:ms-20 xl:w-auto xl:bg-transparent xl:p-0 xl:shadow-none">
                         @php
                             $activeLangs = \App\Models\Language::where('is_active', true)->get();
                             $currentLocale = app()->getLocale();
@@ -52,14 +52,14 @@
                         <div class="flex justify-end mb-4">
                             <a href="{{ route('locale.switch', $nextLang->code) }}">
                                 <x-base.button variant="outline-secondary" class="px-3 py-2">
-                                    <x-base.lucide icon="Languages" class="w-5 h-5 mr-2" />
+                                    <x-base.lucide icon="Languages" class="w-5 h-5 me-2" />
                                     <span>
                                         <span class="font-semibold text-primary">{{ $nextLang->name }}</span>
                                     </span>
                                 </x-base.button>
                             </a>
                         </div>
-                        <h2 class="intro-x text-center text-2xl font-bold xl:text-left xl:text-3xl">
+                        <h2 class="intro-x text-center text-2xl font-bold xl:text-start xl:text-3xl">
                             {{ __('global.register') }}
                         </h2>
                         <div class="intro-x mt-2 text-center text-slate-400 dark:text-slate-400 xl:hidden">
@@ -68,7 +68,7 @@
                         <!-- Registration Security Indicator -->
                         <div class="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
                             <div class="flex items-center">
-                                <x-base.lucide icon="UserPlus" class="w-5 h-5 text-green-500 mr-3" />
+                                <x-base.lucide icon="UserPlus" class="w-5 h-5 text-green-500 me-3" />
                                 <div>
                                     <div class="font-medium text-green-800">{{ __('global.secure_registration') }}</div>
                                     <div class="text-sm text-green-600 mt-1">
@@ -213,7 +213,7 @@
                                 </x-base.form-label>
                                 <div class="relative">
                                     <x-base.form-input
-                                        class="intro-x block min-w-full px-4 py-3 xl:min-w-[350px] border-slate-300 focus:border-primary focus:ring-primary pr-12"
+                                        class="intro-x block min-w-full px-4 py-3 xl:min-w-[350px] border-slate-300 focus:border-primary focus:ring-primary pe-12"
                                         type="password"
                                         name="password"
                                         id="password"
@@ -221,7 +221,7 @@
                                         required
                                         autocomplete="new-password"
                                     />
-                                    <button type="button" class="absolute inset-y-0 right-0 pr-3 flex items-center" onclick="togglePasswordVisibility('password', 'password-eye')">
+                                    <button type="button" class="absolute inset-y-0 right-0 pe-3 flex items-center" onclick="togglePasswordVisibility('password', 'password-eye')">
                                         <x-base.lucide icon="Eye" class="w-5 h-5 text-slate-400 hover:text-slate-600" id="password-eye" />
                                     </button>
                                 </div>
@@ -253,7 +253,7 @@
                                 </x-base.form-label>
                                 <div class="relative">
                                     <x-base.form-input
-                                        class="intro-x block min-w-full px-4 py-3 xl:min-w-[350px] border-slate-300 focus:border-primary focus:ring-primary pr-12"
+                                        class="intro-x block min-w-full px-4 py-3 xl:min-w-[350px] border-slate-300 focus:border-primary focus:ring-primary pe-12"
                                         type="password"
                                         name="password_confirmation"
                                         id="password_confirmation"
@@ -261,7 +261,7 @@
                                         required
                                         autocomplete="new-password"
                                     />
-                                    <button type="button" class="absolute inset-y-0 right-0 pr-3 flex items-center" onclick="togglePasswordVisibility('password_confirmation', 'confirm-eye')">
+                                    <button type="button" class="absolute inset-y-0 right-0 pe-3 flex items-center" onclick="togglePasswordVisibility('password_confirmation', 'confirm-eye')">
                                         <x-base.lucide icon="Eye" class="w-5 h-5 text-slate-400 hover:text-slate-600" id="confirm-eye" />
                                     </button>
                                 </div>
@@ -273,7 +273,7 @@
                             <div class="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
                                 <div class="flex items-start">
                                     <x-base.form-check.input
-                                        class="mr-3 mt-1 border-slate-300 text-primary focus:ring-primary"
+                                        class="me-3 mt-1 border-slate-300 text-primary focus:ring-primary"
                                         id="accept_terms"
                                         name="accept_terms"
                                         type="checkbox"
@@ -308,19 +308,19 @@
                             </div>
                             
                             <!-- Submit Button -->
-                            <div class="intro-x mt-5 text-center xl:mt-8 xl:text-left">
+                            <div class="intro-x mt-5 text-center xl:mt-8 xl:text-start">
                                 <x-base.button
-                                    class="w-full px-4 py-3 align-top xl:mr-3 xl:w-40 flex items-center justify-center"
+                                    class="w-full px-4 py-3 align-top xl:me-3 xl:w-40 flex items-center justify-center"
                                     variant="primary"
                                     type="submit"
                                     id="register-button"
                                 >
-                                    <x-base.lucide icon="UserPlus" class="w-4 h-4 mr-2" />
+                                    <x-base.lucide icon="UserPlus" class="w-4 h-4 me-2" />
                                     {{ __('global.create_account') }}
                                 </x-base.button>
                                 <div class="mt-4 text-center">
                                     <span class="text-slate-600 dark:text-slate-400">{{ __('global.already_have_account') }}</span>
-                                    <a href="{{ route('auth.login') }}" class="text-primary hover:underline font-medium ml-1">
+                                    <a href="{{ route('auth.login') }}" class="text-primary hover:underline font-medium ms-1">
                                         {{ __('global.sign_in_here') }}
                                     </a>
                                 </div>
@@ -415,7 +415,7 @@
                     const originalText = registerButton.innerHTML;
                     
                     // Show loading state
-                    registerButton.innerHTML = '<x-base.lucide icon="Loader" class="w-4 h-4 mr-2 animate-spin" /> {{ __('global.creating_account') }}';
+                    registerButton.innerHTML = '<x-base.lucide icon="Loader" class="w-4 h-4 me-2 animate-spin" /> {{ __('global.creating_account') }}';
                     registerButton.disabled = true;
                     
                     // Revert after 10 seconds if no response

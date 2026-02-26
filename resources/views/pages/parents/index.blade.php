@@ -6,25 +6,25 @@
 
 @section('subcontent')
     <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
-        <h2 class="text-lg font-medium mr-auto">{{ __('kindergarten.parents.title') }}</h2>
+        <h2 class="text-lg font-medium me-auto">{{ __('kindergarten.parents.title') }}</h2>
         <div class="w-full sm:w-auto flex mt-4 sm:mt-0">
             @can('export_parents')
             
                         <div class="flex gap-2">
                             <x-base.button variant="outline-primary" as="a" href="{{ route('parents.export.pdf') }}" class="flex items-center">
-                                <x-base.lucide icon="FileText" class="w-4 h-4 mr-2" />
+                                <x-base.lucide icon="FileText" class="w-4 h-4 me-2" />
                                 {{ __('global.export_pdf') }}
                             </x-base.button>
                             <x-base.button variant="outline-success" as="a" href="{{ route('parents.export.excel') }}" class="flex items-center">
-                                <x-base.lucide icon="FileSpreadsheet" class="w-4 h-4 mr-2" />
+                                <x-base.lucide icon="FileSpreadsheet" class="w-4 h-4 me-2" />
                                 {{ __('global.export_excel') }}
                             </x-base.button>
                         </div>
             @endcan
             
             @can('create_parents')
-            <x-base.button variant="primary" as="a" href="{{ route('parents.create') }}" class="ml-2 flex items-center">
-                <x-base.lucide icon="Plus" class="w-4 h-4 mr-2" />
+            <x-base.button variant="primary" as="a" href="{{ route('parents.create') }}" class="ms-2 flex items-center">
+                <x-base.lucide icon="Plus" class="w-4 h-4 me-2" />
                 {{ __('kindergarten.parents.add_new') }}
             </x-base.button>
             @endcan
@@ -46,7 +46,7 @@
                             <option value="0" {{ request('is_active') == '0' ? 'selected' : '' }}>{{ __('global.inactive') }}</option>
                         </select>
                         <x-base.button type="submit" variant="primary" class="flex items-center">
-                            <x-base.lucide icon="Filter" class="w-4 h-4 mr-2" />
+                            <x-base.lucide icon="Filter" class="w-4 h-4 me-2" />
                             {{ __('global.filter') }}
                         </x-base.button>
                     </div>
@@ -77,7 +77,7 @@
                 <div class="box p-5">
                     <div class="flex items-center">
                         <x-base.lucide icon="Database" class="w-8 h-8 text-primary" />
-                        <div class="ml-auto">
+                        <div class="ms-auto">
                             <div class="report-box__indicator bg-success"> 
                                 <x-base.lucide icon="TrendingUp" class="w-4 h-4" /> 
                             </div>
@@ -91,7 +91,7 @@
                 <div class="box p-5">
                     <div class="flex items-center">
                         <x-base.lucide icon="Activity" class="w-8 h-8 text-pending" />
-                        <div class="ml-auto">
+                        <div class="ms-auto">
                             <div class="report-box__indicator bg-success"> 
                                 <x-base.lucide icon="TrendingUp" class="w-4 h-4" /> 
                             </div>
@@ -112,7 +112,7 @@
                 <div class="box p-5">
                     <div class="flex items-center">
                         <x-base.lucide icon="Calendar" class="w-8 h-8 text-success" />
-                        <div class="ml-auto">
+                        <div class="ms-auto">
                             <div class="report-box__indicator bg-success"> 
                                 <x-base.lucide icon="TrendingUp" class="w-4 h-4" /> 
                             </div>

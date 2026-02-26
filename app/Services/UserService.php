@@ -19,6 +19,11 @@ class UserService
         return $this->repository->all();
     }
 
+    public function all()
+    {
+        return $this->getAll();
+    }
+
     public function getPaginated()
     {
         return $this->repository->paginate(10);

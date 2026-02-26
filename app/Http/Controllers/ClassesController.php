@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use OmarAlalwi\Gpdf\Facades\Gpdf;
+
 use App\Http\Requests\StoreClassesRequest;
 use App\Http\Requests\UpdateClassesRequest;
 use App\Services\ClassesService;
@@ -63,7 +65,7 @@ class ClassesController extends Controller
      */
     protected function exportToPdf($data)
     {
-        $pdf = Pdf::loadView('pages.classes.export-pdf', ['data' => $data]);
+        $pdf = Gpdf::loadView('pages.classes.export-pdf', ['data' => $data]);
 
         return $pdf->download('Classes_export_'.date('Y-m-d_H-i-s').'.pdf');
     }
@@ -147,9 +149,9 @@ class ClassesController extends Controller
         $this->authorize('create_classes');
 
         $teachers = \App\Models\Teacher::select('id', 'name')->orderBy('name')->get();
-        $grades = \App\Models\Grade::select('id', 'name')->orderBy('name')->get();
+        $gradeLevels = \App\Models\GradeLevel::select('id', 'name')->orderBy('name')->get();
 
-        return view('pages.classes.create', compact('teachers', 'grades'));
+        return view('pages.classes.create', compact('teachers', 'gradeLevels'));
     }
 
     public function store(StoreClassesRequest $request)
@@ -174,9 +176,9 @@ class ClassesController extends Controller
         $classes = $this->service->find($id);
 
         $teachers = \App\Models\Teacher::select('id', 'name')->orderBy('name')->get();
-        $grades = \App\Models\Grade::select('id', 'name')->orderBy('name')->get();
+        $gradeLevels = \App\Models\GradeLevel::select('id', 'name')->orderBy('name')->get();
 
-        return view('pages.classes.edit', compact('classes', 'teachers', 'grades'));
+        return view('pages.classes.edit', compact('classes', 'teachers', 'gradeLevels'));
     }
 
     public function update(UpdateClassesRequest $request, $id)
