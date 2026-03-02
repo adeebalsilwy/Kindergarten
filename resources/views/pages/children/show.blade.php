@@ -75,6 +75,10 @@
                     <x-base.lucide icon="Heart" class="w-4 h-4 me-2" />
                     {{ __('global.medical_info') }}
                 </button>
+                <button class="tab-button px-4 py-2 text-sm font-medium rounded-t-lg" data-tab="class-details">
+                    <x-base.lucide icon="School" class="w-4 h-4 me-2" />
+                    {{ __('global.class_details') }}
+                </button>
             </nav>
         </div>
     </div>
@@ -252,7 +256,7 @@
                                 <span class="font-medium">{{ $children->expected_graduation_date 
                                     ? $children->expected_graduation_date->format('F j, Y') 
                                     : 'N/A' }}</span>
-
+                            </div>
                             <div class="flex justify-between py-2 border-b">
                                 <span class="text-slate-500">{{ __('global.enrollment_status') }}:</span>
                                 <span class="font-medium px-2 py-1 rounded text-sm 
@@ -263,6 +267,10 @@
                             <div class="flex justify-between py-2 border-b">
                                 <span class="text-slate-500">{{ __('global.last_attended') }}:</span>
                                 <span class="font-medium">{{ $children->last_attended_at ? $children->last_attended_at->format('F j, Y H:i') : 'Never' }}</span>
+                            </div>
+                            <div class="flex justify-between py-2">
+                                <span class="text-slate-500">{{ __('global.photo_path') }}:</span>
+                                <span class="font-medium text-sm max-w-xs truncate">{{ $children->photo_path ?? 'Not provided' }}</span>
                             </div>
                         </div>
                     </div>
@@ -378,6 +386,75 @@
                     </div>
                 </div>
                 @endif
+                
+                <!-- Parent Children Relationships -->
+                @if($children->parent)
+                <div class="intro-y col-span-12 lg:col-span-6">
+                    <div class="box p-5">
+                        <div class="text-lg font-medium mb-4 flex items-center">
+                            <x-base.lucide icon="Users" class="w-5 h-5 me-2 text-primary" />
+                            {{ __('global.other_children_with_primary_parent') }}
+                        </div>
+                        <div class="space-y-2 max-h-96 overflow-y-auto">
+                            @forelse($children->parent->children as $sibling)
+                                @if($sibling->id != $children->id)
+                                <div class="flex items-center p-2 hover:bg-slate-50 rounded">
+                                    <div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center me-3">
+                                        <span class="text-primary text-sm font-bold">{{ strtoupper(substr($sibling->name, 0, 1)) }}</span>
+                                    </div>
+                                    <div class="flex-1">
+                                        <div class="font-medium text-sm">{{ $sibling->name }}</div>
+                                        <div class="text-xs text-slate-500">{{ $sibling->age }} {{ __('global.years_old') }}</div>
+                                    </div>
+                                    <a href="{{ route('children.show', $sibling->id) }}" class="text-primary hover:underline text-xs">
+                                        {{ __('global.view') }}
+                                    </a>
+                                </div>
+                                @endif
+                            @empty
+                                <div class="text-center py-4 text-slate-500">
+                                    <x-base.lucide icon="Users" class="w-8 h-8 mx-auto mb-2 opacity-50" />
+                                    <p class="text-sm">{{ __('global.no_other_children') }}</p>
+                                </div>
+                            @endforelse
+                        </div>
+                    </div>
+                </div>
+                @endif
+                
+                @if($children->secondParent)
+                <div class="intro-y col-span-12 lg:col-span-6">
+                    <div class="box p-5">
+                        <div class="text-lg font-medium mb-4 flex items-center">
+                            <x-base.lucide icon="Users" class="w-5 h-5 me-2 text-primary" />
+                            {{ __('global.other_children_with_secondary_parent') }}
+                        </div>
+                        <div class="space-y-2 max-h-96 overflow-y-auto">
+                            @forelse($children->secondParent->children as $sibling)
+                                @if($sibling->id != $children->id)
+                                <div class="flex items-center p-2 hover:bg-slate-50 rounded">
+                                    <div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center me-3">
+                                        <span class="text-primary text-sm font-bold">{{ strtoupper(substr($sibling->name, 0, 1)) }}</span>
+                                    </div>
+                                    <div class="flex-1">
+                                        <div class="font-medium text-sm">{{ $sibling->name }}</div>
+                                        <div class="text-xs text-slate-500">{{ $sibling->age }} {{ __('global.years_old') }}</div>
+                                    </div>
+                                    <a href="{{ route('children.show', $sibling->id) }}" class="text-primary hover:underline text-xs">
+                                        {{ __('global.view') }}
+                                    </a>
+                                </div>
+                                @endif
+                            @empty
+                                <div class="text-center py-4 text-slate-500">
+                                    <x-base.lucide icon="Users" class="w-8 h-8 mx-auto mb-2 opacity-50" />
+                                    <p class="text-sm">{{ __('global.no_other_children') }}</p>
+                                </div>
+                            @endforelse
+                        </div>
+                    </div>
+                </div>
+                @endif
             </div>
         </div>
 
@@ -445,7 +522,7 @@
                     <div class="box p-5">
                         <div class="text-lg font-medium mb-4">{{ __('global.classmates') }}</div>
                         <div class="space-y-2 max-h-96 overflow-y-auto">
-                            @forelse($children->class->children->where('id', '!=', $children->id)->take(10) as $classmate)
+                            @forelse($children->class->children->where('id', '!=', $children->id) as $classmate)
                                 <div class="flex items-center p-2 hover:bg-slate-50 rounded">
                                     <div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center me-3">
                                         <span class="text-primary text-sm font-bold">{{ strtoupper(substr($classmate->name, 0, 1)) }}</span>
@@ -516,6 +593,7 @@
                                         <th class="text-left">{{ __('global.check_in') }}</th>
                                         <th class="text-left">{{ __('global.check_out') }}</th>
                                         <th class="text-left">{{ __('global.notes') }}</th>
+                                        <th class="text-left">{{ __('global.absence_reason') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -531,10 +609,11 @@
                                             <td>{{ $attendance->check_in ? $attendance->check_in->format('H:i') : '--' }}</td>
                                             <td>{{ $attendance->check_out ? $attendance->check_out->format('H:i') : '--' }}</td>
                                             <td class="text-sm text-slate-600 max-w-xs truncate">{{ $attendance->notes ?? '--' }}</td>
+                                            <td class="text-sm text-slate-600 max-w-xs truncate">{{ $attendance->absence_reason ?? '--' }}</td>
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="5" class="text-center py-8 text-slate-500">
+                                            <td colspan="6" class="text-center py-8 text-slate-500">
                                                 <x-base.lucide icon="Clock" class="w-12 h-12 mx-auto mb-3 opacity-50" />
                                                 <p>{{ __('global.no_attendance_records') }}</p>
                                             </td>
@@ -607,7 +686,7 @@
                                                     {{ $grade->grade }}
                                                 </span>
                                             </td>
-                                            <td>{{ $grade->evaluator }}</td>
+                                            <td>{{ $grade->evaluator->name ?? $grade->evaluator }}</td>
                                             <td class="text-sm text-slate-600 max-w-xs truncate">{{ $grade->comments ?? '--' }}</td>
                                         </tr>
                                     @empty
@@ -674,6 +753,7 @@
                                         <th class="text-left">{{ __('global.method') }}</th>
                                         <th class="text-left">{{ __('global.status') }}</th>
                                         <th class="text-left">{{ __('global.reference') }}</th>
+                                        <th class="text-left">{{ __('global.fee') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -689,10 +769,11 @@
                                                 </span>
                                             </td>
                                             <td class="text-sm text-slate-600">{{ $payment->reference_number ?? '--' }}</td>
+                                            <td>{{ $payment->fee->name ?? 'N/A' }}</td>
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="5" class="text-center py-8 text-slate-500">
+                                            <td colspan="6" class="text-center py-8 text-slate-500">
                                                 <x-base.lucide icon="DollarSign" class="w-12 h-12 mx-auto mb-3 opacity-50" />
                                                 <p>{{ __('global.no_payments_recorded') }}</p>
                                             </td>
@@ -729,6 +810,10 @@
                                         <div class="flex items-center">
                                             <x-base.lucide icon="User" class="w-4 h-4 me-2" />
                                             {{ optional($activity->teacher)->name ?? 'Not assigned' }}
+                                        </div>
+                                        <div class="flex items-center">
+                                            <x-base.lucide icon="Home" class="w-4 h-4 me-2" />
+                                            {{ optional($activity->class)->name ?? 'Not assigned' }}
                                         </div>
                                         <div class="flex items-center">
                                             <x-base.lucide icon="Calendar" class="w-4 h-4 me-2" />
@@ -794,6 +879,10 @@
                                         <div class="flex items-center">
                                             <x-base.lucide icon="User" class="w-4 h-4 me-2" />
                                             {{ optional($event->teacher)->name ?? 'Not assigned' }}
+                                        </div>
+                                        <div class="flex items-center">
+                                            <x-base.lucide icon="Home" class="w-4 h-4 me-2" />
+                                            {{ optional($event->class)->name ?? 'Not assigned' }}
                                         </div>
                                         <div class="flex items-center">
                                             <x-base.lucide icon="Calendar" class="w-4 h-4 me-2" />
@@ -895,6 +984,149 @@
                 </div>
             </div>
         </div>
+        
+        <!-- Class Details Tab -->
+        <div id="class-details" class="tab-content">
+            <div class="grid grid-cols-12 gap-6">
+                @if($children->class)
+                <div class="intro-y col-span-12">
+                    <div class="box p-5">
+                        <div class="text-lg font-medium mb-4 flex items-center justify-between">
+                            <span>{{ __('global.detailed_class_info') }}</span>
+                            <span class="text-sm text-slate-500">{{ $children->class->name }}</span>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Class Teacher Info -->
+                            <div class="border rounded-lg p-4">
+                                <h3 class="font-medium text-lg mb-3 flex items-center">
+                                    <x-base.lucide icon="UserCheck" class="w-5 h-5 me-2 text-primary" />
+                                    {{ __('global.class_teacher') }}
+                                </h3>
+                                @if($children->class->teacher)
+                                    <div class="space-y-2">
+                                        <div class="flex justify-between py-2 border-b">
+                                            <span class="text-slate-500">{{ __('global.name') }}:</span>
+                                            <span class="font-medium">{{ $children->class->teacher->name }}</span>
+                                        </div>
+                                        <div class="flex justify-between py-2 border-b">
+                                            <span class="text-slate-500">{{ __('global.specialization') }}:</span>
+                                            <span class="font-medium">{{ $children->class->teacher->specialization ?? 'Not specified' }}</span>
+                                        </div>
+                                        <div class="flex justify-between py-2 border-b">
+                                            <span class="text-slate-500">{{ __('global.experience') }}:</span>
+                                            <span class="font-medium">{{ $children->class->teacher->experience_years ?? 0 }} {{ __('global.years') }}</span>
+                                        </div>
+                                        <div class="flex justify-between py-2">
+                                            <span class="text-slate-500">{{ __('global.email') }}:</span>
+                                            <span class="font-medium">{{ $children->class->teacher->email ?? 'N/A' }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="mt-4">
+                                        <a href="{{ route('teachers.show', $children->class->teacher->id) }}" class="text-primary hover:underline">
+                                            {{ __('global.view_teacher_profile') }}
+                                        </a>
+                                    </div>
+                                @else
+                                    <p class="text-slate-500">{{ __('global.no_teacher_assigned') }}</p>
+                                @endif
+                            </div>
+                            
+                            <!-- Class Activities -->
+                            <div class="border rounded-lg p-4">
+                                <h3 class="font-medium text-lg mb-3 flex items-center">
+                                    <x-base.lucide icon="Calendar" class="w-5 h-5 me-2 text-primary" />
+                                    {{ __('global.class_activities') }}
+                                </h3>
+                                <div class="space-y-2 max-h-60 overflow-y-auto">
+                                    @forelse($children->class->activities as $activity)
+                                        <div class="flex items-center p-2 hover:bg-slate-50 rounded">
+                                            <div class="flex-1">
+                                                <div class="font-medium text-sm">{{ $activity->title ?? $activity->name }}</div>
+                                                <div class="text-xs text-slate-500">
+                                                    {{ $activity->scheduled_date ? $activity->scheduled_date->format('M d, Y') : 'Not scheduled' }}
+                                                </div>
+                                            </div>
+                                            <a href="{{ route('activities.show', $activity->id) }}" class="text-primary hover:underline text-xs">
+                                                {{ __('global.view') }}
+                                            </a>
+                                        </div>
+                                    @empty
+                                        <p class="text-slate-500">{{ __('global.no_activities') }}</p>
+                                    @endforelse
+                                </div>
+                            </div>
+                            
+                            <!-- Class Events -->
+                            <div class="border rounded-lg p-4">
+                                <h3 class="font-medium text-lg mb-3 flex items-center">
+                                    <x-base.lucide icon="CalendarEvent" class="w-5 h-5 me-2 text-primary" />
+                                    {{ __('global.class_events') }}
+                                </h3>
+                                <div class="space-y-2 max-h-60 overflow-y-auto">
+                                    @forelse($children->class->events as $event)
+                                        <div class="flex items-center p-2 hover:bg-slate-50 rounded">
+                                            <div class="flex-1">
+                                                <div class="font-medium text-sm">{{ $event->title ?? $event->name }}</div>
+                                                <div class="text-xs text-slate-500">
+                                                    {{ $event->start_datetime ? $event->start_datetime->format('M d, Y') : 'Not scheduled' }}
+                                                </div>
+                                            </div>
+                                            <a href="{{ route('events.show', $event->id) }}" class="text-primary hover:underline text-xs">
+                                                {{ __('global.view') }}
+                                            </a>
+                                        </div>
+                                    @empty
+                                        <p class="text-slate-500">{{ __('global.no_events') }}</p>
+                                    @endforelse
+                                </div>
+                            </div>
+                            
+                            <!-- Class Attendance Stats -->
+                            <div class="border rounded-lg p-4">
+                                <h3 class="font-medium text-lg mb-3 flex items-center">
+                                    <x-base.lucide icon="CheckCircle" class="w-5 h-5 me-2 text-primary" />
+                                    {{ __('global.class_attendance_stats') }}
+                                </h3>
+                                <div class="space-y-3">
+                                    <div class="grid grid-cols-3 gap-2">
+                                        <div class="text-center p-3 bg-success/10 rounded-lg">
+                                            <div class="text-xl font-bold text-success">{{ $children->class->attendances()->where('status', 'present')->count() }}</div>
+                                            <div class="text-xs text-slate-500">{{ __('global.present') }}</div>
+                                        </div>
+                                        <div class="text-center p-3 bg-danger/10 rounded-lg">
+                                            <div class="text-xl font-bold text-danger">{{ $children->class->attendances()->where('status', 'absent')->count() }}</div>
+                                            <div class="text-xs text-slate-500">{{ __('global.absent') }}</div>
+                                        </div>
+                                        <div class="text-center p-3 bg-warning/10 rounded-lg">
+                                            <div class="text-xl font-bold text-warning">{{ $children->class->attendances()->where('status', 'late')->count() }}</div>
+                                            <div class="text-xs text-slate-500">{{ __('global.late') }}</div>
+                                        </div>
+                                    </div>
+                                    <div class="pt-2">
+                                        <div class="text-center">
+                                            <div class="text-xl font-bold text-primary">
+                                                {{ $children->class->attendances()->count() > 0 ? round(($children->class->attendances()->where('status', 'present')->count() / $children->class->attendances()->count()) * 100, 1) : 0 }}%
+                                            </div>
+                                            <div class="text-xs text-slate-500">{{ __('global.attendance_rate') }}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @else
+                <div class="intro-y col-span-12">
+                    <div class="box p-8 text-center">
+                        <x-base.lucide icon="Home" class="w-16 h-16 mx-auto mb-4 text-slate-300" />
+                        <h3 class="text-lg font-medium text-slate-500">{{ __('global.not_assigned_to_class') }}</h3>
+                        <p class="text-slate-400 mt-2">{{ __('global.assign_class_to_view_details') }}</p>
+                    </div>
+                </div>
+                @endif
+            </div>
+        </div>
     </div>
 
     <script>
@@ -902,8 +1134,19 @@
             const tabButtons = document.querySelectorAll('.tab-button');
             const tabContents = document.querySelectorAll('.tab-content');
             
+            // Ensure at least one tab is active on page load
+            const activeTab = document.querySelector('.tab-button.active');
+            if (activeTab) {
+                const activeTabId = activeTab.getAttribute('data-tab');
+                // Hide all tab contents
+                tabContents.forEach(content => content.classList.remove('active'));
+                // Show the active tab content
+                document.getElementById(activeTabId).classList.add('active');
+            }
+            
             tabButtons.forEach(button => {
-                button.addEventListener('click', function() {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
                     const tabId = this.getAttribute('data-tab');
                     
                     // Remove active class from all buttons and contents

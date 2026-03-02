@@ -14,11 +14,12 @@ class StoreGradeRequest extends FormRequest
     public function rules()
     {
         return [
-            'child_id' => 'required',
+            'child_id' => 'required|exists:children,id',
             'subject' => 'required|string|max:255',
             'score' => 'required|string|max:255',
             'date' => 'required|date',
-
+            'comments' => 'nullable|string|max:1000',
+            'evaluator_id' => 'nullable|exists:users,id',
         ];
     }
 

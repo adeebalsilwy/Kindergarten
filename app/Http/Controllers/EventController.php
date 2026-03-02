@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use OmarAlalwi\Gpdf\Facades\Gpdf;
+use OmarAlalwi\Gpdf\Facade\Gpdf;
 
 use App\Http\Requests\StoreEventRequest;
 use App\Http\Requests\UpdateEventRequest;
@@ -25,14 +25,18 @@ class EventController extends Controller
     public function index(Request $request)
     {
         $this->authorize('view_events');
-        $query = $this->service->query();
+        $query = $this->service->query()->with(['class', 'teacher']);
+
+        if (method_exists($query->getModel(), 'scopeFilter')) {
+            $query->filter($request);
+        }
 
         // Handle export functionality
         if ($request->has('export')) {
             return $this->export($request->get('export'), $query);
         }
 
-        $events = $query->paginate(15);
+        $events = $query->paginate(15)->withQueryString();
 
         return view('pages.events.index', compact('events'));
     }
@@ -60,9 +64,11 @@ class EventController extends Controller
      */
     protected function exportToPdf($data)
     {
-        $pdf = Gpdf::loadView('pages.events.export-pdf', ['data' => $data]);
-
-        return $pdf->download('Event_export_'.date('Y-m-d_H-i-s').'.pdf');
+        $html = view('pages.events.export-pdf', ['data' => $data])->render();
+        
+        return response()->streamDownload(function () use ($html) {
+            echo Gpdf::generate($html);
+        }, 'Event_export_'.date('Y-m-d_H-i-s').'.pdf');
     }
 
     /**
@@ -105,8 +111,10 @@ class EventController extends Controller
 
         // Style header row
         $headerRange = 'A3:'.chr(ord('A') + count($headers) - 1).'3';
-        $sheet->getStyle($headerRange)->getFont()->setBold(true)
-            ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+        $sheet->getStyle($headerRange)->getFont()->setBold(true);
+        $sheet->getStyle($headerRange)->getFill()
+            ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID);
+        $sheet->getStyle($headerRange)->getFill()
             ->getStartColor()->setARGB('FFEEEEEE');
 
         // Add data rows
@@ -158,6 +166,13 @@ class EventController extends Controller
     {
         $this->authorize('view_events');
         $event = $this->service->find($id);
+        
+        // Load all related data for the enhanced show page
+        $event->load([
+            'class',
+            'teacher',
+            'children'
+        ]);
 
         return view('pages.events.show', compact('event'));
     }
@@ -184,5 +199,35 @@ class EventController extends Controller
         $this->service->delete($id);
 
         return redirect()->route('events.index')->with('success', __('events.messages.deleted'));
+    }
+
+    public function exportPdf(Request $request)
+    {
+        $this->authorize('export_events');
+        
+        $query = $this->service->query()->with(['class', 'teacher']);
+
+        if (method_exists($query->getModel(), 'scopeFilter')) {
+            $query->filter($request);
+        }
+
+        $data = $query->get();
+        
+        return $this->exportToPdf($data);
+    }
+
+    public function exportExcel(Request $request)
+    {
+        $this->authorize('export_events');
+        
+        $query = $this->service->query()->with(['class', 'teacher']);
+
+        if (method_exists($query->getModel(), 'scopeFilter')) {
+            $query->filter($request);
+        }
+
+        $data = $query->get();
+        
+        return $this->exportToExcel($data);
     }
 }

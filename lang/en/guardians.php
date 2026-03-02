@@ -5,31 +5,24 @@ return [
     'add_new' => 'Add New Guardian',
     'edit' => 'Edit Guardian',
     'list' => 'Guardians List',
-    
-    // Tabs
     'tabs' => [
         'personal_info' => 'Personal Information',
         'work_info' => 'Work Information',
         'contact_info' => 'Contact Information',
         'settings' => 'Settings',
     ],
-    
-    // Sections
     'sections' => [
         'personal_info' => 'Personal Information',
         'work_info' => 'Work Information',
         'contact_info' => 'Contact Information',
         'settings' => 'Account Settings',
     ],
-    
-    // Descriptions
     'descriptions' => [
         'personal_info' => 'Enter the guardian\'s personal information including name, contact details, and identification.',
         'work_info' => 'Provide information about the guardian\'s occupation and workplace.',
         'contact_info' => 'Enter relationship details and complete address information.',
         'settings' => 'Configure account settings and notification preferences.',
     ],
-    
     'fields' => [
         'name' => 'Full Name',
         'email' => 'Email Address',
@@ -52,8 +45,6 @@ return [
         'is_active' => 'Account Active',
         'notes' => 'Additional Notes',
     ],
-    
-    // Placeholders
     'placeholders' => [
         'name' => 'Enter full name',
         'email' => 'Enter email address',
@@ -68,8 +59,6 @@ return [
         'address' => 'Enter complete address including street, city, and postal code',
         'notes' => 'Enter any additional information or notes',
     ],
-    
-    // Relationships
     'relationships' => [
         'father' => 'Father',
         'mother' => 'Mother',
@@ -79,7 +68,6 @@ return [
         'aunt' => 'Aunt',
         'other' => 'Other',
     ],
-    
     'actions' => [
         'save' => 'Save Guardian',
         'cancel' => 'Cancel',
@@ -88,11 +76,15 @@ return [
         'delete' => 'Delete',
         'confirm_delete' => 'Are you sure you want to delete this guardian record?',
     ],
-    
     'messages' => [
         'created' => 'Guardian record created successfully.',
         'updated' => 'Guardian record updated successfully.',
         'deleted' => 'Guardian record deleted successfully.',
         'validation_error' => 'Please correct the errors below before submitting.',
+    ],
+    'guardians' => [
+        'messages' => [
+            'retrieved' => 'Guardians retrieved successfully',
+        ],
     ],
 ];

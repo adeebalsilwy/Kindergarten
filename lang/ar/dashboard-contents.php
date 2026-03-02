@@ -1,17 +1,17 @@
 <?php
 
 return [
-    'title' => 'Dashboard Contents',
-    'add_new' => 'إضافة Dashboard Content جديد',
-    'edit' => 'تعديل Dashboard Content',
-    'list' => 'قائمة Dashboard Contents',
+    'title' => 'محتويات لوحة التحكم',
+    'add_new' => 'إضافة محتوى لوحة تحكم جديد',
+    'edit' => 'تعديل محتوى لوحة التحكم',
+    'list' => 'قائمة محتويات لوحة التحكم',
     'fields' => [
-        'section' => 'Section',
-        'key' => 'Key',
-        'content' => 'Content',
+        'section' => 'القسم',
+        'key' => 'المفتاح',
+        'content' => 'المحتوى',
         'is_active' => 'نشط',
-        'order' => 'Order',
-        'metadata' => 'Metadata',
+        'order' => 'الترتيب',
+        'metadata' => 'البيانات الوصفية',
     ],
     'actions' => [
         'save' => 'حفظ',
@@ -25,5 +25,10 @@ return [
         'created' => 'تم إنشاء السجل بنجاح.',
         'updated' => 'تم تحديث السجل بنجاح.',
         'deleted' => 'تم حذف السجل بنجاح.',
+    ],
+    'dashboard-contents' => [
+        'fields' => [
+            'name' => 'الاسم',
+        ],
     ],
 ];

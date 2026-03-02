@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use OmarAlalwi\Gpdf\Facades\Gpdf;
+use OmarAlalwi\Gpdf\Facade\Gpdf;
 
 use App\Http\Requests\StoreTeacherRequest;
 use App\Http\Requests\UpdateTeacherRequest;
@@ -25,7 +25,7 @@ class TeacherController extends Controller
     public function index(Request $request)
     {
         $this->authorize('view_teachers');
-        $query = $this->service->query()->with(['classes']);
+        $query = $this->service->query()->with(['classes', 'user']);
 
         if (method_exists($query->getModel(), 'scopeFilter')) {
             $query->filter($request);
@@ -64,9 +64,11 @@ class TeacherController extends Controller
      */
     protected function exportToPdf($data)
     {
-        $pdf = Gpdf::loadView('pages.teachers.export-pdf', ['data' => $data]);
-
-        return $pdf->download('Teacher_export_'.date('Y-m-d_H-i-s').'.pdf');
+        $html = view('pages.teachers.export-pdf', ['data' => $data])->render();
+        
+        return response()->streamDownload(function () use ($html) {
+            echo Gpdf::generate($html);
+        }, 'Teacher_export_'.date('Y-m-d_H-i-s').'.pdf');
     }
 
     /**
@@ -146,8 +148,10 @@ class TeacherController extends Controller
     public function create()
     {
         $this->authorize('create_teachers');
+        
+        $users = \App\Models\User::all();
 
-        return view('pages.teachers.create', get_defined_vars());
+        return view('pages.teachers.create', compact('users'));
     }
 
     public function store(StoreTeacherRequest $request)
@@ -162,6 +166,23 @@ class TeacherController extends Controller
     {
         $this->authorize('view_teachers');
         $teacher = $this->service->find($id);
+        
+        // Load all related data for the enhanced show page
+        $teacher->load([
+            'user',
+            'classes.children',
+            'classes.activities',
+            'classes.events',
+            'classes.teacher',
+            'activities.class',
+            'activities.children',
+            'events.class',
+            'events.children'
+        ]);
+        
+        // Manually load curriculum data to avoid relationship issues
+        $teacher->setRelation('curriculum', $teacher->user_id ? 
+            \App\Models\Curriculum::where('created_by', $teacher->user_id)->with(['activities', 'classes'])->get() : collect());
 
         return view('pages.teachers.show', compact('teacher'));
     }
@@ -170,8 +191,10 @@ class TeacherController extends Controller
     {
         $this->authorize('edit_teachers');
         $teacher = $this->service->find($id);
+        
+        $users = \App\Models\User::all();
 
-        return view('pages.teachers.edit', get_defined_vars());
+        return view('pages.teachers.edit', compact('teacher', 'users'));
     }
 
     public function update(UpdateTeacherRequest $request, $id)
@@ -188,5 +211,77 @@ class TeacherController extends Controller
         $this->service->delete($id);
 
         return redirect()->route('teachers.index')->with('success', __('teachers.messages.deleted'));
+    }
+
+    public function exportPdf()
+    {
+        $this->authorize('export_teachers');
+        $query = $this->service->query()->with(['classes', 'user']);
+
+        // Apply filters
+        $request = request();
+        if ($request->filled('search')) {
+            $query->where(function($q) use ($request) {
+                $q->where('name', 'LIKE', '%' . $request->search . '%')
+                  ->orWhere('email', 'LIKE', '%' . $request->search . '%')
+                  ->orWhere('phone', 'LIKE', '%' . $request->search . '%')
+                  ->orWhere('qualification', 'LIKE', '%' . $request->search . '%');
+            });
+        }
+        
+        if ($request->filled('department')) {
+            $query->where('department', $request->department);
+        }
+        
+        if ($request->filled('employment_status')) {
+            $query->where('employment_status', $request->employment_status);
+        }
+        
+        if ($request->filled('joining_date_from')) {
+            $query->where('joining_date', '>=', $request->joining_date_from);
+        }
+        
+        if ($request->filled('joining_date_to')) {
+            $query->where('joining_date', '<=', $request->joining_date_to);
+        }
+
+        $data = $query->get();
+        return $this->exportToPdf($data);
+    }
+
+    public function exportExcel()
+    {
+        $this->authorize('export_teachers');
+        $query = $this->service->query()->with(['classes', 'user']);
+
+        // Apply filters
+        $request = request();
+        if ($request->filled('search')) {
+            $query->where(function($q) use ($request) {
+                $q->where('name', 'LIKE', '%' . $request->search . '%')
+                  ->orWhere('email', 'LIKE', '%' . $request->search . '%')
+                  ->orWhere('phone', 'LIKE', '%' . $request->search . '%')
+                  ->orWhere('qualification', 'LIKE', '%' . $request->search . '%');
+            });
+        }
+        
+        if ($request->filled('department')) {
+            $query->where('department', $request->department);
+        }
+        
+        if ($request->filled('employment_status')) {
+            $query->where('employment_status', $request->employment_status);
+        }
+        
+        if ($request->filled('joining_date_from')) {
+            $query->where('joining_date', '>=', $request->joining_date_from);
+        }
+        
+        if ($request->filled('joining_date_to')) {
+            $query->where('joining_date', '<=', $request->joining_date_to);
+        }
+
+        $data = $query->get();
+        return $this->exportToExcel($data);
     }
 }

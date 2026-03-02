@@ -71,6 +71,14 @@
                                 'staff'        => 'Users',
                                 'parent_user'  => 'User',
                                 '1'            => 'User', // Fallback for numeric keys if any
+                                // Arabic role names
+                                'الإدارة العليا' => 'Shield',
+                                'مدير النظام' => 'Shield',
+                                'المدير' => 'UserCog',
+                                'محاسب' => 'Calculator',
+                                'معلم' => 'GraduationCap',
+                                'طاقم العمل' => 'Users',
+                                'أولياء الأمور' => 'User',
                             ];
                         @endphp
                         
@@ -233,7 +241,7 @@
                                                         <x-base.lucide icon="{{ $roleIcons[$acc['role_key']] ?? 'User' }}" class="w-4 h-4 me-2 text-slate-500 group-hover:text-white" />
                                                         <div>
                                                             <div class="text-xs font-bold text-slate-700 dark:text-slate-300 group-hover:text-white truncate">
-                                                                {{ __($acc['role_key']) }}
+                                                                {{ $acc['name'] ?? __($acc['role_key']) }}
                                                             </div>
                                                             <div class="text-[10px] text-slate-500 dark:text-slate-400 group-hover:text-white/80 truncate mt-1">
                                                                 {{ $acc['email'] }}
@@ -411,15 +419,17 @@
                     if(emailInput) emailInput.dispatchEvent(new Event('input'));
                     if(passwordInput) passwordInput.dispatchEvent(new Event('input'));
 
-                    // Submit form
+                    // Submit form after a brief delay to ensure fields are filled
                     setTimeout(() => {
                         this.classList.remove('ring-2', 'ring-primary');
-                        if (submitButton) {
+                        if (form) {
+                            // Directly submit the form
+                            form.requestSubmit();
+                        } else if (submitButton) {
+                            // Fallback to clicking the submit button
                             submitButton.click();
-                        } else if(form) {
-                            form.submit();
                         }
-                    }, 100);
+                    }, 150);
                 });
             });
             

@@ -1,10 +1,10 @@
 <?php
 
 return [
-    'title' => 'Financial Reports',
-    'add_new' => 'إضافة Financial Report جديد',
-    'edit' => 'تعديل Financial Report',
-    'list' => 'قائمة Financial Reports',
+    'title' => 'التقارير المالية',
+    'add_new' => 'إضافة تقرير مالي جديد',
+    'edit' => 'تعديل التقرير المالي',
+    'list' => 'قائمة التقارير المالية',
     'fields' => [
         'name' => 'الاسم',
     ],
@@ -20,5 +20,29 @@ return [
         'created' => 'تم إنشاء السجل بنجاح.',
         'updated' => 'تم تحديث السجل بنجاح.',
         'deleted' => 'تم حذف السجل بنجاح.',
+    ],
+    'reports' => [
+        'messages' => [
+            'retrieved' => '',
+        ],
+    ],
+    'financial-reports' => [
+        'messages' => [
+            'created' => 'تم إنشاء التقرير المالي بنجاح',
+            'updated' => 'تم تحديث التقرير المالي بنجاح',
+            'deleted' => 'تم حذف التقرير المالي بنجاح',
+        ],
+        'fields' => [
+            'report_type' => 'نوع التقرير',
+            'period_start' => 'بداية الفترة',
+            'period_end' => 'نهاية الفترة',
+            'generated_at' => 'تم إنشاؤه في',
+            'generated_by' => 'تم إنشاؤه بواسطة',
+        ],
+        'title' => 'التقارير المالية',
+        'add_new' => 'إضافة تقرير مالي جديد',
+        'edit' => 'تعديل التقرير المالي',
+        'list' => 'قائمة التقارير المالية',
+        'show' => 'عرض التقرير المالي',
     ],
 ];

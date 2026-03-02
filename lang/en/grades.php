@@ -24,4 +24,12 @@ return [
         'updated' => 'Record updated successfully.',
         'deleted' => 'Record deleted successfully.',
     ],
+    'grades' => [
+        'messages' => [
+            'retrieved' => 'Grades retrieved successfully',
+        ],
+        'fields' => [
+            'comments' => 'Comments',
+        ],
+    ],
 ];

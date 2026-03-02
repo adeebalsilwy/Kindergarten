@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use OmarAlalwi\Gpdf\Facades\Gpdf;
+use OmarAlalwi\Gpdf\Facade\Gpdf;
 
 use App\Http\Requests\StoreDashboardContentRequest;
 use App\Http\Requests\UpdateDashboardContentRequest;
@@ -60,9 +60,11 @@ class DashboardContentController extends Controller
      */
     protected function exportToPdf($data)
     {
-        $pdf = Gpdf::loadView('pages.dashboard_contents.export-pdf', ['data' => $data]);
-
-        return $pdf->download('DashboardContent_export_'.date('Y-m-d_H-i-s').'.pdf');
+        $html = view('pages.dashboard_contents.export-pdf', ['data' => $data])->render();
+        
+        return response()->streamDownload(function () use ($html) {
+            echo Gpdf::generate($html);
+        }, 'DashboardContent_export_'.date('Y-m-d_H-i-s').'.pdf');
     }
 
     /**

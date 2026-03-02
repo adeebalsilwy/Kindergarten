@@ -44,11 +44,10 @@ License: You must have a valid license purchased only from themeforest(the above
 
     @yield('head')
 
-    <!-- BEGIN: CSS Assets-->
+    <!-- BEGIN: CSS Assets - Loading all assets for production mode -->
+    @vite('resources/css/app.css')
     @stack('styles')
     <!-- END: CSS Assets-->
-
-    @vite('resources/css/app.css')
 </head>
 <!-- END: Head -->
 

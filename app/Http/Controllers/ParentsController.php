@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use OmarAlalwi\Gpdf\Facades\Gpdf;
+use OmarAlalwi\Gpdf\Facade\Gpdf;
 
 use App\Http\Requests\StoreParentRequest;
 use App\Http\Requests\UpdateParentRequest;
@@ -65,9 +65,11 @@ class ParentsController extends Controller
      */
     protected function exportToPdf($data)
     {
-        $pdf = Gpdf::loadView('pages.parents.export-pdf', ['data' => $data]);
-
-        return $pdf->download('Parent_export_'.date('Y-m-d_H-i-s').'.pdf');
+        $html = view('pages.parents.export-pdf', ['data' => $data])->render();
+        
+        return response()->streamDownload(function () use ($html) {
+            echo Gpdf::generate($html);
+        }, 'Parent_export_'.date('Y-m-d_H-i-s').'.pdf');
     }
 
     /**
@@ -110,8 +112,10 @@ class ParentsController extends Controller
 
         // Style header row
         $headerRange = 'A3:'.chr(ord('A') + count($headers) - 1).'3';
-        $sheet->getStyle($headerRange)->getFont()->setBold(true)
-            ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+        $sheet->getStyle($headerRange)->getFont()->setBold(true);
+        $sheet->getStyle($headerRange)->getFill()
+            ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID);
+        $sheet->getStyle($headerRange)->getFill()
             ->getStartColor()->setARGB('FFEEEEEE');
 
         // Add data rows
@@ -189,5 +193,35 @@ class ParentsController extends Controller
         $this->service->delete($id);
 
         return redirect()->route('parents.index')->with('success', __('kindergarten.messages.deleted'));
+    }
+
+    public function exportPdf(Request $request)
+    {
+        $this->authorize('export_parents');
+        
+        $query = $this->service->query();
+
+        if (method_exists($query->getModel(), 'scopeFilter')) {
+            $query->filter($request);
+        }
+
+        $data = $query->get();
+        
+        return $this->exportToPdf($data);
+    }
+
+    public function exportExcel(Request $request)
+    {
+        $this->authorize('export_parents');
+        
+        $query = $this->service->query();
+
+        if (method_exists($query->getModel(), 'scopeFilter')) {
+            $query->filter($request);
+        }
+
+        $data = $query->get();
+        
+        return $this->exportToExcel($data);
     }
 }

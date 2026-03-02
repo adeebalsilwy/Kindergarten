@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use OmarAlalwi\Gpdf\Facades\Gpdf;
+use OmarAlalwi\Gpdf\Facade\Gpdf;
 
 use App\Http\Requests\StoreAccountingEntryRequest;
 use App\Http\Requests\UpdateAccountingEntryRequest;
@@ -64,9 +64,11 @@ class AccountingEntryController extends Controller
      */
     protected function exportToPdf($data)
     {
-        $pdf = Gpdf::loadView('pages.accounting_entries.export-pdf', ['data' => $data]);
-
-        return $pdf->download('AccountingEntry_export_'.date('Y-m-d_H-i-s').'.pdf');
+        $html = view('pages.accounting_entries.export-pdf', ['data' => $data])->render();
+        
+        return response()->streamDownload(function () use ($html) {
+            echo Gpdf::generate($html);
+        }, 'AccountingEntry_export_'.date('Y-m-d_H-i-s').'.pdf');
     }
 
     /**
@@ -188,5 +190,75 @@ class AccountingEntryController extends Controller
         $this->service->delete($id);
 
         return redirect()->route('accounting_entries.index')->with('success', __('accounting_entries.messages.deleted'));
+    }
+
+    public function exportPdf()
+    {
+        $this->authorize('export_accounting_entries');
+        $query = $this->service->query();
+
+        // Apply filters
+        $request = request();
+        if ($request->filled('search')) {
+            $query->where(function($q) use ($request) {
+                $q->where('description', 'LIKE', '%' . $request->search . '%')
+                  ->orWhere('account_name', 'LIKE', '%' . $request->search . '%')
+                  ->orWhere('entry_type', 'LIKE', '%' . $request->search . '%');
+            });
+        }
+        
+        if ($request->filled('entry_type')) {
+            $query->where('entry_type', $request->entry_type);
+        }
+        
+        if ($request->filled('account_name')) {
+            $query->where('account_name', $request->account_name);
+        }
+        
+        if ($request->filled('date_from')) {
+            $query->where('date', '>=', $request->date_from);
+        }
+        
+        if ($request->filled('date_to')) {
+            $query->where('date', '<=', $request->date_to);
+        }
+
+        $data = $query->get();
+        return $this->exportToPdf($data);
+    }
+
+    public function exportExcel()
+    {
+        $this->authorize('export_accounting_entries');
+        $query = $this->service->query();
+
+        // Apply filters
+        $request = request();
+        if ($request->filled('search')) {
+            $query->where(function($q) use ($request) {
+                $q->where('description', 'LIKE', '%' . $request->search . '%')
+                  ->orWhere('account_name', 'LIKE', '%' . $request->search . '%')
+                  ->orWhere('entry_type', 'LIKE', '%' . $request->search . '%');
+            });
+        }
+        
+        if ($request->filled('entry_type')) {
+            $query->where('entry_type', $request->entry_type);
+        }
+        
+        if ($request->filled('account_name')) {
+            $query->where('account_name', $request->account_name);
+        }
+        
+        if ($request->filled('date_from')) {
+            $query->where('date', '>=', $request->date_from);
+        }
+        
+        if ($request->filled('date_to')) {
+            $query->where('date', '<=', $request->date_to);
+        }
+
+        $data = $query->get();
+        return $this->exportToExcel($data);
     }
 }

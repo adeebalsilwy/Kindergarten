@@ -1,15 +1,15 @@
 <?php
 
 return [
-    'title' => 'Caches',
-    'add_new' => 'إضافة Cache جديد',
-    'edit' => 'تعديل Cache',
-    'list' => 'قائمة Caches',
+    'title' => 'الذواكر المؤقتة',
+    'add_new' => 'إضافة ذاكرة مؤقتة جديدة',
+    'edit' => 'تعديل الذاكرة المؤقتة',
+    'list' => 'قائمة الذاكرات المؤقتة',
     'fields' => [
-        'key' => 'Key',
-        'value' => 'Value',
-        'expiration' => 'Expiration',
-        'owner' => 'Owner',
+        'key' => 'المفتاح',
+        'value' => 'القيمة',
+        'expiration' => 'انتهاء الصلاحية',
+        'owner' => 'المالك',
     ],
     'actions' => [
         'save' => 'حفظ',
@@ -23,5 +23,19 @@ return [
         'created' => 'تم إنشاء السجل بنجاح.',
         'updated' => 'تم تحديث السجل بنجاح.',
         'deleted' => 'تم حذف السجل بنجاح.',
+    ],
+    'cache' => [
+        'title' => '',
+        'messages' => [
+            'created' => '',
+            'updated' => '',
+            'deleted' => '',
+            'retrieved' => '',
+        ],
+    ],
+    'caches' => [
+        'fields' => [
+            'name' => '',
+        ],
     ],
 ];

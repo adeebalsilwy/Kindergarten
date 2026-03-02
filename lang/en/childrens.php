@@ -5,16 +5,12 @@ return [
     'add_new' => 'Add New Child',
     'edit' => 'Edit Child',
     'list' => 'Children List',
-    
-    // Tabs
     'tabs' => [
         'basic_info' => 'Basic Information',
         'parents' => 'Parents Information',
         'medical' => 'Medical Information',
         'enrollment' => 'Enrollment & Fees',
     ],
-    
-    // Sections
     'sections' => [
         'personal_info' => 'Personal Information',
         'class_assignment' => 'Class Assignment',
@@ -24,8 +20,6 @@ return [
         'financial_info' => 'Financial Information',
         'enrollment_info' => 'Enrollment Information',
     ],
-    
-    // Descriptions
     'descriptions' => [
         'personal_info' => 'Enter the child\'s basic personal information including name, date of birth, and contact details.',
         'class_assignment' => 'Assign the child to an appropriate class based on their age and grade level.',
@@ -35,7 +29,6 @@ return [
         'financial_info' => 'Set up the financial requirements and track payments for the child\'s enrollment.',
         'enrollment_info' => 'Manage enrollment status, dates, and attendance tracking information.',
     ],
-    
     'fields' => [
         'name' => 'Full Name',
         'dob' => 'Date of Birth',
@@ -61,8 +54,6 @@ return [
         'religion' => 'Religion',
         'special_needs' => 'Special Needs',
     ],
-    
-    // Placeholders
     'placeholders' => [
         'name' => 'Enter child\'s full name',
         'nationality' => 'Enter nationality',
@@ -75,12 +66,9 @@ return [
         'medications' => 'List current medications',
         'special_needs' => 'Describe any special needs or requirements',
     ],
-    
-    // Help text
     'help' => [
         'second_parent_optional' => 'Optional: Select if there is a secondary parent/guardian',
     ],
-    
     'actions' => [
         'save' => 'Save Child',
         'cancel' => 'Cancel',
@@ -89,7 +77,6 @@ return [
         'delete' => 'Delete',
         'confirm_delete' => 'Are you sure you want to delete this child record?',
     ],
-    
     'messages' => [
         'created' => 'Child record created successfully.',
         'updated' => 'Child record updated successfully.',
@@ -97,5 +84,18 @@ return [
         'validation_error' => 'Please correct the errors below before submitting.',
         'fill_demo_data' => 'Fill with Demo Data',
         'demo_data_filled' => 'Demo data has been filled successfully!',
+    ],
+    'children' => [
+        'title' => '',
+        'messages' => [
+            'created' => '',
+            'updated' => '',
+            'deleted' => '',
+            'retrieved' => '',
+        ],
+    ],
+    'childrens' => [
+        'fill_demo_data' => '',
+        'demo_data_filled' => '',
     ],
 ];

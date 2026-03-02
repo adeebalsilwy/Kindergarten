@@ -7,6 +7,25 @@ export default defineConfig({
         commonjsOptions: {
             include: ["tailwind.config.js", "node_modules/**"],
         },
+        cssMinify: true,
+        minify: 'terser',
+        sourcemap: false,
+        rollupOptions: {
+            output: {
+                manualChunks: {
+                    // Remove Vue chunks as Vue is not used in this project
+                    vendor: ['axios'],
+                },
+                assetFileNames: (assetInfo) => {
+                    if (assetInfo.name.endsWith('.css')) {
+                        return 'css/[name]-[hash][extname]';
+                    }
+                    return 'assets/[name]-[hash][extname]';
+                },
+                chunkFileNames: 'js/[name]-[hash].js',
+                entryFileNames: 'js/[name]-[hash].js',
+            },
+        },
     },
     optimizeDeps: {
         include: ["tailwind-config"],
@@ -14,7 +33,10 @@ export default defineConfig({
     plugins: [
         laravel({
             input: [
-                // CSS Vendors
+                // CSS General (Must be first to establish base styles and Tailwind)
+                "resources/css/app.css",
+
+                // CSS Vendors (Import order matters for proper cascade)
                 "node_modules/animate.css/animate.min.css",
                 "resources/css/vendors/ckeditor.css",
                 "resources/css/vendors/dropzone.css",
@@ -30,7 +52,7 @@ export default defineConfig({
                 "resources/css/vendors/tom-select.css",
                 "resources/css/vendors/zoom-vanilla.css",
 
-                // CSS Themes
+                // CSS Themes (Theme-specific styles)
                 "resources/css/themes/enigma/side-nav.css",
                 "resources/css/themes/enigma/top-nav.css",
                 "resources/css/themes/icewall/side-nav.css",
@@ -42,11 +64,8 @@ export default defineConfig({
                 "resources/css/themes/kindergarten/side-nav.css",
                 "resources/css/themes/kindergarten/top-nav.css",
 
-                // CSS Components
+                // CSS Components (Additional components)
                 "resources/css/components/mobile-menu.css",
-
-                // CSS General
-                "resources/css/app.css",
 
                 // JS Vendor
                 "resources/js/vendors/accordion.js",

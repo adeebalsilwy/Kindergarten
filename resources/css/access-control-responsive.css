@@ -1,0 +1,352 @@
+/* Access Control Components - Responsive Design */
+.access-control-index {
+    /* Ensure proper spacing and padding for mobile */
+    padding: 1rem;
+}
+
+.access-control-index .intro-y {
+    margin-bottom: 1.5rem;
+}
+
+/* Responsive Grid Layouts */
+@media (max-width: 768px) {
+    .access-control-index .grid {
+        grid-template-columns: 1fr !important;
+        gap: 1rem !important;
+    }
+    
+    .access-control-index .md\:grid-cols-2 {
+        grid-template-columns: 1fr !important;
+    }
+    
+    .access-control-index .lg\:grid-cols-3 {
+        grid-template-columns: 1fr !important;
+    }
+    
+    .access-control-index .lg\:grid-cols-4 {
+        grid-template-columns: 1fr !important;
+    }
+    
+    .access-control-index .xl\:grid-cols-6 {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+@media (max-width: 640px) {
+    .access-control-index {
+        padding: 0.5rem;
+    }
+    
+    .access-control-index .box {
+        padding: 1rem !important;
+    }
+    
+    .access-control-index .text-lg {
+        font-size: 1.125rem !important;
+    }
+    
+    .access-control-index .flex-wrap {
+        flex-wrap: wrap !important;
+    }
+    
+    .access-control-index .w-full {
+        width: 100% !important;
+    }
+}
+
+/* Table Responsiveness */
+@media (max-width: 768px) {
+    .access-control-index .table-report {
+        display: block !important;
+        overflow-x: auto !important;
+        white-space: nowrap !important;
+    }
+    
+    .access-control-index .table-report th,
+    .access-control-index .table-report td {
+        white-space: nowrap !important;
+        padding: 0.5rem !important;
+    }
+    
+    .access-control-index .table-report__action {
+        min-width: 120px !important;
+    }
+}
+
+/* Form Responsiveness */
+.access-control-form .form-field-group {
+    margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+    .access-control-form .grid {
+        grid-template-columns: 1fr !important;
+        gap: 1rem !important;
+    }
+    
+    .access-control-form .md\:col-span-6 {
+        grid-column: span 1 !important;
+    }
+    
+    .access-control-form .lg\:col-span-8 {
+        grid-column: span 1 !important;
+    }
+    
+    .access-control-form .form-input,
+    .access-control-form .form-select,
+    .access-control-form .form-textarea {
+        font-size: 1rem !important;
+        padding: 0.75rem !important;
+    }
+    
+    .access-control-form .btn {
+        width: 100% !important;
+        margin-bottom: 0.5rem !important;
+    }
+}
+
+/* Filter Component Responsiveness */
+.access-control-filters .box {
+    padding: 1.25rem !important;
+}
+
+@media (max-width: 768px) {
+    .access-control-filters .flex {
+        flex-direction: column !important;
+        gap: 1rem !important;
+    }
+    
+    .access-control-filters .flex-wrap {
+        flex-wrap: wrap !important;
+    }
+    
+    .access-control-filters .gap-2 > * {
+        width: 100% !important;
+        margin-bottom: 0.5rem !important;
+    }
+    
+    .access-control-filters .dropdown-menu {
+        position: fixed !important;
+        top: 50% !important;
+        left: 50% !important;
+        transform: translate(-50%, -50%) !important;
+        width: 90% !important;
+        max-width: 300px !important;
+        z-index: 1000 !important;
+    }
+}
+
+/* Modal Responsiveness */
+@media (max-width: 640px) {
+    .modal-dialog {
+        margin: 1rem !important;
+        max-width: calc(100% - 2rem) !important;
+    }
+    
+    .modal-content {
+        border-radius: 0.5rem !important;
+    }
+    
+    .modal-header,
+    .modal-body,
+    .modal-footer {
+        padding: 1rem !important;
+    }
+    
+    .modal-body .grid {
+        grid-template-columns: 1fr !important;
+        gap: 1rem !important;
+    }
+}
+
+/* Button Responsiveness */
+@media (max-width: 480px) {
+    .btn {
+        padding: 0.5rem 1rem !important;
+        font-size: 0.875rem !important;
+    }
+    
+    .btn .lucide {
+        width: 1rem !important;
+        height: 1rem !important;
+        margin-right: 0.5rem !important;
+    }
+    
+    .btn span {
+        display: none !important;
+    }
+    
+    .btn span:first-child:last-child {
+        display: inline !important;
+    }
+}
+
+/* Card/Box Responsiveness */
+@media (max-width: 768px) {
+    .box {
+        border-radius: 0.75rem !important;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
+    }
+    
+    .intro-y.box {
+        margin-bottom: 1rem !important;
+    }
+    
+    .report-box .box {
+        padding: 1rem !important;
+    }
+    
+    .report-box .text-2xl {
+        font-size: 1.5rem !important;
+    }
+    
+    .report-box .text-sm {
+        font-size: 0.75rem !important;
+    }
+}
+
+/* Typography Responsiveness */
+@media (max-width: 640px) {
+    h2.text-lg {
+        font-size: 1.25rem !important;
+    }
+    
+    .text-base {
+        font-size: 0.875rem !important;
+    }
+    
+    .text-sm {
+        font-size: 0.75rem !important;
+    }
+    
+    .text-xs {
+        font-size: 0.625rem !important;
+    }
+}
+
+/* Touch-friendly elements */
+@media (max-width: 768px) {
+    .form-check-input {
+        width: 1.25rem !important;
+        height: 1.25rem !important;
+    }
+    
+    .form-label {
+        font-size: 0.875rem !important;
+        margin-bottom: 0.25rem !important;
+    }
+    
+    select {
+        background-position: right 0.5rem center !important;
+        padding-right: 2rem !important;
+    }
+    
+    .pagination {
+        flex-wrap: wrap !important;
+        gap: 0.5rem !important;
+    }
+    
+    .pagination .btn {
+        padding: 0.5rem !important;
+        font-size: 0.75rem !important;
+    }
+}
+
+/* Dark mode adjustments */
+@media (prefers-color-scheme: dark) {
+    .access-control-index,
+    .access-control-form,
+    .access-control-filters {
+        color-scheme: dark;
+    }
+    
+    .box {
+        background-color: #1f2937 !important;
+        border-color: #374151 !important;
+    }
+    
+    .form-input,
+    .form-select,
+    .form-textarea {
+        background-color: #1f2937 !important;
+        border-color: #4b5563 !important;
+        color: #f9fafb !important;
+    }
+    
+    .form-input:focus,
+    .form-select:focus,
+    .form-textarea:focus {
+        border-color: #3b82f6 !important;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
+    }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+    .btn {
+        border-width: 2px !important;
+    }
+    
+    .form-label {
+        font-weight: 600 !important;
+    }
+    
+    .form-input,
+    .form-select,
+    .form-textarea {
+        border-width: 2px !important;
+    }
+    
+    .table-report th {
+        background-color: #000 !important;
+        color: #fff !important;
+        border: 2px solid #fff !important;
+    }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    
+    .btn:hover,
+    .form-input:hover,
+    .form-select:hover {
+        transform: none !important;
+    }
+}
+
+/* Print styles */
+@media print {
+    .access-control-index .btn,
+    .access-control-form .btn,
+    .access-control-filters .btn,
+    .modal,
+    .dropdown-menu {
+        display: none !important;
+    }
+    
+    .box {
+        box-shadow: none !important;
+        border: 1px solid #000 !important;
+    }
+    
+    .table-report {
+        border: 1px solid #000 !important;
+    }
+    
+    .table-report th,
+    .table-report td {
+        border: 1px solid #000 !important;
+    }
+    
+    .form-input,
+    .form-select,
+    .form-textarea {
+        border: 1px solid #000 !important;
+        background: #fff !important;
+    }
+}

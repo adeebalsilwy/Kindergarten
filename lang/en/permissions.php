@@ -23,4 +23,18 @@ return [
         'updated' => 'Record updated successfully.',
         'deleted' => 'Record deleted successfully.',
     ],
+    'permission' => [
+        'title' => '',
+        'messages' => [
+            'created' => '',
+            'updated' => '',
+            'deleted' => '',
+            'retrieved' => '',
+        ],
+    ],
+    'permissions' => [
+        'fields' => [
+            'InnoDB' => '',
+        ],
+    ],
 ];

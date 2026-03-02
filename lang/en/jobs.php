@@ -37,4 +37,9 @@ return [
         'updated' => 'Record updated successfully.',
         'deleted' => 'Record deleted successfully.',
     ],
+    'jobs' => [
+        'messages' => [
+            'retrieved' => 'Jobs retrieved successfully',
+        ],
+    ],
 ];

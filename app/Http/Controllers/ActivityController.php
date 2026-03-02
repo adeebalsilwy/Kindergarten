@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use OmarAlalwi\Gpdf\Facades\Gpdf;
+use OmarAlalwi\Gpdf\Facade\Gpdf;
 
 use App\Http\Requests\StoreActivityRequest;
 use App\Http\Requests\UpdateActivityRequest;
@@ -60,9 +60,11 @@ class ActivityController extends Controller
      */
     protected function exportToPdf($data)
     {
-        $pdf = Gpdf::loadView('pages.activities.export-pdf', ['data' => $data]);
-
-        return $pdf->download('Activity_export_'.date('Y-m-d_H-i-s').'.pdf');
+        $html = view('pages.activities.export-pdf', ['data' => $data])->render();
+        
+        return response()->streamDownload(function () use ($html) {
+            echo Gpdf::generate($html);
+        }, 'Activity_export_'.date('Y-m-d_H-i-s').'.pdf');
     }
 
     /**
@@ -158,6 +160,14 @@ class ActivityController extends Controller
     {
         $this->authorize('view_activities');
         $activity = $this->service->find($id);
+        
+        // Load all related data for the enhanced show page
+        $activity->load([
+            'class',
+            'teacher',
+            'curriculum',
+            'children'
+        ]);
 
         return view('pages.activities.show', compact('activity'));
     }

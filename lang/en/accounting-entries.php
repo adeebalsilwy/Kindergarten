@@ -26,4 +26,9 @@ return [
         'updated' => 'Record updated successfully.',
         'deleted' => 'Record deleted successfully.',
     ],
+    'accounting-entries' => [
+        'fields' => [
+            'name' => 'Name',
+        ],
+    ],
 ];

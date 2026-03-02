@@ -29,6 +29,8 @@ class StoreCurriculumRequest extends FormRequest
             'is_active' => 'required|boolean',
             'published_at' => 'required|date',
             'created_by' => 'required',
+            'connected_materials' => 'array',
+            'connected_materials.*' => 'exists:materials,id',
 
         ];
     }

@@ -24,4 +24,9 @@ return [
         'updated' => 'Record updated successfully.',
         'deleted' => 'Record deleted successfully.',
     ],
+    'languages' => [
+        'messages' => [
+            'retrieved' => 'Languages retrieved successfully',
+        ],
+    ],
 ];

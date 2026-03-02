@@ -5,10 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Traits\Filterable;
 
 class Payment extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, Filterable;
+
+    protected $searchable = [
+        'reference_number',
+        'receipt_number',
+        'payment_method',
+        'status',
+    ];
 
     protected $fillable = [
         'child_id',

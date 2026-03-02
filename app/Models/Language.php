@@ -25,5 +25,22 @@ class Language extends Model
 
     protected $appends = [
         'slug',
+        'display_name',
+        'direction',
     ];
+
+    public function getDisplayNameAttribute()
+    {
+        return $this->name;
+    }
+
+    public function getDirectionAttribute()
+    {
+        return $this->is_rtl ? 'rtl' : 'ltr';
+    }
+
+    public function getSlugAttribute()
+    {
+        return strtolower(str_replace(' ', '-', $this->name));
+    }
 }

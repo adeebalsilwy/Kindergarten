@@ -7,10 +7,21 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
+use App\Traits\Filterable;
 
 class Guardian extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, Filterable;
+
+    protected $searchable = [
+        'name',
+        'phone',
+        'email',
+        'address',
+        'relationship',
+        'national_id',
+        'passport_number',
+    ];
 
     protected $fillable = [
         'name',
@@ -51,6 +62,7 @@ class Guardian extends Model
         'slug',
         'full_address',
         'children_count',
+        'full_name',
     ];
 
     // Model Events
@@ -78,6 +90,11 @@ class Guardian extends Model
     public function getSlugAttribute(): string
     {
         return Str::slug($this->name);
+    }
+
+    public function getFullNameAttribute(): string
+    {
+        return $this->name;
     }
 
     public function getFullAddressAttribute(): string

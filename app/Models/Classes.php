@@ -33,6 +33,8 @@ class Classes extends Model
         'monthly_fee',
         'is_active',
         'curriculum',
+        'deleted_at',
+        'grade_level_id',
     ];
 
     protected $casts = [
@@ -41,6 +43,7 @@ class Classes extends Model
         'monthly_fee' => 'decimal:2',
         'is_active' => 'boolean',
         'deleted_at' => 'datetime',
+        'grade_level_id' => 'integer',
     ];
 
     protected $appends = [
@@ -91,14 +94,15 @@ class Classes extends Model
         return $this->hasMany(Event::class, 'class_id');
     }
 
-    // public function curriculum(): BelongsTo
-    // {
-    //     return $this->belongsTo(Curriculum::class, 'curriculum_id');
-    // }
+    public function classEnrollments(): HasMany
+    {
+        return $this->hasMany(ClassEnrollment::class);
+    }
 
     public function enrolledChildren(): BelongsToMany
     {
         return $this->belongsToMany(Children::class, 'class_enrollments', 'class_id', 'child_id')
+            ->withPivot(['enrollment_date', 'withdrawal_date', 'status', 'reason'])
             ->withTimestamps();
     }
 
@@ -110,7 +114,8 @@ class Classes extends Model
 
     public function getEnrollmentCountAttribute(): int
     {
-        return $this->children()->count();
+        // Count only active enrollments
+        return $this->classEnrollments()->where('status', 'active')->count();
     }
 
     public function getAvailableSpotsAttribute(): int
@@ -135,5 +140,32 @@ class Classes extends Model
         return $this->gradeLevel->name ?? '';
     }
 
-
+    public function scopeFilter($query, $filters)
+    {
+        if (isset($filters['grade_level_id']) && $filters['grade_level_id']) {
+            $query->where('grade_level_id', $filters['grade_level_id']);
+        }
+        
+        if (isset($filters['teacher_id']) && $filters['teacher_id']) {
+            $query->where('teacher_id', $filters['teacher_id']);
+        }
+        
+        if (isset($filters['age_group']) && $filters['age_group']) {
+            $query->where('age_group', $filters['age_group']);
+        }
+        
+        if (isset($filters['is_active'])) {
+            $query->where('is_active', $filters['is_active']);
+        }
+        
+        if (isset($filters['search']) && $filters['search']) {
+            $query->where(function($q) use ($filters) {
+                $q->where('name', 'LIKE', '%' . $filters['search'] . '%')
+                  ->orWhere('code', 'LIKE', '%' . $filters['search'] . '%')
+                  ->orWhere('description', 'LIKE', '%' . $filters['search'] . '%');
+            });
+        }
+        
+        return $query;
+    }
 }

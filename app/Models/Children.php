@@ -119,6 +119,18 @@ class Children extends Model
             ->withTimestamps();
     }
 
+    public function classEnrollments(): HasMany
+    {
+        return $this->hasMany('App\Models\ClassEnrollment', 'child_id');
+    }
+
+    public function enrolledClasses(): BelongsToMany
+    {
+        return $this->belongsToMany(Classes::class, 'class_enrollments', 'child_id', 'class_id')
+            ->withPivot(['enrollment_date', 'withdrawal_date', 'status', 'reason'])
+            ->withTimestamps();
+    }
+
     // Accessors
     public function getSlugAttribute(): string
     {

@@ -20,12 +20,13 @@ class LoginController extends Controller
     public function showLoginForm(): View
     {
         $demoAccounts = [
-            ['role_key' => 'administrator', 'email' => 'admin@kindergarten.ye', 'password' => 'admin123'],
-            ['role_key' => 'principal', 'email' => 'principal@kindergarten.ye', 'password' => 'principal123'],
-            ['role_key' => 'accountant', 'email' => 'accountant@kindergarten.ye', 'password' => 'accountant123'],
-            ['role_key' => 'teacher', 'email' => 'teacher@kindergarten.ye', 'password' => 'teacher123'],
-            ['role_key' => 'staff', 'email' => 'staff@kindergarten.ye', 'password' => 'staff123'],
-            ['role_key' => 'parent_user', 'email' => 'parent@kindergarten.ye', 'password' => 'parent123'],
+            ['role_key' => 'Super Admin', 'email' => 'superadmin@nursery.ye', 'password' => 'admin123', 'name' => __('global.administrator')],
+            ['role_key' => 'Administrator', 'email' => 'admin@nursery.ye', 'password' => 'admin123', 'name' => __('global.administrator')],
+            ['role_key' => 'Principal', 'email' => 'principal@nursery.ye', 'password' => 'admin123', 'name' => __('global.principal')],
+            ['role_key' => 'Accountant', 'email' => 'accountant@nursery.ye', 'password' => 'admin123', 'name' => __('global.accountant')],
+            ['role_key' => 'Teacher', 'email' => 'teacher@nursery.ye', 'password' => 'admin123', 'name' => __('global.teacher')],
+            ['role_key' => 'Staff', 'email' => 'staff@nursery.ye', 'password' => 'admin123', 'name' => __('global.staff')],
+            ['role_key' => 'Parent', 'email' => 'parent@nursery.ye', 'password' => 'admin123', 'name' => __('global.parent_user')],
         ];
 
         // Get login attempt count for rate limiting info
@@ -150,13 +151,19 @@ class LoginController extends Controller
      */
     private function redirectToDashboard(User $user): RedirectResponse
     {
-        // You can customize this based on user roles
-        if ($user->hasRole('administrator')) {
+        // Check for English role names that correspond to the system
+        if ($user->hasRole('Super Admin') || $user->hasRole('Administrator')) {
             return redirect()->intended(route('dashboard-overview-1'));
-        } elseif ($user->hasRole('principal')) {
+        } elseif ($user->hasRole('Principal')) {
+            return redirect()->intended(route('dashboard-overview-1'));
+        } elseif ($user->hasRole('Accountant')) {
+            return redirect()->intended(route('dashboard-overview-1'));
+        } elseif ($user->hasRole('Teacher')) {
+            return redirect()->intended(route('dashboard-overview-1'));
+        } elseif ($user->hasRole('Staff')) {
             return redirect()->intended(route('dashboard-overview-1'));
         } else {
-            return redirect()->intended(route('dashboard-overview-1'));
+            return redirect()->intended(route('dashboard-overview-1')); // Default redirect
         }
     }
 }

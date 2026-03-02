@@ -71,6 +71,10 @@
                     <x-base.lucide icon="CheckCircle" class="w-4 h-4 me-2" />
                     {{ __('global.attendance') }}
                 </button>
+                <button class="tab-button px-4 py-2 text-sm font-medium rounded-t-lg" data-tab="teacher-details">
+                    <x-base.lucide icon="User" class="w-4 h-4 me-2" />
+                    {{ __('global.teacher_details') }}
+                </button>
             </nav>
         </div>
     </div>
@@ -419,7 +423,7 @@
                                                 <div class="text-xs text-slate-500">{{ __('global.activities') }}</div>
                                             </div>
                                             <div class="text-center p-2 bg-purple-50 rounded">
-                                                <div class="text-lg font-bold text-purple-600">{{ $classes->teacher->assignedChildren()->count() }}</div>
+                                                <div class="text-lg font-bold text-purple-600">{{ $classes->children()->count() }}</div>
                                                 <div class="text-xs text-slate-500">{{ __('global.students') }}</div>
                                             </div>
                                         </div>
@@ -457,11 +461,11 @@
                         <div class="space-y-4">
                             <div class="flex justify-between py-2 border-b">
                                 <span class="text-slate-500">{{ __('global.start_time') }}:</span>
-                                <span class="font-medium">{{ $classes->start_time ? $classes->start_time->format('H:i') : __('global.not_specified') }}</span>
+                                <span class="font-medium">{{ $classes->start_time ? date('H:i', strtotime($classes->start_time)) : __('global.not_specified') }}</span>
                             </div>
                             <div class="flex justify-between py-2 border-b">
                                 <span class="text-slate-500">{{ __('global.end_time') }}:</span>
-                                <span class="font-medium">{{ $classes->end_time ? $classes->end_time->format('H:i') : __('global.not_specified') }}</span>
+                                <span class="font-medium">{{ $classes->end_time ? date('H:i', strtotime($classes->end_time)) : __('global.not_specified') }}</span>
                             </div>
                             <div class="flex justify-between py-2 border-b">
                                 <span class="text-slate-500">{{ __('global.room_number') }}:</span>
@@ -484,7 +488,7 @@
                         <div class="space-y-4">
                             <div class="text-center p-4 bg-blue-50 rounded-lg">
                                 <div class="text-2xl font-bold text-blue-600">
-                                    {{ $classes->start_time && $classes->end_time ? $classes->start_time->diffInMinutes($classes->end_time) : 0 }}
+                                    {{ $classes->start_time && $classes->end_time ? abs(strtotime($classes->end_time) - strtotime($classes->start_time)) / 60 : 0 }}
                                 </div>
                                 <div class="text-sm text-slate-600">{{ __('global.minutes_per_session') }}</div>
                             </div>
@@ -663,26 +667,29 @@
                                 <div class="flex items-start justify-between mb-4">
                                     <div>
                                         <h3 class="text-xl font-bold">{{ $classes->curriculum->name }}</h3>
-                                        <div class="text-slate-500 text-sm mt-1">{{ $classes->curriculum->code ?? 'No code' }}</div>
+                                        <div class="text-slate-500 text-sm mt-1">{{ $classes->curriculum->subject_area ?? 'General' }}</div>
                                     </div>
-                                    <span class="px-3 py-1 rounded text-sm 
-                                        {{ $classes->curriculum->is_active ? 'bg-success/20 text-success' : 'bg-warning/20 text-warning' }}">
-                                        {{ $classes->curriculum->is_active ? __('global.active') : __('global.inactive') }}
-                                    </span>
                                 </div>
                                 
-                                <div class="space-y-3 text-sm text-slate-600">
-                                    <div class="flex items-center">
-                                        <x-base.lucide icon="Award" class="w-4 h-4 me-2" />
-                                        {{ $classes->curriculum->grade_level ?? 'Not specified' }}
+                                <div class="space-y-4">
+                                    <div class="flex justify-between py-2 border-b">
+                                        <span class="text-slate-500">{{ __('global.code') }}:</span>
+                                        <span class="font-medium">{{ $classes->curriculum->code ?? 'Not specified' }}</span>
                                     </div>
-                                    <div class="flex items-center">
-                                        <x-base.lucide icon="Book" class="w-4 h-4 me-2" />
-                                        {{ $classes->curriculum->subject_area ?? 'Not specified' }}
+                                    <div class="flex justify-between py-2 border-b">
+                                        <span class="text-slate-500">{{ __('global.grade_level') }}:</span>
+                                        <span class="font-medium">{{ $classes->curriculum->grade_level ?? 'Not specified' }}</span>
                                     </div>
-                                    <div class="flex items-center">
-                                        <x-base.lucide icon="Calendar" class="w-4 h-4 me-2" />
-                                        {{ $classes->curriculum->duration_weeks ?? 'N/A' }} {{ __('global.weeks') }}
+                                    <div class="flex justify-between py-2 border-b">
+                                        <span class="text-slate-500">{{ __('global.duration_weeks') }}:</span>
+                                        <span class="font-medium">{{ $classes->curriculum->duration_weeks ?? 'N/A' }} {{ __('global.weeks') }}</span>
+                                    </div>
+                                    <div class="flex justify-between py-2">
+                                        <span class="text-slate-500">{{ __('global.status') }}:</span>
+                                        <span class="font-medium px-2 py-1 rounded text-sm 
+                                            {{ $classes->curriculum->is_active ? 'bg-success/20 text-success' : 'bg-warning/20 text-warning' }}">
+                                            {{ $classes->curriculum->is_active ? __('global.active') : __('global.inactive') }}
+                                        </span>
                                     </div>
                                 </div>
                                 
@@ -693,25 +700,6 @@
                                 @endif
                                 
                                 <div class="mt-4 pt-4 border-t">
-                                    <div class="grid grid-cols-3 gap-2">
-                                        <div class="text-center p-2 bg-blue-50 rounded">
-                                            <div class="text-lg font-bold text-blue-600">{{ $classes->curriculum->activities()->count() }}</div>
-                                            <div class="text-xs text-slate-500">{{ __('global.activities') }}</div>
-                                        </div>
-                                        <div class="text-center p-2 bg-green-50 rounded">
-                                            <div class="text-lg font-bold text-green-600">{{ $classes->curriculum->classes()->count() }}</div>
-                                            <div class="text-xs text-slate-500">{{ __('global.classes') }}</div>
-                                        </div>
-                                        <div class="text-center p-2 bg-purple-50 rounded">
-                                            <div class="text-lg font-bold text-purple-600">
-                                                {{ $classes->curriculum->topics ? count($classes->curriculum->topics) : 0 }}
-                                            </div>
-                                            <div class="text-xs text-slate-500">{{ __('global.topics') }}</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="mt-4">
                                     <a href="{{ route('curricula.show', $classes->curriculum->id) }}" class="text-primary hover:underline">
                                         {{ __('global.view_curriculum_details') }}
                                         <x-base.lucide icon="ArrowRight" class="w-4 h-4 inline ms-1" />
@@ -810,6 +798,143 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+        
+        <!-- Teacher Details Tab -->
+        <div id="teacher-details" class="tab-content">
+            <div class="grid grid-cols-12 gap-6">
+                @if($classes->teacher)
+                <div class="intro-y col-span-12">
+                    <div class="box p-5">
+                        <div class="text-lg font-medium mb-4 flex items-center justify-between">
+                            <span>{{ __('global.detailed_teacher_info') }}</span>
+                            <span class="text-sm text-slate-500">{{ $classes->teacher->name }}</span>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Teacher Classes -->
+                            <div class="border rounded-lg p-4">
+                                <h3 class="font-medium text-lg mb-3 flex items-center">
+                                    <x-base.lucide icon="Home" class="w-5 h-5 me-2 text-primary" />
+                                    {{ __('global.teacher_classes') }}
+                                </h3>
+                                <div class="space-y-2 max-h-60 overflow-y-auto">
+                                    @forelse($classes->teacher->classes as $teacherClass)
+                                        <div class="flex items-center p-2 hover:bg-slate-50 rounded">
+                                            <div class="flex-1">
+                                                <div class="font-medium text-sm">{{ $teacherClass->name }}</div>
+                                                <div class="text-xs text-slate-500">{{ $teacherClass->age_group ?? 'Not specified' }}</div>
+                                            </div>
+                                            <a href="{{ route('classes.show', $teacherClass->id) }}" class="text-primary hover:underline text-xs">
+                                                {{ __('global.view') }}
+                                            </a>
+                                        </div>
+                                    @empty
+                                        <p class="text-slate-500">{{ __('global.no_classes') }}</p>
+                                    @endforelse
+                                </div>
+                            </div>
+                            
+                            <!-- Teacher Activities -->
+                            <div class="border rounded-lg p-4">
+                                <h3 class="font-medium text-lg mb-3 flex items-center">
+                                    <x-base.lucide icon="Calendar" class="w-5 h-5 me-2 text-primary" />
+                                    {{ __('global.teacher_activities') }}
+                                </h3>
+                                <div class="space-y-2 max-h-60 overflow-y-auto">
+                                    @forelse($classes->teacher->activities as $teacherActivity)
+                                        <div class="flex items-center p-2 hover:bg-slate-50 rounded">
+                                            <div class="flex-1">
+                                                <div class="font-medium text-sm">{{ $teacherActivity->title ?? $teacherActivity->name }}</div>
+                                                <div class="text-xs text-slate-500">
+                                                    {{ $teacherActivity->scheduled_date ? $teacherActivity->scheduled_date->format('M d, Y') : 'Not scheduled' }}
+                                                </div>
+                                            </div>
+                                            <a href="{{ route('activities.show', $teacherActivity->id) }}" class="text-primary hover:underline text-xs">
+                                                {{ __('global.view') }}
+                                            </a>
+                                        </div>
+                                    @empty
+                                        <p class="text-slate-500">{{ __('global.no_activities') }}</p>
+                                    @endforelse
+                                </div>
+                            </div>
+                            
+                            <!-- Teacher Events -->
+                            <div class="border rounded-lg p-4">
+                                <h3 class="font-medium text-lg mb-3 flex items-center">
+                                    <x-base.lucide icon="CalendarEvent" class="w-5 h-5 me-2 text-primary" />
+                                    {{ __('global.teacher_events') }}
+                                </h3>
+                                <div class="space-y-2 max-h-60 overflow-y-auto">
+                                    @forelse($classes->teacher->events as $teacherEvent)
+                                        <div class="flex items-center p-2 hover:bg-slate-50 rounded">
+                                            <div class="flex-1">
+                                                <div class="font-medium text-sm">{{ $teacherEvent->title ?? $teacherEvent->name }}</div>
+                                                <div class="text-xs text-slate-500">
+                                                    {{ $teacherEvent->start_datetime ? $teacherEvent->start_datetime->format('M d, Y') : 'Not scheduled' }}
+                                                </div>
+                                            </div>
+                                            <a href="{{ route('events.show', $teacherEvent->id) }}" class="text-primary hover:underline text-xs">
+                                                {{ __('global.view') }}
+                                            </a>
+                                        </div>
+                                    @empty
+                                        <p class="text-slate-500">{{ __('global.no_events') }}</p>
+                                    @endforelse
+                                </div>
+                            </div>
+                            
+                            <!-- Teacher User Account -->
+                            <div class="border rounded-lg p-4">
+                                <h3 class="font-medium text-lg mb-3 flex items-center">
+                                    <x-base.lucide icon="User" class="w-5 h-5 me-2 text-primary" />
+                                    {{ __('global.user_account') }}
+                                </h3>
+                                @if($classes->teacher->user)
+                                    <div class="space-y-2">
+                                        <div class="flex justify-between py-2 border-b">
+                                            <span class="text-slate-500">{{ __('global.name') }}:</span>
+                                            <span class="font-medium">{{ $classes->teacher->user->name }}</span>
+                                        </div>
+                                        <div class="flex justify-between py-2 border-b">
+                                            <span class="text-slate-500">{{ __('global.email') }}:</span>
+                                            <span class="font-medium">{{ $classes->teacher->user->email }}</span>
+                                        </div>
+                                        <div class="flex justify-between py-2 border-b">
+                                            <span class="text-slate-500">{{ __('global.status') }}:</span>
+                                            <span class="font-medium px-2 py-1 rounded text-sm 
+                                                {{ $classes->teacher->user->is_active ? 'bg-success/20 text-success' : 'bg-warning/20 text-warning' }}">
+                                                {{ $classes->teacher->user->is_active ? __('global.active') : __('global.inactive') }}
+                                            </span>
+                                        </div>
+                                        <div class="flex justify-between py-2">
+                                            <span class="text-slate-500">{{ __('global.roles') }}:</span>
+                                            <span class="font-medium">{{ $classes->teacher->user->roles->count() }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="mt-4">
+                                        <a href="{{ route('users.show', $classes->teacher->user->id) }}" class="text-primary hover:underline">
+                                            {{ __('global.view_user_profile') }}
+                                        </a>
+                                    </div>
+                                @else
+                                    <p class="text-slate-500">{{ __('global.no_user_account_linked') }}</p>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @else
+                <div class="intro-y col-span-12">
+                    <div class="box p-8 text-center">
+                        <x-base.lucide icon="UserX" class="w-16 h-16 mx-auto mb-4 text-slate-300" />
+                        <h3 class="text-lg font-medium text-slate-500">{{ __('global.no_teacher_assigned') }}</h3>
+                        <p class="text-slate-400 mt-2">{{ __('global.assign_teacher_to_view_details') }}</p>
+                    </div>
+                </div>
+                @endif
             </div>
         </div>
     </div>

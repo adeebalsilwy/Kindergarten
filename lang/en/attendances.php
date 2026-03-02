@@ -24,4 +24,9 @@ return [
         'updated' => 'Record updated successfully.',
         'deleted' => 'Record deleted successfully.',
     ],
+    'attendances' => [
+        'messages' => [
+            'retrieved' => 'Attendance records retrieved successfully',
+        ],
+    ],
 ];

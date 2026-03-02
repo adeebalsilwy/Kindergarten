@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use OmarAlalwi\Gpdf\Facades\Gpdf;
+use OmarAlalwi\Gpdf\Facade\Gpdf;
 
 use App\Http\Requests\StoreFeeRequest;
 use App\Http\Requests\UpdateFeeRequest;
@@ -38,7 +38,19 @@ class FeeController extends Controller
 
         $fees = $query->paginate(15)->withQueryString();
 
-        return view('pages.fees.index', compact('fees'));
+        // Statistics
+        $totalFeesCount = \App\Models\Fee::count();
+        $activeFeesCount = \App\Models\Fee::where('is_active', true)->count();
+        $totalFeesAmount = \App\Models\Fee::sum('amount');
+        $totalCollected = \App\Models\Payment::where('status', 'completed')->sum('amount');
+
+        return view('pages.fees.index', compact(
+            'fees', 
+            'totalFeesCount', 
+            'activeFeesCount', 
+            'totalFeesAmount', 
+            'totalCollected'
+        ));
     }
 
     /**
@@ -64,9 +76,11 @@ class FeeController extends Controller
      */
     protected function exportToPdf($data)
     {
-        $pdf = Gpdf::loadView('pages.fees.export-pdf', ['data' => $data]);
-
-        return $pdf->download('Fee_export_'.date('Y-m-d_H-i-s').'.pdf');
+        $html = view('pages.fees.export-pdf', ['data' => $data])->render();
+        
+        return response()->streamDownload(function () use ($html) {
+            echo Gpdf::generate($html);
+        }, 'Fee_export_'.date('Y-m-d_H-i-s').'.pdf');
     }
 
     /**
@@ -188,5 +202,65 @@ class FeeController extends Controller
         $this->service->delete($id);
 
         return redirect()->route('fees.index')->with('success', __('fees.messages.deleted'));
+    }
+
+    public function exportPdf()
+    {
+        $this->authorize('export_fees');
+        $query = $this->service->query()->with(['payments']);
+
+        // Apply filters
+        $request = request();
+        if ($request->filled('search')) {
+            $query->where(function($q) use ($request) {
+                $q->where('name', 'LIKE', '%' . $request->search . '%')
+                  ->orWhere('description', 'LIKE', '%' . $request->search . '%');
+            });
+        }
+        
+        if ($request->filled('category')) {
+            $query->where('category', $request->category);
+        }
+        
+        if ($request->filled('is_active')) {
+            $query->where('is_active', $request->is_active);
+        }
+        
+        if ($request->filled('frequency')) {
+            $query->where('frequency', $request->frequency);
+        }
+
+        $data = $query->get();
+        return $this->exportToPdf($data);
+    }
+
+    public function exportExcel()
+    {
+        $this->authorize('export_fees');
+        $query = $this->service->query()->with(['payments']);
+
+        // Apply filters
+        $request = request();
+        if ($request->filled('search')) {
+            $query->where(function($q) use ($request) {
+                $q->where('name', 'LIKE', '%' . $request->search . '%')
+                  ->orWhere('description', 'LIKE', '%' . $request->search . '%');
+            });
+        }
+        
+        if ($request->filled('category')) {
+            $query->where('category', $request->category);
+        }
+        
+        if ($request->filled('is_active')) {
+            $query->where('is_active', $request->is_active);
+        }
+        
+        if ($request->filled('frequency')) {
+            $query->where('frequency', $request->frequency);
+        }
+
+        $data = $query->get();
+        return $this->exportToExcel($data);
     }
 }

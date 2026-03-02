@@ -41,4 +41,9 @@ return [
         'updated' => 'Record updated successfully.',
         'deleted' => 'Record deleted successfully.',
     ],
+    'events' => [
+        'messages' => [
+            'retrieved' => 'Events retrieved successfully',
+        ],
+    ],
 ];

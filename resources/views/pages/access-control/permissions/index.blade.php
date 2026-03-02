@@ -1,61 +1,113 @@
 @extends('../themes/' . $activeTheme . '/' . $activeLayout)
 
 @section('subhead')
-    <title>Permissions - Deebo</title>
+    <title>{{ __('access_control.permissions.title') }} - {{ config('app.name') }}</title>
 @endsection
 
 @section('subcontent')
-    <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
-        <h2 class="text-lg font-medium me-auto">Permissions Management</h2>
-    </div>
+    <x-access-control.index
+        title="access_control.permissions.title"
+        :items="$permissions"
+        :columns="[
+            ['key' => 'id', 'label' => 'access_control.fields.id', 'class' => 'whitespace-nowrap'],
+            ['key' => 'name', 'label' => 'access_control.fields.name', 'class' => 'whitespace-nowrap'],
+            ['key' => 'guard_name', 'label' => 'access_control.fields.guard_name', 'class' => 'text-center whitespace-nowrap'],
+            ['key' => 'created_at', 'label' => 'access_control.fields.created_at', 'class' => 'text-center whitespace-nowrap'],
+        ]"
+        :filters="[
+            [
+                'name' => 'guard_name',
+                'label' => 'access_control.fields.guard_name',
+                'type' => 'select',
+                'placeholder' => 'access_control.permissions.filter_by_guard',
+                'options' => [
+                    ['value' => 'web', 'label' => 'Web'],
+                    ['value' => 'api', 'label' => 'API'],
+                ]
+            ]
+        ]"
+        :bulkActions="[
+            ['action' => 'delete', 'label' => 'access_control.actions.delete', 'icon' => 'Trash2'],
+        ]"
+        searchPlaceholder="access_control.permissions.search"
+        createUrl="{{ route('permissions.create') }}"
+        viewType="table"
+        showStats="false"
+        :pagination="$permissions"
+    >
+        <x-slot name="header">
+            <x-base.button 
+                variant="primary" 
+                data-tw-toggle="modal" 
+                data-tw-target="#create-permission-modal"
+                class="flex items-center shadow-md"
+            >
+                <x-base.lucide icon="Plus" class="w-4 h-4 me-2" />
+                {{ __('access_control.permissions.add_new') }}
+            </x-base.button>
+        </x-slot>
+        
+        <x-slot name="afterContent">
+            {{ $permissions->links() }}
+        </x-slot>
+    </x-access-control.index>
 
-    <div class="grid grid-cols-12 gap-6 mt-5">
-        <div class="intro-y col-span-12 lg:col-span-4">
-            <div class="intro-y box p-5">
-                <h3 class="text-base font-medium mb-4">Add New Permission</h3>
+    <!-- Create Permission Modal -->
+    <div id="create-permission-modal" class="modal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="font-medium text-base me-auto">{{ __('access_control.permissions.add_new') }}</h2>
+                    <x-base.button variant="outline-secondary" data-tw-dismiss="modal">
+                        <x-base.lucide icon="X" class="w-4 h-4" />
+                    </x-base.button>
+                </div>
                 <form action="{{ route('permissions.store') }}" method="POST">
                     @csrf
-                    <div>
-                        <x-base.form-label for="name">Permission Name</x-base.form-label>
-                        <x-base.form-input id="name" name="name" type="text" placeholder="e.g. view_reports" required />
+                    <div class="modal-body">
+                        <div class="mb-4">
+                            <x-base.form-label for="modal_name" class="required">
+                                {{ __('access_control.fields.name') }} <span class="text-danger">*</span>
+                            </x-base.form-label>
+                            <x-base.form-input 
+                                id="modal_name" 
+                                name="name" 
+                                type="text" 
+                                placeholder="e.g. view_reports" 
+                                required 
+                            />
+                        </div>
+                        <div class="mb-4">
+                            <x-base.form-label for="modal_guard_name">
+                                {{ __('access_control.fields.guard_name') }}
+                            </x-base.form-label>
+                            <x-base.tom-select name="guard_name" id="modal_guard_name">
+                                <option value="web">Web</option>
+                                <option value="api">API</option>
+                            </x-base.tom-select>
+                        </div>
+                        <div class="mb-4">
+                            <x-base.form-label for="modal_description">
+                                {{ __('access_control.fields.description') }}
+                            </x-base.form-label>
+                            <x-base.form-textarea 
+                                id="modal_description" 
+                                name="description" 
+                                rows="3" 
+                                placeholder="{{ __('access_control.messages.description_placeholder') }}"
+                            ></x-base.form-textarea>
+                        </div>
                     </div>
-                    <x-base.button variant="primary" type="submit" class="mt-4 w-full">Create Permission</x-base.button>
+                    <div class="modal-footer">
+                        <x-base.button variant="outline-secondary" data-tw-dismiss="modal">
+                            {{ __('access_control.actions.cancel') }}
+                        </x-base.button>
+                        <x-base.button variant="primary" type="submit">
+                            <x-base.lucide icon="Save" class="w-4 h-4 me-2" />
+                            {{ __('access_control.actions.create') }}
+                        </x-base.button>
+                    </div>
                 </form>
-            </div>
-        </div>
-
-        <div class="intro-y col-span-12 lg:col-span-8">
-            <div class="intro-y box p-5">
-                <x-base.table class="table-report">
-                    <x-base.table.thead>
-                        <x-base.table.tr>
-                            <x-base.table.th class="whitespace-nowrap">ID</x-base.table.th>
-                            <x-base.table.th class="whitespace-nowrap">NAME</x-base.table.th>
-                            <x-base.table.th class="text-center whitespace-nowrap">ACTIONS</x-base.table.th>
-                        </x-base.table.tr>
-                    </x-base.table.thead>
-                    <x-base.table.tbody>
-                        @foreach($permissions as $perm)
-                            <x-base.table.tr>
-                                <x-base.table.td>{{ $perm->id }}</x-base.table.td>
-                                <x-base.table.td>
-                                    <span class="font-medium whitespace-nowrap">{{ $perm->name }}</span>
-                                </x-base.table.td>
-                                <x-base.table.td class="table-report__action">
-                                    <div class="flex justify-center items-center">
-                                        <form action="{{ route('permissions.destroy', $perm->id) }}" method="POST" onsubmit="return confirm('Are you sure?')">
-                                            @csrf
-                                            @method('DELETE')
-                                            <x-base.button variant="outline-danger" type="submit" size="sm">
-                                                <x-base.lucide icon="Trash2" class="w-4 h-4 me-1" /> Delete
-                                            </x-base.button>
-                                        </form>
-                                    </div>
-                                </x-base.table.td>
-                            </x-base.table.tr>
-                        @endforeach
-                    </x-base.table.tbody>
-                </x-base.table>
             </div>
         </div>
     </div>

@@ -1,7 +1,7 @@
 @extends('../themes/' . $activeTheme . '/' . $activeLayout)
 
 @section('head')
-    <title>{{ __('Teacher.list') }} - Laravel</title>
+    <title>{{ __('Teacher.list') }} - {{ config('app.name') }}</title>
 @endsection
 
 @section('subcontent')
@@ -175,6 +175,15 @@
                             <option value="1" {{ request('is_active') == '1' ? 'selected' : '' }}>{{ __('global.active') }}</option>
                             <option value="0" {{ request('is_active') == '0' ? 'selected' : '' }}>{{ __('global.inactive') }}</option>
                         </select>
+                        <select name="sort" class="form-select w-full sm:w-40">
+                            <option value="">{{ __('global.sort_by_default') }}</option>
+                            <option value="name_asc" {{ request('sort') == 'name_asc' ? 'selected' : '' }}>{{ __('global.name_a_z') }}</option>
+                            <option value="name_desc" {{ request('sort') == 'name_desc' ? 'selected' : '' }}>{{ __('global.name_z_a') }}</option>
+                            <option value="salary_asc" {{ request('sort') == 'salary_asc' ? 'selected' : '' }}>{{ __('global.salary_low_high') }}</option>
+                            <option value="salary_desc" {{ request('sort') == 'salary_desc' ? 'selected' : '' }}>{{ __('global.salary_high_low') }}</option>
+                            <option value="hire_date_desc" {{ request('sort') == 'hire_date_desc' ? 'selected' : '' }}>{{ __('global.newest_first') }}</option>
+                            <option value="hire_date_asc" {{ request('sort') == 'hire_date_asc' ? 'selected' : '' }}>{{ __('global.oldest_first') }}</option>
+                        </select>
                         <div class="flex gap-2">
                             <x-base.button as="a" href="{{ route('teachers.index') }}" variant="secondary" class="flex items-center">
                                 <x-base.lucide icon="RotateCcw" class="w-4 h-4 me-2" />
@@ -283,6 +292,16 @@
                             @can('edit_teachers')
                             <x-base.button variant="outline-primary" as="a" href="{{ route('teachers.edit', $teacher->id) }}" size="sm" class="px-2 py-1">
                                 <x-base.lucide icon="Pencil" class="w-3 h-3" />
+                            </x-base.button>
+                            @endcan
+                            
+                            @can('delete_teachers')
+                            <x-base.button variant="outline-danger" 
+                                          data-delete-id="{{ $teacher->id }}" 
+                                          data-delete-name="{{ $teacher->name }}" 
+                                          data-delete-route="{{ route('teachers.destroy', $teacher->id) }}"
+                                          size="sm" class="px-2 py-1 delete-btn">
+                                <x-base.lucide icon="Trash2" class="w-3 h-3" />
                             </x-base.button>
                             @endcan
                         </div>
@@ -396,36 +415,98 @@
         @endif
     </div>
 
-    <!-- JavaScript for Filtering -->
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteModal" class="modal" tabindex="-1" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body p-0">
+                    <div class="p-5 text-center">
+                        <x-base.lucide icon="AlertTriangle" class="w-16 h-16 text-danger mx-auto mt-3" />
+                        <div class="text-3xl mt-5">{{ __('global.are_you_sure') }}</div>
+                        <div class="text-slate-500 mt-2">
+                            {{ __('global.delete_confirmation') }} "<span id="deleteItemName"></span>"?
+                        </div>
+                        <div class="text-slate-500 mt-1">
+                            {{ __('global.this_action_cannot_be_undone') }}
+                        </div>
+                    </div>
+                    <form id="deleteForm" method="POST" action="">
+                        @csrf
+                        @method('DELETE')
+                        <div class="px-5 pb-8 text-center">
+                            <x-base.button type="button" data-dismiss="modal" class="btn btn-outline-secondary w-24 mr-1">
+                                {{ __('global.cancel') }}
+                            </x-base.button>
+                            <x-base.button type="submit" class="btn btn-danger w-24">
+                                {{ __('global.delete') }}
+                            </x-base.button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript for Delete Confirmation -->
     <script>
-        function applyFilters() {
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            const qualificationFilter = document.getElementById('qualificationFilter').value;
-            const statusFilter = document.getElementById('statusFilter').value;
-            
-            const cards = document.querySelectorAll('#teachersGrid > div');
-            
-            cards.forEach(card => {
-                const name = card.querySelector('.font-medium.text-base').textContent.toLowerCase();
-                const qualification = card.querySelector('.text-slate-500.text-xs').textContent.toLowerCase();
-                const statusElement = card.querySelector('.flex.items-center span:last-child');
-                const status = statusElement ? statusElement.textContent.trim().toLowerCase() : '';
-                
-                const matchesSearch = name.includes(searchTerm);
-                const matchesQualification = !qualificationFilter || qualification.includes(qualificationFilter);
-                const matchesStatus = !statusFilter || status.includes(statusFilter);
-                
-                if (matchesSearch && matchesQualification && matchesStatus) {
-                    card.style.display = 'block';
-                } else {
-                    card.style.display = 'none';
-                }
+        document.addEventListener('DOMContentLoaded', function() {
+            // Delete button click handler
+            document.querySelectorAll('.delete-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const id = this.dataset.deleteId;
+                    const name = this.dataset.deleteName;
+                    const route = this.dataset.deleteRoute;
+                    
+                    document.getElementById('deleteItemName').textContent = name;
+                    document.getElementById('deleteForm').setAttribute('action', route);
+                    
+                    // Show modal
+                    const modal = new bootstrap.Modal(document.getElementById('deleteModal'));
+                    modal.show();
+                });
             });
-        }
-        
-        // Live search
-        document.getElementById('searchInput').addEventListener('input', applyFilters);
-        document.getElementById('qualificationFilter').addEventListener('change', applyFilters);
-        document.getElementById('statusFilter').addEventListener('change', applyFilters);
+
+            // Live search and filtering
+            function applyFilters() {
+                const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+                const qualificationFilter = document.getElementById('qualificationFilter').value;
+                const statusFilter = document.getElementById('statusFilter').value;
+                
+                const cards = document.querySelectorAll('#teachersGrid > div');
+                
+                cards.forEach(card => {
+                    const name = card.querySelector('.font-medium.text-base').textContent.toLowerCase();
+                    const qualification = card.querySelector('.text-slate-500.text-xs').textContent.toLowerCase();
+                    const statusElement = card.querySelector('.flex.items-center span:last-child');
+                    const status = statusElement ? statusElement.textContent.trim().toLowerCase() : '';
+                    
+                    const matchesSearch = name.includes(searchTerm);
+                    const matchesQualification = !qualificationFilter || qualification.includes(qualificationFilter);
+                    const matchesStatus = !statusFilter || status.includes(statusFilter);
+                    
+                    if (matchesSearch && matchesQualification && matchesStatus) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            }
+            
+            // Event listeners for live filtering
+            const searchInput = document.getElementById('searchInput');
+            if (searchInput) {
+                searchInput.addEventListener('input', applyFilters);
+            }
+            
+            const qualificationFilter = document.getElementById('qualificationFilter');
+            if (qualificationFilter) {
+                qualificationFilter.addEventListener('change', applyFilters);
+            }
+            
+            const statusFilter = document.getElementById('statusFilter');
+            if (statusFilter) {
+                statusFilter.addEventListener('change', applyFilters);
+            }
+        });
     </script>
 @endsection

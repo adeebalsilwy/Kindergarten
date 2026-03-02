@@ -43,25 +43,21 @@
                     <x-base.lucide icon="User" class="w-4 h-4 me-2" />
                     {{ __('global.personal_info') }}
                 </button>
-                <button class="tab-button px-4 py-2 text-sm font-medium rounded-t-lg" data-tab="children">
-                    <x-base.lucide icon="Baby" class="w-4 h-4 me-2" />
-                    {{ __('global.children') }}
-                </button>
                 <button class="tab-button px-4 py-2 text-sm font-medium rounded-t-lg" data-tab="contact">
                     <x-base.lucide icon="Phone" class="w-4 h-4 me-2" />
                     {{ __('global.contact_info') }}
                 </button>
-                <button class="tab-button px-4 py-2 text-sm font-medium rounded-t-lg" data-tab="financial">
-                    <x-base.lucide icon="DollarSign" class="w-4 h-4 me-2" />
-                    {{ __('global.financial_info') }}
+                <button class="tab-button px-4 py-2 text-sm font-medium rounded-t-lg" data-tab="children">
+                    <x-base.lucide icon="Users" class="w-4 h-4 me-2" />
+                    {{ __('global.children') }}
                 </button>
-                <button class="tab-button px-4 py-2 text-sm font-medium rounded-t-lg" data-tab="notifications">
-                    <x-base.lucide icon="Bell" class="w-4 h-4 me-2" />
-                    {{ __('global.notifications') }}
+                <button class="tab-button px-4 py-2 text-sm font-medium rounded-t-lg" data-tab="primary-children">
+                    <x-base.lucide icon="User" class="w-4 h-4 me-2" />
+                    {{ __('global.primary_children') }}
                 </button>
-                <button class="tab-button px-4 py-2 text-sm font-medium rounded-t-lg" data-tab="activity">
-                    <x-base.lucide icon="Activity" class="w-4 h-4 me-2" />
-                    {{ __('global.activity_summary') }}
+                <button class="tab-button px-4 py-2 text-sm font-medium rounded-t-lg" data-tab="secondary-children">
+                    <x-base.lucide icon="UserPlus" class="w-4 h-4 me-2" />
+                    {{ __('global.secondary_children') }}
                 </button>
             </nav>
         </div>
@@ -77,18 +73,14 @@
                     <div class="box p-5 info-card">
                         <div class="flex items-center">
                             <div class="w-20 h-20 rounded-full overflow-hidden border-4 border-primary/20">
-                                @if($parents->photo)
-                                    <img src="{{ asset('storage/'.$parents->photo) }}" class="w-full h-full object-cover" alt="{{ $parents->name }}">
-                                @else
-                                    <div class="w-full h-full bg-primary/10 flex items-center justify-center text-primary font-bold text-2xl">
-                                        {{ strtoupper(substr($parents->name, 0, 2)) }}
-                                    </div>
-                                @endif
+                                <div class="w-full h-full bg-primary/10 flex items-center justify-center text-primary font-bold text-2xl">
+                                    {{ strtoupper(substr($parents->name, 0, 2)) }}
+                                </div>
                             </div>
                             <div class="ms-4 flex-1">
                                 <div class="text-xl font-bold">{{ $parents->name }}</div>
                                 <div class="text-slate-500 text-sm mt-1">
-                                    {{ $parents->relationship ?? __('global.parent') }}
+                                    {{ $parents->relationship ?? 'Guardian' }}
                                 </div>
                                 <div class="text-slate-500 text-sm mt-1">
                                     {{ $parents->occupation ?? 'Not specified' }}
@@ -96,8 +88,8 @@
                             </div>
                             <div class="ms-auto">
                                 <span class="px-3 py-1 rounded-full text-sm font-medium 
-                                    {{ ($parents->is_active ?? true) ? 'bg-success/20 text-success' : 'bg-danger/20 text-danger' }}">
-                                    {{ ($parents->is_active ?? true) ? __('global.active') : __('global.inactive') }}
+                                    {{ $parents->is_active ? 'bg-success/20 text-success' : 'bg-warning/20 text-warning' }}">
+                                    {{ $parents->is_active ? __('global.active') : __('global.inactive') }}
                                 </span>
                             </div>
                         </div>
@@ -120,41 +112,60 @@
                         <div class="mt-5 pt-4 border-t">
                             <div class="grid grid-cols-3 gap-2">
                                 <div class="text-center p-2 bg-blue-50 rounded">
-                                    <div class="text-lg font-bold text-blue-600">{{ $parents->children_count }}</div>
-                                    <div class="text-xs text-slate-500">{{ __('global.children') }}</div>
+                                    <div class="text-lg font-bold text-blue-600">{{ $parents->children()->count() }}</div>
+                                    <div class="text-xs text-slate-500">{{ __('global.primary_children') }}</div>
                                 </div>
                                 <div class="text-center p-2 bg-green-50 rounded">
-                                    <div class="text-lg font-bold text-green-600">
-                                        {{ $parents->children()->where('enrollment_status', 'active')->count() }}
-                                    </div>
-                                    <div class="text-xs text-slate-500">{{ __('global.active') }}</div>
+                                    <div class="text-lg font-bold text-green-600">{{ $parents->secondChildren()->count() }}</div>
+                                    <div class="text-xs text-slate-500">{{ __('global.secondary_children') }}</div>
                                 </div>
                                 <div class="text-center p-2 bg-purple-50 rounded">
-                                    <div class="text-lg font-bold text-purple-600">
-                                        {{ $parents->payments()->sum('amount') > 0 ? number_format($parents->payments()->sum('amount'), 2) : '0.00' }}
-                                    </div>
-                                    <div class="text-xs text-slate-500">{{ __('global.paid') }}</div>
+                                    <div class="text-lg font-bold text-purple-600">{{ $parents->children_count }}</div>
+                                    <div class="text-xs text-slate-500">{{ __('global.total_children') }}</div>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Stats -->
+                    <div class="box p-5 mt-5">
+                        <div class="text-base font-medium mb-4">{{ __('global.account_status') }}</div>
+                        <div class="space-y-3">
+                            <div class="flex justify-between">
+                                <span class="text-slate-500">{{ __('global.status') }}:</span>
+                                <span class="font-medium">{{ $parents->is_active ? __('global.active') : __('global.inactive') }}</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-slate-500">{{ __('global.primary_guardian') }}:</span>
+                                <span class="font-medium">{{ $parents->is_primary_guardian ? __('global.yes') : __('global.no') }}</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-slate-500">{{ __('global.primary_emergency_contact') }}:</span>
+                                <span class="font-medium">{{ $parents->is_primary_emergency_contact ? __('global.yes') : __('global.no') }}</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-slate-500">{{ __('global.created_at') }}:</span>
+                                <span class="font-medium">{{ $parents->created_at->format('M d, Y') }}</span>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Quick Stats -->
+                <!-- Recent Activity -->
                 <div class="intro-y col-span-12 lg:col-span-8">
                     <div class="grid grid-cols-12 gap-6">
                         <div class="col-span-12 md:col-span-6">
                             <div class="box p-5">
-                                <div class="text-base font-medium mb-3">{{ __('global.children_summary') }}</div>
+                                <div class="text-base font-medium mb-3">{{ __('global.primary_children') }}</div>
                                 <div class="space-y-3">
-                                    @forelse($parents->children->take(4) as $child)
-                                        <div class="flex items-center p-2 hover:bg-slate-50 rounded">
+                                    @forelse($parents->children()->latest()->take(3)->get() as $child)
+                                        <div class="flex items-center p-2 border rounded hover:bg-slate-50">
                                             <div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center me-3">
                                                 <span class="text-primary text-sm font-bold">{{ strtoupper(substr($child->name, 0, 1)) }}</span>
                                             </div>
                                             <div class="flex-1">
                                                 <div class="font-medium text-sm">{{ $child->name }}</div>
-                                                <div class="text-xs text-slate-500">{{ optional($child->class)->name ?? 'Not assigned' }}</div>
+                                                <div class="text-xs text-slate-500">{{ $child->age }} {{ __('global.years_old') }}</div>
                                             </div>
                                             <a href="{{ route('children.show', $child->id) }}" class="text-primary hover:underline text-xs">
                                                 {{ __('global.view') }}
@@ -162,43 +173,35 @@
                                         </div>
                                     @empty
                                         <div class="text-center py-4 text-slate-500">
-                                            <x-base.lucide icon="Baby" class="w-8 h-8 mx-auto mb-2 opacity-50" />
-                                            <p class="text-sm">{{ __('global.no_children_assigned') }}</p>
+                                            <x-base.lucide icon="User" class="w-8 h-8 mx-auto mb-2 opacity-50" />
+                                            <p class="text-sm">{{ __('global.no_primary_children') }}</p>
                                         </div>
                                     @endforelse
                                 </div>
-                                @if($parents->children->count() > 4)
-                                    <div class="mt-3 pt-3 border-t text-center">
-                                        <a href="#" class="text-primary hover:underline text-sm">
-                                            {{ __('global.view_all_children') }} ({{ $parents->children->count() }})
-                                        </a>
-                                    </div>
-                                @endif
                             </div>
                         </div>
                         
                         <div class="col-span-12 md:col-span-6">
                             <div class="box p-5">
-                                <div class="text-base font-medium mb-3">{{ __('global.recent_activity') }}</div>
+                                <div class="text-base font-medium mb-3">{{ __('global.secondary_children') }}</div>
                                 <div class="space-y-3">
-                                    @forelse($parents->children->flatMap(function($child) { return $child->attendances()->latest()->take(2)->get(); })->sortByDesc('date')->take(5) as $attendance)
+                                    @forelse($parents->secondChildren()->latest()->take(3)->get() as $child)
                                         <div class="flex items-center p-2 border rounded hover:bg-slate-50">
-                                            <div class="w-2 h-2 rounded-full me-3 
-                                                {{ $attendance->status === 'present' ? 'bg-success' : ($attendance->status === 'absent' ? 'bg-danger' : 'bg-warning') }}">
+                                            <div class="w-8 h-8 rounded-full bg-secondary/10 flex items-center justify-center me-3">
+                                                <span class="text-secondary text-sm font-bold">{{ strtoupper(substr($child->name, 0, 1)) }}</span>
                                             </div>
                                             <div class="flex-1">
-                                                <div class="font-medium text-sm">{{ $attendance->child->name }}</div>
-                                                <div class="text-xs text-slate-500">{{ $attendance->date->format('M d, Y') }}</div>
+                                                <div class="font-medium text-sm">{{ $child->name }}</div>
+                                                <div class="text-xs text-slate-500">{{ $child->age }} {{ __('global.years_old') }}</div>
                                             </div>
-                                            <span class="text-xs px-2 py-1 rounded 
-                                                {{ $attendance->status === 'present' ? 'bg-success/20 text-success' : ($attendance->status === 'absent' ? 'bg-danger/20 text-danger' : 'bg-warning/20 text-warning') }}">
-                                                {{ ucfirst($attendance->status) }}
-                                            </span>
+                                            <a href="{{ route('children.show', $child->id) }}" class="text-primary hover:underline text-xs">
+                                                {{ __('global.view') }}
+                                            </a>
                                         </div>
                                     @empty
                                         <div class="text-center py-4 text-slate-500">
-                                            <x-base.lucide icon="Activity" class="w-8 h-8 mx-auto mb-2 opacity-50" />
-                                            <p class="text-sm">{{ __('global.no_recent_activity') }}</p>
+                                            <x-base.lucide icon="UserPlus" class="w-8 h-8 mx-auto mb-2 opacity-50" />
+                                            <p class="text-sm">{{ __('global.no_secondary_children') }}</p>
                                         </div>
                                     @endforelse
                                 </div>
@@ -235,16 +238,9 @@
                                 <span class="text-slate-500">{{ __('global.workplace') }}:</span>
                                 <span class="font-medium">{{ $parents->workplace ?? __('global.not_specified') }}</span>
                             </div>
-                            <div class="flex justify-between py-2 border-b">
+                            <div class="flex justify-between py-2">
                                 <span class="text-slate-500">{{ __('global.date_of_birth') }}:</span>
                                 <span class="font-medium">{{ $parents->date_of_birth ? $parents->date_of_birth->format('F j, Y') : __('global.not_specified') }}</span>
-                            </div>
-                            <div class="flex justify-between py-2">
-                                <span class="text-slate-500">{{ __('global.status') }}:</span>
-                                <span class="font-medium px-2 py-1 rounded text-sm 
-                                    {{ ($parents->is_active ?? true) ? 'bg-success/20 text-success' : 'bg-danger/20 text-danger' }}">
-                                    {{ ($parents->is_active ?? true) ? __('global.active') : __('global.inactive') }}
-                                </span>
                             </div>
                         </div>
                     </div>
@@ -254,24 +250,130 @@
                     <div class="box p-5">
                         <div class="text-lg font-medium mb-4 flex items-center">
                             <x-base.lucide icon="Shield" class="w-5 h-5 me-2 text-primary" />
-                            {{ __('global.identification') }}
+                            {{ __('global.account_status') }}
                         </div>
                         <div class="space-y-4">
                             <div class="flex justify-between py-2 border-b">
-                                <span class="text-slate-500">{{ __('global.national_id') }}:</span>
-                                <span class="font-medium">{{ $parents->national_id ?? __('global.not_provided') }}</span>
+                                <span class="text-slate-500">{{ __('global.status') }}:</span>
+                                <span class="font-medium px-2 py-1 rounded text-sm 
+                                    {{ $parents->is_active ? 'bg-success/20 text-success' : 'bg-warning/20 text-warning' }}">
+                                    {{ $parents->is_active ? __('global.active') : __('global.inactive') }}
+                                </span>
                             </div>
                             <div class="flex justify-between py-2 border-b">
-                                <span class="text-slate-500">{{ __('global.passport_number') }}:</span>
-                                <span class="font-medium">{{ $parents->passport_number ?? __('global.not_provided') }}</span>
+                                <span class="text-slate-500">{{ __('global.primary_guardian') }}:</span>
+                                <span class="font-medium">
+                                    @if($parents->is_primary_guardian)
+                                        <span class="text-success">
+                                            <x-base.lucide icon="CheckCircle" class="w-4 h-4 inline me-1" />
+                                            {{ __('global.yes') }}
+                                        </span>
+                                    @else
+                                        <span class="text-danger">
+                                            <x-base.lucide icon="XCircle" class="w-4 h-4 inline me-1" />
+                                            {{ __('global.no') }}
+                                        </span>
+                                    @endif
+                                </span>
                             </div>
                             <div class="flex justify-between py-2 border-b">
+                                <span class="text-slate-500">{{ __('global.primary_emergency_contact') }}:</span>
+                                <span class="font-medium">
+                                    @if($parents->is_primary_emergency_contact)
+                                        <span class="text-success">
+                                            <x-base.lucide icon="CheckCircle" class="w-4 h-4 inline me-1" />
+                                            {{ __('global.yes') }}
+                                        </span>
+                                    @else
+                                        <span class="text-danger">
+                                            <x-base.lucide icon="XCircle" class="w-4 h-4 inline me-1" />
+                                            {{ __('global.no') }}
+                                        </span>
+                                    @endif
+                                </span>
+                            </div>
+                            <div class="flex justify-between py-2">
                                 <span class="text-slate-500">{{ __('global.preferred_language') }}:</span>
                                 <span class="font-medium">{{ $parents->preferred_language ?? __('global.not_specified') }}</span>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Information Tab -->
+        <div id="contact" class="tab-content">
+            <div class="grid grid-cols-12 gap-6">
+                <div class="intro-y col-span-12 lg:col-span-6">
+                    <div class="box p-5">
+                        <div class="text-lg font-medium mb-4 flex items-center">
+                            <x-base.lucide icon="Phone" class="w-5 h-5 me-2 text-primary" />
+                            {{ __('global.contact_details') }}
+                        </div>
+                        <div class="space-y-4">
+                            <div class="flex justify-between py-2 border-b">
+                                <span class="text-slate-500">{{ __('global.phone') }}:</span>
+                                <span class="font-medium">{{ $parents->phone ?? __('global.not_provided') }}</span>
+                            </div>
+                            <div class="flex justify-between py-2 border-b">
+                                <span class="text-slate-500">{{ __('global.secondary_phone') }}:</span>
+                                <span class="font-medium">{{ $parents->secondary_phone ?? __('global.not_provided') }}</span>
+                            </div>
+                            <div class="flex justify-between py-2 border-b">
+                                <span class="text-slate-500">{{ __('global.email') }}:</span>
+                                <span class="font-medium">{{ $parents->email ?? __('global.not_provided') }}</span>
+                            </div>
                             <div class="flex justify-between py-2">
-                                <span class="text-slate-500">{{ __('global.last_login') }}:</span>
-                                <span class="font-medium">{{ $parents->last_login_at ? $parents->last_login_at->format('F j, Y H:i') : __('global.never') }}</span>
+                                <span class="text-slate-500">{{ __('global.address') }}:</span>
+                                <span class="font-medium text-right max-w-xs">{{ $parents->address ?? __('global.not_provided') }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="intro-y col-span-12 lg:col-span-6">
+                    <div class="box p-5">
+                        <div class="text-lg font-medium mb-4 flex items-center">
+                            <x-base.lucide icon="Bell" class="w-5 h-5 me-2 text-primary" />
+                            {{ __('global.notification_preferences') }}
+                        </div>
+                        <div class="space-y-4">
+                            <div class="flex justify-between py-2 border-b">
+                                <span class="text-slate-500">{{ __('global.sms_notifications') }}:</span>
+                                <span class="font-medium">
+                                    @if($parents->receives_sms_notifications)
+                                        <span class="text-success">
+                                            <x-base.lucide icon="CheckCircle" class="w-4 h-4 inline me-1" />
+                                            {{ __('global.enabled') }}
+                                        </span>
+                                    @else
+                                        <span class="text-danger">
+                                            <x-base.lucide icon="XCircle" class="w-4 h-4 inline me-1" />
+                                            {{ __('global.disabled') }}
+                                        </span>
+                                    @endif
+                                </span>
+                            </div>
+                            <div class="flex justify-between py-2 border-b">
+                                <span class="text-slate-500">{{ __('global.email_notifications') }}:</span>
+                                <span class="font-medium">
+                                    @if($parents->receives_email_notifications)
+                                        <span class="text-success">
+                                            <x-base.lucide icon="CheckCircle" class="w-4 h-4 inline me-1" />
+                                            {{ __('global.enabled') }}
+                                        </span>
+                                    @else
+                                        <span class="text-danger">
+                                            <x-base.lucide icon="XCircle" class="w-4 h-4 inline me-1" />
+                                            {{ __('global.disabled') }}
+                                        </span>
+                                    @endif
+                                </span>
+                            </div>
+                            <div class="flex justify-between py-2">
+                                <span class="text-slate-500">{{ __('global.notes') }}:</span>
+                                <span class="font-medium text-right max-w-xs">{{ $parents->notes ?? __('global.none') }}</span>
                             </div>
                         </div>
                     </div>
@@ -285,7 +387,7 @@
                 <div class="intro-y col-span-12">
                     <div class="box p-5">
                         <div class="text-lg font-medium mb-4 flex items-center justify-between">
-                            <span>{{ __('global.children_under_care') }}</span>
+                            <span>{{ __('global.all_children') }}</span>
                             <span class="text-sm text-slate-500">{{ $parents->children_count }} {{ __('global.children') }}</span>
                         </div>
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -301,9 +403,8 @@
                                                 <div class="text-xs text-slate-500">{{ $child->age }} {{ __('global.years_old') }}</div>
                                             </div>
                                         </div>
-                                        <span class="px-2 py-1 rounded text-xs 
-                                            {{ $child->enrollment_status === 'active' ? 'bg-success/20 text-success' : 'bg-warning/20 text-warning' }}">
-                                            {{ ucfirst($child->enrollment_status) }}
+                                        <span class="px-2 py-1 rounded text-xs bg-blue-100 text-blue-800">
+                                            {{ __('global.primary') }}
                                         </span>
                                     </div>
                                     <div class="space-y-2 text-sm text-slate-600">
@@ -320,7 +421,130 @@
                                             {{ $child->dob->format('M d, Y') }}
                                         </div>
                                         <div class="flex items-center">
-                                            <x-base.lucide icon="Users" class="w-4 h-4 me-2" />
+                                            <x-base.lucide icon="User" class="w-4 h-4 me-2" />
+                                            {{ $child->gender }}
+                                        </div>
+                                    </div>
+                                    <div class="mt-4 pt-3 border-t flex justify-between items-center">
+                                        <div class="flex space-x-2">
+                                            <span class="text-xs px-2 py-1 rounded bg-blue-100 text-blue-800">
+                                                {{ $child->attendances()->where('status', 'present')->count() }} {{ __('global.present') }}
+                                            </span>
+                                            <span class="text-xs px-2 py-1 rounded bg-red-100 text-red-800">
+                                                {{ $child->attendances()->where('status', 'absent')->count() }} {{ __('global.absent') }}
+                                            </span>
+                                        </div>
+                                        <a href="{{ route('children.show', $child->id) }}" class="text-primary hover:underline text-sm">
+                                            {{ __('global.view_details') }}
+                                        </a>
+                                    </div>
+                                </div>
+                            @endforelse
+                            
+                            @forelse($parents->secondChildren as $child)
+                                <div class="border rounded-lg p-4 hover:shadow-md transition-shadow">
+                                    <div class="flex items-start justify-between mb-3">
+                                        <div class="flex items-center">
+                                            <div class="w-12 h-12 rounded-full bg-secondary/10 flex items-center justify-center me-3">
+                                                <span class="text-secondary font-bold">{{ strtoupper(substr($child->name, 0, 1)) }}</span>
+                                            </div>
+                                            <div>
+                                                <h3 class="font-medium">{{ $child->name }}</h3>
+                                                <div class="text-xs text-slate-500">{{ $child->age }} {{ __('global.years_old') }}</div>
+                                            </div>
+                                        </div>
+                                        <span class="px-2 py-1 rounded text-xs bg-purple-100 text-purple-800">
+                                            {{ __('global.secondary') }}
+                                        </span>
+                                    </div>
+                                    <div class="space-y-2 text-sm text-slate-600">
+                                        <div class="flex items-center">
+                                            <x-base.lucide icon="Home" class="w-4 h-4 me-2" />
+                                            {{ optional($child->class)->name ?? 'Not assigned' }}
+                                        </div>
+                                        <div class="flex items-center">
+                                            <x-base.lucide icon="DollarSign" class="w-4 h-4 me-2" />
+                                            {{ number_format($child->balance, 2) }} {{ __('global.balance') }}
+                                        </div>
+                                        <div class="flex items-center">
+                                            <x-base.lucide icon="Cake" class="w-4 h-4 me-2" />
+                                            {{ $child->dob->format('M d, Y') }}
+                                        </div>
+                                        <div class="flex items-center">
+                                            <x-base.lucide icon="User" class="w-4 h-4 me-2" />
+                                            {{ $child->gender }}
+                                        </div>
+                                    </div>
+                                    <div class="mt-4 pt-3 border-t flex justify-between items-center">
+                                        <div class="flex space-x-2">
+                                            <span class="text-xs px-2 py-1 rounded bg-blue-100 text-blue-800">
+                                                {{ $child->attendances()->where('status', 'present')->count() }} {{ __('global.present') }}
+                                            </span>
+                                            <span class="text-xs px-2 py-1 rounded bg-red-100 text-red-800">
+                                                {{ $child->attendances()->where('status', 'absent')->count() }} {{ __('global.absent') }}
+                                            </span>
+                                        </div>
+                                        <a href="{{ route('children.show', $child->id) }}" class="text-primary hover:underline text-sm">
+                                            {{ __('global.view_details') }}
+                                        </a>
+                                    </div>
+                                </div>
+                            @empty
+                                @if(count($parents->children) == 0 && count($parents->secondChildren) == 0)
+                                    <div class="col-span-full text-center py-12">
+                                        <x-base.lucide icon="Users" class="w-16 h-16 mx-auto mb-4 text-slate-300" />
+                                        <h3 class="text-lg font-medium text-slate-500">{{ __('global.no_children_associated') }}</h3>
+                                        <p class="text-slate-400 mt-2">{{ __('global.this_guardian_has_no_children_associated') }}</p>
+                                    </div>
+                                @endif
+                            @endforelse
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Primary Children Tab -->
+        <div id="primary-children" class="tab-content">
+            <div class="grid grid-cols-12 gap-6">
+                <div class="intro-y col-span-12">
+                    <div class="box p-5">
+                        <div class="text-lg font-medium mb-4 flex items-center justify-between">
+                            <span>{{ __('global.primary_children') }}</span>
+                            <span class="text-sm text-slate-500">{{ $parents->children()->count() }} {{ __('global.children') }}</span>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                            @forelse($parents->children as $child)
+                                <div class="border rounded-lg p-4 hover:shadow-md transition-shadow">
+                                    <div class="flex items-start justify-between mb-3">
+                                        <div class="flex items-center">
+                                            <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center me-3">
+                                                <span class="text-primary font-bold">{{ strtoupper(substr($child->name, 0, 1)) }}</span>
+                                            </div>
+                                            <div>
+                                                <h3 class="font-medium">{{ $child->name }}</h3>
+                                                <div class="text-xs text-slate-500">{{ $child->age }} {{ __('global.years_old') }}</div>
+                                            </div>
+                                        </div>
+                                        <span class="px-2 py-1 rounded text-xs bg-blue-100 text-blue-800">
+                                            {{ __('global.primary') }}
+                                        </span>
+                                    </div>
+                                    <div class="space-y-2 text-sm text-slate-600">
+                                        <div class="flex items-center">
+                                            <x-base.lucide icon="Home" class="w-4 h-4 me-2" />
+                                            {{ optional($child->class)->name ?? 'Not assigned' }}
+                                        </div>
+                                        <div class="flex items-center">
+                                            <x-base.lucide icon="DollarSign" class="w-4 h-4 me-2" />
+                                            {{ number_format($child->balance, 2) }} {{ __('global.balance') }}
+                                        </div>
+                                        <div class="flex items-center">
+                                            <x-base.lucide icon="Cake" class="w-4 h-4 me-2" />
+                                            {{ $child->dob->format('M d, Y') }}
+                                        </div>
+                                        <div class="flex items-center">
+                                            <x-base.lucide icon="User" class="w-4 h-4 me-2" />
                                             {{ $child->gender }}
                                         </div>
                                     </div>
@@ -340,9 +564,9 @@
                                 </div>
                             @empty
                                 <div class="col-span-full text-center py-12">
-                                    <x-base.lucide icon="Baby" class="w-16 h-16 mx-auto mb-4 text-slate-300" />
-                                    <h3 class="text-lg font-medium text-slate-500">{{ __('global.no_children_assigned') }}</h3>
-                                    <p class="text-slate-400 mt-2">{{ __('global.assign_children_to_view_details') }}</p>
+                                    <x-base.lucide icon="User" class="w-16 h-16 mx-auto mb-4 text-slate-300" />
+                                    <h3 class="text-lg font-medium text-slate-500">{{ __('global.no_primary_children') }}</h3>
+                                    <p class="text-slate-400 mt-2">{{ __('global.this_guardian_has_no_primary_children') }}</p>
                                 </div>
                             @endforelse
                         </div>
@@ -351,302 +575,71 @@
             </div>
         </div>
 
-        <!-- Contact Information Tab -->
-        <div id="contact" class="tab-content">
+        <!-- Secondary Children Tab -->
+        <div id="secondary-children" class="tab-content">
             <div class="grid grid-cols-12 gap-6">
-                <div class="intro-y col-span-12 lg:col-span-6">
+                <div class="intro-y col-span-12">
                     <div class="box p-5">
-                        <div class="text-lg font-medium mb-4 flex items-center">
-                            <x-base.lucide icon="Phone" class="w-5 h-5 me-2 text-primary" />
-                            {{ __('global.primary_contact') }}
+                        <div class="text-lg font-medium mb-4 flex items-center justify-between">
+                            <span>{{ __('global.secondary_children') }}</span>
+                            <span class="text-sm text-slate-500">{{ $parents->secondChildren()->count() }} {{ __('global.children') }}</span>
                         </div>
-                        <div class="space-y-4">
-                            <div class="flex justify-between py-2 border-b">
-                                <span class="text-slate-500">{{ __('global.primary_phone') }}:</span>
-                                <span class="font-medium">{{ $parents->phone ?? __('global.not_provided') }}</span>
-                            </div>
-                            <div class="flex justify-between py-2 border-b">
-                                <span class="text-slate-500">{{ __('global.secondary_phone') }}:</span>
-                                <span class="font-medium">{{ $parents->secondary_phone ?? __('global.not_provided') }}</span>
-                            </div>
-                            <div class="flex justify-between py-2 border-b">
-                                <span class="text-slate-500">{{ __('global.email') }}:</span>
-                                <span class="font-medium">{{ $parents->email ?? __('global.not_provided') }}</span>
-                            </div>
-                            <div class="flex justify-between py-2">
-                                <span class="text-slate-500">{{ __('global.address') }}:</span>
-                                <span class="font-medium text-right">{{ $parents->address ?? __('global.not_provided') }}</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="intro-y col-span-12 lg:col-span-6">
-                    <div class="box p-5">
-                        <div class="text-lg font-medium mb-4 flex items-center">
-                            <x-base.lucide icon="MapPin" class="w-5 h-5 me-2 text-primary" />
-                            {{ __('global.location_info') }}
-                        </div>
-                        <div class="space-y-4">
-                            <div class="flex justify-between py-2 border-b">
-                                <span class="text-slate-500">{{ __('global.full_address') }}:</span>
-                                <span class="font-medium text-right max-w-xs">{{ $parents->full_address ?? __('global.not_provided') }}</span>
-                            </div>
-                            <div class="flex justify-between py-2 border-b">
-                                <span class="text-slate-500">{{ __('global.is_primary_guardian') }}:</span>
-                                <span class="font-medium">
-                                    <span class="{{ ($parents->is_primary_guardian ?? false) ? 'text-success' : 'text-danger' }}">
-                                        <x-base.lucide icon="{{ ($parents->is_primary_guardian ?? false) ? 'CheckCircle' : 'XCircle' }}" class="w-4 h-4 inline me-1" />
-                                        {{ ($parents->is_primary_guardian ?? false) ? __('global.yes') : __('global.no') }}
-                                    </span>
-                                </span>
-                            </div>
-                            <div class="flex justify-between py-2">
-                                <span class="text-slate-500">{{ __('global.is_primary_emergency') }}:</span>
-                                <span class="font-medium">
-                                    <span class="{{ ($parents->is_primary_emergency_contact ?? false) ? 'text-success' : 'text-danger' }}">
-                                        <x-base.lucide icon="{{ ($parents->is_primary_emergency_contact ?? false) ? 'CheckCircle' : 'XCircle' }}" class="w-4 h-4 inline me-1" />
-                                        {{ ($parents->is_primary_emergency_contact ?? false) ? __('global.yes') : __('global.no') }}
-                                    </span>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Financial Information Tab -->
-        <div id="financial" class="tab-content">
-            <div class="grid grid-cols-12 gap-6">
-                <div class="intro-y col-span-12 lg:col-span-4">
-                    <div class="box p-5">
-                        <div class="text-lg font-medium mb-4">{{ __('global.bank_details') }}</div>
-                        <div class="space-y-4">
-                            <div class="flex justify-between py-2 border-b">
-                                <span class="text-slate-500">{{ __('global.bank_name') }}:</span>
-                                <span class="font-medium">{{ $parents->bank_name ?? __('global.not_provided') }}</span>
-                            </div>
-                            <div class="flex justify-between py-2 border-b">
-                                <span class="text-slate-500">{{ __('global.account_number') }}:</span>
-                                <span class="font-medium">{{ $parents->bank_account_number ?? __('global.not_provided') }}</span>
-                            </div>
-                            <div class="pt-4 border-t">
-                                <div class="text-center">
-                                    <div class="text-2xl font-bold text-primary">
-                                        {{ $parents->children->sum('fees_paid') > 0 ? number_format($parents->children->sum('fees_paid'), 2) : '0.00' }}
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                            @forelse($parents->secondChildren as $child)
+                                <div class="border rounded-lg p-4 hover:shadow-md transition-shadow">
+                                    <div class="flex items-start justify-between mb-3">
+                                        <div class="flex items-center">
+                                            <div class="w-12 h-12 rounded-full bg-secondary/10 flex items-center justify-center me-3">
+                                                <span class="text-secondary font-bold">{{ strtoupper(substr($child->name, 0, 1)) }}</span>
+                                            </div>
+                                            <div>
+                                                <h3 class="font-medium">{{ $child->name }}</h3>
+                                                <div class="text-xs text-slate-500">{{ $child->age }} {{ __('global.years_old') }}</div>
+                                            </div>
+                                        </div>
+                                        <span class="px-2 py-1 rounded text-xs bg-purple-100 text-purple-800">
+                                            {{ __('global.secondary') }}
+                                        </span>
                                     </div>
-                                    <div class="text-sm text-slate-600">{{ __('global.total_paid_by_children') }}</div>
+                                    <div class="space-y-2 text-sm text-slate-600">
+                                        <div class="flex items-center">
+                                            <x-base.lucide icon="Home" class="w-4 h-4 me-2" />
+                                            {{ optional($child->class)->name ?? 'Not assigned' }}
+                                        </div>
+                                        <div class="flex items-center">
+                                            <x-base.lucide icon="DollarSign" class="w-4 h-4 me-2" />
+                                            {{ number_format($child->balance, 2) }} {{ __('global.balance') }}
+                                        </div>
+                                        <div class="flex items-center">
+                                            <x-base.lucide icon="Cake" class="w-4 h-4 me-2" />
+                                            {{ $child->dob->format('M d, Y') }}
+                                        </div>
+                                        <div class="flex items-center">
+                                            <x-base.lucide icon="User" class="w-4 h-4 me-2" />
+                                            {{ $child->gender }}
+                                        </div>
+                                    </div>
+                                    <div class="mt-4 pt-3 border-t flex justify-between items-center">
+                                        <div class="flex space-x-2">
+                                            <span class="text-xs px-2 py-1 rounded bg-blue-100 text-blue-800">
+                                                {{ $child->attendances()->where('status', 'present')->count() }} {{ __('global.present') }}
+                                            </span>
+                                            <span class="text-xs px-2 py-1 rounded bg-red-100 text-red-800">
+                                                {{ $child->attendances()->where('status', 'absent')->count() }} {{ __('global.absent') }}
+                                            </span>
+                                        </div>
+                                        <a href="{{ route('children.show', $child->id) }}" class="text-primary hover:underline text-sm">
+                                            {{ __('global.view_details') }}
+                                        </a>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="intro-y col-span-12 lg:col-span-8">
-                    <div class="box p-5">
-                        <div class="text-lg font-medium mb-4 flex items-center justify-between">
-                            <span>{{ __('global.children_financial_summary') }}</span>
-                            <span class="text-sm text-slate-500">{{ $parents->children->count() }} {{ __('global.children') }}</span>
-                        </div>
-                        <div class="overflow-x-auto">
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th class="text-left">{{ __('global.child') }}</th>
-                                        <th class="text-left">{{ __('global.fees_required') }}</th>
-                                        <th class="text-left">{{ __('global.fees_paid') }}</th>
-                                        <th class="text-left">{{ __('global.balance') }}</th>
-                                        <th class="text-left">{{ __('global.class') }}</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @forelse($parents->children as $child)
-                                        <tr>
-                                            <td class="py-2">
-                                                <div class="flex items-center">
-                                                    <div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center me-2">
-                                                        <span class="text-primary text-sm font-bold">{{ strtoupper(substr($child->name, 0, 1)) }}</span>
-                                                    </div>
-                                                    {{ $child->name }}
-                                                </div>
-                                            </td>
-                                            <td>{{ number_format($child->fees_required, 2) }}</td>
-                                            <td class="text-success">{{ number_format($child->fees_paid, 2) }}</td>
-                                            <td class="{{ $child->balance > 0 ? 'text-danger' : 'text-success' }}">
-                                                {{ number_format(abs($child->balance), 2) }}
-                                            </td>
-                                            <td>{{ optional($child->class)->name ?? 'Not assigned' }}</td>
-                                        </tr>
-                                    @empty
-                                        <tr>
-                                            <td colspan="5" class="text-center py-8 text-slate-500">
-                                                <x-base.lucide icon="DollarSign" class="w-12 h-12 mx-auto mb-3 opacity-50" />
-                                                <p>{{ __('global.no_children_for_financial_summary') }}</p>
-                                            </td>
-                                        </tr>
-                                    @endforelse
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Notifications Tab -->
-        <div id="notifications" class="tab-content">
-            <div class="grid grid-cols-12 gap-6">
-                <div class="intro-y col-span-12 lg:col-span-6">
-                    <div class="box p-5">
-                        <div class="text-lg font-medium mb-4 flex items-center">
-                            <x-base.lucide icon="Bell" class="w-5 h-5 me-2 text-primary" />
-                            {{ __('global.notification_preferences') }}
-                        </div>
-                        <div class="space-y-4">
-                            <div class="flex justify-between items-center py-2 border-b">
-                                <div>
-                                    <div class="font-medium">{{ __('global.sms_notifications') }}</div>
-                                    <div class="text-sm text-slate-500">{{ __('global.receive_sms_updates') }}</div>
+                            @empty
+                                <div class="col-span-full text-center py-12">
+                                    <x-base.lucide icon="UserPlus" class="w-16 h-16 mx-auto mb-4 text-slate-300" />
+                                    <h3 class="text-lg font-medium text-slate-500">{{ __('global.no_secondary_children') }}</h3>
+                                    <p class="text-slate-400 mt-2">{{ __('global.this_guardian_has_no_secondary_children') }}</p>
                                 </div>
-                                <span class="{{ ($parents->receives_sms_notifications ?? false) ? 'text-success' : 'text-danger' }}">
-                                    <x-base.lucide icon="{{ ($parents->receives_sms_notifications ?? false) ? 'CheckCircle' : 'XCircle' }}" class="w-5 h-5" />
-                                </span>
-                            </div>
-                            <div class="flex justify-between items-center py-2 border-b">
-                                <div>
-                                    <div class="font-medium">{{ __('global.email_notifications') }}</div>
-                                    <div class="text-sm text-slate-500">{{ __('global.receive_email_updates') }}</div>
-                                </div>
-                                <span class="{{ ($parents->receives_email_notifications ?? false) ? 'text-success' : 'text-danger' }}">
-                                    <x-base.lucide icon="{{ ($parents->receives_email_notifications ?? false) ? 'CheckCircle' : 'XCircle' }}" class="w-5 h-5" />
-                                </span>
-                            </div>
-                            <div class="pt-4 border-t">
-                                <div class="text-sm text-slate-600">
-                                    {{ __('global.notification_settings_note') }}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="intro-y col-span-12 lg:col-span-6">
-                    <div class="box p-5">
-                        <div class="text-lg font-medium mb-4 flex items-center">
-                            <x-base.lucide icon="MessageSquare" class="w-5 h-5 me-2 text-primary" />
-                            {{ __('global.communication_summary') }}
-                        </div>
-                        <div class="space-y-4">
-                            <div class="text-center p-4 bg-blue-50 rounded-lg">
-                                <div class="text-3xl font-bold text-blue-600">
-                                    {{ $parents->children->sum(function($child) { return $child->payments()->count(); }) }}
-                                </div>
-                                <div class="text-sm text-slate-600">{{ __('global.payment_notifications') }}</div>
-                            </div>
-                            <div class="text-center p-4 bg-green-50 rounded-lg">
-                                <div class="text-3xl font-bold text-green-600">
-                                    {{ $parents->children->sum(function($child) { return $child->attendances()->where('status', 'absent')->count(); }) }}
-                                </div>
-                                <div class="text-sm text-slate-600">{{ __('global.absence_notifications') }}</div>
-                            </div>
-                            <div class="text-center p-4 bg-purple-50 rounded-lg">
-                                <div class="text-3xl font-bold text-purple-600">
-                                    {{ $parents->children->sum(function($child) { return $child->grades()->count(); }) }}
-                                </div>
-                                <div class="text-sm text-slate-600">{{ __('global.grade_updates') }}</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Activity Summary Tab -->
-        <div id="activity" class="tab-content">
-            <div class="grid grid-cols-12 gap-6">
-                <div class="intro-y col-span-12 lg:col-span-4">
-                    <div class="box p-5">
-                        <div class="text-lg font-medium mb-4">{{ __('global.attendance_summary') }}</div>
-                        <div class="space-y-4">
-                            <div class="text-center p-4 bg-success/10 rounded-lg">
-                                <div class="text-3xl font-bold text-success">
-                                    {{ $parents->children->sum(function($child) { return $child->attendances()->where('status', 'present')->count(); }) }}
-                                </div>
-                                <div class="text-sm text-slate-600">{{ __('global.total_days_present') }}</div>
-                            </div>
-                            <div class="text-center p-4 bg-danger/10 rounded-lg">
-                                <div class="text-3xl font-bold text-danger">
-                                    {{ $parents->children->sum(function($child) { return $child->attendances()->where('status', 'absent')->count(); }) }}
-                                </div>
-                                <div class="text-sm text-slate-600">{{ __('global.total_days_absent') }}</div>
-                            </div>
-                            <div class="text-center p-4 bg-warning/10 rounded-lg">
-                                <div class="text-3xl font-bold text-warning">
-                                    {{ $parents->children->sum(function($child) { return $child->attendances()->where('status', 'late')->count(); }) }}
-                                </div>
-                                <div class="text-sm text-slate-600">{{ __('global.total_days_late') }}</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="intro-y col-span-12 lg:col-span-8">
-                    <div class="box p-5">
-                        <div class="text-lg font-medium mb-4 flex items-center justify-between">
-                            <span>{{ __('global.recent_attendance') }}</span>
-                            <span class="text-sm text-slate-500">{{ $parents->children->sum(function($child) { return $child->attendances()->count(); }) }} {{ __('global.records') }}</span>
-                        </div>
-                        <div class="overflow-x-auto">
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th class="text-left">{{ __('global.child') }}</th>
-                                        <th class="text-left">{{ __('global.date') }}</th>
-                                        <th class="text-left">{{ __('global.status') }}</th>
-                                        <th class="text-left">{{ __('global.check_in') }}</th>
-                                        <th class="text-left">{{ __('global.notes') }}</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @php
-                                        $recentAttendances = $parents->children->flatMap(function($child) {
-                                            return $child->attendances()->latest()->take(3)->get()->map(function($attendance) use ($child) {
-                                                $attendance->child_name = $child->name;
-                                                return $attendance;
-                                            });
-                                        })->sortByDesc('date')->take(10);
-                                    @endphp
-                                    @forelse($recentAttendances as $attendance)
-                                        <tr>
-                                            <td class="py-2">
-                                                <div class="flex items-center">
-                                                    <div class="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center me-2">
-                                                        <span class="text-primary text-xs font-bold">{{ strtoupper(substr($attendance->child_name, 0, 1)) }}</span>
-                                                    </div>
-                                                    {{ $attendance->child_name }}
-                                                </div>
-                                            </td>
-                                            <td>{{ $attendance->date->format('M d, Y') }}</td>
-                                            <td>
-                                                <span class="px-2 py-1 rounded text-xs font-medium 
-                                                    {{ $attendance->status === 'present' ? 'bg-success/20 text-success' : ($attendance->status === 'absent' ? 'bg-danger/20 text-danger' : 'bg-warning/20 text-warning') }}">
-                                                    {{ ucfirst($attendance->status) }}
-                                                </span>
-                                            </td>
-                                            <td>{{ $attendance->check_in ? $attendance->check_in->format('H:i') : '--' }}</td>
-                                            <td class="text-sm text-slate-600 max-w-xs truncate">{{ $attendance->notes ?? '--' }}</td>
-                                        </tr>
-                                    @empty
-                                        <tr>
-                                            <td colspan="5" class="text-center py-8 text-slate-500">
-                                                <x-base.lucide icon="Activity" class="w-12 h-12 mx-auto mb-3 opacity-50" />
-                                                <p>{{ __('global.no_attendance_records') }}</p>
-                                            </td>
-                                        </tr>
-                                    @endforelse
-                                </tbody>
-                            </table>
+                            @endforelse
                         </div>
                     </div>
                 </div>
@@ -660,7 +653,8 @@
             const tabContents = document.querySelectorAll('.tab-content');
             
             tabButtons.forEach(button => {
-                button.addEventListener('click', function() {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
                     const tabId = this.getAttribute('data-tab');
                     
                     // Remove active class from all buttons and contents

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use OmarAlalwi\Gpdf\Facades\Gpdf;
+use OmarAlalwi\Gpdf\Facade\Gpdf;
 
 use App\Http\Requests\StoreJobRequest;
 use App\Http\Requests\UpdateJobRequest;
@@ -60,9 +60,11 @@ class JobController extends Controller
      */
     protected function exportToPdf($data)
     {
-        $pdf = Gpdf::loadView('pages.jobs.export-pdf', ['data' => $data]);
-
-        return $pdf->download('Job_export_'.date('Y-m-d_H-i-s').'.pdf');
+        $html = view('pages.jobs.export-pdf', ['data' => $data])->render();
+        
+        return response()->streamDownload(function () use ($html) {
+            echo Gpdf::generate($html);
+        }, 'Job_export_'.date('Y-m-d_H-i-s').'.pdf');
     }
 
     /**

@@ -1,13 +1,13 @@
 <?php
 
 return [
-    'title' => 'Roles',
-    'add_new' => 'إضافة Role جديد',
-    'edit' => 'تعديل Role',
-    'list' => 'قائمة Roles',
+    'title' => 'الأدوار',
+    'add_new' => 'إضافة دور جديد',
+    'edit' => 'تعديل الدور',
+    'list' => 'قائمة الأدوار',
     'fields' => [
         'name' => 'الاسم',
-        'guard_name' => 'Guard Name',
+        'guard_name' => 'اسم الحارس',
     ],
     'actions' => [
         'save' => 'حفظ',
@@ -21,5 +21,10 @@ return [
         'created' => 'تم إنشاء السجل بنجاح.',
         'updated' => 'تم تحديث السجل بنجاح.',
         'deleted' => 'تم حذف السجل بنجاح.',
+    ],
+    'roles' => [
+        'messages' => [
+            'retrieved' => 'تم استرجاع الأدوار بنجاح',
+        ],
     ],
 ];

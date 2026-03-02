@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 use App\Traits\Filterable;
@@ -86,15 +87,74 @@ class Teacher extends Model
         return $this->hasMany(Event::class);
     }
 
-    public function curriculum(): HasMany
+    public function getCurriculumAttribute()
     {
-        return $this->hasMany(Curriculum::class);
+        // A teacher's curricula are those created by their associated user
+        if ($this->user_id) {
+            return \App\Models\Curriculum::where('created_by', $this->user_id)->get();
+        }
+        return collect(); // Return empty collection
+    }
+    
+    public function curriculum()
+    {
+        // If the relation is already loaded, return it
+        if ($this->relationLoaded('curriculum')) {
+            return $this->getRelation('curriculum');
+        }
+        
+        // Otherwise return a query builder
+        if ($this->user_id) {
+            return \App\Models\Curriculum::where('created_by', $this->user_id);
+        }
+        return \App\Models\Curriculum::whereRaw('1 = 0'); // Empty result
     }
 
-    public function assignedChildren(): BelongsToMany
+    // Temporarily comment out the relationship due to missing table
+    // public function assignedChildren(): BelongsToMany
+    // {
+    //     return $this->belongsToMany(Children::class, 'teacher_child_assignments', 'teacher_id', 'child_id')
+    //         ->withTimestamps();
+    // }
+
+    public function classChildren()
     {
-        return $this->belongsToMany(Children::class, 'teacher_child_assignments', 'teacher_id', 'child_id')
-            ->withTimestamps();
+        // Define the relationship between Teacher and Children through Classes
+        $childrenIds = collect();
+        foreach ($this->classes as $class) {
+            $childrenIds = $childrenIds->concat($class->children->pluck('id')->toArray());
+        }
+        
+        // Return a query that gets the children
+        return \App\Models\Children::whereIn('id', $childrenIds->unique());
+    }
+    
+    public function getClassChildrenAttribute()
+    {
+        // This accessor now calls the relationship method
+        return $this->classChildren()->get();
+    }
+    
+    public function getClassChildrenCountAttribute()
+    {
+        // Get count of all children from classes taught by this teacher
+        $childrenIds = collect();
+        foreach ($this->classes as $class) {
+            $childrenIds = $childrenIds->concat($class->children->pluck('id')->toArray());
+        }
+        
+        return \App\Models\Children::whereIn('id', $childrenIds->unique())->count();
+    }
+    
+    // Alternative method that can be called directly without accessor convention
+    public function getClassChildren()
+    {
+        return $this->getClassChildrenAttribute();
+    }
+    
+    public function getClassChildrenCount()
+    {
+        return $this->getClassChildrenCountAttribute();
     }
 
     // Accessors

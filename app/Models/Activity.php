@@ -95,6 +95,14 @@ class Activity extends Model
             ->withTimestamps();
     }
 
+    // New relationship for materials
+    public function materials(): BelongsToMany
+    {
+        return $this->belongsToMany(Material::class, 'activity_materials')
+                    ->withPivot(['quantity_required', 'usage_instructions'])
+                    ->withTimestamps();
+    }
+
     // Accessors
     public function getSlugAttribute(): string
     {
@@ -109,6 +117,14 @@ class Activity extends Model
     public function getIsFullAttribute(): bool
     {
         return $this->max_participants && $this->participant_count >= $this->max_participants;
+    }
+
+    public function getRequiredMaterialsListAttribute(): array
+    {
+        // Return materials from the relationship as well as legacy array
+        $materials = $this->materials->pluck('name')->toArray();
+        $legacyMaterials = $this->required_materials ?? [];
+        return array_merge($materials, $legacyMaterials);
     }
 
     // Mutators

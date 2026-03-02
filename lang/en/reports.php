@@ -21,4 +21,18 @@ return [
         'updated' => 'Record updated successfully.',
         'deleted' => 'Record deleted successfully.',
     ],
+    'financial_reports' => [
+        'title' => '',
+        'messages' => [
+            'created' => '',
+            'updated' => '',
+            'deleted' => '',
+            'retrieved' => '',
+        ],
+    ],
+    'reports' => [
+        'messages' => [
+            'retrieved' => 'Reports retrieved successfully',
+        ],
+    ],
 ];

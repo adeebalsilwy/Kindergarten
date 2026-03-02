@@ -67,6 +67,10 @@
                     <x-base.lucide icon="Users" class="w-4 h-4 me-2" />
                     {{ __('global.students') }}
                 </button>
+                <button class="tab-button px-4 py-2 text-sm font-medium rounded-t-lg" data-tab="user-account">
+                    <x-base.lucide icon="User" class="w-4 h-4 me-2" />
+                    {{ __('global.user_account') }}
+                </button>
             </nav>
         </div>
     </div>
@@ -132,7 +136,7 @@
                                     <div class="text-xs text-slate-500">{{ __('global.activities') }}</div>
                                 </div>
                                 <div class="text-center p-2 bg-purple-50 rounded">
-                                    <div class="text-lg font-bold text-purple-600">{{ $teacher->assignedChildren()->count() }}</div>
+                                    <div class="text-lg font-bold text-purple-600">{{ $teacher->getClassChildrenCountAttribute() }}</div>
                                     <div class="text-xs text-slate-500">{{ __('global.students') }}</div>
                                 </div>
                             </div>
@@ -642,10 +646,10 @@
                     <div class="box p-5">
                         <div class="text-lg font-medium mb-4 flex items-center justify-between">
                             <span>{{ __('global.students_under_care') }}</span>
-                            <span class="text-sm text-slate-500">{{ $teacher->assignedChildren()->count() }} {{ __('global.students') }}</span>
+                            <span class="text-sm text-slate-500">{{ $teacher->classChildren()->count() }} {{ __('global.students') }}</span>
                         </div>
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                            @forelse($teacher->assignedChildren as $child)
+                            @forelse($teacher->classChildren()->get() as $child)
                                 <div class="border rounded-lg p-4 hover:shadow-md transition-shadow">
                                     <div class="flex items-start justify-between mb-3">
                                         <div class="flex items-center">
@@ -704,6 +708,129 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+        
+        <!-- User Account Tab -->
+        <div id="user-account" class="tab-content">
+            <div class="grid grid-cols-12 gap-6">
+                @if($teacher->user)
+                <div class="intro-y col-span-12">
+                    <div class="box p-5">
+                        <div class="text-lg font-medium mb-4 flex items-center">
+                            <x-base.lucide icon="User" class="w-5 h-5 me-2 text-primary" />
+                            {{ __('global.user_account_details') }}
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="border rounded-lg p-4">
+                                <h3 class="font-medium text-lg mb-3">{{ __('global.user_info') }}</h3>
+                                <div class="space-y-2">
+                                    <div class="flex justify-between py-2 border-b">
+                                        <span class="text-slate-500">{{ __('global.name') }}:</span>
+                                        <span class="font-medium">{{ $teacher->user->name }}</span>
+                                    </div>
+                                    <div class="flex justify-between py-2 border-b">
+                                        <span class="text-slate-500">{{ __('global.email') }}:</span>
+                                        <span class="font-medium">{{ $teacher->user->email }}</span>
+                                    </div>
+                                    <div class="flex justify-between py-2 border-b">
+                                        <span class="text-slate-500">{{ __('global.status') }}:</span>
+                                        <span class="font-medium">
+                                            <span class="{{ $teacher->user->is_active ? 'text-success' : 'text-danger' }}">
+                                                <x-base.lucide icon="{{ $teacher->user->is_active ? 'CheckCircle' : 'XCircle' }}" class="w-4 h-4 inline me-1" />
+                                                {{ $teacher->user->is_active ? __('global.active') : __('global.inactive') }}
+                                            </span>
+                                        </span>
+                                    </div>
+                                    <div class="flex justify-between py-2 border-b">
+                                        <span class="text-slate-500">{{ __('global.email_verified') }}:</span>
+                                        <span class="font-medium">
+                                            <span class="{{ $teacher->user->email_verified_at ? 'text-success' : 'text-warning' }}">
+                                                <x-base.lucide icon="{{ $teacher->user->email_verified_at ? 'CheckCircle' : 'Clock' }}" class="w-4 h-4 inline me-1" />
+                                                {{ $teacher->user->email_verified_at ? __('global.verified') : __('global.pending') }}
+                                            </span>
+                                        </span>
+                                    </div>
+                                    <div class="flex justify-between py-2">
+                                        <span class="text-slate-500">{{ __('global.last_login') }}:</span>
+                                        <span class="font-medium">{{ $teacher->user->last_activity ? date('M d, Y H:i', $teacher->user->last_activity) : 'Never' }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="border rounded-lg p-4">
+                                <h3 class="font-medium text-lg mb-3">{{ __('global.roles_and_permissions') }}</h3>
+                                <div class="space-y-3">
+                                    <div>
+                                        <div class="font-medium mb-2">{{ __('global.roles') }}</div>
+                                        <div class="flex flex-wrap gap-1">
+                                            @forelse($teacher->user->roles as $role)
+                                                <span class="px-2 py-1 text-xs rounded-full bg-primary/10 text-primary border border-primary/20">
+                                                    {{ $role->name }}
+                                                </span>
+                                            @empty
+                                                <span class="text-xs text-slate-500">{{ __('global.no_roles_assigned') }}</span>
+                                            @endforelse
+                                        </div>
+                                    </div>
+                                    
+                                    <div>
+                                        <div class="font-medium mb-2">{{ __('global.permissions') }}</div>
+                                        <div class="flex flex-wrap gap-1 max-h-32 overflow-y-auto">
+                                            @forelse($teacher->user->permissions as $permission)
+                                                <span class="px-2 py-1 text-xs rounded-full bg-secondary/10 text-secondary border border-secondary/20">
+                                                    {{ $permission->name }}
+                                                </span>
+                                            @empty
+                                                <span class="text-xs text-slate-500">{{ __('global.no_permissions_assigned') }}</span>
+                                            @endforelse
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="border rounded-lg p-4">
+                                <h3 class="font-medium text-lg mb-3">{{ __('global.related_data') }}</h3>
+                                <div class="space-y-2">
+                                    <div class="flex justify-between py-2 border-b">
+                                        <span class="text-slate-500">{{ __('global.accounting_entries') }}:</span>
+                                        <span class="font-medium">{{ $teacher->user->accountingEntries()->count() }}</span>
+                                    </div>
+                                    <div class="flex justify-between py-2 border-b">
+                                        <span class="text-slate-500">{{ __('global.expenses_created') }}:</span>
+                                        <span class="font-medium">{{ $teacher->user->expensesCreated()->count() }}</span>
+                                    </div>
+                                    <div class="flex justify-between py-2 border-b">
+                                        <span class="text-slate-500">{{ __('global.expenses_assigned') }}:</span>
+                                        <span class="font-medium">{{ $teacher->user->expensesAssigned()->count() }}</span>
+                                    </div>
+                                    <div class="flex justify-between py-2">
+                                        <span class="text-slate-500">{{ __('global.financial_reports') }}:</span>
+                                        <span class="font-medium">{{ $teacher->user->financialReports()->count() }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="border rounded-lg p-4">
+                                <h3 class="font-medium text-lg mb-3">{{ __('global.actions') }}</h3>
+                                <div class="space-y-2">
+                                    <a href="{{ route('users.show', $teacher->user->id) }}" class="block w-full text-center py-2 px-4 rounded bg-primary/10 text-primary hover:bg-primary/20 transition-colors">
+                                        {{ __('global.view_user_profile') }}
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @else
+                <div class="intro-y col-span-12">
+                    <div class="box p-8 text-center">
+                        <x-base.lucide icon="UserX" class="w-16 h-16 mx-auto mb-4 text-slate-300" />
+                        <h3 class="text-lg font-medium text-slate-500">{{ __('global.no_user_account_linked') }}</h3>
+                        <p class="text-slate-400 mt-2">{{ __('global.this_teacher_is_not_linked_to_a_user_account') }}</p>
+                    </div>
+                </div>
+                @endif
             </div>
         </div>
     </div>

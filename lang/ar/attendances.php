@@ -1,13 +1,13 @@
 <?php
 
 return [
-    'title' => 'Attendances',
-    'add_new' => 'إضافة Attendance جديد',
-    'edit' => 'تعديل Attendance',
-    'list' => 'قائمة Attendances',
+    'title' => 'الحضور',
+    'add_new' => 'إضافة حضور جديد',
+    'edit' => 'تعديل الحضور',
+    'list' => 'قائمة الحضور',
     'fields' => [
-        'child_id' => 'Child Id',
-        'date' => 'Date',
+        'child_id' => 'معرّف الطفل',
+        'date' => 'التاريخ',
         'status' => 'الحالة',
         'notes' => 'ملاحظات',
     ],
@@ -23,5 +23,10 @@ return [
         'created' => 'تم إنشاء السجل بنجاح.',
         'updated' => 'تم تحديث السجل بنجاح.',
         'deleted' => 'تم حذف السجل بنجاح.',
+    ],
+    'attendances' => [
+        'messages' => [
+            'retrieved' => 'تم استرجاع سجلات الحضور بنجاح',
+        ],
     ],
 ];

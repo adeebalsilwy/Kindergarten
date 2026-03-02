@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use OmarAlalwi\Gpdf\Facades\Gpdf;
+use OmarAlalwi\Gpdf\Facade\Gpdf;
 
 use App\Http\Requests\StoreGradeRequest;
 use App\Http\Requests\UpdateGradeRequest;
@@ -25,16 +25,27 @@ class GradeController extends Controller
     public function index(Request $request)
     {
         $this->authorize('view_grades');
-        $query = $this->service->query();
+        $query = $this->service->query()->with(['child']);
+
+        if (method_exists($query->getModel(), 'scopeFilter')) {
+            $query->filter($request);
+        }
+        
+        // Additional filtering for child_id
+        if ($request->filled('child_id')) {
+            $query->where('child_id', $request->child_id);
+        }
 
         // Handle export functionality
         if ($request->has('export')) {
             return $this->export($request->get('export'), $query);
         }
 
-        $grades = $query->paginate(15);
+        $grades = $query->paginate(15)->withQueryString();
+        $subjects = $this->service->query()->distinct()->pluck('subject');
+        $children = \App\Models\Children::select('id', 'name')->get();
 
-        return view('pages.grades.index', compact('grades'));
+        return view('pages.grades.index', compact('grades', 'subjects', 'children'));
     }
 
     /**
@@ -60,9 +71,11 @@ class GradeController extends Controller
      */
     protected function exportToPdf($data)
     {
-        $pdf = Gpdf::loadView('pages.grades.export-pdf', ['data' => $data]);
-
-        return $pdf->download('Grade_export_'.date('Y-m-d_H-i-s').'.pdf');
+        $html = view('pages.grades.export-pdf', ['data' => $data])->render();
+        
+        return response()->streamDownload(function () use ($html) {
+            echo Gpdf::generate($html);
+        }, 'Grade_export_'.date('Y-m-d_H-i-s').'.pdf');
     }
 
     /**
@@ -105,8 +118,10 @@ class GradeController extends Controller
 
         // Style header row
         $headerRange = 'A3:'.chr(ord('A') + count($headers) - 1).'3';
-        $sheet->getStyle($headerRange)->getFont()->setBold(true)
-            ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+        $sheet->getStyle($headerRange)->getFont()->setBold(true);
+        $sheet->getStyle($headerRange)->getFill()
+            ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID);
+        $sheet->getStyle($headerRange)->getFill()
             ->getStartColor()->setARGB('FFEEEEEE');
 
         // Add data rows
@@ -143,7 +158,9 @@ class GradeController extends Controller
     {
         $this->authorize('create_grades');
 
-        return view('pages.grades.create', get_defined_vars());
+        $children = \App\Models\Children::all();
+        
+        return view('pages.grades.create', compact('children'));
     }
 
     public function store(StoreGradeRequest $request)
@@ -166,8 +183,9 @@ class GradeController extends Controller
     {
         $this->authorize('edit_grades');
         $grade = $this->service->find($id);
+        $children = \App\Models\Children::all();
 
-        return view('pages.grades.edit', get_defined_vars());
+        return view('pages.grades.edit', compact('grade', 'children'));
     }
 
     public function update(UpdateGradeRequest $request, $id)
@@ -184,5 +202,45 @@ class GradeController extends Controller
         $this->service->delete($id);
 
         return redirect()->route('grades.index')->with('success', __('grades.messages.deleted'));
+    }
+
+    public function exportPdf(Request $request)
+    {
+        $this->authorize('export_grades');
+        
+        $query = $this->service->query()->with(['child']);
+
+        if (method_exists($query->getModel(), 'scopeFilter')) {
+            $query->filter($request);
+        }
+        
+        // Additional filtering for child_id
+        if ($request->filled('child_id')) {
+            $query->where('child_id', $request->child_id);
+        }
+
+        $data = $query->get();
+        
+        return $this->exportToPdf($data);
+    }
+
+    public function exportExcel(Request $request)
+    {
+        $this->authorize('export_grades');
+        
+        $query = $this->service->query()->with(['child']);
+
+        if (method_exists($query->getModel(), 'scopeFilter')) {
+            $query->filter($request);
+        }
+        
+        // Additional filtering for child_id
+        if ($request->filled('child_id')) {
+            $query->where('child_id', $request->child_id);
+        }
+
+        $data = $query->get();
+        
+        return $this->exportToExcel($data);
     }
 }

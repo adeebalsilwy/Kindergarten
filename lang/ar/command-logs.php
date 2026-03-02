@@ -1,16 +1,16 @@
 <?php
 
 return [
-    'title' => 'Command Logs',
-    'add_new' => 'إضافة Command Log جديد',
-    'edit' => 'تعديل Command Log',
-    'list' => 'قائمة Command Logs',
+    'title' => 'سجلات الأوامر',
+    'add_new' => 'إضافة سجل أمر جديد',
+    'edit' => 'تعديل سجل الأمر',
+    'list' => 'قائمة سجلات الأوامر',
     'fields' => [
-        'command' => 'Command',
-        'parameters' => 'Parameters',
-        'output' => 'Output',
+        'command' => 'الأمر',
+        'parameters' => 'المعلمات',
+        'output' => 'الناتج',
         'status' => 'الحالة',
-        'error_message' => 'Error Message',
+        'error_message' => 'رسالة الخطأ',
     ],
     'actions' => [
         'save' => 'حفظ',

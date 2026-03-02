@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use OmarAlalwi\Gpdf\Facades\Gpdf;
+use Omaralalwi\Gpdf\Facade\Gpdf;
 
 use App\Http\Requests\StorePaymentRequest;
 use App\Http\Requests\UpdatePaymentRequest;
 use App\Services\PaymentService;
-use OmarAlalwi\Gpdf\Facades\Gpdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
@@ -16,8 +15,6 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 class PaymentController extends Controller
 {
     protected $service;
-
-    use \Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
     public function __construct(PaymentService $service)
     {
@@ -29,8 +26,37 @@ class PaymentController extends Controller
         $this->authorize('view_payments');
         $query = $this->service->query()->with(['child', 'fee']);
 
-        if (method_exists($query->getModel(), 'scopeFilter')) {
-            $query->filter($request);
+        // Apply filters
+        if ($request->filled('search')) {
+            $query->whereHas('child', function($q) use ($request) {
+                $q->where('name', 'LIKE', '%' . $request->search . '%');
+            });
+        }
+        
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+        
+        if ($request->filled('payment_method')) {
+            $query->where('payment_method', $request->payment_method);
+        }
+        
+        if ($request->filled('child_id')) {
+            $query->where('child_id', $request->child_id);
+        }
+        
+        if ($request->filled('class_id')) {
+            $query->whereHas('child', function($q) use ($request) {
+                $q->where('class_id', $request->class_id);
+            });
+        }
+        
+        if ($request->filled('payment_date_from')) {
+            $query->where('payment_date', '>=', $request->payment_date_from);
+        }
+        
+        if ($request->filled('payment_date_to')) {
+            $query->where('payment_date', '<=', $request->payment_date_to);
         }
 
         // Handle export functionality
@@ -40,7 +66,25 @@ class PaymentController extends Controller
 
         $payments = $query->paginate(15)->withQueryString();
 
-        return view('pages.payments.index', compact('payments'));
+        // Statistics
+        $totalPayments = \App\Models\Payment::sum('amount');
+        $thisMonthPayments = \App\Models\Payment::whereMonth('payment_date', now()->month)->sum('amount');
+        $pendingPaymentsCount = \App\Models\Payment::where('status', 'pending')->count();
+        $completedPaymentsCount = \App\Models\Payment::where('status', 'completed')->count();
+
+        // Get children and classes for filters
+        $children = \App\Models\Children::select('id', 'name')->orderBy('name')->get();
+        $classes = \App\Models\Classes::select('id', 'name')->orderBy('name')->get();
+
+        return view('pages.payments.index', compact(
+            'payments', 
+            'totalPayments', 
+            'thisMonthPayments', 
+            'pendingPaymentsCount', 
+            'completedPaymentsCount',
+            'children',
+            'classes'
+        ));
     }
 
     /**
@@ -66,9 +110,11 @@ class PaymentController extends Controller
      */
     protected function exportToPdf($data)
     {
-        $pdf = Gpdf::loadView('pages.payments.export-pdf', ['data' => $data]);
-
-        return $pdf->download('Payment_export_'.date('Y-m-d_H-i-s').'.pdf');
+        $html = view('pages.payments.export-pdf', ['data' => $data])->render();
+        
+        return response()->streamDownload(function () use ($html) {
+            echo Gpdf::generate($html);
+        }, 'Payment_export_'.date('Y-m-d_H-i-s').'.pdf');
     }
 
     /**
@@ -111,8 +157,10 @@ class PaymentController extends Controller
 
         // Style header row
         $headerRange = 'A3:'.chr(ord('A') + count($headers) - 1).'3';
-        $sheet->getStyle($headerRange)->getFont()->setBold(true)
-            ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+        $sheet->getStyle($headerRange)->getFont()->setBold(true);
+        $sheet->getStyle($headerRange)->getFill()
+            ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID);
+        $sheet->getStyle($headerRange)->getFill()
             ->getStartColor()->setARGB('FFEEEEEE');
 
         // Add data rows
@@ -195,5 +243,91 @@ class PaymentController extends Controller
         $this->service->delete($id);
 
         return redirect()->route('payments.index')->with('success', __('payments.messages.deleted'));
+    }
+
+    public function exportPdf()
+    {
+        $this->authorize('export_payments');
+        $query = $this->service->query()->with(['child', 'fee']);
+
+        // Apply filters similar to index method
+        $request = request();
+        if ($request->filled('search')) {
+            $query->whereHas('child', function($q) use ($request) {
+                $q->where('name', 'LIKE', '%' . $request->search . '%');
+            });
+        }
+        
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+        
+        if ($request->filled('payment_method')) {
+            $query->where('payment_method', $request->payment_method);
+        }
+        
+        if ($request->filled('child_id')) {
+            $query->where('child_id', $request->child_id);
+        }
+        
+        if ($request->filled('class_id')) {
+            $query->whereHas('child', function($q) use ($request) {
+                $q->where('class_id', $request->class_id);
+            });
+        }
+        
+        if ($request->filled('payment_date_from')) {
+            $query->where('payment_date', '>=', $request->payment_date_from);
+        }
+        
+        if ($request->filled('payment_date_to')) {
+            $query->where('payment_date', '<=', $request->payment_date_to);
+        }
+
+        $data = $query->get();
+        return $this->exportToPdf($data);
+    }
+
+    public function exportExcel()
+    {
+        $this->authorize('export_payments');
+        $query = $this->service->query()->with(['child', 'fee']);
+
+        // Apply filters similar to index method
+        $request = request();
+        if ($request->filled('search')) {
+            $query->whereHas('child', function($q) use ($request) {
+                $q->where('name', 'LIKE', '%' . $request->search . '%');
+            });
+        }
+        
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+        
+        if ($request->filled('payment_method')) {
+            $query->where('payment_method', $request->payment_method);
+        }
+        
+        if ($request->filled('child_id')) {
+            $query->where('child_id', $request->child_id);
+        }
+        
+        if ($request->filled('class_id')) {
+            $query->whereHas('child', function($q) use ($request) {
+                $q->where('class_id', $request->class_id);
+            });
+        }
+        
+        if ($request->filled('payment_date_from')) {
+            $query->where('payment_date', '>=', $request->payment_date_from);
+        }
+        
+        if ($request->filled('payment_date_to')) {
+            $query->where('payment_date', '<=', $request->payment_date_to);
+        }
+
+        $data = $query->get();
+        return $this->exportToExcel($data);
     }
 }

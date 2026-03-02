@@ -1,0 +1,240 @@
+/* Kindergarten Theme Main Styles */
+
+/* Base styles */
+.kindergarten {
+  /* Use emerald green as the main theme color */
+  --color-theme-1: 16 185 129; /* #10B981 - Emerald 500 */
+  --color-theme-2: 101 163 13; /* #65A30D - Emerald 600 */
+  --color-primary: var(--color-theme-1);
+  --color-secondary: 156 163 175; /* #9CA3AF - Gray 400 */
+  --color-success: 16 185 129; /* #10B981 - Emerald 500 */
+  --color-pending: 245 158 11; /* #F59E0B - Amber 500 */
+  --color-warning: 245 158 11; /* #F59E0B - Amber 500 */
+  --color-danger: 239 68 68; /* #EF4444 - Red 500 */
+  --color-dark: 30 41 59; /* #1E293B - Slate 800 */
+  --color-slate: 148 163 184; /* #94A3B8 - Slate 400 */
+  --color-gray: 203 213 225; /* #CBD5E1 - Gray 300 */
+  --color-gray-light: 241 245 249; /* #F1F5F9 - Gray 100 */
+  --color-gray-dark: 71 85 105; /* #475569 - Slate 600 */
+  --color-transparent: 255 255 255 / 0;
+  --color-white: 255 255 255;
+  --color-black: 0 0 0;
+  --tw-ring-opacity: 1;
+  --tw-ring-color: rgb(16 185 129 / var(--tw-ring-opacity));
+}
+
+/* Background gradients and colors */
+.kindergarten-bg {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+}
+
+.kindergarten-bg-alt {
+  background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%) !important;
+}
+
+.kindergarten-text {
+  color: #10b981 !important;
+}
+
+.kindergarten-border {
+  border-color: #10b981 !important;
+}
+
+/* Card styles */
+.kindergarten-card {
+  background-color: rgba(255, 255, 255, 0.9) !important;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(16, 185, 129, 0.2) !important;
+  border-radius: 1rem !important;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.05) !important;
+}
+
+.kindergarten-card-header {
+  background: linear-gradient(135deg, #10b981, #059669) !important;
+  color: white !important;
+  border-top-left-radius: 1rem !important;
+  border-top-right-radius: 1rem !important;
+  padding: 1rem 1.5rem !important;
+  font-weight: 600 !important;
+}
+
+/* Button styles */
+.btn-kindergarten {
+  background-color: #10b981 !important;
+  border-color: #10b981 !important;
+  color: white !important;
+  transition: all 0.3s ease !important;
+}
+
+.btn-kindergarten:hover {
+  background-color: #059669 !important;
+  border-color: #059669 !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3) !important;
+}
+
+.btn-kindergarten-outline {
+  background-color: transparent !important;
+  border: 2px solid #10b981 !important;
+  color: #10b981 !important;
+}
+
+.btn-kindergarten-outline:hover {
+  background-color: #10b981 !important;
+  color: white !important;
+}
+
+/* Form styles */
+.form-control-kindergarten {
+  border: 2px solid rgba(16, 185, 129, 0.3) !important;
+  border-radius: 0.5rem !important;
+  transition: all 0.3s ease !important;
+}
+
+.form-control-kindergarten:focus {
+  border-color: #10b981 !important;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2) !important;
+}
+
+/* Badge styles */
+.badge-kindergarten {
+  background-color: #10b981 !important;
+  color: white !important;
+  border-radius: 9999px !important;
+  padding: 0.25rem 0.75rem !important;
+}
+
+/* Alert styles */
+.alert-kindergarten {
+  background-color: rgba(16, 185, 129, 0.1) !important;
+  border-left: 4px solid #10b981 !important;
+  border-radius: 0.5rem !important;
+}
+
+/* Table styles */
+.table-kindergarten {
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+  width: 100% !important;
+}
+
+.table-kindergarten th {
+  background-color: #10b981 !important;
+  color: white !important;
+  font-weight: 600 !important;
+}
+
+.table-kindergarten tr:nth-child(even) {
+  background-color: rgba(16, 185, 129, 0.05) !important;
+}
+
+/* Progress bar styles */
+.progress-kindergarten {
+  background-color: rgba(16, 185, 129, 0.1) !important;
+  border-radius: 9999px !important;
+  overflow: hidden !important;
+}
+
+.progress-kindergarten .progress-bar {
+  background-color: #10b981 !important;
+  transition: width 0.6s ease !important;
+}
+
+/* Modal styles */
+.modal-kindergarten .modal-content {
+  border-radius: 1rem !important;
+  border: none !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important;
+}
+
+.modal-kindergarten .modal-header {
+  background: linear-gradient(135deg, #10b981, #059669) !important;
+  color: white !important;
+  border-top-left-radius: 1rem !important;
+  border-top-right-radius: 1rem !important;
+}
+
+/* Navigation styles */
+.nav-pills .nav-link.active.kindergarten,
+.nav-tabs .nav-link.active.kindergarten {
+  background-color: #10b981 !important;
+  border-color: #10b981 !important;
+  color: white !important;
+}
+
+/* Custom scrollbar for kindergarten theme */
+.kindergarten ::-webkit-scrollbar {
+  width: 8px;
+}
+
+.kindergarten ::-webkit-scrollbar-track {
+  background: rgba(16, 185, 129, 0.1);
+  border-radius: 4px;
+}
+
+.kindergarten ::-webkit-scrollbar-thumb {
+  background: #10b981;
+  border-radius: 4px;
+}
+
+.kindergarten ::-webkit-scrollbar-thumb:hover {
+  background: #059669;
+}
+
+/* Special elements for kindergarten theme */
+.kindergarten-logo {
+  filter: drop-shadow(0 4px 8px rgba(16, 185, 129, 0.3)) !important;
+}
+
+.kindergarten-icon {
+  color: #10b981 !important;
+}
+
+.kindergarten-highlight {
+  background: linear-gradient(120deg, transparent 0%, rgba(16, 185, 129, 0.3) 0%, rgba(16, 185, 129, 0.3) 100%, transparent 100%) !important;
+  background-repeat: no-repeat !important;
+  background-position: 0 85% !important;
+  background-size: 100% 8px !important;
+}
+
+.kindergarten-border-radius {
+  border-radius: 1rem !important;
+}
+
+.kindergarten-shadow {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* Dark mode support */
+.dark .kindergarten {
+  --color-theme-1: 16 185 129; /* #10B981 - Emerald 500 */
+  --color-theme-2: 101 163 13; /* #65A30D - Emerald 600 */
+  --color-primary: var(--color-theme-1);
+  --color-secondary: 71 85 105; /* #475569 - Slate 600 */
+  --color-success: 16 185 129; /* #10B981 - Emerald 500 */
+  --color-pending: 245 158 11; /* #F59E0B - Amber 500 */
+  --color-warning: 245 158 11; /* #F59E0B - Amber 500 */
+  --color-danger: 239 68 68; /* #EF4444 - Red 500 */
+  --color-dark: 15 23 42; /* #0F172A - Slate 900 */
+  --color-slate: 148 163 184; /* #94A3B8 - Slate 400 */
+  --color-gray: 71 85 105; /* #475569 - Slate 600 */
+  --color-gray-light: 30 41 59; /* #1E293B - Slate 800 */
+  --color-gray-dark: 203 213 225; /* #CBD5E1 - Gray 300 */
+  --color-transparent: 15 23 42 / 0;
+  --color-white: 15 23 42;
+  --color-black: 255 255 255;
+}
+
+/* Specific overrides for layout elements */
+.kindergarten .top-nav,
+.kindergarten .side-nav {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+}
+
+.kindergarten .content {
+  background-color: #f8fafc !important;
+}
+
+.dark .kindergarten .content {
+  background-color: #0f172a !important;
+}

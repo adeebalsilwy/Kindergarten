@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use OmarAlalwi\Gpdf\Facades\Gpdf;
+use OmarAlalwi\Gpdf\Facade\Gpdf;
 
 use App\Http\Requests\StoreCommandLogRequest;
 use App\Http\Requests\UpdateCommandLogRequest;
@@ -60,9 +60,11 @@ class CommandLogController extends Controller
      */
     protected function exportToPdf($data)
     {
-        $pdf = Gpdf::loadView('pages.command_logs.export-pdf', ['data' => $data]);
-
-        return $pdf->download('CommandLog_export_'.date('Y-m-d_H-i-s').'.pdf');
+        $html = view('pages.command_logs.export-pdf', ['data' => $data])->render();
+        
+        return response()->streamDownload(function () use ($html) {
+            echo Gpdf::generate($html);
+        }, 'CommandLog_export_'.date('Y-m-d_H-i-s').'.pdf');
     }
 
     /**

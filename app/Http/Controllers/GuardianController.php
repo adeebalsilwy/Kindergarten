@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use OmarAlalwi\Gpdf\Facades\Gpdf;
+use OmarAlalwi\Gpdf\Facade\Gpdf;
 
 use App\Http\Requests\StoreGuardianRequest;
 use App\Http\Requests\UpdateGuardianRequest;
 use App\Services\GuardianService;
-use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
@@ -28,8 +27,22 @@ class GuardianController extends Controller
         $query = $this->service->query()->with(['children', 'secondChildren']);
 
         // Apply filters
-        if (method_exists($query->getModel(), 'scopeFilter')) {
-            $query->filter($request);
+        if ($request->has('search') || $request->has('is_active')) {
+            // Apply search filter
+            if ($request->filled('search')) {
+                $query->where(function($q) use ($request) {
+                    $q->where('name', 'LIKE', '%' . $request->search . '%')
+                      ->orWhere('phone', 'LIKE', '%' . $request->search . '%')
+                      ->orWhere('email', 'LIKE', '%' . $request->search . '%')
+                      ->orWhere('address', 'LIKE', '%' . $request->search . '%')
+                      ->orWhere('relationship', 'LIKE', '%' . $request->search . '%');
+                });
+            }
+            
+            // Apply active status filter
+            if ($request->filled('is_active')) {
+                $query->where('is_active', $request->is_active);
+            }
         }
 
         // Handle export functionality
@@ -39,7 +52,17 @@ class GuardianController extends Controller
 
         $parents = $query->paginate(15)->withQueryString();
 
-        return view('pages.guardians.index', compact('parents'));
+        // Calculate statistics
+        $totalActive = clone $query;
+        $totalActive = $totalActive->where('is_active', true)->count();
+
+        $totalChildren = $query->get()->sum(function($guardian) {
+            return $guardian->children()->count() + $guardian->secondChildren()->count();
+        });
+
+        $totalGuardians = $parents->total();
+
+        return view('pages.guardians.index', compact('parents', 'totalActive', 'totalChildren', 'totalGuardians'));
     }
 
     /**
@@ -65,9 +88,11 @@ class GuardianController extends Controller
      */
     protected function exportToPdf($data)
     {
-        $pdf = Gpdf::loadView('pages.guardians.export-pdf', ['data' => $data]);
-
-        return $pdf->download('Guardian_export_'.date('Y-m-d_H-i-s').'.pdf');
+        $html = view('pages.guardians.export-pdf', ['data' => $data])->render();
+        
+        return response()->streamDownload(function () use ($html) {
+            echo Gpdf::generate($html);
+        }, 'Guardian_export_'.date('Y-m-d_H-i-s').'.pdf');
     }
 
     /**
@@ -110,9 +135,9 @@ class GuardianController extends Controller
 
         // Style header row
         $headerRange = 'A3:'.chr(ord('A') + count($headers) - 1).'3';
-        $sheet->getStyle($headerRange)->getFont()->setBold(true)
-            ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
-            ->getStartColor()->setARGB('FFEEEEEE');
+        $sheet->getStyle($headerRange)->getFont()->setBold(true);
+        $sheet->getStyle($headerRange)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID);
+        $sheet->getStyle($headerRange)->getFill()->getStartColor()->setARGB('FFEEEEEE');
 
         // Add data rows
         $row = 4;
@@ -163,6 +188,18 @@ class GuardianController extends Controller
     {
         $this->authorize('view_guardians');
         $parents = $this->service->find($id);
+        
+        // Load all related data for the enhanced show page
+        $parents->load([
+            'children',
+            'secondChildren',
+            'children.class',
+            'children.attendances',
+            'children.grades',
+            'children.payments',
+            'children.activities',
+            'children.events'
+        ]);
 
         return view('pages.guardians.show', compact('parents'));
     }

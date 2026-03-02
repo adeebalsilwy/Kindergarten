@@ -24,4 +24,18 @@ return [
         'updated' => 'Record updated successfully.',
         'deleted' => 'Record deleted successfully.',
     ],
+    'cache' => [
+        'title' => '',
+        'messages' => [
+            'created' => '',
+            'updated' => '',
+            'deleted' => '',
+            'retrieved' => '',
+        ],
+    ],
+    'caches' => [
+        'fields' => [
+            'name' => '',
+        ],
+    ],
 ];

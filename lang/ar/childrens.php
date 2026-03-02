@@ -5,16 +5,12 @@ return [
     'add_new' => 'إضافة طفل جديد',
     'edit' => 'تعديل الطفل',
     'list' => 'قائمة الأطفال',
-    
-    // Tabs
     'tabs' => [
         'basic_info' => 'المعلومات الأساسية',
         'parents' => 'معلومات الوالدين',
         'medical' => 'المعلومات الطبية',
         'enrollment' => 'التسجيل والرسوم',
     ],
-    
-    // Sections
     'sections' => [
         'personal_info' => 'المعلومات الشخصية',
         'class_assignment' => 'تعيين الصف',
@@ -24,8 +20,6 @@ return [
         'financial_info' => 'المعلومات المالية',
         'enrollment_info' => 'معلومات التسجيل',
     ],
-    
-    // Descriptions
     'descriptions' => [
         'personal_info' => 'أدخل المعلومات الشخصية الأساسية للطفل بما في ذلك الاسم وتاريخ الميلاد وتفاصيل الاتصال.',
         'class_assignment' => 'قم بتعيين الطفل إلى الصف المناسب بناءً على عمره ومستوى الصف.',
@@ -35,7 +29,6 @@ return [
         'financial_info' => 'قم بإعداد المتطلبات المالية وتتبع المدفوعات لتسجيل الطفل.',
         'enrollment_info' => 'إدارة حالة التسجيل والتواريخ ومعلومات تتبع الحضور.',
     ],
-    
     'fields' => [
         'name' => 'الاسم الكامل',
         'dob' => 'تاريخ الميلاد',
@@ -61,8 +54,6 @@ return [
         'religion' => 'الدين',
         'special_needs' => 'الاحتياجات الخاصة',
     ],
-    
-    // Placeholders
     'placeholders' => [
         'name' => 'أدخل الاسم الكامل للطفل',
         'nationality' => 'أدخل الجنسية',
@@ -75,12 +66,9 @@ return [
         'medications' => 'اذكر الأدوية الحالية',
         'special_needs' => 'وصف أي احتياجات خاصة أو متطلبات',
     ],
-    
-    // Help text
     'help' => [
         'second_parent_optional' => 'اختياري: اختر إذا كان هناك والد/وصي ثانوي',
     ],
-    
     'actions' => [
         'save' => 'حفظ الطفل',
         'cancel' => 'إلغاء',
@@ -89,7 +77,6 @@ return [
         'delete' => 'حذف',
         'confirm_delete' => 'هل أنت متأكد من حذف سجل هذا الطفل؟',
     ],
-    
     'messages' => [
         'created' => 'تم إنشاء سجل الطفل بنجاح.',
         'updated' => 'تم تحديث سجل الطفل بنجاح.',
@@ -97,5 +84,18 @@ return [
         'validation_error' => 'يرجى تصحيح الأخطاء أدناه قبل التقديم.',
         'fill_demo_data' => 'تعبئة البيانات التجريبية',
         'demo_data_filled' => 'تم تعبئة البيانات التجريبية بنجاح!',
+    ],
+    'children' => [
+        'title' => '',
+        'messages' => [
+            'created' => '',
+            'updated' => '',
+            'deleted' => '',
+            'retrieved' => '',
+        ],
+    ],
+    'childrens' => [
+        'fill_demo_data' => '',
+        'demo_data_filled' => '',
     ],
 ];

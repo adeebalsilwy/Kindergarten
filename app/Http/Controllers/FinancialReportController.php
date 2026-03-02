@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use OmarAlalwi\Gpdf\Facades\Gpdf;
+use OmarAlalwi\Gpdf\Facade\Gpdf;
 
 use App\Http\Requests\StoreFinancialReportRequest;
 use App\Http\Requests\UpdateFinancialReportRequest;
@@ -59,9 +59,11 @@ class FinancialReportController extends Controller
      */
     protected function exportToPdf($data)
     {
-        $pdf = Gpdf::loadView('pages.financial_reports.export-pdf', ['data' => $data]);
-
-        return $pdf->download('FinancialReport_export_'.date('Y-m-d_H-i-s').'.pdf');
+        $html = view('pages.financial_reports.export-pdf', ['data' => $data])->render();
+        
+        return response()->streamDownload(function () use ($html) {
+            echo Gpdf::generate($html);
+        }, 'FinancialReport_export_'.date('Y-m-d_H-i-s').'.pdf');
     }
 
     /**

@@ -7,4 +7,5 @@ return [
     App\Providers\ServiceServiceProvider::class,
     App\Providers\AuthServiceProvider::class,
     App\Providers\RouteServiceProvider::class,
+    App\Providers\GpdfAliasServiceProvider::class,
 ];

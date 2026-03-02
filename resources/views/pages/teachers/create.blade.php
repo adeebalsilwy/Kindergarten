@@ -11,6 +11,7 @@
             border-color: var(--primary);
         }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @endsection
 
 @section('subcontent')
@@ -215,8 +216,22 @@
             </div>
             
             <!-- Form Actions -->
-            <x-form-actions :back-url="route('teachers.index')" 
-                           submit-text="{{ __('global.save') }}" />
+            <div class="flex justify-between mt-5">
+                <div class="flex gap-2">
+                    <x-base.button type="button" variant="secondary" onclick="window.history.back()" class="me-1">
+                        <x-base.lucide icon="ArrowLeft" class="w-4 h-4 me-2" />
+                        {{ __('global.back') }}
+                    </x-base.button>
+                    <x-base.button type="button" variant="outline-secondary" onclick="fillDemoData()" class="me-1">
+                        <x-base.lucide icon="Sparkles" class="w-4 h-4 me-2" />
+                        {{ __('global.fill_demo_data') }}
+                    </x-base.button>
+                </div>
+                <x-base.button type="submit" variant="primary" class="me-1">
+                    <x-base.lucide icon="Save" class="w-4 h-4 me-2" />
+                    {{ __('global.save') }}
+                </x-base.button>
+            </div>
         </form>
     </div>
 </div>
@@ -278,5 +293,46 @@
             }
         });
     });
+    
+    // Demo data functionality
+    function fillDemoData() {
+        Swal.fire({
+            title: '{{ __('global.fill_demo_data') }}',
+            text: '{{ __('global.demo_data_warning') }}',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '{{ __('global.yes_fill_data') }}',
+            cancelButtonText: '{{ __('global.cancel') }}'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Personal Info
+                document.querySelector('input[name="name"]').value = 'Ahmed Hassan';
+                document.querySelector('input[name="email"]').value = 'ahmed.hassan@example.com';
+                document.querySelector('input[name="phone"]').value = '01234567890';
+                document.querySelector('input[name="date_of_birth"]').value = '1985-06-15';
+                document.querySelector('select[name="gender"]').value = 'male';
+                document.querySelector('textarea[name="address"]').value = '123 Main Street, Downtown, City';
+                
+                // Professional Info
+                document.querySelector('input[name="qualification"]').value = 'Master of Education';
+                document.querySelector('input[name="specialization"]').value = 'Mathematics';
+                document.querySelector('input[name="experience_years"]').value = '8';
+                document.querySelector('textarea[name="bio"]').value = 'Experienced mathematics teacher with a passion for helping students achieve their academic goals.';
+                
+                // Employment Info
+                document.querySelector('input[name="hire_date"]').value = new Date().toISOString().split('T')[0];
+                document.querySelector('input[name="salary"]').value = '5000';
+                document.querySelector('input[name="is_active"]').checked = true;
+                
+                Swal.fire(
+                    '{{ __('global.success') }}',
+                    '{{ __('global.demo_data_filled') }}',
+                    'success'
+                );
+            }
+        });
+    }
 </script>
 @endsection

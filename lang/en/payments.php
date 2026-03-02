@@ -28,4 +28,20 @@ return [
         'updated' => 'Record updated successfully.',
         'deleted' => 'Record deleted successfully.',
     ],
+    'payments' => [
+        'messages' => [
+            'retrieved' => 'Payments retrieved successfully',
+        ],
+        'methods' => [
+            'cash' => 'Cash',
+            'bank_transfer' => 'Bank Transfer',
+            'credit_card' => 'Credit Card',
+            'check' => 'Check',
+        ],
+        'status' => [
+            'completed' => 'Completed',
+            'pending' => 'Pending',
+            'failed' => 'Failed',
+        ],
+    ],
 ];

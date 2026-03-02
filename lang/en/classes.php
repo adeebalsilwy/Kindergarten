@@ -2,9 +2,10 @@
 
 return [
     'title' => 'Classes',
-    'add_new' => 'Add New Classes',
-    'edit' => 'Edit Classes',
+    'add_new' => 'Add New Class',
+    'edit' => 'Edit Class',
     'list' => 'Classes List',
+    'show' => 'View Class',
     'fields' => [
         'name' => 'Name',
         'code' => 'Code',
@@ -18,6 +19,15 @@ return [
         'room_number' => 'Room Number',
         'monthly_fee' => 'Monthly Fee',
         'is_active' => 'Is Active',
+        'grade_level_id' => 'Grade Level',
+        'schedule' => 'Schedule',
+        'location' => 'Location',
+        'start_date' => 'Start Date',
+        'end_date' => 'End Date',
+        'curriculum' => 'Curriculum',
+        'created_at' => 'Created At',
+        'updated_at' => 'Updated At',
+        'deleted_at' => 'Deleted At',
     ],
     'actions' => [
         'save' => 'Save',
@@ -26,10 +36,37 @@ return [
         'edit' => 'Edit',
         'delete' => 'Delete',
         'confirm_delete' => 'Are you sure?',
+        'archive' => 'Archive',
     ],
     'messages' => [
-        'created' => 'Record created successfully.',
-        'updated' => 'Record updated successfully.',
-        'deleted' => 'Record deleted successfully.',
+        'created' => 'Class created successfully.',
+        'updated' => 'Class updated successfully.',
+        'deleted' => 'Class deleted successfully.',
+        'archived' => 'Class archived successfully.',
+    ],
+    'placeholders' => [
+        'name' => 'Enter class name',
+        'code' => 'Enter class code',
+        'description' => 'Enter class description',
+        'capacity' => 'Enter capacity',
+        'current_students' => 'Enter current students',
+        'room_number' => 'Enter room number',
+        'monthly_fee' => 'Enter monthly fee',
+        'schedule' => 'Enter class schedule',
+        'location' => 'Enter class location',
+    ],
+    'age_groups' => [
+        'toddlers' => 'Toddlers (1-2 years)',
+        'preschool' => 'Preschool (3-4 years)',
+        'pre_k' => 'Pre-K (4-5 years)',
+        'kindergarten' => 'Kindergarten (5-6 years)',
+    ],
+    'classes' => [
+        'messages' => [
+            'retrieved' => 'Classes retrieved successfully',
+        ],
+        'fields' => [
+            'grade_id' => 'Grade',
+        ],
     ],
 ];

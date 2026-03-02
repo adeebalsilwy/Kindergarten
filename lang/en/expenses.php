@@ -31,4 +31,22 @@ return [
         'updated' => 'Record updated successfully.',
         'deleted' => 'Record deleted successfully.',
     ],
+    'expenses' => [
+        'messages' => [
+            'retrieved' => 'Expenses retrieved successfully',
+        ],
+        'categories' => [
+            'utilities' => 'Utilities',
+            'supplies' => 'Supplies',
+            'salaries' => 'Salaries',
+            'maintenance' => 'Maintenance',
+            'other' => 'Other',
+            'equipment' => 'Equipment',
+            'transportation' => 'Transportation',
+        ],
+        'status' => [
+            'paid' => '',
+            'pending' => '',
+        ],
+    ],
 ];

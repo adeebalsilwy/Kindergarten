@@ -1,14 +1,13 @@
 <?php
 
 return [
-    'title' => 'Permissions',
-    'add_new' => 'إضافة Permission جديد',
-    'edit' => 'تعديل Permission',
-    'list' => 'قائمة Permissions',
+    'title' => 'الصلاحيات',
+    'add_new' => 'إضافة صلاحية جديدة',
+    'edit' => 'تعديل الصلاحية',
+    'list' => 'قائمة الصلاحيات',
     'fields' => [
-        'InnoDB' => 'Inno D B',
         'name' => 'الاسم',
-        'guard_name' => 'Guard Name',
+        'guard_name' => 'اسم الحارس',
     ],
     'actions' => [
         'save' => 'حفظ',
@@ -22,5 +21,19 @@ return [
         'created' => 'تم إنشاء السجل بنجاح.',
         'updated' => 'تم تحديث السجل بنجاح.',
         'deleted' => 'تم حذف السجل بنجاح.',
+    ],
+    'permission' => [
+        'title' => '',
+        'messages' => [
+            'created' => '',
+            'updated' => '',
+            'deleted' => '',
+            'retrieved' => '',
+        ],
+    ],
+    'permissions' => [
+        'fields' => [
+            'InnoDB' => '',
+        ],
     ],
 ];

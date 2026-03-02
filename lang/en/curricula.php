@@ -35,4 +35,9 @@ return [
         'updated' => 'Record updated successfully.',
         'deleted' => 'Record deleted successfully.',
     ],
+    'curricula' => [
+        'messages' => [
+            'retrieved' => 'Curricula retrieved successfully',
+        ],
+    ],
 ];

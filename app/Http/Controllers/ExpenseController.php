@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use OmarAlalwi\Gpdf\Facades\Gpdf;
+use OmarAlalwi\Gpdf\Facade\Gpdf;
 
 use App\Http\Requests\StoreExpenseRequest;
 use App\Http\Requests\UpdateExpenseRequest;
@@ -27,6 +27,10 @@ class ExpenseController extends Controller
         $this->authorize('view_expenses');
         $query = $this->service->query();
 
+        if (method_exists($query->getModel(), 'scopeFilter')) {
+            $query->filter($request);
+        }
+
         // Handle export functionality
         if ($request->has('export')) {
             return $this->export($request->get('export'), $query);
@@ -34,7 +38,19 @@ class ExpenseController extends Controller
 
         $expenses = $query->paginate(15);
 
-        return view('pages.expenses.index', compact('expenses'));
+        // Statistics
+        $totalExpenses = \App\Models\Expense::sum('amount');
+        $thisMonthExpenses = \App\Models\Expense::whereMonth('expense_date', now()->month)->sum('amount');
+        $pendingExpensesCount = \App\Models\Expense::where('status', 'pending')->count();
+        $completedExpensesCount = \App\Models\Expense::where('status', 'completed')->count();
+
+        return view('pages.expenses.index', compact(
+            'expenses', 
+            'totalExpenses', 
+            'thisMonthExpenses', 
+            'pendingExpensesCount', 
+            'completedExpensesCount'
+        ));
     }
 
     /**
@@ -60,9 +76,11 @@ class ExpenseController extends Controller
      */
     protected function exportToPdf($data)
     {
-        $pdf = Gpdf::loadView('pages.expenses.export-pdf', ['data' => $data]);
-
-        return $pdf->download('Expense_export_'.date('Y-m-d_H-i-s').'.pdf');
+        $html = view('pages.expenses.export-pdf', ['data' => $data])->render();
+        
+        return response()->streamDownload(function () use ($html) {
+            echo Gpdf::generate($html);
+        }, 'Expense_export_'.date('Y-m-d_H-i-s').'.pdf');
     }
 
     /**
@@ -184,5 +202,75 @@ class ExpenseController extends Controller
         $this->service->delete($id);
 
         return redirect()->route('expenses.index')->with('success', __('expenses.messages.deleted'));
+    }
+
+    public function exportPdf()
+    {
+        $this->authorize('export_expenses');
+        $query = $this->service->query();
+
+        // Apply filters
+        $request = request();
+        if ($request->filled('search')) {
+            $query->where(function($q) use ($request) {
+                $q->where('name', 'LIKE', '%' . $request->search . '%')
+                  ->orWhere('description', 'LIKE', '%' . $request->search . '%')
+                  ->orWhere('category', 'LIKE', '%' . $request->search . '%');
+            });
+        }
+        
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+        
+        if ($request->filled('category')) {
+            $query->where('category', $request->category);
+        }
+        
+        if ($request->filled('expense_date_from')) {
+            $query->where('expense_date', '>=', $request->expense_date_from);
+        }
+        
+        if ($request->filled('expense_date_to')) {
+            $query->where('expense_date', '<=', $request->expense_date_to);
+        }
+
+        $data = $query->get();
+        return $this->exportToPdf($data);
+    }
+
+    public function exportExcel()
+    {
+        $this->authorize('export_expenses');
+        $query = $this->service->query();
+
+        // Apply filters
+        $request = request();
+        if ($request->filled('search')) {
+            $query->where(function($q) use ($request) {
+                $q->where('name', 'LIKE', '%' . $request->search . '%')
+                  ->orWhere('description', 'LIKE', '%' . $request->search . '%')
+                  ->orWhere('category', 'LIKE', '%' . $request->search . '%');
+            });
+        }
+        
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+        
+        if ($request->filled('category')) {
+            $query->where('category', $request->category);
+        }
+        
+        if ($request->filled('expense_date_from')) {
+            $query->where('expense_date', '>=', $request->expense_date_from);
+        }
+        
+        if ($request->filled('expense_date_to')) {
+            $query->where('expense_date', '<=', $request->expense_date_to);
+        }
+
+        $data = $query->get();
+        return $this->exportToExcel($data);
     }
 }

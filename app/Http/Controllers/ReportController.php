@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use OmarAlalwi\Gpdf\Facades\Gpdf;
+use OmarAlalwi\Gpdf\Facade\Gpdf;
 
 use App\Http\Requests\StoreReportRequest;
 use App\Http\Requests\UpdateReportRequest;
@@ -60,9 +60,11 @@ class ReportController extends Controller
      */
     protected function exportToPdf($data)
     {
-        $pdf = Gpdf::loadView('pages.reports.export-pdf', ['data' => $data]);
-
-        return $pdf->download('Report_export_'.date('Y-m-d_H-i-s').'.pdf');
+        $html = view('pages.reports.export-pdf', ['data' => $data])->render();
+        
+        return response()->streamDownload(function () use ($html) {
+            echo Gpdf::generate($html);
+        }, 'Report_export_'.date('Y-m-d_H-i-s').'.pdf');
     }
 
     /**

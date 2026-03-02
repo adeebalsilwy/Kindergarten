@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use OmarAlalwi\Gpdf\Facades\Gpdf;
+use OmarAlalwi\Gpdf\Facade\Gpdf;
 
 use App\Http\Requests\StoreCurriculumRequest;
 use App\Http\Requests\UpdateCurriculumRequest;
@@ -27,12 +27,56 @@ class CurriculumController extends Controller
         $this->authorize('view_curricula');
         $query = $this->service->query();
 
+        // Apply filters based on request parameters
+        if ($request->filled('name')) {
+            $query->where('name', 'LIKE', '%' . $request->get('name') . '%');
+        }
+
+        if ($request->filled('grade_level')) {
+            $query->where('grade_level', 'LIKE', '%' . $request->get('grade_level') . '%');
+        }
+
+        if ($request->filled('subject_area')) {
+            $query->where('subject_area', 'LIKE', '%' . $request->get('subject_area') . '%');
+        }
+
+        if ($request->filled('curriculum_type')) {
+            $query->where('curriculum_type', 'LIKE', '%' . $request->get('curriculum_type') . '%');
+        }
+
+        if ($request->filled('duration_weeks')) {
+            $query->where('duration_weeks', $request->get('duration_weeks'));
+        }
+
+        if ($request->filled('created_by')) {
+            $query->where('created_by', 'LIKE', '%' . $request->get('created_by') . '%');
+        }
+
+        if ($request->filled('is_active')) {
+            $isActiveArray = $request->get('is_active');
+            if (is_array($isActiveArray) && count($isActiveArray) > 0) {
+                $query->whereIn('is_active', $isActiveArray);
+            }
+        }
+
+        // Apply sorting
+        $sortBy = $request->get('sort_by', 'created_at');
+        $sortDirection = $request->get('sort_direction', 'desc');
+        
+        // Validate sort field to prevent injection
+        $allowedSortFields = ['created_at', 'name', 'grade_level', 'subject_area'];
+        if (!in_array($sortBy, $allowedSortFields)) {
+            $sortBy = 'created_at';
+        }
+        
+        $query->orderBy($sortBy, $sortDirection);
+
         // Handle export functionality
         if ($request->has('export')) {
             return $this->export($request->get('export'), $query);
         }
 
-        $curricula = $query->paginate(15);
+        $curricula = $query->paginate(15)->appends($request->query());
 
         return view('pages.curricula.index', compact('curricula'));
     }
@@ -60,9 +104,11 @@ class CurriculumController extends Controller
      */
     protected function exportToPdf($data)
     {
-        $pdf = Gpdf::loadView('pages.curricula.export-pdf', ['data' => $data]);
-
-        return $pdf->download('Curriculum_export_'.date('Y-m-d_H-i-s').'.pdf');
+        $html = view('pages.curricula.export-pdf', ['data' => $data])->render();
+        
+        return response()->streamDownload(function () use ($html) {
+            echo Gpdf::generate($html);
+        }, 'Curriculum_export_'.date('Y-m-d_H-i-s').'.pdf');
     }
 
     /**
@@ -139,9 +185,116 @@ class CurriculumController extends Controller
         }, $fileName);
     }
 
+    public function exportPdf(Request $request)
+    {
+        $this->authorize('export_curricula');
+        $query = $this->service->query();
+
+        // Apply the same filters as in index method
+        if ($request->filled('name')) {
+            $query->where('name', 'LIKE', '%' . $request->get('name') . '%');
+        }
+
+        if ($request->filled('grade_level')) {
+            $query->where('grade_level', 'LIKE', '%' . $request->get('grade_level') . '%');
+        }
+
+        if ($request->filled('subject_area')) {
+            $query->where('subject_area', 'LIKE', '%' . $request->get('subject_area') . '%');
+        }
+
+        if ($request->filled('curriculum_type')) {
+            $query->where('curriculum_type', 'LIKE', '%' . $request->get('curriculum_type') . '%');
+        }
+
+        if ($request->filled('duration_weeks')) {
+            $query->where('duration_weeks', $request->get('duration_weeks'));
+        }
+
+        if ($request->filled('created_by')) {
+            $query->where('created_by', 'LIKE', '%' . $request->get('created_by') . '%');
+        }
+
+        if ($request->filled('is_active')) {
+            $isActiveArray = $request->get('is_active');
+            if (is_array($isActiveArray) && count($isActiveArray) > 0) {
+                $query->whereIn('is_active', $isActiveArray);
+            }
+        }
+
+        // Apply sorting
+        $sortBy = $request->get('sort_by', 'created_at');
+        $sortDirection = $request->get('sort_direction', 'desc');
+        
+        $allowedSortFields = ['created_at', 'name', 'grade_level', 'subject_area'];
+        if (!in_array($sortBy, $allowedSortFields)) {
+            $sortBy = 'created_at';
+        }
+        
+        $query->orderBy($sortBy, $sortDirection);
+
+        $data = $query->get();
+        return $this->exportToPdf($data);
+    }
+
+    public function exportExcel(Request $request)
+    {
+        $this->authorize('export_curricula');
+        $query = $this->service->query();
+
+        // Apply the same filters as in index method
+        if ($request->filled('name')) {
+            $query->where('name', 'LIKE', '%' . $request->get('name') . '%');
+        }
+
+        if ($request->filled('grade_level')) {
+            $query->where('grade_level', 'LIKE', '%' . $request->get('grade_level') . '%');
+        }
+
+        if ($request->filled('subject_area')) {
+            $query->where('subject_area', 'LIKE', '%' . $request->get('subject_area') . '%');
+        }
+
+        if ($request->filled('curriculum_type')) {
+            $query->where('curriculum_type', 'LIKE', '%' . $request->get('curriculum_type') . '%');
+        }
+
+        if ($request->filled('duration_weeks')) {
+            $query->where('duration_weeks', $request->get('duration_weeks'));
+        }
+
+        if ($request->filled('created_by')) {
+            $query->where('created_by', 'LIKE', '%' . $request->get('created_by') . '%');
+        }
+
+        if ($request->filled('is_active')) {
+            $isActiveArray = $request->get('is_active');
+            if (is_array($isActiveArray) && count($isActiveArray) > 0) {
+                $query->whereIn('is_active', $isActiveArray);
+            }
+        }
+
+        // Apply sorting
+        $sortBy = $request->get('sort_by', 'created_at');
+        $sortDirection = $request->get('sort_direction', 'desc');
+        
+        $allowedSortFields = ['created_at', 'name', 'grade_level', 'subject_area'];
+        if (!in_array($sortBy, $allowedSortFields)) {
+            $sortBy = 'created_at';
+        }
+        
+        $query->orderBy($sortBy, $sortDirection);
+
+        $data = $query->get();
+        return $this->exportToExcel($data);
+    }
+
     public function create()
     {
         $this->authorize('create_curricula');
+        
+        // Get all materials for the form
+        $materials = \App\Models\Material::all();
 
         return view('pages.curricula.create', get_defined_vars());
     }
@@ -149,7 +302,20 @@ class CurriculumController extends Controller
     public function store(StoreCurriculumRequest $request)
     {
         $this->authorize('create_curricula');
-        $this->service->create($request->validated());
+        
+        $validatedData = $request->validated();
+        
+        // Extract connected materials from validated data
+        $connectedMaterials = $validatedData['connected_materials'] ?? [];
+        unset($validatedData['connected_materials']);
+        
+        // Create the curriculum
+        $curriculum = $this->service->create($validatedData);
+        
+        // Attach connected materials if any
+        if (!empty($connectedMaterials)) {
+            $curriculum->materials()->attach($connectedMaterials);
+        }
 
         return redirect()->route('curricula.index')->with('success', __('curricula.messages.created'));
     }
@@ -158,6 +324,13 @@ class CurriculumController extends Controller
     {
         $this->authorize('view_curricula');
         $curriculum = $this->service->find($id);
+        
+        // Load all related data for the enhanced show page
+        $curriculum->load([
+            'activities',
+            'teacher',
+            'materials'
+        ]);
 
         return view('pages.curricula.show', compact('curriculum'));
     }
@@ -166,6 +339,9 @@ class CurriculumController extends Controller
     {
         $this->authorize('edit_curricula');
         $curriculum = $this->service->find($id);
+        
+        // Get all materials for the form
+        $materials = \App\Models\Material::all();
 
         return view('pages.curricula.edit', get_defined_vars());
     }
@@ -173,7 +349,19 @@ class CurriculumController extends Controller
     public function update(UpdateCurriculumRequest $request, $id)
     {
         $this->authorize('edit_curricula');
-        $this->service->update($id, $request->validated());
+        
+        $validatedData = $request->validated();
+        
+        // Extract connected materials from validated data
+        $connectedMaterials = $validatedData['connected_materials'] ?? [];
+        unset($validatedData['connected_materials']);
+        
+        // Update the curriculum
+        $this->service->update($id, $validatedData);
+        
+        // Update the materials relationship using the model directly
+        $curriculum = \App\Models\Curriculum::findOrFail($id);
+        $curriculum->materials()->sync($connectedMaterials);
 
         return redirect()->route('curricula.index')->with('success', __('curricula.messages.updated'));
     }

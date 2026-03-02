@@ -1,15 +1,15 @@
 <?php
 
 return [
-    'title' => 'Grades',
-    'add_new' => 'إضافة Grade جديد',
-    'edit' => 'تعديل Grade',
-    'list' => 'قائمة Grades',
+    'title' => 'الدرجات',
+    'add_new' => 'إضافة درجة جديدة',
+    'edit' => 'تعديل الدرجة',
+    'list' => 'قائمة الدرجات',
     'fields' => [
-        'child_id' => 'Child Id',
-        'subject' => 'Subject',
-        'score' => 'Score',
-        'date' => 'Date',
+        'child_id' => 'معرّف الطفل',
+        'subject' => 'المادة',
+        'score' => 'النتيجة',
+        'date' => 'التاريخ',
     ],
     'actions' => [
         'save' => 'حفظ',
@@ -23,5 +23,13 @@ return [
         'created' => 'تم إنشاء السجل بنجاح.',
         'updated' => 'تم تحديث السجل بنجاح.',
         'deleted' => 'تم حذف السجل بنجاح.',
+    ],
+    'grades' => [
+        'messages' => [
+            'retrieved' => 'تم استرجاع الدرجات بنجاح',
+        ],
+        'fields' => [
+            'comments' => 'التعليقات',
+        ],
     ],
 ];

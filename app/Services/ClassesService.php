@@ -52,7 +52,7 @@ class ClassesService
     {
         $model = $this->repository->findById($id);
 
-        return $model->load(['teacher', 'children', 'activities', 'events', 'attendances']);
+        return $model->load(['teacher', 'children', 'activities', 'events', 'attendances', 'gradeLevel']);
     }
 
     public function update($id, array $data)

@@ -95,7 +95,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="text-2xl font-bold leading-8 mt-4">{{ $todayAttendance ?? 0 }}%</div>
+                    <div class="text-2xl font-bold leading-8 mt-4">{{ $todayAttendanceRate ?? 0 }}%</div>
                     <div class="text-sm text-slate-600 mt-1">{{ __('global.today_attendance') }}</div>
                 </div>
             </div>
@@ -132,6 +132,7 @@
                         <x-base.form-input 
                             type="text" 
                             name="search"
+                            id="searchInput"
                             value="{{ request('search') }}"
                             placeholder="{{ __('global.search_children') }}..." 
                             class="w-full ps-10 pe-4 py-2"
@@ -144,7 +145,7 @@
                 
                 <!-- Class Filter -->
                 <div class="w-full lg:w-48">
-                    <select name="class_id" class="form-select w-full box">
+                    <select name="class_id" id="classFilter" class="form-select w-full box">
                         <option value="">{{ __('global.all_classes') }}</option>
                         @foreach($classes as $class)
                             <option value="{{ $class->id }}" {{ request('class_id') == $class->id ? 'selected' : '' }}>{{ $class->name }}</option>
@@ -154,7 +155,7 @@
                 
                 <!-- Status Filter -->
                 <div class="w-full lg:w-40">
-                     <select name="enrollment_status" class="form-select w-full box">
+                     <select name="enrollment_status" id="statusFilter" class="form-select w-full box">
                         <option value="">{{ __('global.all_status') }}</option>
                         <option value="active" {{ request('enrollment_status') == 'active' ? 'selected' : '' }}>{{ __('global.active') }}</option>
                         <option value="inactive" {{ request('enrollment_status') == 'inactive' ? 'selected' : '' }}>{{ __('global.inactive') }}</option>
@@ -164,11 +165,11 @@
                 
                 <!-- Action Buttons -->
                 <div class="flex gap-2">
-                    <x-base.button as="a" href="{{ route('children.index') }}" variant="secondary" class="flex items-center">
+                    <x-base.button as="a" href="{{ route('children.index') }}" variant="secondary" class="flex items-center" id="resetFilters">
                         <x-base.lucide icon="RotateCcw" class="w-4 h-4 me-2" />
                         {{ __('global.reset') }}
                     </x-base.button>
-                    <x-base.button type="submit" variant="primary" class="flex items-center">
+                    <x-base.button type="submit" variant="primary" class="flex items-center" id="applyFilters">
                         <x-base.lucide icon="Filter" class="w-4 h-4 me-2" />
                         {{ __('global.apply') }}
                     </x-base.button>
@@ -316,6 +317,18 @@
                                 {{ __('global.edit') }}
                             </x-base.button>
                         @endcan
+                        
+                        @can('delete_children')
+                            <x-base.button 
+                                variant="outline-danger" 
+                                onclick="confirmDelete({{ $child->id }}, '{{ addslashes($child->name) }}')"
+                                size="sm" 
+                                class="flex-1 justify-center"
+                            >
+                                <x-base.lucide icon="Trash2" class="w-4 h-4 me-1" />
+                                {{ __('global.delete') }}
+                            </x-base.button>
+                        @endcan
                     </div>
                 </div>
             </div>
@@ -353,8 +366,38 @@
             </div>
         </div>
     @endif
+    
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteModal" class="modal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body p-0">
+                    <div class="p-5 text-center">
+                        <x-base.lucide icon="AlertTriangle" class="w-16 h-16 text-danger mx-auto mt-3" />
+                        <div class="text-3xl mt-5">{{ __('global.confirm_delete') }}</div>
+                        <div class="text-slate-500 mt-2" id="deleteMessage">
+                            {{ __('global.confirm_delete_message') }}
+                        </div>
+                        <div class="text-slate-500 mt-2" id="deleteChildName"></div>
+                    </div>
+                    <form id="deleteForm" method="POST" action="">
+                        @csrf
+                        @method('DELETE')
+                        <div class="px-5 pb-8 text-center">
+                            <x-base.button type="button" data-dismiss="modal" class="btn btn-outline-secondary w-24 mr-1">
+                                {{ __('global.cancel') }}
+                            </x-base.button>
+                            <x-base.button type="submit" class="btn btn-danger w-24">
+                                {{ __('global.delete') }}
+                            </x-base.button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <!-- Add JavaScript for filtering -->
+    <!-- Add JavaScript for filtering and deletion -->
     @push('scripts')
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -374,7 +417,7 @@
                 const params = new URLSearchParams();
                 if (searchTerm) params.set('search', searchTerm);
                 if (classId) params.set('class_id', classId);
-                if (status) params.set('status', status);
+                if (status) params.set('enrollment_status', status);
                 
                 // Redirect with filters
                 window.location.href = `{{ route('children.index') }}?${params.toString()}`;
@@ -392,6 +435,38 @@
             searchInput?.addEventListener('keypress', function(e) {
                 if (e.key === 'Enter') {
                     applyFilters.click();
+                }
+            });
+            
+            // Delete confirmation function
+            window.confirmDelete = function(childId, childName) {
+                document.getElementById('deleteChildName').innerHTML = 
+                    `<strong>${childName}</strong>`;
+                document.getElementById('deleteForm').action = `/children/${childId}`;
+                
+                // Show modal using Tailwind/HyperUI classes
+                const modal = document.getElementById('deleteModal');
+                modal.classList.add('show');
+                modal.style.display = 'block';
+                document.body.classList.add('modal-open');
+            };
+            
+            // Close modal
+            document.querySelectorAll('[data-dismiss="modal"]').forEach(button => {
+                button.addEventListener('click', function() {
+                    const modal = document.getElementById('deleteModal');
+                    modal.classList.remove('show');
+                    modal.style.display = 'none';
+                    document.body.classList.remove('modal-open');
+                });
+            });
+            
+            // Close modal when clicking outside
+            document.getElementById('deleteModal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    this.classList.remove('show');
+                    this.style.display = 'none';
+                    document.body.classList.remove('modal-open');
                 }
             });
             
@@ -414,7 +489,8 @@
                         
                         const matches = name.includes(searchTerm) || 
                                        className.includes(searchTerm) || 
-                                       parentName.includes(searchTerm);\                        
+                                       parentName.includes(searchTerm);
+                        
                         card.style.display = matches ? 'block' : 'none';
                     });
                 }, 300);

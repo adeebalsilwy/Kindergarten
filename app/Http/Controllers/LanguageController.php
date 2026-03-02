@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use OmarAlalwi\Gpdf\Facades\Gpdf;
+use OmarAlalwi\Gpdf\Facade\Gpdf;
 
 use App\Http\Requests\StoreLanguageRequest;
 use App\Http\Requests\UpdateLanguageRequest;
@@ -60,9 +60,11 @@ class LanguageController extends Controller
      */
     protected function exportToPdf($data)
     {
-        $pdf = Gpdf::loadView('pages.languages.export-pdf', ['data' => $data]);
-
-        return $pdf->download('Language_export_'.date('Y-m-d_H-i-s').'.pdf');
+        $html = view('pages.languages.export-pdf', ['data' => $data])->render();
+        
+        return response()->streamDownload(function () use ($html) {
+            echo Gpdf::generate($html);
+        }, 'Language_export_'.date('Y-m-d_H-i-s').'.pdf');
     }
 
     /**

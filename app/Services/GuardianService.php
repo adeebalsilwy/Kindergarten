@@ -15,7 +15,7 @@ class GuardianService
 
     public function find(int $id): Guardian
     {
-        return Guardian::with(['children', 'secondChildren'])->findOrFail($id);
+        return Guardian::with(['children', 'secondChildren', 'children.payments', 'secondChildren.payments'])->findOrFail($id);
     }
 
     /**
@@ -110,7 +110,7 @@ class GuardianService
      */
     public function getById(int $id): Guardian
     {
-        return Guardian::with(['children', 'secondChildren'])->findOrFail($id);
+        return Guardian::with(['children', 'secondChildren', 'children.payments', 'secondChildren.payments'])->findOrFail($id);
     }
 
     /**

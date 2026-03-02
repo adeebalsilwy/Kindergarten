@@ -60,7 +60,7 @@ return [
         'edit' => 'تعديل التقييم',
         'view' => 'عرض التقييم',
         'student' => 'الطالب',
-        'child_id' => 'الطالب', // Alias for dynamic fields
+        'child_id' => 'الطالب',
         'subject' => 'المادة / المهارة',
         'score' => 'الدرجة / التقدير',
         'date' => 'التاريخ',
@@ -148,7 +148,7 @@ return [
         'fields' => [
             'child_id' => 'الطفل',
             'fee_id' => 'الرسم',
-            'student_id' => 'الطالب', // Keep for backward compat if needed
+            'student_id' => 'الطالب',
             'amount' => 'المبلغ',
             'amount_paid' => 'المبلغ المدفوع',
             'payment_date' => 'تاريخ الدفع',
@@ -166,6 +166,12 @@ return [
             'cash' => 'نقداً',
             'bank_transfer' => 'تحويل بنكي',
             'card' => 'بطاقة',
+        ],
+    ],
+    'kindergarten' => [
+        'parents' => [
+            'edit' => 'تعديل ولي الأمر',
+            'view' => 'عرض ولي الأمر',
         ],
     ],
 ];

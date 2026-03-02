@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use OmarAlalwi\Gpdf\Facades\Gpdf;
+use OmarAlalwi\Gpdf\Facade\Gpdf;
 
 use App\Http\Requests\StorePermissionRequest;
 use App\Http\Requests\UpdatePermissionRequest;
@@ -60,9 +60,11 @@ class PermissionController extends Controller
      */
     protected function exportToPdf($data)
     {
-        $pdf = Gpdf::loadView('pages.permission.export-pdf', ['data' => $data]);
-
-        return $pdf->download('Permission_export_'.date('Y-m-d_H-i-s').'.pdf');
+        $html = view('pages.permission.export-pdf', ['data' => $data])->render();
+        
+        return response()->streamDownload(function () use ($html) {
+            echo Gpdf::generate($html);
+        }, 'Permission_export_'.date('Y-m-d_H-i-s').'.pdf');
     }
 
     /**

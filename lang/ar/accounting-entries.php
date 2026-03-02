@@ -1,17 +1,17 @@
 <?php
 
 return [
-    'title' => 'Accounting Entries',
-    'add_new' => 'إضافة Accounting Entry جديد',
-    'edit' => 'تعديل Accounting Entry',
-    'list' => 'قائمة Accounting Entries',
+    'title' => 'إدخالات المحاسبة',
+    'add_new' => 'إضافة إدخال محاسبي جديد',
+    'edit' => 'تعديل الإدخال المحاسبي',
+    'list' => 'قائمة إدخالات المحاسبة',
     'fields' => [
         'description' => 'الوصف',
-        'debit' => 'Debit',
-        'credit' => 'Credit',
-        'entry_date' => 'Entry Date',
-        'reference' => 'Reference',
-        'account_type' => 'Account Type',
+        'debit' => 'مدين',
+        'credit' => 'دائن',
+        'entry_date' => 'تاريخ الإدخال',
+        'reference' => 'مرجع',
+        'account_type' => 'نوع الحساب',
     ],
     'actions' => [
         'save' => 'حفظ',
@@ -25,5 +25,10 @@ return [
         'created' => 'تم إنشاء السجل بنجاح.',
         'updated' => 'تم تحديث السجل بنجاح.',
         'deleted' => 'تم حذف السجل بنجاح.',
+    ],
+    'accounting-entries' => [
+        'fields' => [
+            'name' => 'الاسم',
+        ],
     ],
 ];

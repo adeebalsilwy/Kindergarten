@@ -60,6 +60,11 @@ class SideMenu
                         'route_name' => 'curricula.index',
                         'title' => __('global.curriculum'),
                     ],
+                    'materials' => [
+                        'icon' => 'box',
+                        'route_name' => 'materials.index',
+                        'title' => __('global.materials'),
+                    ],
                     'activities' => [
                         'icon' => 'calendar',
                         'route_name' => 'activities.index',
@@ -99,93 +104,49 @@ class SideMenu
                 'icon' => 'dollar-sign',
                 'title' => __('global.finance_reporting'),
                 'sub_menu' => [
-                    'dashboard' => [
-                        'icon' => 'pie-chart',
-                        'route_name' => 'finance.dashboard',
-                        'title' => __('global.dashboard'),
-                    ],
-                    'transactions' => [
+                    'payments' => [
                         'icon' => 'credit-card',
-                        'title' => __('global.transactions'),
-                        'sub_menu' => [
-                            'payments' => [
-                                'icon' => 'arrow-down-circle',
-                                'route_name' => 'payments.index',
-                                'title' => __('global.payments'),
-                            ],
-                            'expenses' => [
-                                'icon' => 'arrow-up-circle',
-                                'route_name' => 'expenses.index',
-                                'title' => __('global.expenses'),
-                            ],
-                            'fees' => [
-                                'icon' => 'tag',
-                                'route_name' => 'fees.index',
-                                'title' => __('global.fees'),
-                            ],
-                        ],
+                        'route_name' => 'payments.index',
+                        'title' => __('global.payments'),
                     ],
-                    'accounting' => [
-                        'icon' => 'calculator',
-                        'route_name' => 'accounting_entries.index',
-                        'title' => __('global.accounting_entries'),
+                    'expenses' => [
+                        'icon' => 'arrow-up-circle',
+                        'route_name' => 'expenses.index',
+                        'title' => __('global.expenses'),
                     ],
-                    'reports' => [
-                        'icon' => 'file-text',
-                        'title' => __('global.reports'),
-                        'sub_menu' => [
-                            'financial-reports' => [
-                                'icon' => 'bar-chart',
-                                'route_name' => 'financial_reports.index',
-                                'title' => __('global.financials'),
-                            ],
-                            'attendance-report' => [
-                                'icon' => 'bar-chart-2',
-                                'route_name' => 'finance.attendance-report',
-                                'title' => __('global.attendance_report'),
-                            ],
-                        ],
+                    'fees' => [
+                        'icon' => 'tag',
+                        'route_name' => 'fees.index',
+                        'title' => __('global.fees'),
                     ],
                 ],
             ],
             'divider',
 
-            // System Administration
-            'system-administration' => [
+            // System
+            'system' => [
                 'icon' => 'settings',
                 'title' => __('global.system_administration'),
                 'sub_menu' => [
-                    'user-access' => [
+                    'users' => [
                         'icon' => 'users',
-                        'title' => __('global.user_access_management'),
-                        'sub_menu' => [
-                            'users' => [
-                                'icon' => 'user',
-                                'route_name' => 'users.index',
-                                'title' => __('global.users'),
-                            ],
-                            'roles' => [
-                                'icon' => 'shield',
-                                'route_name' => 'roles.index',
-                                'title' => __('global.roles'),
-                            ],
-                            'permissions' => [
-                                'icon' => 'key',
-                                'route_name' => 'permissions.index',
-                                'title' => __('global.permissions'),
-                            ],
-                        ],
+                        'route_name' => 'users.index',
+                        'title' => __('global.users'),
                     ],
-                    'system-config' => [
-                        'icon' => 'tool',
-                        'title' => __('global.system_configuration'),
-                        'sub_menu' => [
-                            'languages' => [
-                                'icon' => 'globe',
-                                'route_name' => 'languages.index',
-                                'title' => __('global.languages'),
-                            ],
-                        ],
+                    'roles' => [
+                        'icon' => 'shield',
+                        'route_name' => 'roles.index',
+                        'title' => __('global.roles'),
+                    ],
+                    'permissions' => [
+                        'icon' => 'key',
+                        'route_name' => 'permissions.index',
+                        'title' => __('global.permissions'),
+                    ],
+                    'languages' => [
+                        'icon' => 'globe',
+                        'route_name' => 'languages.index',
+                        'title' => __('global.languages'),
                     ],
                 ],
             ],

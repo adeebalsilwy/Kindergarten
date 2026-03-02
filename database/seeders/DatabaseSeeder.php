@@ -18,7 +18,10 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             RolePermissionSeeder::class,
             DashboardContentSeeder::class,
-            KindergartenDemoSeeder::class,
+            YemeniNurserySeeder::class,  // Added comprehensive Yemeni nursery seeder
+            MaterialsSeeder::class,  // Added materials seeder
+            ClassEnrollmentSeeder::class,  // Added class enrollment seeder
+            ComprehensiveDataSeeder::class,
             UpdateGradeColumnSeeder::class,
         ]);
     }

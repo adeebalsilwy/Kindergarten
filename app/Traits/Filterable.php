@@ -15,11 +15,29 @@ trait Filterable
      */
     public function scopeFilter(Builder $query, $request)
     {
-        if (method_exists($this, 'scopeSearch')) {
+        if ($request->filled('search') && method_exists($this, 'scopeSearch')) {
             $query->search($request->get('search'));
         }
 
-        // Add more generic filtering logic here if needed
+        // Advanced dynamic filtering based on request parameters
+        foreach ($request->all() as $key => $value) {
+            if ($request->filled($key) && $key !== 'search' && $key !== 'page' && $key !== 'export') {
+                if (in_array($key, $this->getFillable()) || $key === 'id') {
+                    $query->where($key, $value);
+                } elseif (str_ends_with($key, '_from')) {
+                    $column = str_replace('_from', '', $key);
+                    if (in_array($column, $this->getFillable())) {
+                        $query->where($column, '>=', $value);
+                    }
+                } elseif (str_ends_with($key, '_to')) {
+                    $column = str_replace('_to', '', $key);
+                    if (in_array($column, $this->getFillable())) {
+                        $query->where($column, '<=', $value);
+                    }
+                }
+            }
+        }
+
         return $query;
     }
 

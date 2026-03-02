@@ -29,6 +29,8 @@ class UpdateCurriculumRequest extends FormRequest
             'is_active' => 'nullable|boolean',
             'published_at' => 'nullable|date',
             'created_by' => 'nullable',
+            'connected_materials' => 'array',
+            'connected_materials.*' => 'exists:materials,id',
 
         ];
     }

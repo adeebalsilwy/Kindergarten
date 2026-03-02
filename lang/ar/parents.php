@@ -1,15 +1,15 @@
 <?php
 
 return [
-    'title' => 'Parents',
-    'add_new' => 'إضافة Parent جديد',
-    'edit' => 'تعديل Parent',
-    'list' => 'قائمة Parents',
+    'title' => 'أولياء الأمور',
+    'add_new' => 'إضافة ولي أمر جديد',
+    'edit' => 'تعديل ولي الأمر',
+    'list' => 'قائمة أولياء الأمور',
     'fields' => [
         'name' => 'الاسم',
         'phone' => 'الهاتف',
         'address' => 'العنوان',
-        'relation' => 'Relation',
+        'relation' => 'العلاقة',
     ],
     'actions' => [
         'save' => 'حفظ',
@@ -23,5 +23,10 @@ return [
         'created' => 'تم إنشاء السجل بنجاح.',
         'updated' => 'تم تحديث السجل بنجاح.',
         'deleted' => 'تم حذف السجل بنجاح.',
+    ],
+    'parents' => [
+        'messages' => [
+            'retrieved' => 'تم استرجاع الوالدين بنجاح',
+        ],
     ],
 ];

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use OmarAlalwi\Gpdf\Facades\Gpdf;
+use OmarAlalwi\Gpdf\Facade\Gpdf;
 
 use App\Http\Requests\StoreChildrenRequest;
 use App\Http\Requests\UpdateChildrenRequest;
@@ -26,8 +26,27 @@ class ChildrenController extends Controller
         $this->authorize('view_children');
         $query = $this->service->query()->with(['parent', 'secondParent', 'class']);
 
-        if (method_exists($query->getModel(), 'scopeFilter')) {
-            $query->filter($request);
+        // Apply filters
+        if ($request->has('search') || $request->has('class_id') || $request->has('enrollment_status')) {
+            // Apply search filter
+            if ($request->filled('search')) {
+                $query->where(function($q) use ($request) {
+                    $q->where('name', 'LIKE', '%' . $request->search . '%')
+                      ->orWhere('emergency_contact_name', 'LIKE', '%' . $request->search . '%')
+                      ->orWhere('emergency_contact_phone', 'LIKE', '%' . $request->search . '%')
+                      ->orWhere('nationality', 'LIKE', '%' . $request->search . '%');
+                });
+            }
+            
+            // Apply class filter
+            if ($request->filled('class_id')) {
+                $query->where('class_id', $request->class_id);
+            }
+            
+            // Apply enrollment status filter
+            if ($request->filled('enrollment_status')) {
+                $query->where('enrollment_status', $request->enrollment_status);
+            }
         }
 
         // Handle export functionality
@@ -38,7 +57,28 @@ class ChildrenController extends Controller
         $childrens = $query->paginate(15)->withQueryString();
         $classes = \App\Models\Classes::select('id', 'name')->orderBy('name')->get();
 
-        return view('pages.children.index', compact('childrens', 'classes'));
+        // Calculate statistics for the filtered results
+        $totalActive = clone $query;
+        $totalActive = $totalActive->where('enrollment_status', 'active')->count();
+
+        $totalOutstanding = clone $query;
+        $totalOutstanding = $totalOutstanding->sum('fees_required') - $totalOutstanding->sum('fees_paid');
+
+        $totalClasses = \App\Models\Classes::count();
+
+        // Calculate today's attendance percentage
+        $todayAttendanceQuery = \App\Models\Attendance::whereDate('date', now());
+        if ($request->filled('class_id')) {
+            $todayAttendanceQuery->whereIn('child_id', function($q) use ($request) {
+                $q->select('id')->from('children')->where('class_id', $request->class_id);
+            });
+        }
+        $todayAttendance = $todayAttendanceQuery->count();
+        $totalChildrenToday = clone $todayAttendanceQuery;
+        $totalChildrenToday = $totalChildrenToday->selectRaw('COUNT(DISTINCT child_id)')->first()->aggregate ?? 0;
+        $todayAttendanceRate = $totalChildrenToday > 0 ? round(($todayAttendance / $totalChildrenToday) * 100, 2) : 0;
+
+        return view('pages.children.index', compact('childrens', 'classes', 'totalActive', 'totalOutstanding', 'totalClasses', 'todayAttendanceRate'));
     }
 
     /**
@@ -64,9 +104,11 @@ class ChildrenController extends Controller
      */
     protected function exportToPdf($data)
     {
-        $pdf = Gpdf::loadView('pages.children.export-pdf', ['data' => $data]);
-
-        return $pdf->download('Children_export_'.date('Y-m-d_H-i-s').'.pdf');
+        $html = view('pages.children.export-pdf', ['data' => $data])->render();
+        
+        return response()->streamDownload(function () use ($html) {
+            echo Gpdf::generate($html);
+        }, 'Children_export_'.date('Y-m-d_H-i-s').'.pdf');
     }
 
     /**
@@ -109,9 +151,9 @@ class ChildrenController extends Controller
 
         // Style header row
         $headerRange = 'A3:'.chr(ord('A') + count($headers) - 1).'3';
-        $sheet->getStyle($headerRange)->getFont()->setBold(true)
-            ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
-            ->getStartColor()->setARGB('FFEEEEEE');
+        $sheet->getStyle($headerRange)->getFont()->setBold(true);
+        $sheet->getStyle($headerRange)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID);
+        $sheet->getStyle($headerRange)->getFill()->getStartColor()->setARGB('FFEEEEEE');
 
         // Add data rows
         $row = 4;
@@ -165,6 +207,26 @@ class ChildrenController extends Controller
     {
         $this->authorize('view_children');
         $children = $this->service->find($id);
+        
+        // Load all related data for the enhanced show page
+        $children->load([
+            'parent',
+            'secondParent',
+            'class.teacher',
+            'attendances',
+            'grades.evaluator',
+            'payments.fee',
+            'activities',
+            'events',
+            'class.children',
+            'class.activities',
+            'class.events',
+            'class.teacher.classes',
+            'class.teacher.activities',
+            'class.teacher.events',
+            'parent.children',
+            'secondParent.children'
+        ]);
 
         return view('pages.children.show', compact('children'));
     }
@@ -193,5 +255,73 @@ class ChildrenController extends Controller
         $this->service->delete($id);
 
         return redirect()->route('children.index')->with('success', __('children.messages.deleted'));
+    }
+
+    public function exportPdf(Request $request)
+    {
+        $this->authorize('export_children');
+        
+        $query = $this->service->query()->with(['parent', 'secondParent', 'class']);
+
+        // Apply filters
+        if ($request->has('search') || $request->has('class_id') || $request->has('enrollment_status')) {
+            // Apply search filter
+            if ($request->filled('search')) {
+                $query->where(function($q) use ($request) {
+                    $q->where('name', 'LIKE', '%' . $request->search . '%')
+                      ->orWhere('emergency_contact_name', 'LIKE', '%' . $request->search . '%')
+                      ->orWhere('emergency_contact_phone', 'LIKE', '%' . $request->search . '%')
+                      ->orWhere('nationality', 'LIKE', '%' . $request->search . '%');
+                });
+            }
+            
+            // Apply class filter
+            if ($request->filled('class_id')) {
+                $query->where('class_id', $request->class_id);
+            }
+            
+            // Apply enrollment status filter
+            if ($request->filled('enrollment_status')) {
+                $query->where('enrollment_status', $request->enrollment_status);
+            }
+        }
+
+        $data = $query->get();
+        
+        return $this->exportToPdf($data);
+    }
+
+    public function exportExcel(Request $request)
+    {
+        $this->authorize('export_children');
+        
+        $query = $this->service->query()->with(['parent', 'secondParent', 'class']);
+
+        // Apply filters
+        if ($request->has('search') || $request->has('class_id') || $request->has('enrollment_status')) {
+            // Apply search filter
+            if ($request->filled('search')) {
+                $query->where(function($q) use ($request) {
+                    $q->where('name', 'LIKE', '%' . $request->search . '%')
+                      ->orWhere('emergency_contact_name', 'LIKE', '%' . $request->search . '%')
+                      ->orWhere('emergency_contact_phone', 'LIKE', '%' . $request->search . '%')
+                      ->orWhere('nationality', 'LIKE', '%' . $request->search . '%');
+                });
+            }
+            
+            // Apply class filter
+            if ($request->filled('class_id')) {
+                $query->where('class_id', $request->class_id);
+            }
+            
+            // Apply enrollment status filter
+            if ($request->filled('enrollment_status')) {
+                $query->where('enrollment_status', $request->enrollment_status);
+            }
+        }
+
+        $data = $query->get();
+        
+        return $this->exportToExcel($data);
     }
 }

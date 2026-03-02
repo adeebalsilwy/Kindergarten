@@ -1,10 +1,10 @@
 <?php
 
 return [
-    'title' => 'Reports',
-    'add_new' => 'إضافة Report جديد',
-    'edit' => 'تعديل Report',
-    'list' => 'قائمة Reports',
+    'title' => 'التقارير',
+    'add_new' => 'إضافة تقرير جديد',
+    'edit' => 'تعديل التقرير',
+    'list' => 'قائمة التقارير',
     'fields' => [
         'name' => 'الاسم',
     ],
@@ -20,5 +20,19 @@ return [
         'created' => 'تم إنشاء السجل بنجاح.',
         'updated' => 'تم تحديث السجل بنجاح.',
         'deleted' => 'تم حذف السجل بنجاح.',
+    ],
+    'financial_reports' => [
+        'title' => '',
+        'messages' => [
+            'created' => '',
+            'updated' => '',
+            'deleted' => '',
+            'retrieved' => '',
+        ],
+    ],
+    'reports' => [
+        'messages' => [
+            'retrieved' => 'تم استرجاع التقارير بنجاح',
+        ],
     ],
 ];

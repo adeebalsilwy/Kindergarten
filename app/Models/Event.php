@@ -8,10 +8,20 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
+use App\Traits\Filterable;
 
 class Event extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, Filterable;
+
+    protected $searchable = [
+        'title',
+        'description',
+        'location',
+        'event_type',
+        'organizer',
+        'status',
+    ];
 
     protected $fillable = [
         'title',

@@ -2,6 +2,7 @@
 
 @section('head')
     <title>{{ __('Curriculum.list') }} - Laravel</title>
+    <link rel="stylesheet" href="{{ Vite::asset('resources/css/pages/curricula.css') }}">
 @endsection
 
 @section('subcontent')
@@ -9,7 +10,6 @@
         <h2 class="text-lg font-medium me-auto">{{ __('Curriculum.list') }}</h2>
         <div class="w-full sm:w-auto flex mt-4 sm:mt-0">
             @can('export_curricula')
-            
                         <div class="flex gap-2">
                             <x-base.button variant="outline-primary" as="a" href="{{ route('curricula.export.pdf') }}" class="flex items-center">
                                 <x-base.lucide icon="FileText" class="w-4 h-4 me-2" />
@@ -32,24 +32,75 @@
     </div>
 
     <div class="grid grid-cols-12 gap-6 mt-5">
-        <!-- Filter Section -->
+        <!-- Advanced Filter Section -->
         <div class="intro-y col-span-12">
-            <div class="box p-5">
-                <div class="flex flex-col sm:flex-row gap-4">
-                    <div class="flex-1">
-                        <x-base.form-input type="text" placeholder="{{ __('global.search') }}" class="w-full" />
+            <div class="box p-5 curriculum-filters">
+                <h3 class="text-md font-medium mb-4 flex items-center">
+                    <x-base.lucide icon="Filter" class="w-4 h-4 me-2" />
+                    {{ __('global.filters') }}
+                </h3>
+                <form id="filterForm" method="GET" action="{{ route('curricula.index') }}">
+                    <div class="filter-row">
+                        <div class="filter-group">
+                            <x-base.form-label>{{ __('curricula.fields.name') }}</x-base.form-label>
+                            <x-base.form-input type="text" name="name" value="{{ request('name') }}" placeholder="{{ __('curricula.fields.name') }}" />
+                        </div>
+                        <div class="filter-group">
+                            <x-base.form-label>{{ __('curricula.fields.grade_level') }}</x-base.form-label>
+                            <x-base.form-input type="text" name="grade_level" value="{{ request('grade_level') }}" placeholder="{{ __('curricula.fields.grade_level') }}" />
+                        </div>
+                        <div class="filter-group">
+                            <x-base.form-label>{{ __('curricula.fields.subject_area') }}</x-base.form-label>
+                            <x-base.form-input type="text" name="subject_area" value="{{ request('subject_area') }}" placeholder="{{ __('curricula.fields.subject_area') }}" />
+                        </div>
+                        <div class="filter-group">
+                            <x-base.form-label>{{ __('curricula.fields.is_active') }}</x-base.form-label>
+                            <x-base.tom-select name="is_active[]" multiple>
+                                <option value="1" {{ in_array('1', request('is_active', [])) ? 'selected' : '' }}>{{ __('global.active') }}</option>
+                                <option value="0" {{ in_array('0', request('is_active', [])) ? 'selected' : '' }}>{{ __('global.inactive') }}</option>
+                            </x-base.tom-select>
+                        </div>
                     </div>
-                    <x-base.button variant="secondary" class="flex items-center">
-                        <x-base.lucide icon="Filter" class="w-4 h-4 me-2" />
-                        {{ __('global.filter') }}
-                    </x-base.button>
-                </div>
+                    <div class="filter-row mt-3">
+                        <div class="filter-group">
+                            <x-base.form-label>{{ __('curricula.fields.curriculum_type') }}</x-base.form-label>
+                            <x-base.form-input type="text" name="curriculum_type" value="{{ request('curriculum_type') }}" placeholder="{{ __('curricula.fields.curriculum_type') }}" />
+                        </div>
+                        <div class="filter-group">
+                            <x-base.form-label>{{ __('curricula.fields.duration_weeks') }}</x-base.form-label>
+                            <x-base.form-input type="number" name="duration_weeks" value="{{ request('duration_weeks') }}" placeholder="{{ __('curricula.fields.duration_weeks') }}" min="1" />
+                        </div>
+                        <div class="filter-group">
+                            <x-base.form-label>{{ __('curricula.fields.created_by') }}</x-base.form-label>
+                            <x-base.form-input type="text" name="created_by" value="{{ request('created_by') }}" placeholder="{{ __('curricula.fields.created_by') }}" />
+                        </div>
+                        <div class="filter-group">
+                            <x-base.form-label>{{ __('global.sort_by') }}</x-base.form-label>
+                            <x-base.tom-select name="sort_by">
+                                <option value="created_at" {{ request('sort_by') === 'created_at' ? 'selected' : '' }}>{{ __('global.date_created') }}</option>
+                                <option value="name" {{ request('sort_by') === 'name' ? 'selected' : '' }}>{{ __('curricula.fields.name') }}</option>
+                                <option value="grade_level" {{ request('sort_by') === 'grade_level' ? 'selected' : '' }}>{{ __('curricula.fields.grade_level') }}</option>
+                                <option value="subject_area" {{ request('sort_by') === 'subject_area' ? 'selected' : '' }}>{{ __('curricula.fields.subject_area') }}</option>
+                            </x-base.tom-select>
+                        </div>
+                    </div>
+                    <div class="filter-actions">
+                        <x-base.button variant="primary" type="submit" class="flex items-center">
+                            <x-base.lucide icon="Search" class="w-4 h-4 me-2" />
+                            {{ __('global.apply_filters') }}
+                        </x-base.button>
+                        <a href="{{ route('curricula.index') }}" class="btn btn-outline-secondary flex items-center">
+                            <x-base.lucide icon="RefreshCw" class="w-4 h-4 me-2" />
+                            {{ __('global.clear_filters') }}
+                        </a>
+                    </div>
+                </form>
             </div>
         </div>
 
         <!-- Data List -->
-        <div class="intro-y col-span-12 overflow-auto lg:overflow-visible">
-            <x-base.table class="table-report -mt-2">
+        <div class="intro-y col-span-12 overflow-x-auto">
+            <x-base.table class="curriculum-table table-report -mt-2 min-w-full">
                 <x-base.table.thead>
                     <x-base.table.tr>
 @php
@@ -78,20 +129,67 @@
                 <x-base.table.tbody>
                     @forelse($curricula as $curriculum)
                         <x-base.table.tr class="intro-x">
-                            <x-base.table.td class="text-center">{{ $curriculum->name ?? '-' }}</x-base.table.td>
-                            <x-base.table.td class="text-center">{{ $curriculum->code ?? '-' }}</x-base.table.td>
-                            <x-base.table.td class="text-center">{{ $curriculum->grade_level ?? '-' }}</x-base.table.td>
-                            <x-base.table.td class="text-center">{{ $curriculum->subject_area ?? '-' }}</x-base.table.td>
-                            <x-base.table.td class="text-center">{{ $curriculum->topics ?? '-' }}</x-base.table.td>
-                            <x-base.table.td class="text-center">{{ $curriculum->materials_needed ?? '-' }}</x-base.table.td>
-                            <x-base.table.td class="text-center">{{ $curriculum->curriculum_type ?? '-' }}</x-base.table.td>
-                            <x-base.table.td class="text-center">{{ $curriculum->duration_weeks ?? '-' }}</x-base.table.td>
-                            <x-base.table.td class="text-center">{{ $curriculum->assessment_methods ?? '-' }}</x-base.table.td>
-                            <x-base.table.td class="text-center">
-                                <div class="flex items-center justify-center {{ $curriculum->is_active ? 'text-success' : 'text-danger' }}"> <x-base.lucide icon="{{ $curriculum->is_active ? 'CheckSquare' : 'XSquare' }}" class="w-4 h-4 me-2" /> {{ $curriculum->is_active ? __('global.yes') : __('global.no') }} </div>
+                            <x-base.table.td class="text-center truncate max-w-xs">{{ $curriculum->name ?? '-' }}</x-base.table.td>
+                            <x-base.table.td class="text-center truncate max-w-xs">{{ $curriculum->code ?? '-' }}</x-base.table.td>
+                            <x-base.table.td class="text-center truncate max-w-xs">{{ $curriculum->grade_level ?? '-' }}</x-base.table.td>
+                            <x-base.table.td class="text-center truncate max-w-xs">{{ $curriculum->subject_area ?? '-' }}</x-base.table.td>
+                            <x-base.table.td class="text-center max-w-xs">
+                                @if($curriculum->topics && is_array($curriculum->topics))
+                                    <div class="array-display-list">
+                                        @foreach(array_slice($curriculum->topics, 0, 3) as $topic)
+                                            <span class="array-display truncate">{{ $topic }}</span>
+                                        @endforeach
+                                        @if(count($curriculum->topics) > 3)
+                                            <span class="array-display truncate">+{{ count($curriculum->topics) - 3 }} more</span>
+                                        @endif
+                                    </div>
+                                @elseif($curriculum->topics)
+                                    <span class="truncate">{{ Str::limit($curriculum->topics, 50) }}</span>
+                                @else
+                                    -
+                                @endif
                             </x-base.table.td>
-                            <x-base.table.td class="text-center">{{ $curriculum->published_at ? $curriculum->published_at->format('Y-m-d') : '-' }}</x-base.table.td>
-                            <x-base.table.td class="text-center">{{ $curriculum->created_by ?? '-' }}</x-base.table.td>
+                            <x-base.table.td class="text-center max-w-xs">
+                                @if($curriculum->materials_needed && is_array($curriculum->materials_needed))
+                                    <div class="array-display-list">
+                                        @foreach(array_slice($curriculum->materials_needed, 0, 3) as $material)
+                                            <span class="array-display truncate">{{ $material }}</span>
+                                        @endforeach
+                                        @if(count($curriculum->materials_needed) > 3)
+                                            <span class="array-display truncate">+{{ count($curriculum->materials_needed) - 3 }} more</span>
+                                        @endif
+                                    </div>
+                                @elseif($curriculum->materials_needed)
+                                    <span class="truncate">{{ Str::limit($curriculum->materials_needed, 50) }}</span>
+                                @else
+                                    -
+                                @endif
+                            </x-base.table.td>
+                            <x-base.table.td class="text-center truncate max-w-xs">{{ $curriculum->curriculum_type ?? '-' }}</x-base.table.td>
+                            <x-base.table.td class="text-center truncate max-w-xs">{{ $curriculum->duration_weeks ?? '-' }}</x-base.table.td>
+                            <x-base.table.td class="text-center max-w-xs">
+                                @if($curriculum->assessment_methods && is_array($curriculum->assessment_methods))
+                                    <div class="array-display-list">
+                                        @foreach(array_slice($curriculum->assessment_methods, 0, 3) as $method)
+                                            <span class="array-display truncate">{{ $method }}</span>
+                                        @endforeach
+                                        @if(count($curriculum->assessment_methods) > 3)
+                                            <span class="array-display truncate">+{{ count($curriculum->assessment_methods) - 3 }} more</span>
+                                        @endif
+                                    </div>
+                                @elseif($curriculum->assessment_methods)
+                                    <span class="truncate">{{ Str::limit($curriculum->assessment_methods, 50) }}</span>
+                                @else
+                                    -
+                                @endif
+                            </x-base.table.td>
+                            <x-base.table.td class="text-center truncate max-w-xs">
+                                <span class="status-badge {{ $curriculum->is_active ? 'status-active' : 'status-inactive' }}">
+                                    {{ $curriculum->is_active ? __('global.active') : __('global.inactive') }}
+                                </span>
+                            </x-base.table.td>
+                            <x-base.table.td class="text-center truncate max-w-xs">{{ $curriculum->published_at ? $curriculum->published_at->format('Y-m-d') : '-' }}</x-base.table.td>
+                            <x-base.table.td class="text-center truncate max-w-xs">{{ $curriculum->created_by ?? '-' }}</x-base.table.td>
 
                             @if($canEdit || $canDelete || $canView)
                             <x-base.table.td class="table-report__action w-56">
@@ -146,7 +244,7 @@
 
         <!-- Pagination -->
         <div class="intro-y col-span-12 flex flex-wrap sm:flex-row sm:flex-nowrap items-center">
-            {!! $curricula->links() !!}
+            {!! $curricula->appends(request()->query())->links() !!}
         </div>
 
         <!-- Summary Cards -->

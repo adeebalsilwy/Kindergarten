@@ -1,19 +1,19 @@
 <?php
 
 return [
-    'title' => 'Payments',
-    'add_new' => 'إضافة Payment جديد',
-    'edit' => 'تعديل Payment',
-    'list' => 'قائمة Payments',
+    'title' => 'المدفوعات',
+    'add_new' => 'إضافة دفعة جديدة',
+    'edit' => 'تعديل الدفعة',
+    'list' => 'قائمة المدفوعات',
     'fields' => [
-        'child_id' => 'Child Id',
-        'fee_id' => 'Fee Id',
+        'child_id' => 'معرّف الطفل',
+        'fee_id' => 'معرّف الرسوم',
         'amount' => 'المبلغ',
-        'payment_date' => 'Payment Date',
-        'payment_method' => 'Payment Method',
-        'reference_number' => 'Reference Number',
+        'payment_date' => 'تاريخ الدفع',
+        'payment_method' => 'طريقة الدفع',
+        'reference_number' => 'رقم المرجع',
         'status' => 'الحالة',
-        'receipt_number' => 'Receipt Number',
+        'receipt_number' => 'رقم الإيصال',
     ],
     'actions' => [
         'save' => 'حفظ',
@@ -27,5 +27,21 @@ return [
         'created' => 'تم إنشاء السجل بنجاح.',
         'updated' => 'تم تحديث السجل بنجاح.',
         'deleted' => 'تم حذف السجل بنجاح.',
+    ],
+    'payments' => [
+        'messages' => [
+            'retrieved' => 'تم استرجاع المدفوعات بنجاح',
+        ],
+        'methods' => [
+            'cash' => 'نقدي',
+            'bank_transfer' => 'تحويل بنكي',
+            'credit_card' => 'بطاقة ائتمان',
+            'check' => 'شيك',
+        ],
+        'status' => [
+            'completed' => 'مكتمل',
+            'pending' => 'قيد الانتظار',
+            'failed' => 'فشل',
+        ],
     ],
 ];

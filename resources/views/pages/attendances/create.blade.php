@@ -1,89 +1,143 @@
 @extends('../themes/' . $activeTheme . '/' . $activeLayout)
 
-@section('head')
-    <title>{{ __('Attendance.add_new') }} - Laravel</title>
+@section('subhead')
+    <title>{{ __('global.add_new_attendance') }} - {{ config('app.name') }}</title>
 @endsection
 
 @section('subcontent')
-    <div class="intro-y flex items-center mt-8">
-        <h2 class="text-lg font-medium me-auto">{{ __('Attendance.add_new') }}</h2>
+    <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
+        <h2 class="text-lg font-medium me-auto">
+            {{ __('global.add_new_attendance') }}
+        </h2>
+        <div class="w-full sm:w-auto flex mt-4 sm:mt-0">
+            <x-base.button variant="outline-secondary" as="a" href="{{ route('attendances.index') }}" class="flex items-center">
+                <x-base.lucide icon="ArrowLeft" class="w-4 h-4 me-2" /> {{ __('global.back') }}
+            </x-base.button>
+        </div>
     </div>
+
     <div class="grid grid-cols-12 gap-6 mt-5">
-        <div class="intro-y col-span-12 lg:col-span-10">
-            <div class="intro-y box p-5">
-                <form action="{{ route('attendances.store') }}" method="POST" enctype="multipart/form-data">
+        <div class="intro-y col-span-12 lg:col-span-8">
+            <div class="box p-5">
+                <form action="{{ route('attendances.store') }}" method="POST">
                     @csrf
                     <div class="grid grid-cols-12 gap-4">
-                        <div class="col-span-12 sm:col-span-6">
-                            <x-base.form-label>{{ __('attendances.fields.child_id') }}</x-base.form-label>
-                            <x-base.tom-select name="child_id" class="mt-2" data-placeholder="{{ __('global.select_option') }}">
-                                <option value="">{{ __('global.select_option') }}</option>
-                                @foreach($children as $child)
+                        <div class="col-span-12">
+                            <x-base.form-label class="font-bold">{{ __('global.select_student') }}</x-base.form-label>
+                            <x-base.tom-select name="child_id" class="w-full">
+                                <option value="">{{ __('global.please_select') }}</option>
+                                @foreach($children ?? [] as $child)
                                     <option value="{{ $child->id }}" {{ old('child_id') == $child->id ? 'selected' : '' }}>
-                                        {{ $child->name }}
+                                        {{ $child->name }} ({{ $child->class->name ?? '' }})
                                     </option>
                                 @endforeach
                             </x-base.tom-select>
                             @error('child_id')
-                                <div class="text-danger mt-2">{{ $message }}</div>
+                                <div class="text-danger mt-1">{{ $message }}</div>
                             @enderror
                         </div>
-                        <div class="col-span-12 sm:col-span-6">
-                            <x-base.form-label>{{ __('attendances.fields.date') }}</x-base.form-label>
-                            <x-base.form-input type="date" name="date" value="{{ old('date', $attendance->date ?? '') }}" class="mt-2" />
+                        
+                        <div class="col-span-12 md:col-span-6">
+                            <x-base.form-label class="font-bold">{{ __('global.attendance_date') }}</x-base.form-label>
+                            <x-base.form-input type="date" name="date" value="{{ old('date', now()->format('Y-m-d')) }}" class="w-full" />
                             @error('date')
-                                <div class="text-danger mt-2">{{ $message }}</div>
+                                <div class="text-danger mt-1">{{ $message }}</div>
                             @enderror
                         </div>
-                        <div class="col-span-12 sm:col-span-6">
-                            <x-base.form-label>{{ __('attendances.fields.status') }}</x-base.form-label>
-                            <x-base.tom-select name="status" class="mt-2" data-placeholder="{{ __('global.select_option') }}">
-                                <option value="">{{ __('global.select_option') }}</option>
-                                <option value="present" {{ old('status', $attendance->status ?? '') == 'present' ? 'selected' : '' }}>{{ __('global.present') }}</option>
-                                <option value="absent" {{ old('status', $attendance->status ?? '') == 'absent' ? 'selected' : '' }}>{{ __('global.absent') }}</option>
-                                <option value="sick" {{ old('status', $attendance->status ?? '') == 'sick' ? 'selected' : '' }}>{{ __('global.sick') }}</option>
-                                <option value="late" {{ old('status', $attendance->status ?? '') == 'late' ? 'selected' : '' }}>{{ __('global.late') }}</option>
-                                <option value="excused" {{ old('status', $attendance->status ?? '') == 'excused' ? 'selected' : '' }}>{{ __('global.excused') }}</option>
-                            </x-base.tom-select>
+                        
+                        <div class="col-span-12 md:col-span-6">
+                            <x-base.form-label class="font-bold">{{ __('global.status') }}</x-base.form-label>
+                            <x-base.form-select name="status" class="w-full">
+                                <option value="present" {{ old('status', 'present') == 'present' ? 'selected' : '' }}>{{ __('global.present') }}</option>
+                                <option value="absent" {{ old('status') == 'absent' ? 'selected' : '' }}>{{ __('global.absent') }}</option>
+                                <option value="late" {{ old('status') == 'late' ? 'selected' : '' }}>{{ __('global.late') }}</option>
+                                <option value="excused" {{ old('status') == 'excused' ? 'selected' : '' }}>{{ __('global.excused') }}</option>
+                            </x-base.form-select>
                             @error('status')
-                                <div class="text-danger mt-2">{{ $message }}</div>
+                                <div class="text-danger mt-1">{{ $message }}</div>
                             @enderror
                         </div>
-                        <div class="col-span-12 sm:col-span-6">
-                            <x-base.form-label>{{ __('attendances.fields.check_in') }}</x-base.form-label>
-                            <x-base.form-input type="time" name="check_in" value="{{ old('check_in', $attendance->check_in ?? '') }}" class="mt-2" />
+                        
+                        <div class="col-span-12 md:col-span-6">
+                            <x-base.form-label class="font-bold">{{ __('global.check_in') }}</x-base.form-label>
+                            <x-base.form-input type="time" name="check_in" value="{{ old('check_in') }}" class="w-full" />
                             @error('check_in')
-                                <div class="text-danger mt-2">{{ $message }}</div>
+                                <div class="text-danger mt-1">{{ $message }}</div>
                             @enderror
                         </div>
-                        <div class="col-span-12 sm:col-span-6">
-                            <x-base.form-label>{{ __('attendances.fields.check_out') }}</x-base.form-label>
-                            <x-base.form-input type="time" name="check_out" value="{{ old('check_out', $attendance->check_out ?? '') }}" class="mt-2" />
+                        
+                        <div class="col-span-12 md:col-span-6">
+                            <x-base.form-label class="font-bold">{{ __('global.check_out') }}</x-base.form-label>
+                            <x-base.form-input type="time" name="check_out" value="{{ old('check_out') }}" class="w-full" />
                             @error('check_out')
-                                <div class="text-danger mt-2">{{ $message }}</div>
+                                <div class="text-danger mt-1">{{ $message }}</div>
                             @enderror
                         </div>
+                        
                         <div class="col-span-12">
-                            <x-base.form-label>{{ __('attendances.fields.notes') }}</x-base.form-label>
-                            <x-base.form-textarea name="notes" rows="4" class="resize-none">{{ old('notes', $attendance->notes ?? '') }}</x-base.form-textarea>
-                            @error('notes')
-                                <div class="text-danger mt-2">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="col-span-12">
-                            <x-base.form-label>{{ __('attendances.fields.absence_reason') }}</x-base.form-label>
-                            <x-base.form-textarea name="absence_reason" rows="3" class="resize-none">{{ old('absence_reason', $attendance->absence_reason ?? '') }}</x-base.form-textarea>
+                            <x-base.form-label class="font-bold">{{ __('global.absence_reason') }}</x-base.form-label>
+                            <x-base.form-input type="text" name="absence_reason" value="{{ old('absence_reason') }}" class="w-full" placeholder="{{ __('global.absence_reason_field') }}..." />
                             @error('absence_reason')
-                                <div class="text-danger mt-2">{{ $message }}</div>
+                                <div class="text-danger mt-1">{{ $message }}</div>
                             @enderror
                         </div>
-
+                        
+                        <div class="col-span-12">
+                            <x-base.form-label class="font-bold">{{ __('global.notes') }}</x-base.form-label>
+                            <x-base.form-textarea name="notes" class="w-full" rows="3" placeholder="{{ __('global.add_notes_here') }}...">{{ old('notes') }}</x-base.form-textarea>
+                            @error('notes')
+                                <div class="text-danger mt-1">{{ $message }}</div>
+                            @enderror
+                        </div>
                     </div>
-                    <div class="flex justify-end mt-5">
-                        <a href="{{ route('attendances.index') }}" class="btn btn-outline-secondary w-24 me-1">{{ __('global.cancel') }}</a>
-                        <x-base.button type="submit" variant="primary" class="w-24">{{ __('global.save') }}</x-base.button>
+                    
+                    <div class="flex justify-end gap-3 mt-8">
+                        <x-base.button variant="outline-secondary" as="a" href="{{ route('attendances.index') }}" class="w-32">
+                            {{ __('global.cancel') }}
+                        </x-base.button>
+                        <x-base.button type="submit" variant="primary" class="w-48 shadow-md">
+                            <x-base.lucide icon="Save" class="w-4 h-4 me-2" /> {{ __('global.save') }}
+                        </x-base.button>
                     </div>
                 </form>
+            </div>
+        </div>
+        
+        <div class="intro-y col-span-12 lg:col-span-4">
+            <div class="box p-5">
+                <div class="font-medium text-base mb-4">{{ __('global.quick_tips') }}</div>
+                <ul class="space-y-3">
+                    <li class="flex items-start">
+                        <x-base.lucide icon="CheckCircle" class="w-4 h-4 text-success me-2 mt-0.5 flex-shrink-0" />
+                        <span class="text-sm">{{ __('global.attendance_status_tip') }}</span>
+                    </li>
+                    <li class="flex items-start">
+                        <x-base.lucide icon="CheckCircle" class="w-4 h-4 text-success me-2 mt-0.5 flex-shrink-0" />
+                        <span class="text-sm">{{ __('global.check_in_out_tip') }}</span>
+                    </li>
+                    <li class="flex items-start">
+                        <x-base.lucide icon="CheckCircle" class="w-4 h-4 text-success me-2 mt-0.5 flex-shrink-0" />
+                        <span class="text-sm">{{ __('global.bulk_attendance_tip') }}</span>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="box p-5 mt-5">
+                <div class="font-medium text-base mb-4">{{ __('global.attendance_statistics') }}</div>
+                <div class="space-y-3">
+                    <div class="flex justify-between">
+                        <span class="text-slate-500">{{ __('global.total_attendance') }}</span>
+                        <span class="font-bold text-primary">{{ $totalAttendance ?? 0 }}</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-slate-500">{{ __('global.present_rate') }}</span>
+                        <span class="font-bold text-success">{{ $attendanceRate ?? 0 }}%</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-slate-500">{{ __('global.absent_rate') }}</span>
+                        <span class="font-bold text-danger">{{ $absentRate ?? 0 }}%</span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

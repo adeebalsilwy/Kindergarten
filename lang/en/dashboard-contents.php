@@ -26,4 +26,9 @@ return [
         'updated' => 'Record updated successfully.',
         'deleted' => 'Record deleted successfully.',
     ],
+    'dashboard-contents' => [
+        'fields' => [
+            'name' => 'Name',
+        ],
+    ],
 ];

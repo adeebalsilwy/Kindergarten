@@ -14,11 +14,12 @@ class UpdateGradeRequest extends FormRequest
     public function rules()
     {
         return [
-            'child_id' => 'nullable',
+            'child_id' => 'nullable|exists:children,id',
             'subject' => 'nullable|string|max:255',
             'score' => 'nullable|string|max:255',
             'date' => 'nullable|date',
-
+            'comments' => 'nullable|string|max:1000',
+            'evaluator_id' => 'nullable|exists:users,id',
         ];
     }
 

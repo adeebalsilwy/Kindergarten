@@ -53,6 +53,11 @@ class TeacherService
         return $this->repository->findById($id);
     }
 
+    public function findWithRelations($id)
+    {
+        return $this->repository->findByIdWithRelations($id);
+    }
+
     public function update($id, array $data)
     {
         DB::beginTransaction();

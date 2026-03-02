@@ -1,10 +1,10 @@
 <?php
 
 return [
-    'title' => 'Test Models',
-    'add_new' => 'إضافة Test Model جديد',
-    'edit' => 'تعديل Test Model',
-    'list' => 'قائمة Test Models',
+    'title' => 'نماذج الاختبار',
+    'add_new' => 'إضافة نموذج اختبار جديد',
+    'edit' => 'تعديل نموذج الاختبار',
+    'list' => 'قائمة نماذج الاختبار',
     'fields' => [
         'name' => 'الاسم',
     ],

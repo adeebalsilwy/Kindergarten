@@ -22,4 +22,9 @@ return [
         'updated' => 'Record updated successfully.',
         'deleted' => 'Record deleted successfully.',
     ],
+    'roles' => [
+        'messages' => [
+            'retrieved' => 'Roles retrieved successfully',
+        ],
+    ],
 ];

@@ -129,15 +129,15 @@
                 <form method="GET" action="{{ route('guardians.index') }}">
                     <div class="flex flex-col sm:flex-row gap-4">
                         <div class="flex-1">
-                            <x-base.form-input name="search" value="{{ request('search') }}" placeholder="{{ __('global.search_guardians') }}" class="w-full" />
+                            <x-base.form-input name="search" id="searchInput" value="{{ request('search') }}" placeholder="{{ __('global.search_guardians') }}" class="w-full" />
                         </div>
-                        <select name="relationship_type" class="form-select w-full sm:w-40">
+                        <select name="relationship_type" id="relationshipFilter" class="form-select w-full sm:w-40">
                             <option value="" {{ request('relationship_type') === null ? 'selected' : '' }}>{{ __('global.all_relationships') }}</option>
                             <option value="father" {{ request('relationship_type') == 'father' ? 'selected' : '' }}>{{ __('global.father') }}</option>
                             <option value="mother" {{ request('relationship_type') == 'mother' ? 'selected' : '' }}>{{ __('global.mother') }}</option>
                             <option value="guardian" {{ request('relationship_type') == 'guardian' ? 'selected' : '' }}>{{ __('global.guardian') }}</option>
                         </select>
-                        <select name="is_active" class="form-select w-full sm:w-40">
+                        <select name="is_active" id="statusFilter" class="form-select w-full sm:w-40">
                             <option value="" {{ request('is_active') === null ? 'selected' : '' }}>{{ __('global.all_statuses') }}</option>
                             <option value="1" {{ request('is_active') == '1' ? 'selected' : '' }}>{{ __('global.active') }}</option>
                             <option value="0" {{ request('is_active') == '0' ? 'selected' : '' }}>{{ __('global.inactive') }}</option>
@@ -221,6 +221,17 @@
                             @can('edit_guardians')
                             <x-base.button variant="outline-primary" as="a" href="{{ route('guardians.edit', $guardian->id) }}" size="sm" class="px-2 py-1">
                                 <x-base.lucide icon="Pencil" class="w-3 h-3" />
+                            </x-base.button>
+                            @endcan
+                            
+                            @can('delete_guardians')
+                            <x-base.button 
+                                variant="outline-danger" 
+                                onclick="confirmDelete({{ $guardian->id }}, '{{ addslashes($guardian->name) }}')"
+                                size="sm" 
+                                class="px-2 py-1"
+                            >
+                                <x-base.lucide icon="Trash2" class="w-3 h-3" />
                             </x-base.button>
                             @endcan
                         </div>
@@ -331,8 +342,38 @@
         </div>
         @endif
     </div>
+    
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteModal" class="modal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body p-0">
+                    <div class="p-5 text-center">
+                        <x-base.lucide icon="AlertTriangle" class="w-16 h-16 text-danger mx-auto mt-3" />
+                        <div class="text-3xl mt-5">{{ __('global.confirm_delete') }}</div>
+                        <div class="text-slate-500 mt-2" id="deleteMessage">
+                            {{ __('global.confirm_delete_message') }}
+                        </div>
+                        <div class="text-slate-500 mt-2" id="deleteGuardianName"></div>
+                    </div>
+                    <form id="deleteForm" method="POST" action="">
+                        @csrf
+                        @method('DELETE')
+                        <div class="px-5 pb-8 text-center">
+                            <x-base.button type="button" data-dismiss="modal" class="btn btn-outline-secondary w-24 mr-1">
+                                {{ __('global.cancel') }}
+                            </x-base.button>
+                            <x-base.button type="submit" class="btn btn-danger w-24">
+                                {{ __('global.delete') }}
+                            </x-base.button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <!-- JavaScript for Filtering -->
+    <!-- JavaScript for Filtering and Deletion -->
     <script>
         function applyFilters() {
             const searchTerm = document.getElementById('searchInput').value.toLowerCase();
@@ -363,5 +404,37 @@
         document.getElementById('searchInput').addEventListener('input', applyFilters);
         document.getElementById('relationshipFilter').addEventListener('change', applyFilters);
         document.getElementById('statusFilter').addEventListener('change', applyFilters);
+        
+        // Delete confirmation function
+        window.confirmDelete = function(guardianId, guardianName) {
+            document.getElementById('deleteGuardianName').innerHTML = 
+                `<strong>${guardianName}</strong>`;
+            document.getElementById('deleteForm').action = `/guardians/${guardianId}`;
+            
+            // Show modal
+            const modal = document.getElementById('deleteModal');
+            modal.classList.add('show');
+            modal.style.display = 'block';
+            document.body.classList.add('modal-open');
+        };
+        
+        // Close modal
+        document.querySelectorAll('[data-dismiss="modal"]').forEach(button => {
+            button.addEventListener('click', function() {
+                const modal = document.getElementById('deleteModal');
+                modal.classList.remove('show');
+                modal.style.display = 'none';
+                document.body.classList.remove('modal-open');
+            });
+        });
+        
+        // Close modal when clicking outside
+        document.getElementById('deleteModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.classList.remove('show');
+                this.style.display = 'none';
+                document.body.classList.remove('modal-open');
+            }
+        });
     </script>
 @endsection

@@ -1,119 +1,163 @@
 @extends('../themes/' . $activeTheme . '/' . $activeLayout)
 
-@section('head')
-    <title>{{ __('Payment.add_new') }} - Laravel</title>
+@section('subhead')
+    <title>{{ __('global.add_new_payment') }} - {{ config('app.name') }}</title>
 @endsection
 
 @section('subcontent')
-    <div class="intro-y flex items-center mt-8">
-        <h2 class="text-lg font-medium me-auto">{{ __('Payment.add_new') }}</h2>
+    <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
+        <h2 class="text-lg font-medium me-auto">
+            {{ __('global.add_new_payment') }}
+        </h2>
+        <div class="w-full sm:w-auto flex mt-4 sm:mt-0">
+            <x-base.button variant="outline-secondary" as="a" href="{{ route('payments.index') }}" class="flex items-center">
+                <x-base.lucide icon="ArrowLeft" class="w-4 h-4 me-2" /> {{ __('global.back') }}
+            </x-base.button>
+        </div>
     </div>
+
     <div class="grid grid-cols-12 gap-6 mt-5">
-        <div class="intro-y col-span-12 lg:col-span-10">
-            <div class="intro-y box p-5">
-                <form action="{{ route('payments.store') }}" method="POST" enctype="multipart/form-data">
+        <div class="intro-y col-span-12 lg:col-span-8">
+            <div class="box p-5">
+                <form action="{{ route('payments.store') }}" method="POST">
                     @csrf
                     <div class="grid grid-cols-12 gap-4">
-                        <div class="col-span-12 sm:col-span-6">
-                            <x-base.form-label>{{ __('payments.fields.child_id') }}</x-base.form-label>
-                            <x-base.tom-select name="child_id" class="mt-2" data-placeholder="{{ __('global.select_option') }}">
-                                <option value="">{{ __('global.select_option') }}</option>
-                                @foreach($children as $child)
-                                    <option value="{{ $child->id }}" {{ old('child_id', $payment->child_id ?? '') == $child->id ? 'selected' : '' }}>
-                                        {{ $child->name }}
+                        <div class="col-span-12">
+                            <x-base.form-label class="font-bold">{{ __('global.select_student') }}</x-base.form-label>
+                            <x-base.tom-select name="child_id" class="w-full">
+                                <option value="">{{ __('global.please_select') }}</option>
+                                @foreach($children ?? [] as $child)
+                                    <option value="{{ $child->id }}" {{ old('child_id') == $child->id ? 'selected' : '' }}>
+                                        {{ $child->name }} ({{ $child->class->name ?? '' }})
                                     </option>
                                 @endforeach
                             </x-base.tom-select>
                             @error('child_id')
-                                <div class="text-danger mt-2">{{ $message }}</div>
+                                <div class="text-danger mt-1">{{ $message }}</div>
                             @enderror
                         </div>
-                        <div class="col-span-12 sm:col-span-6">
-                            <x-base.form-label>{{ __('payments.fields.fee_id') }}</x-base.form-label>
-                            <x-base.tom-select name="fee_id" class="mt-2" data-placeholder="{{ __('global.select_option') }}">
-                                <option value="">{{ __('global.select_option') }}</option>
-                                @foreach($fees as $fee)
-                                    <option value="{{ $fee->id }}" {{ old('fee_id', $payment->fee_id ?? '') == $fee->id ? 'selected' : '' }}>
-                                        {{ $fee->name ?? ('#'.$fee->id) }}
+                        
+                        <div class="col-span-12 md:col-span-6">
+                            <x-base.form-label class="font-bold">{{ __('global.select_fee') }}</x-base.form-label>
+                            <x-base.tom-select name="fee_id" class="w-full">
+                                <option value="">{{ __('global.please_select') }}</option>
+                                @foreach($fees ?? [] as $fee)
+                                    <option value="{{ $fee->id }}" {{ old('fee_id') == $fee->id ? 'selected' : '' }}>
+                                        {{ $fee->name }} - {{ number_format($fee->amount, 2) }}
                                     </option>
                                 @endforeach
                             </x-base.tom-select>
                             @error('fee_id')
-                                <div class="text-danger mt-2">{{ $message }}</div>
+                                <div class="text-danger mt-1">{{ $message }}</div>
                             @enderror
                         </div>
-                        <div class="col-span-12 sm:col-span-6">
-                            <x-base.form-label>{{ __('payments.fields.amount') }}</x-base.form-label>
-                            <div class="relative mt-2">
-                                <div class="absolute inset-y-0 left-0 ps-3 flex items-center pointer-events-none">
-                                    <span class="text-gray-500 sm:text-sm">{{ config('app.currency', 'USD') }}</span>
-                                </div>
-                                <x-base.form-input type="number" step="0.01" min="0" name="amount" value="{{ old('amount', $payment->amount ?? '') }}" class="ps-12" />
-                            </div>
+                        
+                        <div class="col-span-12 md:col-span-6">
+                            <x-base.form-label class="font-bold">{{ __('global.amount') }}</x-base.form-label>
+                            <x-base.form-input type="number" step="0.01" name="amount" value="{{ old('amount') }}" class="w-full" placeholder="{{ __('global.amount') }}..." />
                             @error('amount')
-                                <div class="text-danger mt-2">{{ $message }}</div>
+                                <div class="text-danger mt-1">{{ $message }}</div>
                             @enderror
                         </div>
-                        <div class="col-span-12 sm:col-span-6">
-                            <x-base.form-label>{{ __('payments.fields.payment_date') }}</x-base.form-label>
-                            <div class="relative mt-2">
-                                <x-base.form-input type="date" name="payment_date" value="{{ old('payment_date', $payment->payment_date ?? '') }}" />
-                                <div class="absolute inset-y-0 right-0 pe-3 flex items-center pointer-events-none">
-                                    <x-base.lucide icon="Calendar" class="h-5 w-5 text-gray-400" />
-                                </div>
-                            </div>
+                        
+                        <div class="col-span-12 md:col-span-6">
+                            <x-base.form-label class="font-bold">{{ __('global.payment_date') }}</x-base.form-label>
+                            <x-base.form-input type="date" name="payment_date" value="{{ old('payment_date', now()->format('Y-m-d')) }}" class="w-full" />
                             @error('payment_date')
-                                <div class="text-danger mt-2">{{ $message }}</div>
+                                <div class="text-danger mt-1">{{ $message }}</div>
                             @enderror
                         </div>
-                        <div class="col-span-12 sm:col-span-6">
-                            <x-base.form-label>{{ __('payments.fields.payment_method') }}</x-base.form-label>
-                            <x-base.tom-select name="payment_method" class="mt-2">
-                                <option value="">{{ __('global.select_option') }}</option>
-                                <option value="cash" {{ old('payment_method', $payment->payment_method ?? '') == 'cash' ? 'selected' : '' }}>{{ __('payments.methods.cash') }}</option>
-                                <option value="bank_transfer" {{ old('payment_method', $payment->payment_method ?? '') == 'bank_transfer' ? 'selected' : '' }}>{{ __('payments.methods.bank_transfer') }}</option>
-                                <option value="credit_card" {{ old('payment_method', $payment->payment_method ?? '') == 'credit_card' ? 'selected' : '' }}>{{ __('payments.methods.credit_card') }}</option>
-                                <option value="check" {{ old('payment_method', $payment->payment_method ?? '') == 'check' ? 'selected' : '' }}>{{ __('payments.methods.check') }}</option>
-                                <option value="online" {{ old('payment_method', $payment->payment_method ?? '') == 'online' ? 'selected' : '' }}>{{ __('payments.methods.online') }}</option>
-                            </x-base.tom-select>
+                        
+                        <div class="col-span-12 md:col-span-6">
+                            <x-base.form-label class="font-bold">{{ __('global.payment_method') }}</x-base.form-label>
+                            <x-base.form-select name="payment_method" class="w-full">
+                                <option value="">{{ __('global.please_select') }}</option>
+                                <option value="cash" {{ old('payment_method') == 'cash' ? 'selected' : '' }}>{{ __('global.payment_method_cash') }}</option>
+                                <option value="bank_transfer" {{ old('payment_method') == 'bank_transfer' ? 'selected' : '' }}>{{ __('global.payment_method_bank_transfer') }}</option>
+                                <option value="credit_card" {{ old('payment_method') == 'credit_card' ? 'selected' : '' }}>{{ __('global.payment_method_credit_card') }}</option>
+                                <option value="check" {{ old('payment_method') == 'check' ? 'selected' : '' }}>{{ __('global.payment_method_check') }}</option>
+                            </x-base.form-select>
                             @error('payment_method')
-                                <div class="text-danger mt-2">{{ $message }}</div>
+                                <div class="text-danger mt-1">{{ $message }}</div>
                             @enderror
                         </div>
-                        <div class="col-span-12 sm:col-span-6">
-                            <x-base.form-label>{{ __('payments.fields.reference_number') }}</x-base.form-label>
-                            <x-base.form-input type="text" name="reference_number" value="{{ old('reference_number', $payment->reference_number ?? '') }}" class="mt-2" />
+                        
+                        <div class="col-span-12 md:col-span-6">
+                            <x-base.form-label class="font-bold">{{ __('global.reference_number') }}</x-base.form-label>
+                            <x-base.form-input type="text" name="reference_number" value="{{ old('reference_number') }}" class="w-full" placeholder="{{ __('global.reference_number_placeholder') }}..." />
                             @error('reference_number')
-                                <div class="text-danger mt-2">{{ $message }}</div>
+                                <div class="text-danger mt-1">{{ $message }}</div>
                             @enderror
                         </div>
-                        <div class="col-span-12 sm:col-span-6">
-                            <x-base.form-label>{{ __('payments.fields.status') }}</x-base.form-label>
-                            <x-base.tom-select name="status" class="mt-2">
-                                <option value="">{{ __('global.select_option') }}</option>
-                                <option value="completed" {{ old('status', $payment->status ?? '') == 'completed' ? 'selected' : '' }}>{{ __('payments.statuses.completed') }}</option>
-                                <option value="pending" {{ old('status', $payment->status ?? '') == 'pending' ? 'selected' : '' }}>{{ __('payments.statuses.pending') }}</option>
-                                <option value="failed" {{ old('status', $payment->status ?? '') == 'failed' ? 'selected' : '' }}>{{ __('payments.statuses.failed') }}</option>
-                                <option value="refunded" {{ old('status', $payment->status ?? '') == 'refunded' ? 'selected' : '' }}>{{ __('payments.statuses.refunded') }}</option>
-                            </x-base.tom-select>
+                        
+                        <div class="col-span-12 md:col-span-6">
+                            <x-base.form-label class="font-bold">{{ __('global.status') }}</x-base.form-label>
+                            <x-base.form-select name="status" class="w-full">
+                                <option value="completed" {{ old('status', 'completed') == 'completed' ? 'selected' : '' }}>{{ __('global.payment_status_completed') }}</option>
+                                <option value="pending" {{ old('status') == 'pending' ? 'selected' : '' }}>{{ __('global.payment_status_pending') }}</option>
+                                <option value="failed" {{ old('status') == 'failed' ? 'selected' : '' }}>{{ __('global.payment_status_failed') }}</option>
+                            </x-base.form-select>
                             @error('status')
-                                <div class="text-danger mt-2">{{ $message }}</div>
+                                <div class="text-danger mt-1">{{ $message }}</div>
                             @enderror
                         </div>
-                        <div class="col-span-12 sm:col-span-6">
-                            <x-base.form-label>{{ __('payments.fields.receipt_number') }}</x-base.form-label>
-                            <x-base.form-input type="text" name="receipt_number" value="{{ old('receipt_number', $payment->receipt_number ?? '') }}" class="mt-2" />
-                            @error('receipt_number')
-                                <div class="text-danger mt-2">{{ $message }}</div>
+                        
+                        <div class="col-span-12">
+                            <x-base.form-label class="font-bold">{{ __('global.notes') }}</x-base.form-label>
+                            <x-base.form-textarea name="notes" class="w-full" rows="3" placeholder="{{ __('global.add_notes_here') }}...">{{ old('notes') }}</x-base.form-textarea>
+                            @error('notes')
+                                <div class="text-danger mt-1">{{ $message }}</div>
                             @enderror
                         </div>
-
                     </div>
-                    <div class="flex justify-end mt-5">
-                        <a href="{{ route('payments.index') }}" class="btn btn-outline-secondary w-24 me-1">{{ __('global.cancel') }}</a>
-                        <x-base.button type="submit" variant="primary" class="w-24">{{ __('global.save') }}</x-base.button>
+                    
+                    <div class="flex justify-end gap-3 mt-8">
+                        <x-base.button variant="outline-secondary" as="a" href="{{ route('payments.index') }}" class="w-32">
+                            {{ __('global.cancel') }}
+                        </x-base.button>
+                        <x-base.button type="submit" variant="primary" class="w-48 shadow-md">
+                            <x-base.lucide icon="Save" class="w-4 h-4 me-2" /> {{ __('global.save') }}
+                        </x-base.button>
                     </div>
                 </form>
+            </div>
+        </div>
+        
+        <div class="intro-y col-span-12 lg:col-span-4">
+            <div class="box p-5">
+                <div class="font-medium text-base mb-4">{{ __('global.payment_guidelines') }}</div>
+                <ul class="space-y-3">
+                    <li class="flex items-start">
+                        <x-base.lucide icon="CheckCircle" class="w-4 h-4 text-success me-2 mt-0.5 flex-shrink-0" />
+                        <span class="text-sm">{{ __('global.payment_tip_1') }}</span>
+                    </li>
+                    <li class="flex items-start">
+                        <x-base.lucide icon="CheckCircle" class="w-4 h-4 text-success me-2 mt-0.5 flex-shrink-0" />
+                        <span class="text-sm">{{ __('global.payment_tip_2') }}</span>
+                    </li>
+                    <li class="flex items-start">
+                        <x-base.lucide icon="CheckCircle" class="w-4 h-4 text-success me-2 mt-0.5 flex-shrink-0" />
+                        <span class="text-sm">{{ __('global.payment_tip_3') }}</span>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="box p-5 mt-5">
+                <div class="font-medium text-base mb-4">{{ __('global.quick_tips') }}</div>
+                <ul class="space-y-2 text-sm text-slate-600">
+                    <li class="flex items-start">
+                        <x-base.lucide icon="Info" class="w-4 h-4 me-2 mt-0.5 flex-shrink-0" />
+                        <span>{{ __('global.payment_tip_1') }}</span>
+                    </li>
+                    <li class="flex items-start">
+                        <x-base.lucide icon="Info" class="w-4 h-4 me-2 mt-0.5 flex-shrink-0" />
+                        <span>{{ __('global.payment_tip_2') }}</span>
+                    </li>
+                    <li class="flex items-start">
+                        <x-base.lucide icon="Info" class="w-4 h-4 me-2 mt-0.5 flex-shrink-0" />
+                        <span>{{ __('global.payment_tip_3') }}</span>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>

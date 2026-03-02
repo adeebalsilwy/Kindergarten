@@ -39,6 +39,8 @@ use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\TestModelController;
 use App\Http\Controllers\ThemeController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ClassEnrollmentController;
+use App\Http\Controllers\MaterialController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -60,11 +62,12 @@ Route::get('/', [LandingController::class, 'index'])->name('home');
 Route::get('landing', [LandingController::class, 'index'])->name('landing');
 
 // Authentication Routes
-Route::get('login', [LoginController::class, 'showLoginForm'])->name('auth.login')->middleware('guest');
+Route::get('login', [LoginController::class, 'showLoginForm'])->name('login')->middleware('guest');
 Route::post('login', [LoginController::class, 'login'])->name('auth.login.post')->middleware('guest');
-Route::post('logout', [LoginController::class, 'logout'])->name('auth.logout')->middleware('auth');
-Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('auth.register')->middleware('guest');
-Route::post('register', [RegisterController::class, 'register'])->name('auth.register.post')->middleware('guest');
+Route::post('logout', [LoginController::class, 'logout'])->name('logout')->middleware('auth');
+Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('register')->middleware('guest');
+Route::post('register', [RegisterController::class, 'register'])->name('register.post')->middleware('guest');
+
 Route::get('locale/{locale}', [LocaleController::class, 'switch'])->name('locale.switch');
 
 // Email Verification Routes
@@ -91,6 +94,10 @@ Route::controller(\App\Http\Controllers\Auth\PasswordResetController::class)->gr
     Route::post('reset-password', 'reset')->name('password.update');
 });
 
+// Standard Laravel Password Reset Route Aliases
+Route::get('password/reset', [\App\Http\Controllers\Auth\PasswordResetController::class, 'showLinkRequestForm'])->name('password.request.standard'); // Standard alias for forgot-password
+Route::get('password/reset/{token}', [\App\Http\Controllers\Auth\PasswordResetController::class, 'showResetForm'])->name('password.reset.standard'); // Standard alias for reset-password
+
 Route::middleware(['auth', 'verified', 'role:Administrator|Accountant|Principal'])->prefix('finance')->name('finance.')->group(function () {
     Route::get('dashboard', [ReportController::class, 'dashboard'])->name('dashboard');
     Route::get('trial-balance', [ReportController::class, 'trialBalance'])->name('trial-balance');
@@ -108,7 +115,7 @@ Route::middleware(['auth', 'verified', 'role:Administrator|Accountant|Principal'
 });
 Route::get('attendances/bulk', [AttendanceController::class, 'bulk'])->name('attendances.bulk')->middleware(['auth', 'role:Administrator|Principal|Teacher']);
 Route::post('attendances/bulk', [AttendanceController::class, 'bulkStore'])->name('attendances.bulk.store')->middleware(['auth', 'role:Administrator|Principal|Teacher']);
-Route::resource('grades', GradeController::class)->only(['index', 'store'])->middleware(['auth', 'verified', 'role:Administrator|Principal|Teacher']);
+Route::resource('grades', GradeController::class)->middleware(['auth', 'verified', 'role:Administrator|Principal|Teacher']);
 Route::resource('children', ChildrenController::class)->middleware(['auth', 'verified', 'role:Administrator|Principal|Teacher']);
 // Route::resource('parents', ParentsController::class); // Replaced by guardians resource below
 
@@ -257,11 +264,42 @@ Route::get('users/export/excel', [UserController::class, 'exportExcel'])->name('
 Route::resource('activities', ActivityController::class)->middleware(['auth', 'verified', 'role:Administrator|Principal|Teacher']);
 Route::resource('events', EventController::class)->middleware(['auth', 'verified', 'role:Administrator|Principal|Teacher']);
 
+// Materials Management
+Route::resource('materials', MaterialController::class)->middleware(['auth', 'verified', 'role:Administrator|Principal|Teacher']);
+
+// Additional Material Routes for attaching/detaching
+Route::post('materials/{material}/attach-to-curriculum', [MaterialController::class, 'attachToCurriculum'])->name('materials.attach-to-curriculum')->middleware(['auth', 'verified', 'role:Administrator|Principal|Teacher']);
+Route::delete('materials/{material}/detach-from-curriculum', [MaterialController::class, 'detachFromCurriculumWithDelete'])->name('materials.detach-from-curriculum')->middleware(['auth', 'verified', 'role:Administrator|Principal|Teacher']);
+Route::post('materials/{material}/attach-to-activity', [MaterialController::class, 'attachToActivity'])->name('materials.attach-to-activity')->middleware(['auth', 'verified', 'role:Administrator|Principal|Teacher']);
+Route::delete('materials/{material}/detach-from-activity', [MaterialController::class, 'detachFromActivityWithDelete'])->name('materials.detach-from-activity')->middleware(['auth', 'verified', 'role:Administrator|Principal|Teacher']);
+Route::post('materials/{material}/attach-to-class', [MaterialController::class, 'attachToClass'])->name('materials.attach-to-class')->middleware(['auth', 'verified', 'role:Administrator|Principal|Teacher']);
+Route::delete('materials/{material}/detach-from-class', [MaterialController::class, 'detachFromClassWithDelete'])->name('materials.detach-from-class')->middleware(['auth', 'verified', 'role:Administrator|Principal|Teacher']);
+
+// Export Routes for Materials
+Route::get('materials/export/pdf', [MaterialController::class, 'exportPdf'])->name('materials.export.pdf')->middleware(['auth', 'verified', 'role:Administrator|Principal|Teacher']);
+Route::get('materials/export/excel', [MaterialController::class, 'exportExcel'])->name('materials.export.excel')->middleware(['auth', 'verified', 'role:Administrator|Principal|Teacher']);
+
 Route::resource('curricula', CurriculumController::class)->middleware(['auth', 'verified', 'role:Administrator|Principal|Teacher']);
 
 // Export Routes for Curriculum
 Route::get('curricula/export/pdf', [CurriculumController::class, 'exportPdf'])->name('curricula.export.pdf')->middleware(['auth', 'verified', 'role:Administrator|Principal|Teacher']);
 Route::get('curricula/export/excel', [CurriculumController::class, 'exportExcel'])->name('curricula.export.excel')->middleware(['auth', 'verified', 'role:Administrator|Principal|Teacher']);
+
+// Export Routes for Activity
+Route::get('activities/export/pdf', [ActivityController::class, 'exportPdf'])->name('activities.export.pdf')->middleware(['auth', 'verified', 'role:Administrator|Principal|Teacher']);
+Route::get('activities/export/excel', [ActivityController::class, 'exportExcel'])->name('activities.export.excel')->middleware(['auth', 'verified', 'role:Administrator|Principal|Teacher']);
+
+// Export Routes for Event
+Route::get('events/export/pdf', [EventController::class, 'exportPdf'])->name('events.export.pdf')->middleware(['auth', 'verified', 'role:Administrator|Principal|Teacher']);
+Route::get('events/export/excel', [EventController::class, 'exportExcel'])->name('events.export.excel')->middleware(['auth', 'verified', 'role:Administrator|Principal|Teacher']);
+
+// Class Enrollment Routes
+Route::resource('class-enrollments', ClassEnrollmentController::class)->middleware(['auth', 'verified', 'role:Administrator|Principal|Teacher']);
+Route::post('class-enrollments/{classEnrollment}/transfer', [ClassEnrollmentController::class, 'transfer'])->name('class-enrollments.transfer')->middleware(['auth', 'verified', 'role:Administrator|Principal|Teacher']);
+Route::post('class-enrollments/dual-enroll', [ClassEnrollmentController::class, 'dualEnroll'])->name('class-enrollments.dual-enroll')->middleware(['auth', 'verified', 'role:Administrator|Principal|Teacher']);
+Route::post('class-enrollments/bulk-update', [ClassEnrollmentController::class, 'bulkUpdate'])->name('class-enrollments.bulk-update')->middleware(['auth', 'verified', 'role:Administrator|Principal|Teacher']);
+Route::post('class-enrollments/bulk-transfer', [ClassEnrollmentController::class, 'bulkTransfer'])->name('class-enrollments.bulk-transfer')->middleware(['auth', 'verified', 'role:Administrator|Principal|Teacher']);
+Route::post('class-enrollments/bulk-delete', [ClassEnrollmentController::class, 'bulkDelete'])->name('class-enrollments.bulk-delete')->middleware(['auth', 'verified', 'role:Administrator|Principal|Teacher']);
 
 // Export Routes for Activity
 Route::get('activities/export/pdf', [ActivityController::class, 'exportPdf'])->name('activities.export.pdf')->middleware(['auth', 'verified', 'role:Administrator|Principal|Teacher']);

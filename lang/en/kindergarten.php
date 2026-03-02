@@ -74,4 +74,10 @@ return [
         'updated' => 'Record updated successfully.',
         'deleted' => 'Record deleted successfully.',
     ],
+    'kindergarten' => [
+        'parents' => [
+            'edit' => 'Edit Parent',
+            'view' => 'View Parent',
+        ],
+    ],
 ];

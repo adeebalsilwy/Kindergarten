@@ -24,11 +24,11 @@
                 </x-base.button>
                 <div class="dropdown-menu w-40">
                     <div class="dropdown-content">
-                        <a href="{{ route('classes.export.pdf') }}" class="dropdown-item flex items-center">
+                        <a href="{{ route('classes.export.pdf') }}{{ request()->getQueryString() ? '?' . request()->getQueryString() : '' }}" class="dropdown-item flex items-center">
                             <x-base.lucide icon="FileText" class="w-4 h-4 me-2" />
                             {{ __('global.export_pdf') }}
                         </a>
-                        <a href="{{ route('classes.export.excel') }}" class="dropdown-item flex items-center">
+                        <a href="{{ route('classes.export.excel') }}{{ request()->getQueryString() ? '?' . request()->getQueryString() : '' }}" class="dropdown-item flex items-center">
                             <x-base.lucide icon="FileSpreadsheet" class="w-4 h-4 me-2" />
                             {{ __('global.export_excel') }}
                         </a>
@@ -55,7 +55,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="text-2xl font-bold leading-8 mt-4">{{ $classes->count() }}</div>
+                    <div class="text-2xl font-bold leading-8 mt-4">{{ $classes->total() }}</div>
                     <div class="text-sm text-slate-600 mt-1">{{ __('global.total_classes') }}</div>
                 </div>
             </div>
@@ -77,7 +77,7 @@
                     </div>
                     <div class="text-2xl font-bold leading-8 mt-4">
                         @php
-                            $totalStudents = $classes->sum('current_students');
+                            $totalStudents = $classes->items() ? collect($classes->items())->sum('current_students') : 0;
                         @endphp
                         {{ $totalStudents }}
                     </div>
@@ -102,8 +102,10 @@
                     </div>
                     <div class="text-2xl font-bold leading-8 mt-4">
                         @php
-                            $utilizationRate = $classes->sum('capacity') > 0 ? 
-                                round(($classes->sum('current_students') / $classes->sum('capacity')) * 100, 1) : 0;
+                            $totalCapacity = $classes->items() ? collect($classes->items())->sum('capacity') : 0;
+                            $totalStudents = $classes->items() ? collect($classes->items())->sum('current_students') : 0;
+                            $utilizationRate = $totalCapacity > 0 ? 
+                                round(($totalStudents / $totalCapacity) * 100, 1) : 0;
                         @endphp
                         {{ $utilizationRate }}%
                     </div>
@@ -128,9 +130,9 @@
                     </div>
                     <div class="text-2xl font-bold leading-8 mt-4">
                         @php
-                            $potentialRevenue = $classes->sum(function($class) { 
+                            $potentialRevenue = $classes->items() ? collect($classes->items())->sum(function($class) { 
                                 return $class->monthly_fee * $class->current_students; 
-                            });
+                            }) : 0;
                         @endphp
                         {{ number_format($potentialRevenue, 0) }}
                     </div>
@@ -145,26 +147,57 @@
         <div class="intro-y col-span-12">
             <div class="box p-5">
                 <form method="GET" action="{{ route('classes.index') }}">
-                    <div class="flex flex-col sm:flex-row gap-4">
-                        <div class="flex-1">
-                            <x-base.form-input name="search" value="{{ request('search') }}" placeholder="{{ __('global.search_classes') }}" class="w-full" />
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-6 gap-4">
+                        <div>
+                            <x-base.form-label>{{ __('global.search') }}</x-base.form-label>
+                            <x-base.form-input name="search" value="{{ request('search') }}" placeholder="{{ __('global.search_classes') }}" />
                         </div>
-                        <select name="age_group" class="form-select w-full sm:w-40">
-                            <option value="" {{ request('age_group') == '' ? 'selected' : '' }}>{{ __('global.all_age_groups') }}</option>
-                            <option value="2-3" {{ request('age_group') == '2-3' ? 'selected' : '' }}>2-3 {{ __('global.years') }}</option>
-                            <option value="3-4" {{ request('age_group') == '3-4' ? 'selected' : '' }}>3-4 {{ __('global.years') }}</option>
-                            <option value="4-5" {{ request('age_group') == '4-5' ? 'selected' : '' }}>4-5 {{ __('global.years') }}</option>
-                            <option value="5-6" {{ request('age_group') == '5-6' ? 'selected' : '' }}>5-6 {{ __('global.years') }}</option>
-                        </select>
-                        <select name="is_active" class="form-select w-full sm:w-40">
-                            <option value="" {{ request('is_active') === null ? 'selected' : '' }}>{{ __('global.all_statuses') }}</option>
-                            <option value="1" {{ request('is_active') == '1' ? 'selected' : '' }}>{{ __('global.active') }}</option>
-                            <option value="0" {{ request('is_active') == '0' ? 'selected' : '' }}>{{ __('global.inactive') }}</option>
-                        </select>
-                        <x-base.button type="submit" variant="primary" class="flex items-center">
-                            <x-base.lucide icon="Filter" class="w-4 h-4 me-2" />
-                            {{ __('global.filter') }}
-                        </x-base.button>
+                        <div>
+                            <x-base.form-label>{{ __('classes.fields.teacher_id') }}</x-base.form-label>
+                            <x-base.tom-select name="teacher_id" class="w-full">
+                                <option value="" {{ request('teacher_id') == '' ? 'selected' : '' }}>{{ __('global.all_teachers') }}</option>
+                                @foreach(\App\Models\Teacher::orderBy('name')->get() as $teacher)
+                                    <option value="{{ $teacher->id }}" {{ request('teacher_id') == $teacher->id ? 'selected' : '' }}>
+                                        {{ $teacher->name }}
+                                    </option>
+                                @endforeach
+                            </x-base.tom-select>
+                        </div>
+                        <div>
+                            <x-base.form-label>{{ __('classes.fields.grade_level_id') }}</x-base.form-label>
+                            <x-base.tom-select name="grade_level_id" class="w-full">
+                                <option value="" {{ request('grade_level_id') == '' ? 'selected' : '' }}>{{ __('global.all_grade_levels') }}</option>
+                                @foreach(\App\Models\GradeLevel::orderBy('name')->get() as $gradeLevel)
+                                    <option value="{{ $gradeLevel->id }}" {{ request('grade_level_id') == $gradeLevel->id ? 'selected' : '' }}>
+                                        {{ $gradeLevel->name }}
+                                    </option>
+                                @endforeach
+                            </x-base.tom-select>
+                        </div>
+                        <div>
+                            <x-base.form-label>{{ __('classes.fields.age_group') }}</x-base.form-label>
+                            <x-base.tom-select name="age_group" class="w-full">
+                                <option value="" {{ request('age_group') == '' ? 'selected' : '' }}>{{ __('global.all_age_groups') }}</option>
+                                <option value="toddlers" {{ request('age_group') == 'toddlers' ? 'selected' : '' }}>{{ __('classes.age_groups.toddlers') }}</option>
+                                <option value="preschool" {{ request('age_group') == 'preschool' ? 'selected' : '' }}>{{ __('classes.age_groups.preschool') }}</option>
+                                <option value="pre_k" {{ request('age_group') == 'pre_k' ? 'selected' : '' }}>{{ __('classes.age_groups.pre_k') }}</option>
+                                <option value="kindergarten" {{ request('age_group') == 'kindergarten' ? 'selected' : '' }}>{{ __('classes.age_groups.kindergarten') }}</option>
+                            </x-base.tom-select>
+                        </div>
+                        <div>
+                            <x-base.form-label>{{ __('classes.fields.is_active') }}</x-base.form-label>
+                            <x-base.tom-select name="is_active" class="w-full">
+                                <option value="" {{ request('is_active') === null || request('is_active') === '' ? 'selected' : '' }}>{{ __('global.all_statuses') }}</option>
+                                <option value="1" {{ request('is_active') == '1' ? 'selected' : '' }}>{{ __('global.active') }}</option>
+                                <option value="0" {{ request('is_active') == '0' ? 'selected' : '' }}>{{ __('global.inactive') }}</option>
+                            </x-base.tom-select>
+                        </div>
+                        <div class="flex items-end">
+                            <x-base.button type="submit" variant="primary" class="w-full">
+                                <x-base.lucide icon="Filter" class="w-4 h-4 me-2" />
+                                {{ __('global.filter') }}
+                            </x-base.button>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -203,8 +236,13 @@
                             </div>
                             
                             <div class="flex justify-between text-xs">
+                                <span class="text-slate-600 dark:text-slate-300">{{ __('global.grade_level') }}:</span>
+                                <span class="font-medium">{{ $class->gradeLevel->name ?? '-' }}</span>
+                            </div>
+                            
+                            <div class="flex justify-between text-xs">
                                 <span class="text-slate-600 dark:text-slate-300">{{ __('global.age_group') }}:</span>
-                                <span class="font-medium">{{ $class->age_group ?? '-' }}</span>
+                                <span class="font-medium">{{ $class->age_group ? __('classes.age_groups.' . $class->age_group) : '-' }}</span>
                             </div>
                             
                             <div class="flex justify-between text-xs">
@@ -267,6 +305,16 @@
                                 <x-base.lucide icon="Pencil" class="w-3 h-3" />
                             </x-base.button>
                             @endcan
+                            
+                            @can('delete_classes')
+                            <x-base.button variant="outline-danger" 
+                                          data-delete-id="{{ $class->id }}" 
+                                          data-delete-name="{{ $class->name ?? 'Class' }}" 
+                                          data-delete-route="{{ route('classes.destroy', $class->id) }}"
+                                          size="sm" class="px-2 py-1 delete-btn">
+                                <x-base.lucide icon="Trash2" class="w-3 h-3" />
+                            </x-base.button>
+                            @endcan
                         </div>
                     </div>
                 </div>
@@ -290,7 +338,12 @@
 
         <!-- Pagination -->
         <div class="intro-y col-span-12 flex flex-wrap sm:flex-row sm:flex-nowrap items-center">
-            {!! $classes->links() !!}
+            <div class="me-auto">
+                {{ $classes->withQueryString()->links() }}
+            </div>
+            <div class="text-slate-500">
+                {{ __('global.showing') }} {{ $classes->firstItem() }} {{ __('global.to') }} {{ $classes->lastItem() }} {{ __('global.of') }} {{ $classes->total() }} {{ __('global.results') }}
+            </div>
         </div>
 
         <!-- Summary Cards -->
@@ -323,7 +376,7 @@
                     </div>
                     <div class="text-3xl font-bold leading-8 mt-6">
                         @php
-                            $recentCount = $classes->filter(function($item) {
+                            $recentCount = collect($classes->items())->filter(function($item) {
                                 return $item->created_at >= \Carbon\Carbon::now()->subDays(7);
                             })->count();
                         @endphp
@@ -345,7 +398,7 @@
                     </div>
                     <div class="text-3xl font-bold leading-8 mt-6">
                         @php
-                            $todayCount = $classes->filter(function($class) {
+                            $todayCount = collect($classes->items())->filter(function($class) {
                                 return $class->created_at->isToday();
                             })->count();
                         @endphp
@@ -367,7 +420,8 @@
                     </div>
                     <div class="text-3xl font-bold leading-8 mt-6">
                         @php
-                            $avgStudents = $classes->count() > 0 ? round($classes->avg('current_students'), 1) : 0;
+                            $items = collect($classes->items());
+                            $avgStudents = $items->count() > 0 ? round($items->avg('current_students'), 1) : 0;
                         @endphp
                         {{ $avgStudents }}
                     </div>
@@ -380,37 +434,71 @@
 
     <!-- JavaScript for Filtering -->
     <script>
-        function applyFilters() {
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            const ageGroupFilter = document.getElementById('ageGroupFilter').value;
-            const statusFilter = document.getElementById('statusFilter').value;
-            
-            const cards = document.querySelectorAll('#classesGrid > div');
-            
-            cards.forEach(card => {
-                const name = card.querySelector('.font-medium.text-base').textContent.toLowerCase();
-                const ageGroupElement = Array.from(card.querySelectorAll('.text-xs')).find(el => 
-                    el.textContent.includes('{{ __('global.age_group') }}')
-                );
-                const ageGroup = ageGroupElement ? ageGroupElement.nextElementSibling.textContent.toLowerCase() : '';
-                const statusElement = card.querySelector('.flex.items-center span:last-child');
-                const status = statusElement ? statusElement.textContent.trim().toLowerCase() : '';
-                
-                const matchesSearch = name.includes(searchTerm);
-                const matchesAgeGroup = !ageGroupFilter || ageGroup.includes(ageGroupFilter);
-                const matchesStatus = !statusFilter || status.includes(statusFilter);
-                
-                if (matchesSearch && matchesAgeGroup && matchesStatus) {
-                    card.style.display = 'block';
-                } else {
-                    card.style.display = 'none';
-                }
+        // Add functionality for the Tom Select dropdowns if needed
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize Tom Select if needed
+            if (typeof TomSelect !== 'undefined') {
+                const tomSelectElements = document.querySelectorAll('select[data-search="true"]');
+                tomSelectElements.forEach(element => {
+                    new TomSelect(element, {
+                        plugins: ['dropdown_input'],
+                        allowEmptyOption: true
+                    });
+                });
+            }
+        });
+    </script>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteModal" class="modal" tabindex="-1" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body p-0">
+                    <div class="p-5 text-center">
+                        <x-base.lucide icon="AlertTriangle" class="w-16 h-16 text-danger mx-auto mt-3" />
+                        <div class="text-3xl mt-5">{{ __('global.are_you_sure') }}</div>
+                        <div class="text-slate-500 mt-2">
+                            {{ __('global.delete_confirmation') }} "<span id="deleteItemName"></span>"?
+                        </div>
+                        <div class="text-slate-500 mt-1">
+                            {{ __('global.this_action_cannot_be_undone') }}
+                        </div>
+                    </div>
+                    <form id="deleteForm" method="POST" action="">
+                        @csrf
+                        @method('DELETE')
+                        <div class="px-5 pb-8 text-center">
+                            <x-base.button type="button" data-dismiss="modal" class="btn btn-outline-secondary w-24 mr-1">
+                                {{ __('global.cancel') }}
+                            </x-base.button>
+                            <x-base.button type="submit" class="btn btn-danger w-24">
+                                {{ __('global.delete') }}
+                            </x-base.button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript for Delete Confirmation -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Delete button click handler
+            document.querySelectorAll('.delete-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const id = this.dataset.deleteId;
+                    const name = this.dataset.deleteName;
+                    const route = this.dataset.deleteRoute;
+                    
+                    document.getElementById('deleteItemName').textContent = name;
+                    document.getElementById('deleteForm').setAttribute('action', route);
+                    
+                    // Show modal
+                    const modal = new bootstrap.Modal(document.getElementById('deleteModal'));
+                    modal.show();
+                });
             });
-        }
-        
-        // Live search
-        document.getElementById('searchInput').addEventListener('input', applyFilters);
-        document.getElementById('ageGroupFilter').addEventListener('change', applyFilters);
-        document.getElementById('statusFilter').addEventListener('change', applyFilters);
+        });
     </script>
 @endsection

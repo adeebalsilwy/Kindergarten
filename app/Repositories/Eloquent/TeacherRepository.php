@@ -31,6 +31,17 @@ class TeacherRepository implements TeacherRepositoryInterface
         return $this->model->findOrFail($id);
     }
 
+    public function findByIdWithRelations($id)
+    {
+        return $this->model->with([
+            'user',
+            'classes', 
+            'activities',
+            'events'
+            // Note: curriculum relation is handled separately due to complexity
+        ])->findOrFail($id);
+    }
+
     public function create(array $data)
     {
         return $this->model->create($data);

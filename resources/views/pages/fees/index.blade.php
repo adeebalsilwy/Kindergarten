@@ -31,6 +31,66 @@
         </div>
     </div>
 
+    <!-- Statistics -->
+    <div class="grid grid-cols-12 gap-6 mt-5">
+        <div class="intro-y col-span-12 sm:col-span-6 xl:col-span-3">
+            <div class="report-box zoom-in">
+                <div class="box p-5 border border-primary/20 bg-primary/5">
+                    <div class="flex items-center">
+                        <x-base.lucide icon="Tag" class="w-8 h-8 text-primary" />
+                        <div class="ms-auto text-success flex items-center">
+                            <span class="text-xs">{{ __('global.total') }}</span>
+                        </div>
+                    </div>
+                    <div class="text-2xl font-bold leading-8 mt-4">{{ $totalFeesCount ?? 0 }}</div>
+                    <div class="text-sm text-slate-500 mt-1">{{ __('global.total_fee_types') }}</div>
+                </div>
+            </div>
+        </div>
+        <div class="intro-y col-span-12 sm:col-span-6 xl:col-span-3">
+            <div class="report-box zoom-in">
+                <div class="box p-5 border border-success/20 bg-success/5">
+                    <div class="flex items-center">
+                        <x-base.lucide icon="Activity" class="w-8 h-8 text-success" />
+                        <div class="ms-auto text-success flex items-center">
+                            <span class="text-xs">{{ __('global.active') }}</span>
+                        </div>
+                    </div>
+                    <div class="text-2xl font-bold leading-8 mt-4">{{ $activeFeesCount ?? 0 }}</div>
+                    <div class="text-sm text-slate-500 mt-1">{{ __('global.active_fee_types') }}</div>
+                </div>
+            </div>
+        </div>
+        <div class="intro-y col-span-12 sm:col-span-6 xl:col-span-3">
+            <div class="report-box zoom-in">
+                <div class="box p-5 border border-warning/20 bg-warning/5">
+                    <div class="flex items-center">
+                        <x-base.lucide icon="DollarSign" class="w-8 h-8 text-warning" />
+                        <div class="ms-auto text-warning flex items-center">
+                            <span class="text-xs">{{ __('global.amount') }}</span>
+                        </div>
+                    </div>
+                    <div class="text-2xl font-bold leading-8 mt-4">{{ number_format($totalFeesAmount ?? 0, 2) }}</div>
+                    <div class="text-sm text-slate-500 mt-1">{{ __('global.total_fees_value') }}</div>
+                </div>
+            </div>
+        </div>
+        <div class="intro-y col-span-12 sm:col-span-6 xl:col-span-3">
+            <div class="report-box zoom-in">
+                <div class="box p-5 border border-info/20 bg-info/5">
+                    <div class="flex items-center">
+                        <x-base.lucide icon="CheckCircle" class="w-8 h-8 text-info" />
+                        <div class="ms-auto text-info flex items-center">
+                            <span class="text-xs">{{ __('global.collected') }}</span>
+                        </div>
+                    </div>
+                    <div class="text-2xl font-bold leading-8 mt-4">{{ number_format($totalCollected ?? 0, 2) }}</div>
+                    <div class="text-sm text-slate-500 mt-1">{{ __('global.total_collected') }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="grid grid-cols-12 gap-6 mt-5">
         <!-- Filter Section -->
         <div class="intro-y col-span-12">

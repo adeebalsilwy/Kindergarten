@@ -35,15 +35,52 @@
         <!-- Filter Section -->
         <div class="intro-y col-span-12">
             <div class="box p-5">
-                <div class="flex flex-col sm:flex-row gap-4">
-                    <div class="flex-1">
-                        <x-base.form-input type="text" placeholder="{{ __('global.search') }}" class="w-full" />
+                <form method="GET" action="{{ route('events.index') }}">
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <div class="flex-1">
+                            <div class="relative">
+                                <x-base.form-input 
+                                    type="text" 
+                                    name="search" 
+                                    value="{{ request('search') }}"
+                                    placeholder="{{ __('global.search_events') }}..." 
+                                    class="w-full ps-10 pe-4 py-2" 
+                                />
+                                <div class="absolute inset-y-0 left-0 ps-3 flex items-center pointer-events-none">
+                                    <x-base.lucide icon="Search" class="h-5 w-5 text-gray-400" />
+                                </div>
+                            </div>
+                        </div>
+                        <select name="event_type" class="form-select w-full sm:w-40">
+                            <option value="">{{ __('global.all_event_types') }}</option>
+                            <option value="meeting" {{ request('event_type') == 'meeting' ? 'selected' : '' }}>{{ __('global.meeting') }}</option>
+                            <option value="activity" {{ request('event_type') == 'activity' ? 'selected' : '' }}>{{ __('global.activity') }}</option>
+                            <option value="outing" {{ request('event_type') == 'outing' ? 'selected' : '' }}>{{ __('global.outing') }}</option>
+                            <option value="performance" {{ request('event_type') == 'performance' ? 'selected' : '' }}>{{ __('global.performance') }}</option>
+                        </select>
+                        <select name="status" class="form-select w-full sm:w-40">
+                            <option value="">{{ __('global.all_statuses') }}</option>
+                            <option value="active" {{ request('status') == 'active' ? 'selected' : '' }}>{{ __('global.active') }}</option>
+                            <option value="completed" {{ request('status') == 'completed' ? 'selected' : '' }}>{{ __('global.completed') }}</option>
+                            <option value="cancelled" {{ request('status') == 'cancelled' ? 'selected' : '' }}>{{ __('global.cancelled') }}</option>
+                        </select>
+                        <select name="sort" class="form-select w-full sm:w-40">
+                            <option value="">{{ __('global.sort_by_default') }}</option>
+                            <option value="start_datetime_desc" {{ request('sort') == 'start_datetime_desc' ? 'selected' : '' }}>{{ __('global.newest_first') }}</option>
+                            <option value="start_datetime_asc" {{ request('sort') == 'start_datetime_asc' ? 'selected' : '' }}>{{ __('global.oldest_first') }}</option>
+                        </select>
+                        <div class="flex gap-2">
+                            <x-base.button as="a" href="{{ route('events.index') }}" variant="secondary" class="flex items-center">
+                                <x-base.lucide icon="RotateCcw" class="w-4 h-4 me-2" />
+                                {{ __('global.reset') }}
+                            </x-base.button>
+                            <x-base.button type="submit" variant="primary" class="flex items-center">
+                                <x-base.lucide icon="Filter" class="w-4 h-4 me-2" />
+                                {{ __('global.apply') }}
+                            </x-base.button>
+                        </div>
                     </div>
-                    <x-base.button variant="secondary" class="flex items-center">
-                        <x-base.lucide icon="Filter" class="w-4 h-4 me-2" />
-                        {{ __('global.filter') }}
-                    </x-base.button>
-                </div>
+                </form>
             </div>
         </div>
 
@@ -131,14 +168,14 @@
                                     @endcan
                                     
                                     @can('delete_events')
-                                    <form action="{{ route('events.destroy', $event->id) }}" method="POST" onsubmit="return confirm('{{ __('global.confirm_delete') }}')" class="inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <x-base.button variant="outline-danger" type="submit" size="sm">
-                                            <x-base.lucide icon="Trash2" class="w-4 h-4 me-1" />
-                                            {{ __('global.delete') }}
-                                        </x-base.button>
-                                    </form>
+                                    <x-base.button variant="outline-danger" 
+                                                  data-delete-id="{{ $event->id }}" 
+                                                  data-delete-name="{{ $event->title ?? 'Event' }}" 
+                                                  data-delete-route="{{ route('events.destroy', $event->id) }}"
+                                                  size="sm" class="delete-btn">
+                                        <x-base.lucide icon="Trash2" class="w-4 h-4 me-1" />
+                                        {{ __('global.delete') }}
+                                    </x-base.button>
                                     @endcan
                                 </div>
                             </x-base.table.td>
@@ -229,4 +266,57 @@
         </div>
         @endif
     </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteModal" class="modal" tabindex="-1" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body p-0">
+                    <div class="p-5 text-center">
+                        <x-base.lucide icon="AlertTriangle" class="w-16 h-16 text-danger mx-auto mt-3" />
+                        <div class="text-3xl mt-5">{{ __('global.are_you_sure') }}</div>
+                        <div class="text-slate-500 mt-2">
+                            {{ __('global.delete_confirmation') }} "<span id="deleteItemName"></span>"?
+                        </div>
+                        <div class="text-slate-500 mt-1">
+                            {{ __('global.this_action_cannot_be_undone') }}
+                        </div>
+                    </div>
+                    <form id="deleteForm" method="POST" action="">
+                        @csrf
+                        @method('DELETE')
+                        <div class="px-5 pb-8 text-center">
+                            <x-base.button type="button" data-dismiss="modal" class="btn btn-outline-secondary w-24 mr-1">
+                                {{ __('global.cancel') }}
+                            </x-base.button>
+                            <x-base.button type="submit" class="btn btn-danger w-24">
+                                {{ __('global.delete') }}
+                            </x-base.button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript for Delete Confirmation -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Delete button click handler
+            document.querySelectorAll('.delete-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const id = this.dataset.deleteId;
+                    const name = this.dataset.deleteName;
+                    const route = this.dataset.deleteRoute;
+                    
+                    document.getElementById('deleteItemName').textContent = name;
+                    document.getElementById('deleteForm').setAttribute('action', route);
+                    
+                    // Show modal
+                    const modal = new bootstrap.Modal(document.getElementById('deleteModal'));
+                    modal.show();
+                });
+            });
+        });
+    </script>
 @endsection

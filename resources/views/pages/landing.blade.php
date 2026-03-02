@@ -67,22 +67,22 @@
                                 <x-base.lucide icon="Layout" class="w-4 h-4 me-2" /> {{ __('global.dashboard') }}
                             </x-base.dropdown.item>
                             <x-base.dropdown.divider />
-                            <x-base.dropdown.item as="a" href="{{ route('auth.logout') }}" 
+                            <x-base.dropdown.item as="a" href="{{ route('logout') }}" 
                                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();" 
                                 class="text-red-600 hover:bg-red-50 transition-all duration-200">
                                 <x-base.lucide icon="LogOut" class="w-4 h-4 me-2" /> {{ __('global.sign_out') }}
                             </x-base.dropdown.item>
-                            <form id="logout-form" action="{{ route('auth.logout') }}" method="POST" class="hidden">
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
                                 @csrf
                             </form>
                         </x-base.dropdown.menu>
                     </x-base.dropdown>
                 @else
                     <div id="auth-buttons" class="hidden md:flex items-center gap-2">
-                        <x-base.button as="a" href="{{ route('auth.login') }}" variant="outline-primary" class="transition-all duration-300 hover:scale-105">
+                        <x-base.button as="a" href="{{ route('login') }}" variant="outline-primary" class="transition-all duration-300 hover:scale-105">
                             {{ __('global.sign_in') }}
                         </x-base.button>
-                        <x-base.button as="a" href="{{ route('auth.register') }}" variant="primary" class="transition-all duration-300 hover:scale-105">
+                        <x-base.button as="a" href="{{ route('register') }}" variant="primary" class="transition-all duration-300 hover:scale-105">
                             {{ __('global.get_started') }}
                         </x-base.button>
                     </div>
@@ -102,7 +102,7 @@
                     {{ __('global.kindergarten_landing_subtitle') }}
                 </p>
                 <div class="mt-6 md:mt-8 flex flex-wrap gap-3 md:gap-4 animate__animated animate__fadeInLeft animate__delay-2s">
-                    <x-base.button as="a" href="{{ route('auth.register') }}" variant="primary" class="px-6 py-3 rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-lg">
+                    <x-base.button as="a" href="{{ route('register') }}" variant="primary" class="px-6 py-3 rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-lg">
                         <x-base.lucide icon="Rocket" class="w-4 h-4 me-2" /> {{ __('global.get_started') }}
                     </x-base.button>
                     <x-base.button as="a" href="#features" variant="outline-primary" class="px-6 py-3 rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-lg">
@@ -323,10 +323,10 @@
                 <h2 class="text-3xl md:text-4xl font-bold animate__animated animate__fadeInDown">{{ __('global.ready_to_get_started') }}</h2>
                 <p class="mt-3 text-lg animate__animated animate__fadeInDown animate__delay-1s">{{ __('global.landing_cta_description') }}</p>
                 <div class="mt-6 flex justify-center gap-3 animate__animated animate__fadeInDown animate__delay-2s">
-                    <x-base.button as="a" href="{{ route('auth.register') }}" class="bg-white text-primary hover:bg-slate-100 px-8 py-3 rounded-lg transition-all duration-300 hover:scale-105" variant="secondary">
+                    <x-base.button as="a" href="{{ route('register') }}" class="bg-white text-primary hover:bg-slate-100 px-8 py-3 rounded-lg transition-all duration-300 hover:scale-105" variant="secondary">
                         {{ __('global.start_free_trial') }}
                     </x-base.button>
-                    <x-base.button as="a" href="{{ route('auth.login') }}" variant="outline-secondary" class="border-white text-white hover:bg-white hover:text-theme-1 px-8 py-3 rounded-lg transition-all duration-300 hover:scale-105">
+                    <x-base.button as="a" href="{{ route('login') }}" variant="outline-secondary" class="border-white text-white hover:bg-white hover:text-theme-1 px-8 py-3 rounded-lg transition-all duration-300 hover:scale-105">
                         {{ __('global.sign_in') }}
                     </x-base.button>
                 </div>
@@ -353,8 +353,8 @@
                             <li><a class="hover:text-primary transition-all duration-300" href="{{ route('dashboard-overview-1') }}">{{ __('global.dashboard') }}</a></li>
                             <li><a class="hover:text-primary transition-all duration-300" href="{{ route('profile.index') }}">{{ __('global.profile') }}</a></li>
                         @else
-                            <li><a class="hover:text-primary transition-all duration-300" href="{{ route('auth.login') }}">{{ __('global.sign_in') }}</a></li>
-                            <li><a class="hover:text-primary transition-all duration-300" href="{{ route('auth.register') }}">{{ __('global.get_started') }}</a></li>
+                            <li><a class="hover:text-primary transition-all duration-300" href="{{ route('login') }}">{{ __('global.sign_in') }}</a></li>
+                            <li><a class="hover:text-primary transition-all duration-300" href="{{ route('register') }}">{{ __('global.get_started') }}</a></li>
                         @endauth
                     </ul>
                 </div>

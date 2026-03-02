@@ -41,6 +41,7 @@
     37 => 'App\\Providers\\ServiceServiceProvider',
     38 => 'App\\Providers\\AuthServiceProvider',
     39 => 'App\\Providers\\RouteServiceProvider',
+    40 => 'App\\Providers\\GpdfAliasServiceProvider',
   ),
   'eager' => 
   array (
@@ -69,6 +70,7 @@
     22 => 'App\\Providers\\ServiceServiceProvider',
     23 => 'App\\Providers\\AuthServiceProvider',
     24 => 'App\\Providers\\RouteServiceProvider',
+    25 => 'App\\Providers\\GpdfAliasServiceProvider',
   ),
   'deferred' => 
   array (
