@@ -9,7 +9,7 @@
         <h2 class="text-lg font-medium me-auto">{{ __('Activity.list') }}</h2>
         <div class="w-full sm:w-auto flex mt-4 sm:mt-0">
             @can('export_activities')
-            
+
                         <div class="flex gap-2">
                             <x-base.button variant="outline-primary" as="a" href="{{ route('activities.export.pdf') }}" class="flex items-center">
                                 <x-base.lucide icon="FileText" class="w-4 h-4 me-2" />
@@ -21,7 +21,7 @@
                             </x-base.button>
                         </div>
             @endcan
-            
+
             @can('create_activities')
             <x-base.button variant="primary" as="a" href="{{ route('activities.create') }}" class="ms-2 flex items-center">
                 <x-base.lucide icon="Plus" class="w-4 h-4 me-2" />
@@ -91,14 +91,14 @@
                             <x-base.table.td class="text-center">{{ $activity->end_time ?? '-' }}</x-base.table.td>
                             <x-base.table.td class="text-center">{{ $activity->activity_type ?? '-' }}</x-base.table.td>
                             <x-base.table.td class="text-center">{{ $activity->difficulty_level ?? '-' }}</x-base.table.td>
-                            <x-base.table.td class="text-center">{{ $activity->required_materials ?? '-' }}</x-base.table.td>
+                            <x-base.table.td class="text-center">{{ is_array($activity->required_materials) ? implode(', ', array_slice($activity->required_materials, 0, 3)) . (count($activity->required_materials) > 3 ? '...' : '') : ($activity->required_materials ?? '-') }}</x-base.table.td>
                             <x-base.table.td class="text-center">{{ $activity->estimated_duration ?? '-' }}</x-base.table.td>
                             <x-base.table.td class="text-center">{{ $activity->location ?? '-' }}</x-base.table.td>
                             <x-base.table.td class="text-center">
                                 <div class="flex items-center justify-center {{ $activity->is_active ? 'text-success' : 'text-danger' }}"> <x-base.lucide icon="{{ $activity->is_active ? 'CheckSquare' : 'XSquare' }}" class="w-4 h-4 me-2" /> {{ $activity->is_active ? __('global.yes') : __('global.no') }} </div>
                             </x-base.table.td>
-                            <x-base.table.td class="text-center">{{ $activity->learning_objectives ?? '-' }}</x-base.table.td>
-                            <x-base.table.td class="text-center">{{ $activity->outcomes ?? '-' }}</x-base.table.td>
+                            <x-base.table.td class="text-center">{{ is_array($activity->learning_objectives) ? implode(', ', array_slice($activity->learning_objectives, 0, 2)) . (count($activity->learning_objectives) > 2 ? '...' : '') : ($activity->learning_objectives ?? '-') }}</x-base.table.td>
+                            <x-base.table.td class="text-center">{{ is_array($activity->outcomes) ? implode(', ', array_slice($activity->outcomes, 0, 2)) . (count($activity->outcomes) > 2 ? '...' : '') : ($activity->outcomes ?? '-') }}</x-base.table.td>
                             <x-base.table.td class="text-center">{{ $activity->completed_at ? $activity->completed_at->format('Y-m-d') : '-' }}</x-base.table.td>
 
                             @if($canEdit || $canDelete || $canView)
@@ -110,14 +110,14 @@
                                         {{ __('global.view') }}
                                     </x-base.button>
                                     @endcan
-                                    
+
                                     @can('edit_activities')
                                     <x-base.button variant="outline-primary" as="a" href="{{ route('activities.edit', $activity->id) }}" size="sm" class="me-2">
                                         <x-base.lucide icon="Pencil" class="w-4 h-4 me-1" />
                                         {{ __('global.edit') }}
                                     </x-base.button>
                                     @endcan
-                                    
+
                                     @can('delete_activities')
                                     <form action="{{ route('activities.destroy', $activity->id) }}" method="POST" onsubmit="return confirm('{{ __('global.confirm_delete') }}')" class="inline">
                                         @csrf
@@ -165,8 +165,8 @@
                     <div class="flex items-center">
                         <x-base.lucide icon="Database" class="w-8 h-8 text-primary" />
                         <div class="ms-auto">
-                            <div class="report-box__indicator bg-success"> 
-                                <x-base.lucide icon="TrendingUp" class="w-4 h-4" /> 
+                            <div class="report-box__indicator bg-success">
+                                <x-base.lucide icon="TrendingUp" class="w-4 h-4" />
                             </div>
                         </div>
                     </div>
@@ -179,8 +179,8 @@
                     <div class="flex items-center">
                         <x-base.lucide icon="Activity" class="w-8 h-8 text-pending" />
                         <div class="ms-auto">
-                            <div class="report-box__indicator bg-success"> 
-                                <x-base.lucide icon="TrendingUp" class="w-4 h-4" /> 
+                            <div class="report-box__indicator bg-success">
+                                <x-base.lucide icon="TrendingUp" class="w-4 h-4" />
                             </div>
                         </div>
                     </div>
@@ -200,8 +200,8 @@
                     <div class="flex items-center">
                         <x-base.lucide icon="Calendar" class="w-8 h-8 text-success" />
                         <div class="ms-auto">
-                            <div class="report-box__indicator bg-success"> 
-                                <x-base.lucide icon="TrendingUp" class="w-4 h-4" /> 
+                            <div class="report-box__indicator bg-success">
+                                <x-base.lucide icon="TrendingUp" class="w-4 h-4" />
                             </div>
                         </div>
                     </div>

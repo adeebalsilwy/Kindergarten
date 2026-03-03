@@ -9,7 +9,7 @@
         <h2 class="text-lg font-medium me-auto">{{ __('Event.list') }}</h2>
         <div class="w-full sm:w-auto flex mt-4 sm:mt-0">
             @can('export_events')
-            
+
                         <div class="flex gap-2">
                             <x-base.button variant="outline-primary" as="a" href="{{ route('events.export.pdf') }}" class="flex items-center">
                                 <x-base.lucide icon="FileText" class="w-4 h-4 me-2" />
@@ -21,7 +21,7 @@
                             </x-base.button>
                         </div>
             @endcan
-            
+
             @can('create_events')
             <x-base.button variant="primary" as="a" href="{{ route('events.create') }}" class="ms-2 flex items-center">
                 <x-base.lucide icon="Plus" class="w-4 h-4 me-2" />
@@ -39,12 +39,12 @@
                     <div class="flex flex-col sm:flex-row gap-4">
                         <div class="flex-1">
                             <div class="relative">
-                                <x-base.form-input 
-                                    type="text" 
-                                    name="search" 
+                                <x-base.form-input
+                                    type="text"
+                                    name="search"
                                     value="{{ request('search') }}"
-                                    placeholder="{{ __('global.search_events') }}..." 
-                                    class="w-full ps-10 pe-4 py-2" 
+                                    placeholder="{{ __('global.search_events') }}..."
+                                    class="w-full ps-10 pe-4 py-2"
                                 />
                                 <div class="absolute inset-y-0 left-0 ps-3 flex items-center pointer-events-none">
                                     <x-base.lucide icon="Search" class="h-5 w-5 text-gray-400" />
@@ -130,7 +130,7 @@
                             <x-base.table.td class="text-center">{{ $event->organizer ?? '-' }}</x-base.table.td>
                             <x-base.table.td class="text-center">{{ $event->class_id ?? '-' }}</x-base.table.td>
                             <x-base.table.td class="text-center">{{ $event->teacher_id ?? '-' }}</x-base.table.td>
-                            <x-base.table.td class="text-center">{{ $event->attendees ?? '-' }}</x-base.table.td>
+                            <x-base.table.td class="text-center">{{ is_array($event->attendees) ? implode(', ', $event->attendees) : ($event->attendees ?? '-') }}</x-base.table.td>
                             <x-base.table.td class="text-center">
                                 <div class="flex items-center justify-center {{ $event->requires_confirmation ? 'text-success' : 'text-danger' }}"> <x-base.lucide icon="{{ $event->requires_confirmation ? 'CheckSquare' : 'XSquare' }}" class="w-4 h-4 me-2" /> {{ $event->requires_confirmation ? __('global.yes') : __('global.no') }} </div>
                             </x-base.table.td>
@@ -142,13 +142,13 @@
                             </x-base.table.td>
                             <x-base.table.td class="text-center">{{ $event->recurrence_pattern ?? '-' }}</x-base.table.td>
                             <x-base.table.td class="text-center">{{ $event->recurrence_end_date ? $event->recurrence_end_date->format('Y-m-d') : '-' }}</x-base.table.td>
-                            <x-base.table.td class="text-center">{{ $event->recurring_days ?? '-' }}</x-base.table.td>
+                            <x-base.table.td class="text-center">{{ is_array($event->recurring_days) ? implode(', ', $event->recurring_days) : ($event->recurring_days ?? '-') }}</x-base.table.td>
                             <x-base.table.td class="text-center">{{ $event->status ?? '-' }}</x-base.table.td>
                             <x-base.table.td class="text-center">
                                 <div class="flex items-center justify-center {{ $event->send_reminders ? 'text-success' : 'text-danger' }}"> <x-base.lucide icon="{{ $event->send_reminders ? 'CheckSquare' : 'XSquare' }}" class="w-4 h-4 me-2" /> {{ $event->send_reminders ? __('global.yes') : __('global.no') }} </div>
                             </x-base.table.td>
                             <x-base.table.td class="text-center">{{ $event->reminder_hours_before ?? '-' }}</x-base.table.td>
-                            <x-base.table.td class="text-center">{{ $event->documents ?? '-' }}</x-base.table.td>
+                            <x-base.table.td class="text-center">{{ is_array($event->documents) ? implode(', ', array_slice($event->documents, 0, 2)) . (count($event->documents) > 2 ? '...' : '') : ($event->documents ?? '-') }}</x-base.table.td>
 
                             @if($canEdit || $canDelete || $canView)
                             <x-base.table.td class="table-report__action w-56">
@@ -159,18 +159,18 @@
                                         {{ __('global.view') }}
                                     </x-base.button>
                                     @endcan
-                                    
+
                                     @can('edit_events')
                                     <x-base.button variant="outline-primary" as="a" href="{{ route('events.edit', $event->id) }}" size="sm" class="me-2">
                                         <x-base.lucide icon="Pencil" class="w-4 h-4 me-1" />
                                         {{ __('global.edit') }}
                                     </x-base.button>
                                     @endcan
-                                    
+
                                     @can('delete_events')
-                                    <x-base.button variant="outline-danger" 
-                                                  data-delete-id="{{ $event->id }}" 
-                                                  data-delete-name="{{ $event->title ?? 'Event' }}" 
+                                    <x-base.button variant="outline-danger"
+                                                  data-delete-id="{{ $event->id }}"
+                                                  data-delete-name="{{ $event->title ?? 'Event' }}"
                                                   data-delete-route="{{ route('events.destroy', $event->id) }}"
                                                   size="sm" class="delete-btn">
                                         <x-base.lucide icon="Trash2" class="w-4 h-4 me-1" />
@@ -214,8 +214,8 @@
                     <div class="flex items-center">
                         <x-base.lucide icon="Database" class="w-8 h-8 text-primary" />
                         <div class="ms-auto">
-                            <div class="report-box__indicator bg-success"> 
-                                <x-base.lucide icon="TrendingUp" class="w-4 h-4" /> 
+                            <div class="report-box__indicator bg-success">
+                                <x-base.lucide icon="TrendingUp" class="w-4 h-4" />
                             </div>
                         </div>
                     </div>
@@ -228,8 +228,8 @@
                     <div class="flex items-center">
                         <x-base.lucide icon="Activity" class="w-8 h-8 text-pending" />
                         <div class="ms-auto">
-                            <div class="report-box__indicator bg-success"> 
-                                <x-base.lucide icon="TrendingUp" class="w-4 h-4" /> 
+                            <div class="report-box__indicator bg-success">
+                                <x-base.lucide icon="TrendingUp" class="w-4 h-4" />
                             </div>
                         </div>
                     </div>
@@ -249,8 +249,8 @@
                     <div class="flex items-center">
                         <x-base.lucide icon="Calendar" class="w-8 h-8 text-success" />
                         <div class="ms-auto">
-                            <div class="report-box__indicator bg-success"> 
-                                <x-base.lucide icon="TrendingUp" class="w-4 h-4" /> 
+                            <div class="report-box__indicator bg-success">
+                                <x-base.lucide icon="TrendingUp" class="w-4 h-4" />
                             </div>
                         </div>
                     </div>
@@ -308,10 +308,10 @@
                     const id = this.dataset.deleteId;
                     const name = this.dataset.deleteName;
                     const route = this.dataset.deleteRoute;
-                    
+
                     document.getElementById('deleteItemName').textContent = name;
                     document.getElementById('deleteForm').setAttribute('action', route);
-                    
+
                     // Show modal
                     const modal = new bootstrap.Modal(document.getElementById('deleteModal'));
                     modal.show();

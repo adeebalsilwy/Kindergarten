@@ -234,12 +234,12 @@
             </x-base.menu.item>
             <x-base.menu.divider class="bg-white/[0.08]" />
             <x-base.menu.item class="hover:bg-white/5">
-                <form action="{{ route('auth.logout') }}" method="POST" class="w-full flex items-center">
+                <form action="{{ route('logout') }}" method="POST" class="w-full flex items-center">
                     @csrf
                     <x-base.lucide
                         class="me-2 h-4 w-4"
                         icon="ToggleRight"
-                    /> 
+                    />
                     <button type="submit" class="w-full text-start">{{ __('global.logout') }}</button>
                 </form>
             </x-base.menu.item>

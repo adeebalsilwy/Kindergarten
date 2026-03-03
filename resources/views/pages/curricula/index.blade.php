@@ -2,7 +2,6 @@
 
 @section('head')
     <title>{{ __('Curriculum.list') }} - Laravel</title>
-    <link rel="stylesheet" href="{{ Vite::asset('resources/css/pages/curricula.css') }}">
 @endsection
 
 @section('subcontent')
@@ -21,7 +20,7 @@
                             </x-base.button>
                         </div>
             @endcan
-            
+
             @can('create_curricula')
             <x-base.button variant="primary" as="a" href="{{ route('curricula.create') }}" class="ms-2 flex items-center">
                 <x-base.lucide icon="Plus" class="w-4 h-4 me-2" />
@@ -200,14 +199,14 @@
                                         {{ __('global.view') }}
                                     </x-base.button>
                                     @endcan
-                                    
+
                                     @can('edit_curricula')
                                     <x-base.button variant="outline-primary" as="a" href="{{ route('curricula.edit', $curriculum->id) }}" size="sm" class="me-2">
                                         <x-base.lucide icon="Pencil" class="w-4 h-4 me-1" />
                                         {{ __('global.edit') }}
                                     </x-base.button>
                                     @endcan
-                                    
+
                                     @can('delete_curricula')
                                     <form action="{{ route('curricula.destroy', $curriculum->id) }}" method="POST" onsubmit="return confirm('{{ __('global.confirm_delete') }}')" class="inline">
                                         @csrf
@@ -255,8 +254,8 @@
                     <div class="flex items-center">
                         <x-base.lucide icon="Database" class="w-8 h-8 text-primary" />
                         <div class="ms-auto">
-                            <div class="report-box__indicator bg-success"> 
-                                <x-base.lucide icon="TrendingUp" class="w-4 h-4" /> 
+                            <div class="report-box__indicator bg-success">
+                                <x-base.lucide icon="TrendingUp" class="w-4 h-4" />
                             </div>
                         </div>
                     </div>
@@ -269,8 +268,8 @@
                     <div class="flex items-center">
                         <x-base.lucide icon="Activity" class="w-8 h-8 text-pending" />
                         <div class="ms-auto">
-                            <div class="report-box__indicator bg-success"> 
-                                <x-base.lucide icon="TrendingUp" class="w-4 h-4" /> 
+                            <div class="report-box__indicator bg-success">
+                                <x-base.lucide icon="TrendingUp" class="w-4 h-4" />
                             </div>
                         </div>
                     </div>
@@ -290,8 +289,8 @@
                     <div class="flex items-center">
                         <x-base.lucide icon="Calendar" class="w-8 h-8 text-success" />
                         <div class="ms-auto">
-                            <div class="report-box__indicator bg-success"> 
-                                <x-base.lucide icon="TrendingUp" class="w-4 h-4" /> 
+                            <div class="report-box__indicator bg-success">
+                                <x-base.lucide icon="TrendingUp" class="w-4 h-4" />
                             </div>
                         </div>
                     </div>

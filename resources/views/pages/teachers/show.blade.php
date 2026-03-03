@@ -103,13 +103,13 @@
                                 </div>
                             </div>
                             <div class="ms-auto">
-                                <span class="px-3 py-1 rounded-full text-sm font-medium 
+                                <span class="px-3 py-1 rounded-full text-sm font-medium
                                     {{ $teacher->is_active ? 'bg-success/20 text-success' : 'bg-warning/20 text-warning' }}">
                                     {{ $teacher->is_active ? __('global.active') : __('global.inactive') }}
                                 </span>
                             </div>
                         </div>
-                        
+
                         <div class="mt-6 space-y-3">
                             <div class="flex items-center text-sm">
                                 <x-base.lucide icon="Phone" class="w-4 h-4 me-2 text-slate-500" />
@@ -124,7 +124,7 @@
                                 <span>{{ $teacher->address ?? __('global.not_provided') }}</span>
                             </div>
                         </div>
-                        
+
                         <div class="mt-5 pt-4 border-t">
                             <div class="grid grid-cols-3 gap-2">
                                 <div class="text-center p-2 bg-blue-50 rounded">
@@ -161,7 +161,7 @@
                             </div>
                             <div class="flex justify-between">
                                 <span class="text-slate-500">{{ __('global.hire_date') }}:</span>
-                                <span class="font-medium">{{ $teacher->hire_date ? $teacher->hire_date->format('M d, Y') : 'Not specified' }}</span>
+                                <span class="font-medium">{{ $teacher->hire_date ? (is_object($teacher->hire_date) && method_exists($teacher->hire_date, 'format') ? $teacher->hire_date->format('M d, Y') : date('M d, Y', strtotime($teacher->hire_date))) : 'Not specified' }}</span>
                             </div>
                         </div>
                     </div>
@@ -183,7 +183,7 @@
                                                 <div class="font-medium text-sm">{{ $class->name }}</div>
                                                 <div class="text-xs text-slate-500">{{ $class->age_group ?? 'Not specified' }}</div>
                                             </div>
-                                            <span class="text-xs px-2 py-1 rounded 
+                                            <span class="text-xs px-2 py-1 rounded
                                                 {{ $class->is_active ? 'bg-success/20 text-success' : 'bg-warning/20 text-warning' }}">
                                                 {{ $class->is_active ? __('global.active') : __('global.inactive') }}
                                             </span>
@@ -197,7 +197,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="col-span-12 md:col-span-6">
                             <div class="box p-5">
                                 <div class="text-base font-medium mb-3">{{ __('global.recent_activities') }}</div>
@@ -207,10 +207,10 @@
                                             <div class="flex-1">
                                                 <div class="font-medium text-sm">{{ $activity->title ?? $activity->name }}</div>
                                                 <div class="text-xs text-slate-500">
-                                                    {{ $activity->scheduled_date ? $activity->scheduled_date->format('M d, Y') : 'Not scheduled' }}
+                                                    {{ $activity->scheduled_date ? (is_object($activity->scheduled_date) && method_exists($activity->scheduled_date, 'format') ? $activity->scheduled_date->format('M d, Y') : date('M d, Y', strtotime($activity->scheduled_date))) : 'Not scheduled' }}
                                                 </div>
                                             </div>
-                                            <span class="text-xs px-2 py-1 rounded 
+                                            <span class="text-xs px-2 py-1 rounded
                                                 {{ $activity->is_active ? 'bg-success/20 text-success' : 'bg-warning/20 text-warning' }}">
                                                 {{ $activity->is_active ? __('global.active') : __('global.inactive') }}
                                             </span>
@@ -258,7 +258,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="intro-y col-span-12 lg:col-span-6">
                     <div class="box p-5">
                         <div class="text-lg font-medium mb-4 flex items-center">
@@ -268,7 +268,7 @@
                         <div class="space-y-4">
                             <div class="flex justify-between py-2 border-b">
                                 <span class="text-slate-500">{{ __('global.status') }}:</span>
-                                <span class="font-medium px-2 py-1 rounded text-sm 
+                                <span class="font-medium px-2 py-1 rounded text-sm
                                     {{ $teacher->is_active ? 'bg-success/20 text-success' : 'bg-warning/20 text-warning' }}">
                                     {{ $teacher->is_active ? __('global.active') : __('global.inactive') }}
                                 </span>
@@ -291,7 +291,7 @@
                             </div>
                             <div class="flex justify-between py-2">
                                 <span class="text-slate-500">{{ __('global.last_updated') }}:</span>
-                                <span class="font-medium">{{ $teacher->updated_at->format('M d, Y H:i') }}</span>
+                                <span class="font-medium">{{ $teacher->updated_at ? (is_object($teacher->updated_at) && method_exists($teacher->updated_at, 'format') ? $teacher->updated_at->format('M d, Y H:i') : date('M d, Y H:i', strtotime($teacher->updated_at))) : '' }}</span>
                             </div>
                         </div>
                     </div>
@@ -328,7 +328,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="intro-y col-span-12 lg:col-span-6">
                     <div class="box p-5">
                         <div class="text-lg font-medium mb-4 flex items-center">
@@ -338,7 +338,7 @@
                         <div class="space-y-4">
                             <div class="flex justify-between py-2 border-b">
                                 <span class="text-slate-500">{{ __('global.hire_date') }}:</span>
-                                <span class="font-medium">{{ $teacher->hire_date ? $teacher->hire_date->format('F j, Y') : __('global.not_specified') }}</span>
+                                <span class="font-medium">{{ $teacher->hire_date ? (is_object($teacher->hire_date) && method_exists($teacher->hire_date, 'format') ? $teacher->hire_date->format('F j, Y') : date('F j, Y', strtotime($teacher->hire_date))) : __('global.not_specified') }}</span>
                             </div>
                             <div class="flex justify-between py-2 border-b">
                                 <span class="text-slate-500">{{ __('global.years_of_service') }}:</span>
@@ -368,7 +368,7 @@
                                 <div class="border rounded-lg p-4 hover:shadow-md transition-shadow">
                                     <div class="flex items-start justify-between mb-3">
                                         <h3 class="font-medium text-lg">{{ $class->name }}</h3>
-                                        <span class="px-2 py-1 rounded text-xs 
+                                        <span class="px-2 py-1 rounded text-xs
                                             {{ $class->is_active ? 'bg-success/20 text-success' : 'bg-warning/20 text-warning' }}">
                                             {{ $class->is_active ? __('global.active') : __('global.inactive') }}
                                         </span>
@@ -441,7 +441,7 @@
                                 <div class="border rounded-lg p-4 hover:shadow-md transition-shadow">
                                     <div class="flex items-start justify-between mb-3">
                                         <h3 class="font-medium text-lg">{{ $activity->title ?? $activity->name }}</h3>
-                                        <span class="px-2 py-1 rounded text-xs 
+                                        <span class="px-2 py-1 rounded text-xs
                                             {{ $activity->is_active ? 'bg-success/20 text-success' : 'bg-warning/20 text-warning' }}">
                                             {{ $activity->is_active ? __('global.active') : __('global.inactive') }}
                                         </span>
@@ -453,12 +453,12 @@
                                         </div>
                                         <div class="flex items-center">
                                             <x-base.lucide icon="Calendar" class="w-4 h-4 me-2" />
-                                            {{ $activity->scheduled_date ? $activity->scheduled_date->format('M d, Y') : 'Not scheduled' }}
+                                            {{ $activity->scheduled_date ? (is_object($activity->scheduled_date) && method_exists($activity->scheduled_date, 'format') ? $activity->scheduled_date->format('M d, Y') : date('M d, Y', strtotime($activity->scheduled_date))) : 'Not scheduled' }}
                                         </div>
                                         <div class="flex items-center">
                                             <x-base.lucide icon="Clock" class="w-4 h-4 me-2" />
-                                            {{ $activity->start_time ? $activity->start_time->format('H:i') : '--' }} - 
-                                            {{ $activity->end_time ? $activity->end_time->format('H:i') : '--' }}
+                                            {{ $activity->start_time ? (is_object($activity->start_time) && method_exists($activity->start_time, 'format') ? $activity->start_time->format('H:i') : date('H:i', strtotime($activity->start_time))) : '--' }} -
+                                            {{ $activity->end_time ? (is_object($activity->end_time) && method_exists($activity->end_time, 'format') ? $activity->end_time->format('H:i') : date('H:i', strtotime($activity->end_time))) : '--' }}
                                         </div>
                                         <div class="flex items-center">
                                             <x-base.lucide icon="MapPin" class="w-4 h-4 me-2" />
@@ -510,7 +510,7 @@
                                 <div class="border rounded-lg p-4 hover:shadow-md transition-shadow">
                                     <div class="flex items-start justify-between mb-3">
                                         <h3 class="font-medium text-lg">{{ $event->title ?? $event->name }}</h3>
-                                        <span class="px-2 py-1 rounded text-xs 
+                                        <span class="px-2 py-1 rounded text-xs
                                             {{ $event->status === 'active' ? 'bg-success/20 text-success' : 'bg-warning/20 text-warning' }}">
                                             {{ ucfirst($event->status ?? 'active') }}
                                         </span>
@@ -522,12 +522,12 @@
                                         </div>
                                         <div class="flex items-center">
                                             <x-base.lucide icon="Calendar" class="w-4 h-4 me-2" />
-                                            {{ $event->start_datetime ? $event->start_datetime->format('M d, Y H:i') : 'Not scheduled' }}
+                                            {{ $event->start_datetime ? (is_object($event->start_datetime) && method_exists($event->start_datetime, 'format') ? $event->start_datetime->format('M d, Y H:i') : date('M d, Y H:i', strtotime($event->start_datetime))) : 'Not scheduled' }}
                                         </div>
                                         @if($event->end_datetime)
                                             <div class="flex items-center">
                                                 <x-base.lucide icon="Calendar" class="w-4 h-4 me-2" />
-                                                {{ __('global.ends') }}: {{ $event->end_datetime->format('M d, Y H:i') }}
+                                                {{ __('global.ends') }}: {{ $event->end_datetime ? (is_object($event->end_datetime) && method_exists($event->end_datetime, 'format') ? $event->end_datetime->format('M d, Y H:i') : date('M d, Y H:i', strtotime($event->end_datetime))) : '' }}
                                             </div>
                                         @endif
                                         <div class="flex items-center">
@@ -584,7 +584,7 @@
                                 <div class="border rounded-lg p-4 hover:shadow-md transition-shadow">
                                     <div class="flex items-start justify-between mb-3">
                                         <h3 class="font-medium text-lg">{{ $curriculum->name }}</h3>
-                                        <span class="px-2 py-1 rounded text-xs 
+                                        <span class="px-2 py-1 rounded text-xs
                                             {{ $curriculum->is_active ? 'bg-success/20 text-success' : 'bg-warning/20 text-warning' }}">
                                             {{ $curriculum->is_active ? __('global.active') : __('global.inactive') }}
                                         </span>
@@ -661,7 +661,7 @@
                                                 <div class="text-xs text-slate-500">{{ $child->age }} {{ __('global.years_old') }}</div>
                                             </div>
                                         </div>
-                                        <span class="px-2 py-1 rounded text-xs 
+                                        <span class="px-2 py-1 rounded text-xs
                                             {{ $child->enrollment_status === 'active' ? 'bg-success/20 text-success' : 'bg-warning/20 text-warning' }}">
                                             {{ ucfirst($child->enrollment_status) }}
                                         </span>
@@ -681,7 +681,7 @@
                                         </div>
                                         <div class="flex items-center">
                                             <x-base.lucide icon="Cake" class="w-4 h-4 me-2" />
-                                            {{ $child->dob->format('M d, Y') }}
+                                            {{ $child->dob ? (is_object($child->dob) && method_exists($child->dob, 'format') ? $child->dob->format('M d, Y') : date('M d, Y', strtotime($child->dob))) : 'Unknown' }}
                                         </div>
                                     </div>
                                     <div class="mt-4 pt-3 border-t flex justify-between items-center">
@@ -710,7 +710,7 @@
                 </div>
             </div>
         </div>
-        
+
         <!-- User Account Tab -->
         <div id="user-account" class="tab-content">
             <div class="grid grid-cols-12 gap-6">
@@ -757,7 +757,7 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div class="border rounded-lg p-4">
                                 <h3 class="font-medium text-lg mb-3">{{ __('global.roles_and_permissions') }}</h3>
                                 <div class="space-y-3">
@@ -773,7 +773,7 @@
                                             @endforelse
                                         </div>
                                     </div>
-                                    
+
                                     <div>
                                         <div class="font-medium mb-2">{{ __('global.permissions') }}</div>
                                         <div class="flex flex-wrap gap-1 max-h-32 overflow-y-auto">
@@ -788,7 +788,7 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div class="border rounded-lg p-4">
                                 <h3 class="font-medium text-lg mb-3">{{ __('global.related_data') }}</h3>
                                 <div class="space-y-2">
@@ -810,7 +810,7 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div class="border rounded-lg p-4">
                                 <h3 class="font-medium text-lg mb-3">{{ __('global.actions') }}</h3>
                                 <div class="space-y-2">
@@ -839,15 +839,15 @@
         document.addEventListener('DOMContentLoaded', function() {
             const tabButtons = document.querySelectorAll('.tab-button');
             const tabContents = document.querySelectorAll('.tab-content');
-            
+
             tabButtons.forEach(button => {
                 button.addEventListener('click', function() {
                     const tabId = this.getAttribute('data-tab');
-                    
+
                     // Remove active class from all buttons and contents
                     tabButtons.forEach(btn => btn.classList.remove('active'));
                     tabContents.forEach(content => content.classList.remove('active'));
-                    
+
                     // Add active class to clicked button and corresponding content
                     this.classList.add('active');
                     document.getElementById(tabId).classList.add('active');

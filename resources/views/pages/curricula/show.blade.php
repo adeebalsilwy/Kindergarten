@@ -85,13 +85,13 @@
                                 </div>
                             </div>
                             <div class="ms-auto">
-                                <span class="px-3 py-1 rounded-full text-sm font-medium 
+                                <span class="px-3 py-1 rounded-full text-sm font-medium
                                     {{ $curriculum->is_active ? 'bg-success/20 text-success' : 'bg-warning/20 text-warning' }}">
                                     {{ $curriculum->is_active ? __('global.active') : __('global.inactive') }}
                                 </span>
                             </div>
                         </div>
-                        
+
                         <div class="mt-4 space-y-3">
                             <div class="flex items-center text-sm">
                                 <x-base.lucide icon="Book" class="w-4 h-4 me-2 text-slate-500" />
@@ -106,7 +106,7 @@
                                 <span>{{ $curriculum->activity_count }} {{ __('global.activities') }}</span>
                             </div>
                         </div>
-                        
+
                         <div class="mt-5">
                             <div class="text-sm text-slate-500 mb-2">{{ __('global.completion_status') }}</div>
                             @php
@@ -130,7 +130,7 @@
                                 <div class="text-xs text-slate-500">{{ __('global.assigned_classes') }}</div>
                             </div>
                             <div class="text-center p-2 bg-purple-50 rounded">
-                                <div class="text-lg font-bold text-purple-600">{{ $curriculum->created_at->format('Y') }}</div>
+                                <div class="text-lg font-bold text-purple-600">{{ is_object($curriculum->created_at) && method_exists($curriculum->created_at, 'format') ? $curriculum->created_at->format('Y') : date('Y', strtotime($curriculum->created_at)) }}</div>
                                 <div class="text-xs text-slate-500">{{ __('global.year_created') }}</div>
                             </div>
                             <div class="text-center p-2 bg-yellow-50 rounded">
@@ -152,7 +152,7 @@
                                 <p class="text-slate-500 italic">{{ __('global.no_description_provided') }}</p>
                             @endif
                         </div>
-                        
+
                         @if($curriculum->learning_outcomes)
                             <div class="mt-5">
                                 <div class="text-lg font-medium mb-4">{{ __('global.learning_outcomes') }}</div>
@@ -163,7 +163,7 @@
                                 </ul>
                             </div>
                         @endif
-                        
+
                         @if($curriculum->objectives)
                             <div class="mt-5">
                                 <div class="text-lg font-medium mb-4">{{ __('global.objectives') }}</div>
@@ -207,7 +207,7 @@
                             </div>
                             <div class="flex justify-between py-2">
                                 <span class="text-slate-500">{{ __('global.status') }}:</span>
-                                <span class="font-medium px-2 py-1 rounded text-sm 
+                                <span class="font-medium px-2 py-1 rounded text-sm
                                     {{ $curriculum->is_active ? 'bg-success/20 text-success' : 'bg-warning/20 text-warning' }}">
                                     {{ $curriculum->is_active ? __('global.active') : __('global.inactive') }}
                                 </span>
@@ -215,7 +215,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="intro-y col-span-12 lg:col-span-6">
                     <div class="box p-5 curriculum-card">
                         <div class="text-lg font-medium mb-4 flex items-center">
@@ -237,7 +237,7 @@
                             </div>
                             <div class="flex justify-between py-2 border-b">
                                 <span class="text-slate-500">{{ __('global.published_at') }}:</span>
-                                <span class="font-medium">{{ $curriculum->published_at ? $curriculum->published_at->format('F j, Y') : __('global.not_published') }}</span>
+                                <span class="font-medium">{{ $curriculum->published_at ? (is_object($curriculum->published_at) && method_exists($curriculum->published_at, 'format') ? $curriculum->published_at->format('F j, Y') : date('F j, Y', strtotime($curriculum->published_at))) : __('global.not_published') }}</span>
                             </div>
                             <div class="flex justify-between py-2">
                                 <span class="text-slate-500">{{ __('global.created_by') }}:</span>
@@ -247,7 +247,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="grid grid-cols-12 gap-6 curriculum-detail-section">
                 <div class="intro-y col-span-12 lg:col-span-6">
                     <div class="box p-5 curriculum-card">
@@ -289,7 +289,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="intro-y col-span-12 lg:col-span-6">
                     <div class="box p-5 curriculum-card">
                         <div class="text-lg font-medium mb-4 flex items-center">
@@ -424,7 +424,7 @@
                                 </div>
                             </div>
                         @endif
-                        
+
                         <!-- Relationship materials -->
                         @if($curriculum->materials->count() > 0)
                             <div>
@@ -446,10 +446,10 @@
                                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ $material->name }}</td>
                                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 capitalize">{{ $material->type }}</td>
                                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium 
-                                                              {{ $material->status === 'available' ? 'bg-green-100 text-green-800' : 
-                                                                 ($material->status === 'in-use' ? 'bg-yellow-100 text-yellow-800' : 
-                                                                 ($material->status === 'maintenance' ? 'bg-orange-100 text-orange-800' : 
+                                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
+                                                              {{ $material->status === 'available' ? 'bg-green-100 text-green-800' :
+                                                                 ($material->status === 'in-use' ? 'bg-yellow-100 text-yellow-800' :
+                                                                 ($material->status === 'maintenance' ? 'bg-orange-100 text-orange-800' :
                                                                  'bg-red-100 text-red-800')) }}">
                                                             {{ ucfirst(str_replace('-', ' ', $material->status)) }}
                                                         </span>
@@ -472,7 +472,7 @@
                         @endif
                     </div>
                 </div>
-                
+
                 <div class="intro-y col-span-12 lg:col-span-6">
                     <div class="box p-5 curriculum-card">
                         <div class="text-lg font-medium mb-4 flex items-center">
@@ -498,7 +498,7 @@
                         @endif
                     </div>
                 </div>
-                
+
                 @if($curriculum->topics)
                 <div class="intro-y col-span-12">
                     <div class="box p-5 curriculum-card">
@@ -534,7 +534,7 @@
                                 <div class="border rounded-lg p-4 hover:shadow-md transition-shadow curriculum-card">
                                     <div class="flex items-start justify-between mb-3">
                                         <h3 class="font-medium text-lg">{{ $activity->title ?? $activity->name }}</h3>
-                                        <span class="px-2 py-1 rounded text-xs 
+                                        <span class="px-2 py-1 rounded text-xs
                                             {{ $activity->is_active ? 'bg-success/20 text-success' : 'bg-warning/20 text-warning' }}">
                                             {{ $activity->is_active ? __('global.active') : __('global.inactive') }}
                                         </span>
@@ -550,12 +550,12 @@
                                         </div>
                                         <div class="flex items-center">
                                             <x-base.lucide icon="Calendar" class="w-4 h-4 me-2" />
-                                            {{ $activity->scheduled_date ? $activity->scheduled_date->format('M d, Y') : 'Not scheduled' }}
+                                            {{ $activity->scheduled_date ? (is_object($activity->scheduled_date) && method_exists($activity->scheduled_date, 'format') ? $activity->scheduled_date->format('M d, Y') : date('M d, Y', strtotime($activity->scheduled_date))) : 'Not scheduled' }}
                                         </div>
                                         <div class="flex items-center">
                                             <x-base.lucide icon="Clock" class="w-4 h-4 me-2" />
-                                            {{ $activity->start_time ? $activity->start_time->format('H:i') : '--' }} - 
-                                            {{ $activity->end_time ? $activity->end_time->format('H:i') : '--' }}
+                                            {{ $activity->start_time ? (is_object($activity->start_time) && method_exists($activity->start_time, 'format') ? $activity->start_time->format('H:i') : date('H:i', strtotime($activity->start_time))) : '--' }} -
+                                            {{ $activity->end_time ? (is_object($activity->end_time) && method_exists($activity->end_time, 'format') ? $activity->end_time->format('H:i') : date('H:i', strtotime($activity->end_time))) : '--' }}
                                         </div>
                                         <div class="flex items-center">
                                             <x-base.lucide icon="MapPin" class="w-4 h-4 me-2" />
@@ -607,7 +607,7 @@
                                 <div class="border rounded-lg p-4 hover:shadow-md transition-shadow curriculum-card">
                                     <div class="flex items-start justify-between mb-3">
                                         <h3 class="font-medium text-lg">{{ $class->name }}</h3>
-                                        <span class="px-2 py-1 rounded text-xs 
+                                        <span class="px-2 py-1 rounded text-xs
                                             {{ $class->is_active ? 'bg-success/20 text-success' : 'bg-warning/20 text-warning' }}">
                                             {{ $class->is_active ? __('global.active') : __('global.inactive') }}
                                         </span>
@@ -694,7 +694,7 @@
                                     <div class="text-slate-500 text-sm mt-1">
                                         {{ $curriculum->teacher->qualification ?? 'Not specified' }}
                                     </div>
-                                    
+
                                     <div class="mt-4 space-y-2">
                                         <div class="flex items-center text-sm">
                                             <x-base.lucide icon="Phone" class="w-4 h-4 me-2 text-slate-500" />
@@ -709,7 +709,7 @@
                                             <span>{{ $curriculum->teacher->experience_years ?? 0 }} {{ __('global.years_experience') }}</span>
                                         </div>
                                     </div>
-                                    
+
                                     <div class="mt-4 pt-4 border-t">
                                         <div class="grid grid-cols-3 gap-2">
                                             <div class="text-center p-2 bg-blue-50 rounded">
@@ -726,7 +726,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    
+
                                     <div class="mt-4">
                                         <a href="{{ route('teachers.show', $curriculum->teacher->id) }}" class="text-primary hover:underline">
                                             {{ __('global.view_teacher_profile') }}
@@ -752,16 +752,16 @@
         document.addEventListener('DOMContentLoaded', function() {
             const tabButtons = document.querySelectorAll('.tab-button');
             const tabContents = document.querySelectorAll('.tab-content');
-            
+
             tabButtons.forEach(button => {
                 button.addEventListener('click', function(e) {
                     e.preventDefault();
                     const tabId = this.getAttribute('data-tab');
-                    
+
                     // Remove active class from all buttons and contents
                     tabButtons.forEach(btn => btn.classList.remove('active'));
                     tabContents.forEach(content => content.classList.remove('active'));
-                    
+
                     // Add active class to clicked button and corresponding content
                     this.classList.add('active');
                     document.getElementById(tabId).classList.add('active');

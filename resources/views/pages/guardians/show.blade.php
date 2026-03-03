@@ -87,13 +87,13 @@
                                 </div>
                             </div>
                             <div class="ms-auto">
-                                <span class="px-3 py-1 rounded-full text-sm font-medium 
+                                <span class="px-3 py-1 rounded-full text-sm font-medium
                                     {{ $parents->is_active ? 'bg-success/20 text-success' : 'bg-warning/20 text-warning' }}">
                                     {{ $parents->is_active ? __('global.active') : __('global.inactive') }}
                                 </span>
                             </div>
                         </div>
-                        
+
                         <div class="mt-6 space-y-3">
                             <div class="flex items-center text-sm">
                                 <x-base.lucide icon="Phone" class="w-4 h-4 me-2 text-slate-500" />
@@ -108,7 +108,7 @@
                                 <span>{{ $parents->address ?? __('global.not_provided') }}</span>
                             </div>
                         </div>
-                        
+
                         <div class="mt-5 pt-4 border-t">
                             <div class="grid grid-cols-3 gap-2">
                                 <div class="text-center p-2 bg-blue-50 rounded">
@@ -180,7 +180,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="col-span-12 md:col-span-6">
                             <div class="box p-5">
                                 <div class="text-base font-medium mb-3">{{ __('global.secondary_children') }}</div>
@@ -245,7 +245,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="intro-y col-span-12 lg:col-span-6">
                     <div class="box p-5">
                         <div class="text-lg font-medium mb-4 flex items-center">
@@ -255,7 +255,7 @@
                         <div class="space-y-4">
                             <div class="flex justify-between py-2 border-b">
                                 <span class="text-slate-500">{{ __('global.status') }}:</span>
-                                <span class="font-medium px-2 py-1 rounded text-sm 
+                                <span class="font-medium px-2 py-1 rounded text-sm
                                     {{ $parents->is_active ? 'bg-success/20 text-success' : 'bg-warning/20 text-warning' }}">
                                     {{ $parents->is_active ? __('global.active') : __('global.inactive') }}
                                 </span>
@@ -331,7 +331,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="intro-y col-span-12 lg:col-span-6">
                     <div class="box p-5">
                         <div class="text-lg font-medium mb-4 flex items-center">
@@ -439,8 +439,14 @@
                                         </a>
                                     </div>
                                 </div>
+                            @empty
+                                <div class="col-span-full text-center py-12">
+                                    <x-base.lucide icon="Users" class="w-16 h-16 mx-auto mb-4 text-slate-300" />
+                                    <h3 class="text-lg font-medium text-slate-500">{{ __('global.no_primary_children') }}</h3>
+                                    <p class="text-slate-400 mt-2">{{ __('global.this_guardian_has_no_primary_children') }}</p>
+                                </div>
                             @endforelse
-                            
+
                             @forelse($parents->secondChildren as $child)
                                 <div class="border rounded-lg p-4 hover:shadow-md transition-shadow">
                                     <div class="flex items-start justify-between mb-3">
@@ -490,13 +496,11 @@
                                     </div>
                                 </div>
                             @empty
-                                @if(count($parents->children) == 0 && count($parents->secondChildren) == 0)
-                                    <div class="col-span-full text-center py-12">
-                                        <x-base.lucide icon="Users" class="w-16 h-16 mx-auto mb-4 text-slate-300" />
-                                        <h3 class="text-lg font-medium text-slate-500">{{ __('global.no_children_associated') }}</h3>
-                                        <p class="text-slate-400 mt-2">{{ __('global.this_guardian_has_no_children_associated') }}</p>
-                                    </div>
-                                @endif
+                                <div class="col-span-full text-center py-12">
+                                    <x-base.lucide icon="Users" class="w-16 h-16 mx-auto mb-4 text-slate-300" />
+                                    <h3 class="text-lg font-medium text-slate-500">{{ __('global.no_secondary_children') }}</h3>
+                                    <p class="text-slate-400 mt-2">{{ __('global.this_guardian_has_no_secondary_children') }}</p>
+                                </div>
                             @endforelse
                         </div>
                     </div>
@@ -651,16 +655,16 @@
         document.addEventListener('DOMContentLoaded', function() {
             const tabButtons = document.querySelectorAll('.tab-button');
             const tabContents = document.querySelectorAll('.tab-content');
-            
+
             tabButtons.forEach(button => {
                 button.addEventListener('click', function(e) {
                     e.preventDefault();
                     const tabId = this.getAttribute('data-tab');
-                    
+
                     // Remove active class from all buttons and contents
                     tabButtons.forEach(btn => btn.classList.remove('active'));
                     tabContents.forEach(content => content.classList.remove('active'));
-                    
+
                     // Add active class to clicked button and corresponding content
                     this.classList.add('active');
                     document.getElementById(tabId).classList.add('active');

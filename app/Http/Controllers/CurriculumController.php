@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use OmarAlalwi\Gpdf\Facade\Gpdf;
-
 use App\Http\Requests\StoreCurriculumRequest;
 use App\Http\Requests\UpdateCurriculumRequest;
 use App\Services\CurriculumService;
@@ -62,13 +60,13 @@ class CurriculumController extends Controller
         // Apply sorting
         $sortBy = $request->get('sort_by', 'created_at');
         $sortDirection = $request->get('sort_direction', 'desc');
-        
+
         // Validate sort field to prevent injection
         $allowedSortFields = ['created_at', 'name', 'grade_level', 'subject_area'];
         if (!in_array($sortBy, $allowedSortFields)) {
             $sortBy = 'created_at';
         }
-        
+
         $query->orderBy($sortBy, $sortDirection);
 
         // Handle export functionality
@@ -105,10 +103,9 @@ class CurriculumController extends Controller
     protected function exportToPdf($data)
     {
         $html = view('pages.curricula.export-pdf', ['data' => $data])->render();
-        
-        return response()->streamDownload(function () use ($html) {
-            echo Gpdf::generate($html);
-        }, 'Curriculum_export_'.date('Y-m-d_H-i-s').'.pdf');
+
+        $pdf = Pdf::loadView('pages.curricula.export-pdf', ['data' => $data]);
+        return $pdf->download('Curriculum_export_'.date('Y-m-d_H-i-s').'.pdf');
     }
 
     /**
@@ -225,12 +222,12 @@ class CurriculumController extends Controller
         // Apply sorting
         $sortBy = $request->get('sort_by', 'created_at');
         $sortDirection = $request->get('sort_direction', 'desc');
-        
+
         $allowedSortFields = ['created_at', 'name', 'grade_level', 'subject_area'];
         if (!in_array($sortBy, $allowedSortFields)) {
             $sortBy = 'created_at';
         }
-        
+
         $query->orderBy($sortBy, $sortDirection);
 
         $data = $query->get();
@@ -277,12 +274,12 @@ class CurriculumController extends Controller
         // Apply sorting
         $sortBy = $request->get('sort_by', 'created_at');
         $sortDirection = $request->get('sort_direction', 'desc');
-        
+
         $allowedSortFields = ['created_at', 'name', 'grade_level', 'subject_area'];
         if (!in_array($sortBy, $allowedSortFields)) {
             $sortBy = 'created_at';
         }
-        
+
         $query->orderBy($sortBy, $sortDirection);
 
         $data = $query->get();
@@ -292,7 +289,7 @@ class CurriculumController extends Controller
     public function create()
     {
         $this->authorize('create_curricula');
-        
+
         // Get all materials for the form
         $materials = \App\Models\Material::all();
 
@@ -302,16 +299,16 @@ class CurriculumController extends Controller
     public function store(StoreCurriculumRequest $request)
     {
         $this->authorize('create_curricula');
-        
+
         $validatedData = $request->validated();
-        
+
         // Extract connected materials from validated data
         $connectedMaterials = $validatedData['connected_materials'] ?? [];
         unset($validatedData['connected_materials']);
-        
+
         // Create the curriculum
         $curriculum = $this->service->create($validatedData);
-        
+
         // Attach connected materials if any
         if (!empty($connectedMaterials)) {
             $curriculum->materials()->attach($connectedMaterials);
@@ -324,7 +321,7 @@ class CurriculumController extends Controller
     {
         $this->authorize('view_curricula');
         $curriculum = $this->service->find($id);
-        
+
         // Load all related data for the enhanced show page
         $curriculum->load([
             'activities',
@@ -339,7 +336,7 @@ class CurriculumController extends Controller
     {
         $this->authorize('edit_curricula');
         $curriculum = $this->service->find($id);
-        
+
         // Get all materials for the form
         $materials = \App\Models\Material::all();
 
@@ -349,16 +346,16 @@ class CurriculumController extends Controller
     public function update(UpdateCurriculumRequest $request, $id)
     {
         $this->authorize('edit_curricula');
-        
+
         $validatedData = $request->validated();
-        
+
         // Extract connected materials from validated data
         $connectedMaterials = $validatedData['connected_materials'] ?? [];
         unset($validatedData['connected_materials']);
-        
+
         // Update the curriculum
         $this->service->update($id, $validatedData);
-        
+
         // Update the materials relationship using the model directly
         $curriculum = \App\Models\Curriculum::findOrFail($id);
         $curriculum->materials()->sync($connectedMaterials);

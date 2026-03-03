@@ -14,7 +14,7 @@
     <div class="intro-y flex items-center mt-8">
         <h2 class="text-lg font-medium me-auto">{{ __('Curriculum.edit') }}</h2>
     </div>
-    
+
     <!-- Tab Navigation -->
     <div class="intro-y mt-5">
         <div class="border-b border-slate-200">
@@ -42,14 +42,14 @@
             </nav>
         </div>
     </div>
-    
+
     <div class="grid grid-cols-12 gap-6 mt-5">
         <div class="intro-y col-span-12 lg:col-span-12">
             <div class="intro-y box p-5">
                 <form action="{{ route('curricula.update', $curriculum->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
-                    
+
                     <!-- Basic Info Tab -->
                     <div id="basic-info" class="tab-content active">
                         <div class="mb-6">
@@ -81,7 +81,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <!-- Curriculum Details Tab -->
                     <div id="curriculum-details" class="tab-content">
                         <div class="mb-6">
@@ -101,12 +101,12 @@
                             </div>
                             <div class="col-span-12">
                                 <x-base.form-label>{{ __('curricula.fields.topics') }}</x-base.form-label>
-                                <x-base.form-textarea name="topics" rows="4" class="resize-none mt-2" placeholder="{{ __('global.enter_topics_separated_by_commas') }}">{{ old('topics', $curriculum->topics ?? '') }}</x-base.form-textarea>
+                                <x-base.form-textarea name="topics" rows="4" class="resize-none mt-2" placeholder="{{ __('global.enter_topics_separated_by_commas') }}">{{ old('topics', is_array($curriculum->topics) ? implode(', ', $curriculum->topics) : ($curriculum->topics ?? '')) }}</x-base.form-textarea>
                                 <small class="text-slate-500">{{ __('global.separate_with_commas') }}</small>
                             </div>
                         </div>
                     </div>
-                    
+
                     <!-- Learning Outcomes Tab -->
                     <div id="learning-outcomes" class="tab-content">
                         <div class="mb-6">
@@ -118,17 +118,17 @@
                         <div class="grid grid-cols-12 gap-4">
                             <div class="col-span-12">
                                 <x-base.form-label>{{ __('curricula.fields.objectives') }}</x-base.form-label>
-                                <x-base.form-textarea name="objectives" rows="4" class="resize-none mt-2" placeholder="{{ __('global.enter_objectives_separated_by_commas') }}">{{ old('objectives', $curriculum->objectives ?? '') }}</x-base.form-textarea>
+                                <x-base.form-textarea name="objectives" rows="4" class="resize-none mt-2" placeholder="{{ __('global.enter_objectives_separated_by_commas') }}">{{ old('objectives', is_array($curriculum->objectives) ? implode(', ', $curriculum->objectives) : ($curriculum->objectives ?? '')) }}</x-base.form-textarea>
                                 <small class="text-slate-500">{{ __('global.separate_with_commas') }}</small>
                             </div>
                             <div class="col-span-12">
                                 <x-base.form-label>{{ __('curricula.fields.learning_outcomes') }}</x-base.form-label>
-                                <x-base.form-textarea name="learning_outcomes" rows="4" class="resize-none mt-2" placeholder="{{ __('global.enter_learning_outcomes_separated_by_commas') }}">{{ old('learning_outcomes', $curriculum->learning_outcomes ?? '') }}</x-base.form-textarea>
+                                <x-base.form-textarea name="learning_outcomes" rows="4" class="resize-none mt-2" placeholder="{{ __('global.enter_learning_outcomes_separated_by_commas') }}">{{ old('learning_outcomes', is_array($curriculum->learning_outcomes) ? implode(', ', $curriculum->learning_outcomes) : ($curriculum->learning_outcomes ?? '')) }}</x-base.form-textarea>
                                 <small class="text-slate-500">{{ __('global.separate_with_commas') }}</small>
                             </div>
                         </div>
                     </div>
-                    
+
                     <!-- Materials and Assessment Tab -->
                     <div id="materials-assessment" class="tab-content">
                         <div class="mb-6">
@@ -141,11 +141,11 @@
                             <div class="col-span-12 lg:col-span-6">
                                 <div class="mb-4">
                                     <x-base.form-label>{{ __('curricula.fields.materials_needed') }}</x-base.form-label>
-                                    <x-base.form-textarea name="materials_needed" rows="4" class="resize-none mt-2" placeholder="{{ __('global.enter_materials_separated_by_commas') }}">{{ old('materials_needed', $curriculum->materials_needed ?? '') }}</x-base.form-textarea>
+                                    <x-base.form-textarea name="materials_needed" rows="4" class="resize-none mt-2" placeholder="{{ __('global.enter_materials_separated_by_commas') }}">{{ old('materials_needed', is_array($curriculum->materials_needed) ? implode(', ', $curriculum->materials_needed) : ($curriculum->materials_needed ?? '')) }}</x-base.form-textarea>
                                     <small class="text-slate-500">{{ __('global.separate_with_commas') }}</small>
                                 </div>
                             </div>
-                            
+
                             <!-- Connected Materials Section -->
                             <div class="col-span-12 lg:col-span-6">
                                 <div class="mb-4">
@@ -156,7 +156,7 @@
                                     <div class="mt-2">
                                         <x-base.tom-select name="connected_materials[]" id="connected_materials" multiple>
                                             @foreach($materials as $material)
-                                                <option value="{{ $material->id }}" 
+                                                <option value="{{ $material->id }}"
                                                     {{ in_array($material->id, old('connected_materials', $curriculum->materials->pluck('id')->toArray())) ? 'selected' : '' }}
                                                     data-category="{{ $material->category }}"
                                                     data-type="{{ $material->type }}">
@@ -187,7 +187,7 @@
                                             {{ __('global.manage') }} {{ __('Materials.title') }}
                                         </x-base.button>
                                     </div>
-                                    
+
                                     <!-- Current connected materials preview -->
                                     @if($curriculum->materials->count() > 0)
                                     <div class="mt-4 p-3 bg-slate-50 rounded-lg dark:bg-slate-800">
@@ -208,15 +208,15 @@
                                     @endif
                                 </div>
                             </div>
-                            
+
                             <div class="col-span-12">
                                 <x-base.form-label>{{ __('curricula.fields.assessment_methods') }}</x-base.form-label>
-                                <x-base.form-textarea name="assessment_methods" rows="4" class="resize-none mt-2" placeholder="{{ __('global.enter_assessment_methods_separated_by_commas') }}">{{ old('assessment_methods', $curriculum->assessment_methods ?? '') }}</x-base.form-textarea>
+                                <x-base.form-textarea name="assessment_methods" rows="4" class="resize-none mt-2" placeholder="{{ __('global.enter_assessment_methods_separated_by_commas') }}">{{ old('assessment_methods', is_array($curriculum->assessment_methods) ? implode(', ', $curriculum->assessment_methods) : ($curriculum->assessment_methods ?? '')) }}</x-base.form-textarea>
                                 <small class="text-slate-500">{{ __('global.separate_with_commas') }}</small>
                             </div>
                         </div>
                     </div>
-                    
+
                     <!-- Settings Tab -->
                     <div id="settings" class="tab-content">
                         <div class="mb-6">
@@ -248,7 +248,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="flex justify-between mt-5">
                         <a href="{{ route('curricula.index') }}" class="btn btn-outline-secondary w-24 me-1">{{ __('global.cancel') }}</a>
                         <x-base.button type="submit" variant="primary" class="w-24">{{ __('global.update') }}</x-base.button>
@@ -262,16 +262,16 @@
         document.addEventListener('DOMContentLoaded', function() {
             const tabButtons = document.querySelectorAll('.tab-button');
             const tabContents = document.querySelectorAll('.tab-content');
-            
+
             tabButtons.forEach(button => {
                 button.addEventListener('click', function(e) {
                     e.preventDefault();
                     const tabId = this.getAttribute('data-tab');
-                    
+
                     // Remove active class from all buttons and contents
                     tabButtons.forEach(btn => btn.classList.remove('active'));
                     tabContents.forEach(content => content.classList.remove('active'));
-                    
+
                     // Add active class to clicked button and corresponding content
                     this.classList.add('active');
                     document.getElementById(tabId).classList.add('active');

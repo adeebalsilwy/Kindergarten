@@ -16,9 +16,9 @@
                 <div class="image-fit h-12 w-12">
                     <img
                         class="rounded-full"
-                        src="{{ Vite::asset('resources/images/profile-placeholder.jpg') }}"
+                        src="{{ asset('images/profile-placeholder.jpg') }}"
                         alt="User Profile"
-                        onerror="this.src='{{ Vite::asset('resources/images/avatar-default.png') }}';"
+                        onerror="this.src='{{ asset('images/avatar-default.png') }}';"
                     />
                 </div>
                 <div class="ms-4 me-auto">
@@ -122,7 +122,7 @@
                         </button>
                     </div>
                 @endif
-                
+
                 <div class="grid grid-cols-12 gap-4">
                     <div class="col-span-12 sm:col-span-6">
                         <div class="mb-3">
@@ -160,7 +160,7 @@
             </div>
         </div>
         <!-- END: Display Information -->
-        
+
         <!-- BEGIN: Security Information -->
         <div class="intro-y box mt-5">
             <div class="flex items-center border-b border-slate-200/60 p-5 dark:border-darkmode-400">

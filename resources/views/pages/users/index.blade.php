@@ -15,7 +15,7 @@
                 {{ __('User.add_new') }}
             </x-base.button>
             @endcan
-            
+
             @can('export_users')
             <div class="dropdown">
                 <x-base.button variant="outline-secondary" class="flex items-center">
@@ -61,7 +61,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="intro-y">
             <div class="report-box zoom-in">
                 <div class="box p-5 border border-info/20 bg-info/5">
@@ -78,8 +78,8 @@
                     </div>
                     <div class="text-2xl font-bold leading-8 mt-4">
                         @php
-                            $activeUsers = $users->filter(function($user) { 
-                                return $user->is_active; 
+                            $activeUsers = $users->filter(function($user) {
+                                return $user->is_active;
                             })->count();
                         @endphp
                         {{ $activeUsers }}
@@ -88,7 +88,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="intro-y">
             <div class="report-box zoom-in">
                 <div class="box p-5 border border-warning/20 bg-warning/5">
@@ -105,8 +105,8 @@
                     </div>
                     <div class="text-2xl font-bold leading-8 mt-4">
                         @php
-                            $verifiedUsers = $users->filter(function($user) { 
-                                return $user->email_verified_at !== null; 
+                            $verifiedUsers = $users->filter(function($user) {
+                                return $user->email_verified_at !== null;
                             })->count();
                         @endphp
                         {{ $verifiedUsers }}
@@ -115,7 +115,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="intro-y">
             <div class="report-box zoom-in">
                 <div class="box p-5 border border-success/20 bg-success/5">
@@ -132,8 +132,8 @@
                     </div>
                     <div class="text-2xl font-bold leading-8 mt-4">
                         @php
-                            $adminUsers = $users->filter(function($user) { 
-                                return $user->hasRole('Administrator'); 
+                            $adminUsers = $users->filter(function($user) {
+                                return $user->hasRole('Administrator');
                             })->count();
                         @endphp
                         {{ $adminUsers }}
@@ -244,7 +244,7 @@
                                     @endif
                                 </span>
                             </div>
-                            
+
                             <div class="flex justify-between text-xs">
                                 <span class="text-slate-600 dark:text-slate-300">{{ __('global.verification') }}:</span>
                                 @if($user->email_verified_at)
@@ -257,23 +257,23 @@
                                     </span>
                                 @endif
                             </div>
-                            
+
                             <div class="flex justify-between text-xs">
                                 <span class="text-slate-600 dark:text-slate-300">{{ __('global.last_login') }}:</span>
                                 <span class="font-medium">{{ $user->last_activity ? date('M d, Y H:i', $user->last_activity) : 'Never' }}</span>
                             </div>
-                            
+
                             <div class="flex justify-between text-xs">
                                 <span class="text-slate-600 dark:text-slate-300">{{ __('global.created') }}:</span>
                                 <span class="font-medium">{{ $user->created_at->format('M d, Y') }}</span>
                             </div>
-                            
+
                             <div class="flex justify-between text-xs">
                                 <span class="text-slate-600 dark:text-slate-300">{{ __('global.ip_address') }}:</span>
                                 <span class="font-medium">{{ $user->ip_address ?? '-' }}</span>
                             </div>
                         </div>
-                        
+
                         @if($user->roles->count() > 1)
                         <div class="mt-3">
                             <div class="text-xs text-slate-600 dark:text-slate-300 mb-1">{{ __('global.additional_roles') }}:</div>
@@ -302,13 +302,13 @@
                                 <x-base.lucide icon="Eye" class="w-3 h-3" />
                             </x-base.button>
                             @endcan
-                            
+
                             @can('edit_users')
                             <x-base.button variant="outline-primary" as="a" href="{{ route('users.edit', $user->id) }}" size="sm" class="px-2 py-1">
                                 <x-base.lucide icon="Pencil" class="w-3 h-3" />
                             </x-base.button>
                             @endcan
-                            
+
                             @can('delete_users')
                             <form action="{{ route('users.destroy', $user->id) }}" method="POST" onsubmit="return confirm('{{ __('global.confirm_delete_user') }}')" class="inline">
                                 @csrf
@@ -357,8 +357,8 @@
                     <div class="flex items-center">
                         <x-base.lucide icon="Database" class="w-8 h-8 text-primary" />
                         <div class="ms-auto">
-                            <div class="report-box__indicator bg-success"> 
-                                <x-base.lucide icon="TrendingUp" class="w-4 h-4" /> 
+                            <div class="report-box__indicator bg-success">
+                                <x-base.lucide icon="TrendingUp" class="w-4 h-4" />
                             </div>
                         </div>
                     </div>
@@ -366,14 +366,14 @@
                     <div class="text-base text-slate-500 mt-1">{{ __('global.total_records') }}</div>
                 </div>
             </div>
-            
+
             <div class="report-box zoom-in">
                 <div class="box p-5 border border-info/20 bg-info/5">
                     <div class="flex items-center">
                         <x-base.lucide icon="Activity" class="w-8 h-8 text-info" />
                         <div class="ms-auto">
-                            <div class="report-box__indicator bg-success"> 
-                                <x-base.lucide icon="TrendingUp" class="w-4 h-4" /> 
+                            <div class="report-box__indicator bg-success">
+                                <x-base.lucide icon="TrendingUp" class="w-4 h-4" />
                             </div>
                         </div>
                     </div>
@@ -388,14 +388,14 @@
                     <div class="text-base text-slate-500 mt-1">{{ __('global.added_this_week') }}</div>
                 </div>
             </div>
-            
+
             <div class="report-box zoom-in">
                 <div class="box p-5 border border-warning/20 bg-warning/5">
                     <div class="flex items-center">
                         <x-base.lucide icon="Calendar" class="w-8 h-8 text-warning" />
                         <div class="ms-auto">
-                            <div class="report-box__indicator bg-success"> 
-                                <x-base.lucide icon="TrendingUp" class="w-4 h-4" /> 
+                            <div class="report-box__indicator bg-success">
+                                <x-base.lucide icon="TrendingUp" class="w-4 h-4" />
                             </div>
                         </div>
                     </div>
@@ -410,14 +410,14 @@
                     <div class="text-base text-slate-500 mt-1">{{ __('global.added_today') }}</div>
                 </div>
             </div>
-            
+
             <div class="report-box zoom-in">
                 <div class="box p-5 border border-success/20 bg-success/5">
                     <div class="flex items-center">
                         <x-base.lucide icon="BarChart3" class="w-8 h-8 text-success" />
                         <div class="ms-auto">
-                            <div class="report-box__indicator bg-success"> 
-                                <x-base.lucide icon="TrendingUp" class="w-4 h-4" /> 
+                            <div class="report-box__indicator bg-success">
+                                <x-base.lucide icon="TrendingUp" class="w-4 h-4" />
                             </div>
                         </div>
                     </div>

@@ -34,7 +34,7 @@
         <div class="title">{{ __('Attendance.title') }}</div>
         <div>Date: {{ date('Y-m-d H:i:s') }}</div>
     </div>
-    
+
     <table>
         <thead>
             <tr>
@@ -57,8 +57,10 @@
                                     {{ $value ? __('global.yes') : __('global.no') }}
                                 @elseif(in_array($key, ['created_at', 'updated_at']) && $value)
                                     {{ \Carbon\Carbon::parse($value)->format('Y-m-d H:i:s') }}
+                                @elseif(is_array($value))
+                                    {{ implode(', ', $value) }}
                                 @else
-                                    {{ $value }}
+                                    {{ $value ?? '-' }}
                                 @endif
                             </td>
                         @endif

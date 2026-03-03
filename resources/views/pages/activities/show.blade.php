@@ -80,13 +80,13 @@
                                 </div>
                             </div>
                             <div class="ms-auto">
-                                <span class="px-3 py-1 rounded-full text-sm font-medium 
+                                <span class="px-3 py-1 rounded-full text-sm font-medium
                                     {{ $activity->is_active ? 'bg-success/20 text-success' : 'bg-warning/20 text-warning' }}">
                                     {{ $activity->is_active ? __('global.active') : __('global.inactive') }}
                                 </span>
                             </div>
                         </div>
-                        
+
                         <div class="mt-4 space-y-3">
                             <div class="flex items-center text-sm">
                                 <x-base.lucide icon="Clock" class="w-4 h-4 me-2 text-slate-500" />
@@ -98,10 +98,10 @@
                             </div>
                             <div class="flex items-center text-sm">
                                 <x-base.lucide icon="Users" class="w-4 h-4 me-2 text-slate-500" />
-                                <span>{{ $activity->participant_count }}/{{ $activity->max_participants ?? '∞' }} {{ __('global.participants') }}</span>
+                                <span>{{ $activity->participant_count ?? 0 }}/{{ $activity->max_participants ?? '∞' }} {{ __('global.participants') }}</span>
                             </div>
                         </div>
-                        
+
                         <div class="mt-5">
                             <div class="text-sm text-slate-500 mb-2">{{ __('global.participation_rate') }}</div>
                             @php
@@ -125,7 +125,7 @@
                                 <div class="text-xs text-slate-500">{{ __('global.teacher') }}</div>
                             </div>
                             <div class="text-center p-2 bg-purple-50 rounded">
-                                <div class="text-lg font-bold text-purple-600">{{ $activity->participant_count }}</div>
+                                <div class="text-lg font-bold text-purple-600">{{ (int) $activity->participant_count }}</div>
                                 <div class="text-xs text-slate-500">{{ __('global.participants') }}</div>
                             </div>
                             <div class="text-center p-2 bg-yellow-50 rounded">
@@ -142,22 +142,22 @@
                         <div class="text-lg font-medium mb-4">{{ __('global.description') }}</div>
                         <div class="text-slate-700">
                             @if($activity->description)
-                                <p>{{ $activity->description }}</p>
+                                <p>{{ is_array($activity->description) ? implode('\n', $activity->description) : $activity->description }}</p>
                             @else
                                 <p class="text-slate-500 italic">{{ __('global.no_description_provided') }}</p>
                             @endif
                         </div>
-                        
+
                         @if($activity->instructions)
                             <div class="mt-5">
                                 <div class="text-lg font-medium mb-4">{{ __('global.instructions') }}</div>
                                 <div class="text-slate-700">
-                                    <p>{{ $activity->instructions }}</p>
+                                    <p>{{ is_array($activity->instructions) ? implode('\n', $activity->instructions) : $activity->instructions }}</p>
                                 </div>
                             </div>
                         @endif
-                        
-                        @if($activity->learning_objectives)
+
+                        @if(is_array($activity->learning_objectives) && count($activity->learning_objectives) > 0)
                             <div class="mt-5">
                                 <div class="text-lg font-medium mb-4">{{ __('global.learning_objectives') }}</div>
                                 <ul class="list-disc ps-5 text-slate-700">
@@ -200,7 +200,7 @@
                             </div>
                             <div class="flex justify-between py-2">
                                 <span class="text-slate-500">{{ __('global.status') }}:</span>
-                                <span class="font-medium px-2 py-1 rounded text-sm 
+                                <span class="font-medium px-2 py-1 rounded text-sm
                                     {{ $activity->is_active ? 'bg-success/20 text-success' : 'bg-warning/20 text-warning' }}">
                                     {{ $activity->is_active ? __('global.active') : __('global.inactive') }}
                                 </span>
@@ -208,7 +208,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="intro-y col-span-12 lg:col-span-6">
                     <div class="box p-5">
                         <div class="text-lg font-medium mb-4 flex items-center">
@@ -240,7 +240,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="grid grid-cols-12 gap-6 mt-6">
                 <div class="intro-y col-span-12 lg:col-span-6">
                     <div class="box p-5">
@@ -249,7 +249,7 @@
                             {{ __('global.learning_info') }}
                         </div>
                         <div class="space-y-4">
-                            @if($activity->learning_objectives)
+                            @if(is_array($activity->learning_objectives) && count($activity->learning_objectives) > 0)
                                 <div class="py-2 border-b">
                                     <span class="text-slate-500">{{ __('global.learning_objectives') }}:</span>
                                     <ul class="list-disc ps-5 mt-1">
@@ -259,7 +259,7 @@
                                     </ul>
                                 </div>
                             @endif
-                            @if($activity->outcomes)
+                            @if(is_array($activity->outcomes) && count($activity->outcomes) > 0)
                                 <div class="py-2 border-b">
                                     <span class="text-slate-500">{{ __('global.outcomes') }}:</span>
                                     <ul class="list-disc ps-5 mt-1">
@@ -269,7 +269,7 @@
                                     </ul>
                                 </div>
                             @endif
-                            @if($activity->required_materials)
+                            @if(is_array($activity->required_materials) && count($activity->required_materials) > 0)
                                 <div class="py-2 border-b">
                                     <span class="text-slate-500">{{ __('global.required_materials') }}:</span>
                                     <ul class="list-disc ps-5 mt-1">
@@ -279,7 +279,7 @@
                                     </ul>
                                 </div>
                             @endif
-                            @if($activity->assessment_criteria)
+                            @if(is_array($activity->assessment_criteria) && count($activity->assessment_criteria) > 0)
                                 <div class="py-2">
                                     <span class="text-slate-500">{{ __('global.assessment_criteria') }}:</span>
                                     <ul class="list-disc ps-5 mt-1">
@@ -292,7 +292,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="intro-y col-span-12 lg:col-span-6">
                     <div class="box p-5">
                         <div class="text-lg font-medium mb-4 flex items-center">
@@ -310,15 +310,15 @@
                             </div>
                             <div class="flex justify-between py-2 border-b">
                                 <span class="text-slate-500">{{ __('global.category') }}:</span>
-                                <span class="font-medium">{{ $activity->category ?? __('global.not_specified') }}</span>
+                                <span class="font-medium">{{ is_array($activity->category) ? implode(', ', $activity->category) : ($activity->category ?? __('global.not_specified')) }}</span>
                             </div>
                             <div class="flex justify-between py-2 border-b">
                                 <span class="text-slate-500">{{ __('global.materials_needed') }}:</span>
-                                <span class="font-medium">{{ $activity->materials_needed ?? __('global.not_specified') }}</span>
+                                <span class="font-medium">{{ is_array($activity->materials_needed) ? implode(', ', $activity->materials_needed) : ($activity->materials_needed ?? __('global.not_specified')) }}</span>
                             </div>
                             <div class="flex justify-between py-2">
                                 <span class="text-slate-500">{{ __('global.status') }}:</span>
-                                <span class="font-medium">{{ $activity->status ?? __('global.not_specified') }}</span>
+                                <span class="font-medium">{{ is_array($activity->status) ? implode(', ', $activity->status) : ($activity->status ?? __('global.not_specified')) }}</span>
                             </div>
                         </div>
                     </div>
@@ -342,12 +342,12 @@
                                         <h3 class="text-xl font-bold">{{ $activity->class->name }}</h3>
                                         <div class="text-slate-500 text-sm mt-1">{{ $activity->class->code ?? 'No code' }}</div>
                                     </div>
-                                    <span class="px-3 py-1 rounded-full text-sm font-medium 
+                                    <span class="px-3 py-1 rounded-full text-sm font-medium
                                         {{ $activity->class->is_active ? 'bg-success/20 text-success' : 'bg-warning/20 text-warning' }}">
                                         {{ $activity->class->is_active ? __('global.active') : __('global.inactive') }}
                                     </span>
                                 </div>
-                                
+
                                 <div class="space-y-4">
                                     <div class="flex justify-between py-2 border-b">
                                         <span class="text-slate-500">{{ __('global.description') }}:</span>
@@ -370,13 +370,13 @@
                                         <span class="font-medium">{{ number_format($activity->class->monthly_fee ?? 0, 2) }}</span>
                                     </div>
                                 </div>
-                                
+
                                 @if($activity->class->description)
                                     <div class="mt-4 pt-4 border-t">
                                         <p class="text-slate-700">{{ $activity->class->description }}</p>
                                     </div>
                                 @endif
-                                
+
                                 <div class="mt-4 pt-4 border-t">
                                     <a href="{{ route('classes.show', $activity->class->id) }}" class="text-primary hover:underline">
                                         {{ __('global.view_class_details') }}
@@ -424,7 +424,7 @@
                                     <div class="text-slate-500 text-sm mt-1">
                                         {{ $activity->teacher->qualification ?? 'Not specified' }}
                                     </div>
-                                    
+
                                     <div class="mt-4 space-y-2">
                                         <div class="flex items-center text-sm">
                                             <x-base.lucide icon="Phone" class="w-4 h-4 me-2 text-slate-500" />
@@ -439,7 +439,7 @@
                                             <span>{{ $activity->teacher->experience_years ?? 0 }} {{ __('global.years_experience') }}</span>
                                         </div>
                                     </div>
-                                    
+
                                     <div class="mt-4 pt-4 border-t">
                                         <div class="grid grid-cols-3 gap-2">
                                             <div class="text-center p-2 bg-blue-50 rounded">
@@ -456,7 +456,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    
+
                                     <div class="mt-4">
                                         <a href="{{ route('teachers.show', $activity->teacher->id) }}" class="text-primary hover:underline">
                                             {{ __('global.view_teacher_profile') }}
@@ -494,7 +494,7 @@
                                         <div class="text-slate-500 text-sm mt-1">{{ $activity->curriculum->subject_area ?? 'General' }}</div>
                                     </div>
                                 </div>
-                                
+
                                 <div class="space-y-4">
                                     <div class="flex justify-between py-2 border-b">
                                         <span class="text-slate-500">{{ __('global.code') }}:</span>
@@ -510,19 +510,19 @@
                                     </div>
                                     <div class="flex justify-between py-2">
                                         <span class="text-slate-500">{{ __('global.status') }}:</span>
-                                        <span class="font-medium px-2 py-1 rounded text-sm 
+                                        <span class="font-medium px-2 py-1 rounded text-sm
                                             {{ $activity->curriculum->is_active ? 'bg-success/20 text-success' : 'bg-warning/20 text-warning' }}">
                                             {{ $activity->curriculum->is_active ? __('global.active') : __('global.inactive') }}
                                         </span>
                                     </div>
                                 </div>
-                                
+
                                 @if($activity->curriculum->description)
                                     <div class="mt-4 pt-4 border-t">
                                         <p class="text-slate-700">{{ $activity->curriculum->description }}</p>
                                     </div>
                                 @endif
-                                
+
                                 <div class="mt-4 pt-4 border-t">
                                     <a href="{{ route('curricula.show', $activity->curriculum->id) }}" class="text-primary hover:underline">
                                         {{ __('global.view_curriculum_details') }}
@@ -564,7 +564,7 @@
                                                 <div class="text-xs text-slate-500">{{ $child->age }} {{ __('global.years_old') }}</div>
                                             </div>
                                         </div>
-                                        <span class="px-2 py-1 rounded text-xs 
+                                        <span class="px-2 py-1 rounded text-xs
                                             {{ $child->enrollment_status === 'active' ? 'bg-success/20 text-success' : 'bg-warning/20 text-warning' }}">
                                             {{ ucfirst($child->enrollment_status) }}
                                         </span>
@@ -619,16 +619,16 @@
         document.addEventListener('DOMContentLoaded', function() {
             const tabButtons = document.querySelectorAll('.tab-button');
             const tabContents = document.querySelectorAll('.tab-content');
-            
+
             tabButtons.forEach(button => {
                 button.addEventListener('click', function(e) {
                     e.preventDefault();
                     const tabId = this.getAttribute('data-tab');
-                    
+
                     // Remove active class from all buttons and contents
                     tabButtons.forEach(btn => btn.classList.remove('active'));
                     tabContents.forEach(content => content.classList.remove('active'));
-                    
+
                     // Add active class to clicked button and corresponding content
                     this.classList.add('active');
                     document.getElementById(tabId).classList.add('active');
