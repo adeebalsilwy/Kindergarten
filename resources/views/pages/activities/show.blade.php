@@ -94,7 +94,7 @@
                             </div>
                             <div class="flex items-center text-sm">
                                 <x-base.lucide icon="MapPin" class="w-4 h-4 me-2 text-slate-500" />
-                                <span>{{ $activity->location ?? 'Not specified' }}</span>
+                                 <span>{{ $activity->location ?? 'Not specified' }}</span>
                             </div>
                             <div class="flex items-center text-sm">
                                 <x-base.lucide icon="Users" class="w-4 h-4 me-2 text-slate-500" />
