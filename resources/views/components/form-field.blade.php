@@ -14,20 +14,24 @@
     'rows' => 3,
     'disabled' => false,
     'readonly' => false,
-    'autocomplete' => 'off'
+    'autocomplete' => 'off',
+    'class' => 'col-span-12 md:col-span-6'
 ])
 
-<div class="mb-4">
+<div class="{{ $class }} mb-6 custom-form-field">
     @if($label)
-        <x-base.form-label class="{{ $required ? 'required' : '' }}">
+        <x-base.form-label class="text-slate-700 font-bold mb-2 flex items-center {{ $required ? 'required' : '' }}">
+            @if($icon)
+                <x-base.lucide icon="{{ $icon }}" class="w-4 h-4 me-2 text-primary/70" />
+            @endif
             {{ $label }}
             @if($required)
-                <span class="text-danger">*</span>
+                <span class="text-danger ms-1">*</span>
             @endif
         </x-base.form-label>
     @endif
 
-    <div class="mt-1">
+    <div class="relative mt-2">
         @switch($type)
             @case('select')
                 <x-base.tom-select 

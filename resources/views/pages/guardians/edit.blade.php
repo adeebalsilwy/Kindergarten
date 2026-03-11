@@ -47,186 +47,256 @@
     </div>
 
     <div class="grid grid-cols-12 gap-6 mt-5">
-        <div class="intro-y col-span-12 lg:col-span-12">
-            <div class="intro-y box p-5">
-                <form action="{{ route('guardians.update', $parents->id) }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    @method('PUT')
-
-                    <!-- Basic Info Tab -->
-                    <div id="basic-info" class="tab-content active">
-                        <div class="mb-6">
-                            <h3 class="text-lg font-medium text-gray-900 mb-4 flex items-center">
-                                <x-base.lucide icon="User" class="w-5 h-5 me-2 text-blue-600" />
-                                {{ __('global.basic_information') }}
-                            </h3>
-                        </div>
-                        <div class="grid grid-cols-12 gap-4">
-                            <div class="col-span-12 sm:col-span-6">
-                                <x-base.form-label>{{ __('guardians.fields.name') }}</x-base.form-label>
-                                <x-base.form-input type="text" name="name" value="{{ old('name', $parents->name ?? '') }}" class="mt-2" required />
-                            </div>
-                            <div class="col-span-12 sm:col-span-6">
-                                <x-base.form-label>{{ __('guardians.fields.relationship') }}</x-base.form-label>
-                                <x-base.form-input type="text" name="relationship" value="{{ old('relationship', $parents->relationship ?? '') }}" class="mt-2" />
-                            </div>
-                            <div class="col-span-12">
-                                <x-base.form-label>{{ __('guardians.fields.address') }}</x-base.form-label>
-                                <x-base.form-textarea name="address" rows="3" class="resize-none mt-2">{{ old('address', $parents->address ?? '') }}</x-base.form-textarea>
-                            </div>
-                            <div class="col-span-12 sm:col-span-6">
-                                <x-base.form-label>{{ __('guardians.fields.date_of_birth') }}</x-base.form-label>
-                                <x-base.form-input type="date" name="date_of_birth" value="{{ old('date_of_birth', $parents->date_of_birth?->format('Y-m-d') ?? '') }}" class="mt-2" />
-                            </div>
-                            <div class="col-span-12 sm:col-span-6">
-                                <x-base.form-label>{{ __('guardians.fields.preferred_language') }}</x-base.form-label>
-                                <x-base.form-input type="text" name="preferred_language" value="{{ old('preferred_language', $parents->preferred_language ?? 'ar') }}" class="mt-2" />
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Contact Details Tab -->
-                    <div id="contact-details" class="tab-content">
-                        <div class="mb-6">
-                            <h3 class="text-lg font-medium text-gray-900 mb-4 flex items-center">
-                                <x-base.lucide icon="Phone" class="w-5 h-5 me-2 text-blue-600" />
-                                {{ __('global.contact_details') }}
-                            </h3>
-                        </div>
-                        <div class="grid grid-cols-12 gap-4">
-                            <div class="col-span-12 sm:col-span-6">
-                                <x-base.form-label>{{ __('guardians.fields.phone') }}</x-base.form-label>
-                                <x-base.form-input type="tel" name="phone" value="{{ old('phone', $parents->phone ?? '') }}" class="mt-2" required />
-                            </div>
-                            <div class="col-span-12 sm:col-span-6">
-                                <x-base.form-label>{{ __('guardians.fields.secondary_phone') }}</x-base.form-label>
-                                <x-base.form-input type="tel" name="secondary_phone" value="{{ old('secondary_phone', $parents->secondary_phone ?? '') }}" class="mt-2" />
-                            </div>
-                            <div class="col-span-12 sm:col-span-6">
-                                <x-base.form-label>{{ __('guardians.fields.email') }}</x-base.form-label>
-                                <x-base.form-input type="email" name="email" value="{{ old('email', $parents->email ?? '') }}" class="mt-2" />
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Work Information Tab -->
-                    <div id="work-info" class="tab-content">
-                        <div class="mb-6">
-                            <h3 class="text-lg font-medium text-gray-900 mb-4 flex items-center">
-                                <x-base.lucide icon="Briefcase" class="w-5 h-5 me-2 text-blue-600" />
-                                {{ __('global.work_information') }}
-                            </h3>
-                        </div>
-                        <div class="grid grid-cols-12 gap-4">
-                            <div class="col-span-12 sm:col-span-6">
-                                <x-base.form-label>{{ __('guardians.fields.occupation') }}</x-base.form-label>
-                                <x-base.form-input type="text" name="occupation" value="{{ old('occupation', $parents->occupation ?? '') }}" class="mt-2" />
-                            </div>
-                            <div class="col-span-12 sm:col-span-6">
-                                <x-base.form-label>{{ __('guardians.fields.workplace') }}</x-base.form-label>
-                                <x-base.form-input type="text" name="workplace" value="{{ old('workplace', $parents->workplace ?? '') }}" class="mt-2" />
-                            </div>
-                            <div class="col-span-12 sm:col-span-6">
-                                <x-base.form-label>{{ __('guardians.fields.bank_name') }}</x-base.form-label>
-                                <x-base.form-input type="text" name="bank_name" value="{{ old('bank_name', $parents->bank_name ?? '') }}" class="mt-2" />
-                            </div>
-                            <div class="col-span-12 sm:col-span-6">
-                                <x-base.form-label>{{ __('guardians.fields.bank_account_number') }}</x-base.form-label>
-                                <x-base.form-input type="text" name="bank_account_number" value="{{ old('bank_account_number', $parents->bank_account_number ?? '') }}" class="mt-2" />
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Identification Tab -->
-                    <div id="identification" class="tab-content">
-                        <div class="mb-6">
-                            <h3 class="text-lg font-medium text-gray-900 mb-4 flex items-center">
-                                <x-base.lucide icon="CreditCard" class="w-5 h-5 me-2 text-blue-600" />
-                                {{ __('global.identification') }}
-                            </h3>
-                        </div>
-                        <div class="grid grid-cols-12 gap-4">
-                            <div class="col-span-12 sm:col-span-6">
-                                <x-base.form-label>{{ __('guardians.fields.national_id') }}</x-base.form-label>
-                                <x-base.form-input type="text" name="national_id" value="{{ old('national_id', $parents->national_id ?? '') }}" class="mt-2" />
-                            </div>
-                            <div class="col-span-12 sm:col-span-6">
-                                <x-base.form-label>{{ __('guardians.fields.passport_number') }}</x-base.form-label>
-                                <x-base.form-input type="text" name="passport_number" value="{{ old('passport_number', $parents->passport_number ?? '') }}" class="mt-2" />
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Notifications Tab -->
-                    <div id="notifications" class="tab-content">
-                        <div class="mb-6">
-                            <h3 class="text-lg font-medium text-gray-900 mb-4 flex items-center">
-                                <x-base.lucide icon="Bell" class="w-5 h-5 me-2 text-blue-600" />
-                                {{ __('global.notifications_settings') }}
-                            </h3>
-                        </div>
-                        <div class="grid grid-cols-12 gap-4">
-                            <div class="col-span-12 sm:col-span-6">
-                                <div class="flex items-center mt-8">
-                                    <x-base.form-input type="checkbox" name="receives_sms_notifications" value="1" {{ old('receives_sms_notifications', $parents->receives_sms_notifications) ? 'checked' : '' }} class="mr-2" />
-                                    <x-base.form-label class="ml-2">{{ __('guardians.fields.receives_sms_notifications') }}</x-base.form-label>
-                                </div>
-                            </div>
-                            <div class="col-span-12 sm:col-span-6">
-                                <div class="flex items-center mt-8">
-                                    <x-base.form-input type="checkbox" name="receives_email_notifications" value="1" {{ old('receives_email_notifications', $parents->receives_email_notifications) ? 'checked' : '' }} class="mr-2" />
-                                    <x-base.form-label class="ml-2">{{ __('guardians.fields.receives_email_notifications') }}</x-base.form-label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Settings Tab -->
-                    <div id="settings" class="tab-content">
-                        <div class="mb-6">
-                            <h3 class="text-lg font-medium text-gray-900 mb-4 flex items-center">
-                                <x-base.lucide icon="Settings" class="w-5 h-5 me-2 text-blue-600" />
-                                {{ __('global.settings') }}
-                            </h3>
-                        </div>
-                        <div class="grid grid-cols-12 gap-4">
-                            <div class="col-span-12 sm:col-span-6">
-                                <div class="flex items-center mt-8">
-                                    <x-base.form-input type="checkbox" name="is_primary_guardian" value="1" {{ old('is_primary_guardian', $parents->is_primary_guardian) ? 'checked' : '' }} class="mr-2" />
-                                    <x-base.form-label class="ml-2">{{ __('guardians.fields.is_primary_guardian') }}</x-base.form-label>
-                                </div>
-                            </div>
-                            <div class="col-span-12 sm:col-span-6">
-                                <div class="flex items-center mt-8">
-                                    <x-base.form-input type="checkbox" name="is_primary_emergency_contact" value="1" {{ old('is_primary_emergency_contact', $parents->is_primary_emergency_contact) ? 'checked' : '' }} class="mr-2" />
-                                    <x-base.form-label class="ml-2">{{ __('guardians.fields.is_primary_emergency_contact') }}</x-base.form-label>
-                                </div>
-                            </div>
-                            <div class="col-span-12 sm:col-span-6">
-                                <div class="flex items-center mt-8">
-                                    <x-base.form-input type="checkbox" name="is_active" value="1" {{ old('is_active', $parents->is_active ?? true) ? 'checked' : '' }} class="mr-2" />
-                                    <x-base.form-label class="ml-2">{{ __('guardians.fields.is_active') }}</x-base.form-label>
-                                </div>
-                            </div>
-                            <div class="col-span-12">
-                                <x-base.form-label>{{ __('guardians.fields.notes') }}</x-base.form-label>
-                                <x-base.form-textarea name="notes" rows="4" class="resize-none mt-2">{{ old('notes', $parents->notes ?? '') }}</x-base.form-textarea>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Form Actions -->
-                    <div class="flex justify-end mt-6 pt-6 border-t border-slate-200">
-                        <a href="{{ route('guardians.index') }}" class="btn btn-outline-secondary w-24 me-2">{{ __('global.cancel') }}</a>
-                        <x-base.button type="submit" variant="primary" class="w-24">
-                            <x-base.lucide icon="Save" class="w-4 h-4 me-2" />
-                            {{ __('global.update') }}
-                        </x-base.button>
-                    </div>
-                </form>
+    <div class="intro-y col-span-12">
+        <!-- Tab Navigation -->
+        <div class="intro-y box p-0 mb-6 overflow-hidden">
+            <div class="tabs-navigation px-2">
+                <button type="button" class="tab-button active" data-tab="personal">
+                    <x-base.lucide icon="User" class="w-4 h-4" />
+                    {{ __('guardians.tabs.personal_info') }}
+                </button>
+                <button type="button" class="tab-button" data-tab="work">
+                    <x-base.lucide icon="Briefcase" class="w-4 h-4" />
+                    {{ __('guardians.tabs.work_info') }}
+                </button>
+                <button type="button" class="tab-button" data-tab="contact">
+                    <x-base.lucide icon="Phone" class="w-4 h-4" />
+                    {{ __('guardians.tabs.contact_info') }}
+                </button>
+                <button type="button" class="tab-button" data-tab="settings">
+                    <x-base.lucide icon="Settings" class="w-4 h-4" />
+                    {{ __('guardians.tabs.settings') }}
+                </button>
             </div>
         </div>
+
+        <form action="{{ route('guardians.update', $parents->id) }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            @method('PUT')
+            
+            <!-- Personal Information Tab -->
+            <div id="tab-personal" class="tab-content active">
+                <x-form-section title="{{ __('guardians.sections.personal_info') }}" 
+                               description="{{ __('guardians.descriptions.personal_info') }}" 
+                               icon="User">
+                    <x-form-field name="name" 
+                                 label="{{ __('guardians.fields.name') }}" 
+                                 type="text" 
+                                 :required="true" 
+                                 :value="old('name', $parents->name ?? '')" 
+                                 placeholder="{{ __('guardians.placeholders.name') }}" 
+                                 class="col-span-12 sm:col-span-6" />
+                    
+                    <x-form-field name="email" 
+                                 label="{{ __('guardians.fields.email') }}" 
+                                 type="email" 
+                                 :required="true" 
+                                 :value="old('email', $parents->email ?? '')" 
+                                 placeholder="{{ __('guardians.placeholders.email') }}" 
+                                 class="col-span-12 sm:col-span-6" />
+                    
+                    <x-form-field name="phone" 
+                                 label="{{ __('guardians.fields.phone') }}" 
+                                 type="text" 
+                                 :required="true" 
+                                 :value="old('phone', $parents->phone ?? '')" 
+                                 placeholder="{{ __('guardians.placeholders.phone') }}" 
+                                 class="col-span-12 sm:col-span-6" />
+                    
+                    <x-form-field name="secondary_phone" 
+                                 label="{{ __('guardians.fields.secondary_phone') }}" 
+                                 type="text" 
+                                 :value="old('secondary_phone', $parents->secondary_phone ?? '')" 
+                                 placeholder="{{ __('guardians.placeholders.secondary_phone') }}" 
+                                 class="col-span-12 sm:col-span-6" />
+                    
+                    <x-form-field name="date_of_birth" 
+                                 label="{{ __('guardians.fields.date_of_birth') }}" 
+                                 type="date" 
+                                 :value="old('date_of_birth', $parents->date_of_birth ? $parents->date_of_birth->format('Y-m-d') : '')" 
+                                 class="col-span-12 sm:col-span-6" />
+                    
+                    <x-form-field name="national_id" 
+                                 label="{{ __('guardians.fields.national_id') }}" 
+                                 type="text" 
+                                 :value="old('national_id', $parents->national_id ?? '')" 
+                                 placeholder="{{ __('guardians.placeholders.national_id') }}" 
+                                 class="col-span-12 sm:col-span-6" />
+                    
+                    <x-form-field name="passport_number" 
+                                 label="{{ __('guardians.fields.passport_number') }}" 
+                                 type="text" 
+                                 :value="old('passport_number', $parents->passport_number ?? '')" 
+                                 placeholder="{{ __('guardians.placeholders.passport_number') }}" 
+                                 class="col-span-12 sm:col-span-6" />
+                    
+                    <x-form-field name="preferred_language" 
+                                 label="{{ __('guardians.fields.preferred_language') }}" 
+                                 type="select" 
+                                 :value="old('preferred_language', $parents->preferred_language ?? 'en')" 
+                                 :options="[
+                                     'ar' => 'Arabic',
+                                     'en' => 'English'
+                                 ]" 
+                                 class="col-span-12 sm:col-span-6" />
+                </x-form-section>
+            </div>
+            
+            <!-- Work Information Tab -->
+            <div id="tab-work" class="tab-content">
+                <x-form-section title="{{ __('guardians.sections.work_info') }}" 
+                               description="{{ __('guardians.descriptions.work_info') }}" 
+                               icon="Briefcase">
+                    <x-form-field name="occupation" 
+                                 label="{{ __('guardians.fields.occupation') }}" 
+                                 type="text" 
+                                 :value="old('occupation', $parents->occupation ?? '')" 
+                                 placeholder="{{ __('guardians.placeholders.occupation') }}" 
+                                 class="col-span-12 sm:col-span-6" />
+                    
+                    <x-form-field name="workplace" 
+                                 label="{{ __('guardians.fields.workplace') }}" 
+                                 type="text" 
+                                 :value="old('workplace', $parents->workplace ?? '')" 
+                                 placeholder="{{ __('guardians.placeholders.workplace') }}" 
+                                 class="col-span-12 sm:col-span-6" />
+                    
+                    <x-form-field name="bank_name" 
+                                 label="{{ __('guardians.fields.bank_name') }}" 
+                                 type="text" 
+                                 :value="old('bank_name', $parents->bank_name ?? '')" 
+                                 placeholder="{{ __('guardians.placeholders.bank_name') }}" 
+                                 class="col-span-12 sm:col-span-6" />
+                    
+                    <x-form-field name="bank_account_number" 
+                                 label="{{ __('guardians.fields.bank_account_number') }}" 
+                                 type="text" 
+                                 :value="old('bank_account_number', $parents->bank_account_number ?? '')" 
+                                 placeholder="{{ __('guardians.placeholders.bank_account_number') }}" 
+                                 class="col-span-12 sm:col-span-6" />
+                </x-form-section>
+            </div>
+            
+            <!-- Contact Information Tab -->
+            <div id="tab-contact" class="tab-content">
+                <x-form-section title="{{ __('guardians.sections.contact_info') }}" 
+                               description="{{ __('guardians.descriptions.contact_info') }}" 
+                               icon="MapPin">
+                    <x-form-field name="relationship" 
+                                 label="{{ __('guardians.fields.relationship') }}" 
+                                 type="select" 
+                                 :required="true" 
+                                 :value="old('relationship', $parents->relationship ?? '')" 
+                                 :options="[
+                                     'Father' => __('guardians.relationships.father'),
+                                     'Mother' => __('guardians.relationships.mother'),
+                                     'Grandfather' => __('guardians.relationships.grandfather'),
+                                     'Grandmother' => __('guardians.relationships.grandmother'),
+                                     'Uncle' => __('guardians.relationships.uncle'),
+                                     'Aunt' => __('guardians.relationships.aunt'),
+                                     'Other' => __('guardians.relationships.other')
+                                 ]" 
+                                 class="col-span-12 sm:col-span-6" />
+                    
+                    <x-form-field name="address" 
+                                 label="{{ __('guardians.fields.address') }}" 
+                                 type="textarea" 
+                                 :value="old('address', $parents->address ?? '')" 
+                                 placeholder="{{ __('guardians.placeholders.address') }}" 
+                                 rows="4" 
+                                 class="col-span-12" />
+                </x-form-section>
+            </div>
+            
+            <!-- Settings Tab -->
+            <div id="tab-settings" class="tab-content">
+                <x-form-section title="{{ __('guardians.sections.settings') }}" 
+                               description="{{ __('guardians.descriptions.settings') }}" 
+                               icon="Settings">
+                    <div class="col-span-12">
+                        <div class="flex flex-col sm:flex-row gap-6">
+                            <div class="flex items-center">
+                                <input type="hidden" name="is_primary_guardian" value="0">
+                                <x-base.form-check-input id="is_primary_guardian" 
+                                                         type="checkbox" 
+                                                         name="is_primary_guardian" 
+                                                         value="1" 
+                                                         {{ old('is_primary_guardian', $parents->is_primary_guardian) ? 'checked' : '' }} 
+                                                         class="me-3" />
+                                <x-base.form-label for="is_primary_guardian" class="mb-0">
+                                    {{ __('guardians.fields.is_primary_guardian') }}
+                                </x-base.form-label>
+                            </div>
+                            
+                            <div class="flex items-center">
+                                <input type="hidden" name="is_primary_emergency_contact" value="0">
+                                <x-base.form-check-input id="is_primary_emergency_contact" 
+                                                         type="checkbox" 
+                                                         name="is_primary_emergency_contact" 
+                                                         value="1" 
+                                                         {{ old('is_primary_emergency_contact', $parents->is_primary_emergency_contact) ? 'checked' : '' }} 
+                                                         class="me-3" />
+                                <x-base.form-label for="is_primary_emergency_contact" class="mb-0">
+                                    {{ __('guardians.fields.is_primary_emergency_contact') }}
+                                </x-base.form-label>
+                            </div>
+                            
+                            <div class="flex items-center">
+                                <input type="hidden" name="receives_sms_notifications" value="0">
+                                <x-base.form-check-input id="receives_sms_notifications" 
+                                                         type="checkbox" 
+                                                         name="receives_sms_notifications" 
+                                                         value="1" 
+                                                         {{ old('receives_sms_notifications', $parents->receives_sms_notifications) ? 'checked' : '' }} 
+                                                         class="me-3" />
+                                <x-base.form-label for="receives_sms_notifications" class="mb-0">
+                                    {{ __('guardians.fields.receives_sms_notifications') }}
+                                </x-base.form-label>
+                            </div>
+                            
+                            <div class="flex items-center">
+                                <input type="hidden" name="receives_email_notifications" value="0">
+                                <x-base.form-check-input id="receives_email_notifications" 
+                                                         type="checkbox" 
+                                                         name="receives_email_notifications" 
+                                                         value="1" 
+                                                         {{ old('receives_email_notifications', $parents->receives_email_notifications) ? 'checked' : '' }} 
+                                                         class="me-3" />
+                                <x-base.form-label for="receives_email_notifications" class="mb-0">
+                                    {{ __('guardians.fields.receives_email_notifications') }}
+                                </x-base.form-label>
+                            </div>
+                            
+                            <div class="flex items-center">
+                                <input type="hidden" name="is_active" value="0">
+                                <x-base.form-check-input id="is_active" 
+                                                         type="checkbox" 
+                                                         name="is_active" 
+                                                         value="1" 
+                                                         {{ old('is_active', $parents->is_active ?? true) ? 'checked' : '' }} 
+                                                         class="me-3" />
+                                <x-base.form-label for="is_active" class="mb-0">
+                                    {{ __('guardians.fields.is_active') }}
+                                </x-base.form-label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <x-form-field name="notes" 
+                                 label="{{ __('guardians.fields.notes') }}" 
+                                 type="textarea" 
+                                 :value="old('notes', $parents->notes ?? '')" 
+                                 placeholder="{{ __('guardians.placeholders.notes') }}" 
+                                 rows="3" 
+                                 class="col-span-12" />
+                </x-form-section>
+            </div>
+            
+            <x-form-actions backUrl="{{ route('guardians.index') }}" />
+        </form>
     </div>
+</div>
+
 
     @pushOnce('scripts')
     <script>

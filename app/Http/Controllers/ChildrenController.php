@@ -203,6 +203,38 @@ class ChildrenController extends Controller
         return redirect()->route('children.index')->with('success', __('children.messages.created'));
     }
 
+    public function accountStatement($id)
+    {
+        $this->authorize('view_children');
+        $child = $this->service->find($id);
+        $payments = \App\Models\Payment::where('child_id', $id)->with('fee')->orderBy('payment_date')->get();
+        
+        $entries = [];
+        $balance = 0;
+        
+        foreach ($payments as $payment) {
+            $debit = 0; // Fees are usually debits (what they owe), but here payments are credits (what they paid)
+            $credit = $payment->amount;
+            $balance += $credit - $debit;
+            
+            $entries[] = [
+                'date' => $payment->payment_date,
+                'description' => __('payments.fields.payment_for') . ': ' . ($payment->fee->name ?? __('global.general_fee')),
+                'debit' => $debit,
+                'credit' => $credit,
+                'balance' => $balance
+            ];
+        }
+        
+        $accountStatement = [
+            'entries' => $entries,
+            'account_name' => $child->name,
+            'final_balance' => $balance
+        ];
+        
+        return view('pages.children.account-statement', compact('child', 'accountStatement'));
+    }
+
     public function show($id)
     {
         $this->authorize('view_children');

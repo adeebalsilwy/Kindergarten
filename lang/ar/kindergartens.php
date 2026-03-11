@@ -1,0 +1,136 @@
+<?php
+
+return array (
+  'kindergarten' => 
+  array (
+    'parents' => 
+    array (
+      'edit' => 'تعديل ولي الأمر',
+      'view' => 'عرض ولي الأمر',
+    ),
+  ),
+  'children' => 'إدارة الأطفال',
+  'parents' => 'إدارة أولياء الأمور',
+  'attendance' => 
+  array (
+    'status' => 
+    array (
+      'present' => 'حاضر',
+      'absent' => 'غائب',
+      'sick' => 'مريض',
+      'late' => 'متأخر',
+      'excused' => 'مستأذن',
+    ),
+  ),
+  'grades' => 'الدرجات والتقييم',
+  'curriculum' => 'المنهاج',
+  'activities' => 'الأنشطة',
+  'events' => 'الأحداث',
+  'title' => 'المدفوعات',
+  'add_new' => 'تسجيل عملية دفع',
+  'edit' => 'تعديل عملية الدفع',
+  'profile' => 'ملف الطفل',
+  'list' => 'قائمة الفصول',
+  'name' => 'اسم الفصل',
+  'dob' => 'تاريخ الميلاد',
+  'gender' => 'الجنس',
+  'class' => 'الصف / المرحلة',
+  'parent' => 'ولي الأمر',
+  'photo' => 'الصورة الشخصية',
+  'fees_req' => 'الرسوم المطلوبة',
+  'fees_paid' => 'المبلغ المدفوع',
+  'fees_rem' => 'المبلغ المتبقي',
+  'financial_status' => 'الوضع المالي',
+  'attendance_rate' => 'نسبة الحضور',
+  'male' => 'ذكر',
+  'female' => 'أنثى',
+  'view' => 'تفاصيل الدفع',
+  'phone' => 'رقم الهاتف',
+  'address' => 'العنوان',
+  'relation' => 'صلة القرابة',
+  'children_count' => 'عدد الأطفال',
+  'mark' => 'تسجيل الحضور',
+  'save' => 'حفظ الحضور',
+  'student' => 'الطالب',
+  'child_id' => 'الطالب',
+  'subject' => 'المادة / المهارة',
+  'score' => 'الدرجة / التقدير',
+  'date' => 'التاريخ',
+  'recent' => 'آخر التقييمات',
+  'actions' => 
+  array (
+    'save' => 'حفظ',
+    'update' => 'تحديث',
+    'delete' => 'حذف',
+    'edit' => 'تعديل',
+    'view' => 'عرض',
+    'back' => 'رجوع',
+    'confirm_delete' => 'هل أنت متأكد؟',
+  ),
+  'messages' => 
+  array (
+    'created' => 'تم إنشاء السجل بنجاح.',
+    'updated' => 'تم تحديث البيانات بنجاح.',
+    'deleted' => 'تم الحذف بنجاح.',
+  ),
+  'email' => 'البريد الإلكتروني',
+  'specialization' => 'التخصص',
+  'qualification' => 'المؤهل العلمي',
+  'experience' => 'الخبرة (سنوات)',
+  'salary' => 'الراتب',
+  'join_date' => 'تاريخ الانضمام',
+  'status' => 'الحالة',
+  'active' => 'نشط',
+  'inactive' => 'غير نشط',
+  'classes_count' => 'عدد الفصول',
+  'notes' => 'ملاحظات',
+  'code' => 'رمز الفصل',
+  'teacher' => 'مربي الفصل',
+  'age_group' => 'الفئة العمرية',
+  'capacity' => 'القدرة الاستيعابية',
+  'current_count' => 'العدد الحالي',
+  'schedule' => 'التوقيت',
+  'start_time' => 'وقت البدء',
+  'end_time' => 'وقت الانتهاء',
+  'location' => 'القاعة / المكان',
+  'room_number' => 'رقم القاعة',
+  'fees' => 
+  array (
+    'fields' => 
+    array (
+      'name' => 'الاسم',
+      'student_id' => 'الطالب',
+      'amount' => 'المبلغ',
+      'due_date' => 'تاريخ الاستحقاق',
+      'status' => 'الحالة',
+      'is_active' => 'نشط',
+      'type' => 'النوع',
+      'description' => 'الوصف',
+    ),
+  ),
+  'description' => 'الوصف',
+  'payments' => 
+  array (
+    'fields' => 
+    array (
+      'child_id' => 'الطفل',
+      'fee_id' => 'الرسم',
+      'student_id' => 'الطالب',
+      'amount' => 'المبلغ',
+      'amount_paid' => 'المبلغ المدفوع',
+      'payment_date' => 'تاريخ الدفع',
+      'payment_method' => 'طريقة الدفع',
+      'transaction_id' => 'رقم المعاملة',
+      'reference_number' => 'رقم المرجع',
+      'receipt_number' => 'رقم الإيصال',
+      'remarks' => 'ملاحظات',
+      'status' => 'الحالة',
+    ),
+    'methods' => 
+    array (
+      'cash' => 'نقداً',
+      'bank_transfer' => 'تحويل بنكي',
+      'card' => 'بطاقة',
+    ),
+  ),
+);

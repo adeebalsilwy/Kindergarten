@@ -321,9 +321,12 @@
                         @can('delete_children')
                             <x-base.button 
                                 variant="outline-danger" 
-                                onclick="confirmDelete({{ $child->id }}, '{{ addslashes($child->name) }}')"
                                 size="sm" 
-                                class="flex-1 justify-center"
+                                class="flex-1 justify-center delete-btn"
+                                data-id="{{ $child->id }}"
+                                data-name="{{ addslashes($child->name) }}"
+                                data-tw-toggle="modal"
+                                data-tw-target="#delete-confirmation-modal"
                             >
                                 <x-base.lucide icon="Trash2" class="w-4 h-4 me-1" />
                                 {{ __('global.delete') }}
@@ -368,34 +371,30 @@
     @endif
     
     <!-- Delete Confirmation Modal -->
-    <div id="deleteModal" class="modal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-body p-0">
-                    <div class="p-5 text-center">
-                        <x-base.lucide icon="AlertTriangle" class="w-16 h-16 text-danger mx-auto mt-3" />
-                        <div class="text-3xl mt-5">{{ __('global.confirm_delete') }}</div>
-                        <div class="text-slate-500 mt-2" id="deleteMessage">
-                            {{ __('global.confirm_delete_message') }}
-                        </div>
-                        <div class="text-slate-500 mt-2" id="deleteChildName"></div>
-                    </div>
-                    <form id="deleteForm" method="POST" action="">
-                        @csrf
-                        @method('DELETE')
-                        <div class="px-5 pb-8 text-center">
-                            <x-base.button type="button" data-dismiss="modal" class="btn btn-outline-secondary w-24 mr-1">
-                                {{ __('global.cancel') }}
-                            </x-base.button>
-                            <x-base.button type="submit" class="btn btn-danger w-24">
-                                {{ __('global.delete') }}
-                            </x-base.button>
-                        </div>
-                    </form>
+    <x-base.dialog id="delete-confirmation-modal">
+        <x-base.dialog.panel>
+            <div class="p-5 text-center">
+                <x-base.lucide icon="XCircle" class="w-16 h-16 text-danger mx-auto mt-3" />
+                <div class="text-3xl mt-5">{{ __('global.confirm_delete') }}</div>
+                <div class="text-slate-500 mt-2">
+                    {{ __('global.confirm_delete_message') }}
                 </div>
+                <div class="text-slate-500 mt-2 font-bold" id="deleteChildName"></div>
             </div>
-        </div>
-    </div>
+            <div class="px-5 pb-8 text-center">
+                <x-base.button type="button" data-tw-dismiss="modal" variant="outline-secondary" class="w-24 mr-1">
+                    {{ __('global.cancel') }}
+                </x-base.button>
+                <form id="deleteForm" method="POST" action="" class="inline">
+                    @csrf
+                    @method('DELETE')
+                    <x-base.button type="submit" variant="danger" class="w-24">
+                        {{ __('global.delete') }}
+                    </x-base.button>
+                </form>
+            </div>
+        </x-base.dialog.panel>
+    </x-base.dialog>
 
     <!-- Add JavaScript for filtering and deletion -->
     @push('scripts')
@@ -438,36 +437,15 @@
                 }
             });
             
-            // Delete confirmation function
-            window.confirmDelete = function(childId, childName) {
-                document.getElementById('deleteChildName').innerHTML = 
-                    `<strong>${childName}</strong>`;
-                document.getElementById('deleteForm').action = `/children/${childId}`;
-                
-                // Show modal using Tailwind/HyperUI classes
-                const modal = document.getElementById('deleteModal');
-                modal.classList.add('show');
-                modal.style.display = 'block';
-                document.body.classList.add('modal-open');
-            };
-            
-            // Close modal
-            document.querySelectorAll('[data-dismiss="modal"]').forEach(button => {
+            // Handle delete button clicks
+            document.querySelectorAll('.delete-btn').forEach(button => {
                 button.addEventListener('click', function() {
-                    const modal = document.getElementById('deleteModal');
-                    modal.classList.remove('show');
-                    modal.style.display = 'none';
-                    document.body.classList.remove('modal-open');
+                    const id = this.getAttribute('data-id');
+                    const name = this.getAttribute('data-name');
+                    
+                    document.getElementById('deleteChildName').textContent = name;
+                    document.getElementById('deleteForm').action = `/children/${id}`;
                 });
-            });
-            
-            // Close modal when clicking outside
-            document.getElementById('deleteModal').addEventListener('click', function(e) {
-                if (e.target === this) {
-                    this.classList.remove('show');
-                    this.style.display = 'none';
-                    document.body.classList.remove('modal-open');
-                }
             });
             
             // Live search functionality

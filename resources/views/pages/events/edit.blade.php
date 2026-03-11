@@ -16,93 +16,153 @@
                     @method('PUT')
                     <div class="grid grid-cols-12 gap-4">
                         <div class="col-span-12 sm:col-span-6">
-                            <x-base.form-label>{{ __('events.fields.title') }}</x-base.form-label>
-                            <x-base.form-input type="text" name="title" value="{{ old('title', $event->title ?? '') }}" class="mt-2" />
+                            <x-form-field 
+                                label="{{ __('events.fields.title') }}" 
+                                name="title" 
+                                value="{{ old('title', $event->title) }}" 
+                                required="true" 
+                                placeholder="{{ __('events.fields.title') }}" 
+                            />
                         </div>
                         <div class="col-span-12">
-                            <x-base.form-label>{{ __('events.fields.description') }}</x-base.form-label>
-                            <x-base.form-textarea name="description" rows="4" class="resize-none">{{ old('description', $event->description ?? '') }}</x-base.form-textarea>
+                            <x-form-field 
+                                label="{{ __('events.fields.description') }}" 
+                                name="description" 
+                                type="textarea" 
+                                value="{{ old('description', $event->description) }}" 
+                                placeholder="{{ __('events.fields.description') }}" 
+                            />
                         </div>
                         <div class="col-span-12 sm:col-span-6">
-                            <x-base.form-label>{{ __('events.fields.start_datetime') }}</x-base.form-label>
-                            <x-base.form-input type="datetime-local" name="start_datetime" value="{{ old('start_datetime', $event->start_datetime ?? '') }}" class="mt-2" />
+                            <x-form-field 
+                                label="{{ __('events.fields.start_datetime') }}" 
+                                name="start_datetime" 
+                                type="datetime-local" 
+                                value="{{ old('start_datetime', $event->start_datetime ? $event->start_datetime->format('Y-m-d\TH:i') : '') }}" 
+                                required="true" 
+                            />
                         </div>
                         <div class="col-span-12 sm:col-span-6">
-                            <x-base.form-label>{{ __('events.fields.end_datetime') }}</x-base.form-label>
-                            <x-base.form-input type="datetime-local" name="end_datetime" value="{{ old('end_datetime', $event->end_datetime ?? '') }}" class="mt-2" />
+                            <x-form-field 
+                                label="{{ __('events.fields.end_datetime') }}" 
+                                name="end_datetime" 
+                                type="datetime-local" 
+                                value="{{ old('end_datetime', $event->end_datetime ? $event->end_datetime->format('Y-m-d\TH:i') : '') }}" 
+                                required="true" 
+                            />
                         </div>
                         <div class="col-span-12 sm:col-span-6">
-                            <x-base.form-label>{{ __('events.fields.location') }}</x-base.form-label>
-                            <x-base.form-input type="text" name="location" value="{{ old('location', $event->location ?? '') }}" class="mt-2" />
+                            <x-form-field 
+                                label="{{ __('events.fields.location') }}" 
+                                name="location" 
+                                value="{{ old('location', $event->location) }}" 
+                                required="true" 
+                                placeholder="{{ __('events.fields.location') }}" 
+                            />
                         </div>
                         <div class="col-span-12 sm:col-span-6">
-                            <x-base.form-label>{{ __('events.fields.event_type') }}</x-base.form-label>
-                            <x-base.form-input type="text" name="event_type" value="{{ old('event_type', $event->event_type ?? '') }}" class="mt-2" />
+                            <x-form-field 
+                                label="{{ __('events.fields.event_type') }}" 
+                                name="event_type" 
+                                value="{{ old('event_type', $event->event_type) }}" 
+                                required="true" 
+                                placeholder="{{ __('events.fields.event_type') }}" 
+                            />
                         </div>
                         <div class="col-span-12 sm:col-span-6">
-                            <x-base.form-label>{{ __('events.fields.organizer') }}</x-base.form-label>
-                            <x-base.form-input type="text" name="organizer" value="{{ old('organizer', $event->organizer ?? '') }}" class="mt-2" />
+                            <x-form-field 
+                                label="{{ __('events.fields.organizer') }}" 
+                                name="organizer" 
+                                value="{{ old('organizer', $event->organizer) }}" 
+                                placeholder="{{ __('events.fields.organizer') }}" 
+                            />
                         </div>
                         <div class="col-span-12 sm:col-span-6">
-                            <x-base.form-label>{{ __('events.fields.class_id') }}</x-base.form-label>
-                            <x-base.form-input type="text" name="class_id" value="{{ old('class_id', $event->class_id ?? '') }}" class="mt-2" />
+                            <x-form-field 
+                                label="{{ __('events.fields.class_id') }}" 
+                                name="class_id" 
+                                type="select" 
+                                :options="$classes->pluck('name', 'id')->toArray()" 
+                                value="{{ old('class_id', $event->class_id) }}" 
+                                placeholder="{{ __('global.select_class') }}" 
+                            />
                         </div>
                         <div class="col-span-12 sm:col-span-6">
-                            <x-base.form-label>{{ __('events.fields.teacher_id') }}</x-base.form-label>
-                            <x-base.form-input type="text" name="teacher_id" value="{{ old('teacher_id', $event->teacher_id ?? '') }}" class="mt-2" />
+                            <x-form-field 
+                                label="{{ __('events.fields.teacher_id') }}" 
+                                name="teacher_id" 
+                                type="select" 
+                                :options="$teachers->pluck('name', 'id')->toArray()" 
+                                value="{{ old('teacher_id', $event->teacher_id) }}" 
+                                placeholder="{{ __('global.select_teacher') }}" 
+                            />
                         </div>
                         <div class="col-span-12">
-                            <x-base.form-label>{{ __('events.fields.attendees') }}</x-base.form-label>
-                            <x-base.form-textarea name="attendees" rows="4" class="resize-none">{{ old('attendees', $event->attendees ?? '') }}</x-base.form-textarea>
+                            <x-form-field 
+                                label="{{ __('events.fields.attendees') }}" 
+                                name="attendees" 
+                                type="textarea" 
+                                value="{{ old('attendees', $event->attendees) }}" 
+                                placeholder="{{ __('events.fields.attendees') }}" 
+                            />
+                        </div>
+                        <div class="col-span-12 sm:col-span-4">
+                            <x-form-field 
+                                label="{{ __('events.fields.requires_confirmation') }}" 
+                                name="requires_confirmation" 
+                                type="checkbox" 
+                                value="{{ old('requires_confirmation', $event->requires_confirmation) }}" 
+                            />
+                        </div>
+                        <div class="col-span-12 sm:col-span-4">
+                            <x-form-field 
+                                label="{{ __('events.fields.is_public') }}" 
+                                name="is_public" 
+                                type="checkbox" 
+                                value="{{ old('is_public', $event->is_public) }}" 
+                            />
+                        </div>
+                        <div class="col-span-12 sm:col-span-4">
+                            <x-form-field 
+                                label="{{ __('events.fields.is_recurring') }}" 
+                                name="is_recurring" 
+                                type="checkbox" 
+                                value="{{ old('is_recurring', $event->is_recurring) }}" 
+                            />
                         </div>
                         <div class="col-span-12 sm:col-span-6">
-                            <x-base.form-label>{{ __('events.fields.requires_confirmation') }}</x-base.form-label>
-                            <div class="mt-2 space-y-2">
-                                <!-- Hidden input to send 0 if unchecked -->
-                                <input type="hidden" name="requires_confirmation" value="0">
-                                <label class="relative inline-flex items-center cursor-pointer">
-                                    <x-base.form-input type="checkbox" name="requires_confirmation" value="1" {{ old('requires_confirmation', $event->requires_confirmation ?? false) ? 'checked' : '' }} class="sr-only peer" />
-                                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary/30 dark:peer-focus:ring-primary rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-primary"></div>
-                                    <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">{{ __('global.active') }}</span>
-                                </label>
-                            </div>
+                            <x-form-field 
+                                label="{{ __('events.fields.recurrence_pattern') }}" 
+                                name="recurrence_pattern" 
+                                value="{{ old('recurrence_pattern', $event->recurrence_pattern) }}" 
+                                placeholder="{{ __('events.fields.recurrence_pattern') }}" 
+                            />
                         </div>
                         <div class="col-span-12 sm:col-span-6">
-                            <x-base.form-label>{{ __('events.fields.is_public') }}</x-base.form-label>
-                            <div class="mt-2 space-y-2">
-                                <!-- Hidden input to send 0 if unchecked -->
-                                <input type="hidden" name="is_public" value="0">
-                                <label class="relative inline-flex items-center cursor-pointer">
-                                    <x-base.form-input type="checkbox" name="is_public" value="1" {{ old('is_public', $event->is_public ?? false) ? 'checked' : '' }} class="sr-only peer" />
-                                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary/30 dark:peer-focus:ring-primary rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-primary"></div>
-                                    <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">{{ __('global.active') }}</span>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-span-12 sm:col-span-6">
-                            <x-base.form-label>{{ __('events.fields.is_recurring') }}</x-base.form-label>
-                            <div class="mt-2 space-y-2">
-                                <!-- Hidden input to send 0 if unchecked -->
-                                <input type="hidden" name="is_recurring" value="0">
-                                <label class="relative inline-flex items-center cursor-pointer">
-                                    <x-base.form-input type="checkbox" name="is_recurring" value="1" {{ old('is_recurring', $event->is_recurring ?? false) ? 'checked' : '' }} class="sr-only peer" />
-                                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary/30 dark:peer-focus:ring-primary rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-primary"></div>
-                                    <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">{{ __('global.active') }}</span>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-span-12 sm:col-span-6">
-                            <x-base.form-label>{{ __('events.fields.recurrence_pattern') }}</x-base.form-label>
-                            <x-base.form-input type="text" name="recurrence_pattern" value="{{ old('recurrence_pattern', $event->recurrence_pattern ?? '') }}" class="mt-2" />
-                        </div>
-                        <div class="col-span-12 sm:col-span-6">
-                            <x-base.form-label>{{ __('events.fields.recurrence_end_date') }}</x-base.form-label>
-                            <x-base.form-input type="date" name="recurrence_end_date" value="{{ old('recurrence_end_date', $event->recurrence_end_date ?? '') }}" class="mt-2" />
+                            <x-form-field 
+                                label="{{ __('events.fields.recurrence_end_date') }}" 
+                                name="recurrence_end_date" 
+                                type="date" 
+                                value="{{ old('recurrence_end_date', $event->recurrence_end_date ? $event->recurrence_end_date->format('Y-m-d') : '') }}" 
+                            />
                         </div>
                         <div class="col-span-12">
-                            <x-base.form-label>{{ __('events.fields.recurring_days') }}</x-base.form-label>
-                            <x-base.form-textarea name="recurring_days" rows="4" class="resize-none">{{ old('recurring_days', $event->recurring_days ?? '') }}</x-base.form-textarea>
+                            <x-form-field 
+                                label="{{ __('events.fields.children') }}" 
+                                name="child_ids[]" 
+                                type="select" 
+                                :options="$children->pluck('name', 'id')->toArray()" 
+                                :value="old('child_ids', $event->children->pluck('id')->toArray())" 
+                                multiple="true" 
+                                placeholder="{{ __('global.select_children') }}" 
+                            />
                         </div>
+                    </div>
+                    <div class="flex justify-end mt-4">
+                        <a href="{{ route('events.index') }}" class="btn btn-outline-secondary w-24 me-1">{{ __('global.cancel') }}</a>
+                        <x-base.button type="submit" variant="primary" class="w-24">{{ __('global.update') }}</x-base.button>
+                    </div>
+                </form>
                         <div class="col-span-12 sm:col-span-6">
                             <x-base.form-label>{{ __('events.fields.status') }}</x-base.form-label>
                             <x-base.tom-select name="status" class="mt-2">

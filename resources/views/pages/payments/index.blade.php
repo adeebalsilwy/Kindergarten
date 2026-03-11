@@ -172,7 +172,7 @@
         </div>
 
         <!-- Data List -->
-        <div class="intro-y col-span-12 overflow-auto lg:overflow-visible">
+        <div class="intro-y col-span-12 overflow-x-auto">
             <x-base.table class="table-report -mt-2">
                 <x-base.table.thead>
                     <x-base.table.tr>

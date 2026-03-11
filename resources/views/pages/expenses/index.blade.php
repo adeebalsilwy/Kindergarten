@@ -196,7 +196,10 @@
                                     @endcan
                                     @can('delete_expenses')
                                     <x-base.button variant="outline-danger" size="sm" class="px-2 py-1 delete-btn" 
-                                        onclick="confirmDelete('{{ $expense->id }}', '{{ $expense->title }}')">
+                                        data-id="{{ $expense->id }}"
+                                        data-name="{{ addslashes($expense->title) }}"
+                                        data-tw-toggle="modal"
+                                        data-tw-target="#delete-confirmation-modal">
                                         <x-base.lucide icon="Trash2" class="w-4 h-4" />
                                     </x-base.button>
                                     @endcan
@@ -282,4 +285,45 @@
         </div>
         @endif
     </div>
+
+    <!-- Delete Confirmation Modal -->
+    <x-base.dialog id="delete-confirmation-modal">
+        <x-base.dialog.panel>
+            <div class="p-5 text-center">
+                <x-base.lucide icon="XCircle" class="w-16 h-16 text-danger mx-auto mt-3" />
+                <div class="text-3xl mt-5">{{ __('global.confirm_delete') }}</div>
+                <div class="text-slate-500 mt-2">
+                    {{ __('global.confirm_delete_message') }}
+                </div>
+                <div class="text-slate-500 mt-2 font-bold" id="deleteExpenseName"></div>
+            </div>
+            <div class="px-5 pb-8 text-center">
+                <x-base.button type="button" data-tw-dismiss="modal" variant="outline-secondary" class="w-24 mr-1">
+                    {{ __('global.cancel') }}
+                </x-base.button>
+                <form id="deleteForm" method="POST" action="" class="inline">
+                    @csrf
+                    @method('DELETE')
+                    <x-base.button type="submit" variant="danger" class="w-24">
+                        {{ __('global.delete') }}
+                    </x-base.button>
+                </form>
+            </div>
+        </x-base.dialog.panel>
+    </x-base.dialog>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Handle delete button clicks
+            document.querySelectorAll('.delete-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const id = this.getAttribute('data-id');
+                    const name = this.getAttribute('data-name');
+                    
+                    document.getElementById('deleteExpenseName').textContent = name;
+                    document.getElementById('deleteForm').action = `/expenses/${id}`;
+                });
+            });
+        });
+    </script>
 @endsection

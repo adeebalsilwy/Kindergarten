@@ -15,6 +15,7 @@
     'filterable' => true,
     'exportable' => true,
     'importable' => false,
+    'resourceRoute' => null, // e.g. 'roles' or 'users'
 ])
 
 <div class="access-control-index">
@@ -22,6 +23,10 @@
     <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
         <h2 class="text-lg font-medium me-auto">{{ __($title) }}</h2>
         <div class="w-full sm:w-auto flex flex-wrap gap-2 mt-4 sm:mt-0">
+            @if(isset($actions))
+                {{ $actions }}
+            @endif
+
             @if($importable)
                 <x-base.button variant="outline-secondary" class="flex items-center">
                     <x-base.lucide icon="Upload" class="w-4 h-4 me-2" />
@@ -226,22 +231,41 @@
                                     @endforeach
                                     <x-base.table.td class="table-report__action w-56">
                                         <div class="flex justify-center items-center gap-2">
-                                            <x-base.button variant="outline-primary" size="sm" class="px-2 py-1">
-                                                <x-base.lucide icon="Eye" class="w-3 h-3 me-1" />
-                                                {{ __('access_control.actions.view') }}
-                                            </x-base.button>
-                                            <x-base.button variant="outline-secondary" size="sm" class="px-2 py-1">
-                                                <x-base.lucide icon="Pencil" class="w-3 h-3 me-1" />
-                                                {{ __('access_control.actions.edit') }}
-                                            </x-base.button>
-                                            <form method="POST" onsubmit="return confirm('{{ __('access_control.actions.confirm_delete') }}')">
-                                                @csrf
-                                                @method('DELETE')
-                                                <x-base.button variant="outline-danger" type="submit" size="sm" class="px-2 py-1">
+                                            @if($resourceRoute)
+                                                <x-base.button variant="outline-primary" as="a" href="{{ route($resourceRoute . '.show', $item->id) }}" size="sm" class="px-2 py-1">
+                                                    <x-base.lucide icon="Eye" class="w-3 h-3 me-1" />
+                                                    {{ __('access_control.actions.view') }}
+                                                </x-base.button>
+                                                <x-base.button variant="outline-secondary" as="a" href="{{ route($resourceRoute . '.edit', $item->id) }}" size="sm" class="px-2 py-1">
+                                                    <x-base.lucide icon="Pencil" class="w-3 h-3 me-1" />
+                                                    {{ __('access_control.actions.edit') }}
+                                                </x-base.button>
+                                                <x-base.button 
+                                                    variant="outline-danger" 
+                                                    size="sm" 
+                                                    class="px-2 py-1 delete-btn"
+                                                    data-id="{{ $item->id }}"
+                                                    data-name="{{ $item->name ?? $item->title ?? '' }}"
+                                                    data-tw-toggle="modal"
+                                                    data-tw-target="#delete-confirmation-modal"
+                                                >
                                                     <x-base.lucide icon="Trash2" class="w-3 h-3 me-1" />
                                                     {{ __('access_control.actions.delete') }}
                                                 </x-base.button>
-                                            </form>
+                                            @else
+                                                <x-base.button variant="outline-primary" size="sm" class="px-2 py-1">
+                                                    <x-base.lucide icon="Eye" class="w-3 h-3 me-1" />
+                                                    {{ __('access_control.actions.view') }}
+                                                </x-base.button>
+                                                <x-base.button variant="outline-secondary" size="sm" class="px-2 py-1">
+                                                    <x-base.lucide icon="Pencil" class="w-3 h-3 me-1" />
+                                                    {{ __('access_control.actions.edit') }}
+                                                </x-base.button>
+                                                <x-base.button variant="outline-danger" size="sm" class="px-2 py-1">
+                                                    <x-base.lucide icon="Trash2" class="w-3 h-3 me-1" />
+                                                    {{ __('access_control.actions.delete') }}
+                                                </x-base.button>
+                                            @endif
                                         </div>
                                     </x-base.table.td>
                                 </x-base.table.tr>
@@ -360,7 +384,45 @@
                 </div>
             </div>
         @endif
+
+        @if(isset($afterContent))
+            <div class="intro-y col-span-12 mt-5">
+                {{ $afterContent }}
+            </div>
+        @endif
+
+        @if(isset($slot) && $slot->isNotEmpty())
+            <div class="intro-y col-span-12 mt-5">
+                {{ $slot }}
+            </div>
+        @endif
     </div>
+
+    <!-- Delete Confirmation Modal -->
+    <x-base.dialog id="delete-confirmation-modal">
+        <x-base.dialog.panel>
+            <div class="p-5 text-center">
+                <x-base.lucide icon="XCircle" class="w-16 h-16 text-danger mx-auto mt-3" />
+                <div class="text-3xl mt-5">{{ __('global.confirm_delete') }}</div>
+                <div class="text-slate-500 mt-2">
+                    {{ __('global.confirm_delete_message') }}
+                </div>
+                <div class="text-slate-500 mt-2 font-bold" id="deleteItemName"></div>
+            </div>
+            <div class="px-5 pb-8 text-center">
+                <x-base.button type="button" data-tw-dismiss="modal" variant="outline-secondary" class="w-24 mr-1">
+                    {{ __('global.cancel') }}
+                </x-base.button>
+                <form id="deleteForm" method="POST" action="" class="inline">
+                    @csrf
+                    @method('DELETE')
+                    <x-base.button type="submit" variant="danger" class="w-24">
+                        {{ __('global.delete') }}
+                    </x-base.button>
+                </form>
+            </div>
+        </x-base.dialog.panel>
+    </x-base.dialog>
 </div>
 
 <script>
@@ -377,8 +439,9 @@ function changeView(viewType) {
     window.location.reload();
 }
 
-// Initialize view from localStorage
+// Initialize view and delete functionality
 document.addEventListener('DOMContentLoaded', function() {
+    // saved view initialization...
     const savedView = localStorage.getItem('accessControlView');
     if (savedView) {
         // Update UI to reflect saved view
@@ -389,5 +452,22 @@ document.addEventListener('DOMContentLoaded', function() {
         document.querySelector(`[onclick="changeView('${savedView}')"]`)?.classList.add('bg-primary', 'text-white');
         document.querySelector(`[onclick="changeView('${savedView}')"]`)?.classList.remove('bg-white', 'text-slate-600');
     }
+
+    // Handle delete button clicks
+    const resourceRoute = "{{ $resourceRoute }}";
+    document.querySelectorAll('.delete-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            const id = this.getAttribute('data-id');
+            const name = this.getAttribute('data-name');
+            
+            const nameElement = document.getElementById('deleteItemName');
+            if (nameElement) nameElement.textContent = name;
+            
+            const formElement = document.getElementById('deleteForm');
+            if (formElement && resourceRoute) {
+                formElement.action = `/${resourceRoute}/${id}`;
+            }
+        });
+    });
 });
 </script>

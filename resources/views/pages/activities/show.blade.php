@@ -1,7 +1,7 @@
 @extends('../themes/' . $activeTheme . '/' . $activeLayout)
 
 @section('head')
-    <title>{{ __('Activity.show') }} - {{ $activity->title }}</title>
+    <title>{{ __('Activity.show') }} - {{ is_array($activity->title) ? implode(' ', $activity->title) : $activity->title }}</title>
     <style>
         .tab-content { display: none; }
         .tab-content.active { display: block; }
@@ -142,7 +142,10 @@
                         <div class="text-lg font-medium mb-4">{{ __('global.description') }}</div>
                         <div class="text-slate-700">
                             @if($activity->description)
-                                <p>{{ is_array($activity->description) ? implode('\n', $activity->description) : $activity->description }}</p>
+                                @php
+                                    $description = is_array($activity->description) ? implode(' ', $activity->description) : $activity->description;
+                                @endphp
+                                <p>{{ e($description) }}</p>
                             @else
                                 <p class="text-slate-500 italic">{{ __('global.no_description_provided') }}</p>
                             @endif
@@ -151,8 +154,11 @@
                         @if($activity->instructions)
                             <div class="mt-5">
                                 <div class="text-lg font-medium mb-4">{{ __('global.instructions') }}</div>
+                                @php
+                                    $instructions = is_array($activity->instructions) ? implode(' ', $activity->instructions) : $activity->instructions;
+                                @endphp
                                 <div class="text-slate-700">
-                                    <p>{{ is_array($activity->instructions) ? implode('\n', $activity->instructions) : $activity->instructions }}</p>
+                                    <p>{{ e($instructions) }}</p>
                                 </div>
                             </div>
                         @endif
@@ -188,7 +194,9 @@
                             </div>
                             <div class="flex justify-between py-2 border-b">
                                 <span class="text-slate-500">{{ __('global.description') }}:</span>
-                                <span class="font-medium text-right max-w-xs">{{ $activity->description ?? __('global.not_provided') }}</span>
+                                <span class="font-medium text-right max-w-xs">
+                                    {{ is_array($activity->description) ? implode(', ', $activity->description) : ($activity->description ?? __('global.not_provided')) }}
+                                </span>
                             </div>
                             <div class="flex justify-between py-2 border-b">
                                 <span class="text-slate-500">{{ __('global.activity_type') }}:</span>
@@ -308,18 +316,39 @@
                                 <span class="text-slate-500">{{ __('global.current_participants') }}:</span>
                                 <span class="font-medium">{{ $activity->participant_count }}</span>
                             </div>
+                        @if(is_array($activity->category) && count($activity->category) > 0)
                             <div class="flex justify-between py-2 border-b">
                                 <span class="text-slate-500">{{ __('global.category') }}:</span>
-                                <span class="font-medium">{{ is_array($activity->category) ? implode(', ', $activity->category) : ($activity->category ?? __('global.not_specified')) }}</span>
+                                <span class="font-medium">{{ implode(', ', $activity->category) }}</span>
                             </div>
+                        @elseif(!is_array($activity->category) && $activity->category)
+                            <div class="flex justify-between py-2 border-b">
+                                <span class="text-slate-500">{{ __('global.category') }}:</span>
+                                <span class="font-medium">{{ e($activity->category) }}</span>
+                            </div>
+                        @endif
+                        @if(is_array($activity->materials_needed) && count($activity->materials_needed) > 0)
                             <div class="flex justify-between py-2 border-b">
                                 <span class="text-slate-500">{{ __('global.materials_needed') }}:</span>
-                                <span class="font-medium">{{ is_array($activity->materials_needed) ? implode(', ', $activity->materials_needed) : ($activity->materials_needed ?? __('global.not_specified')) }}</span>
+                                <span class="font-medium">{{ implode(', ', $activity->materials_needed) }}</span>
                             </div>
+                        @elseif(!is_array($activity->materials_needed) && $activity->materials_needed)
+                            <div class="flex justify-between py-2 border-b">
+                                <span class="text-slate-500">{{ __('global.materials_needed') }}:</span>
+                                <span class="font-medium">{{ e($activity->materials_needed) }}</span>
+                            </div>
+                        @endif
+                        @if(is_array($activity->status) && count($activity->status) > 0)
                             <div class="flex justify-between py-2">
                                 <span class="text-slate-500">{{ __('global.status') }}:</span>
-                                <span class="font-medium">{{ is_array($activity->status) ? implode(', ', $activity->status) : ($activity->status ?? __('global.not_specified')) }}</span>
+                                <span class="font-medium">{{ implode(', ', $activity->status) }}</span>
                             </div>
+                        @elseif(!is_array($activity->status) && $activity->status)
+                            <div class="flex justify-between py-2">
+                                <span class="text-slate-500">{{ __('global.status') }}:</span>
+                                <span class="font-medium">{{ e($activity->status) }}</span>
+                            </div>
+                        @endif
                         </div>
                     </div>
                 </div>

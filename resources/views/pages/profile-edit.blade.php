@@ -16,9 +16,8 @@
                 <div class="image-fit h-12 w-12">
                     <img
                         class="rounded-full"
-                        src="{{ Vite::asset('resources/images/profile-placeholder.jpg') }}"
+                        src="{{ $user->photo ? asset('storage/' . $user->photo) : 'https://ui-avatars.com/api/?name=' . urlencode($user->name) . '&color=7F9CF5&background=EBF4FF' }}"
                         alt="User Profile"
-                        onerror="this.src='{{ Vite::asset('resources/images/avatar-default.png') }}';"
                     />
                 </div>
                 <div class="ms-4 me-auto">

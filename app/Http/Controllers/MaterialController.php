@@ -51,7 +51,7 @@ class MaterialController extends Controller
         $sortBy = $request->get('sort_by', 'created_at');
         $sortDirection = $request->get('sort_direction', 'desc');
         $allowedSortFields = ['name', 'category', 'type', 'quantity_available', 'created_at'];
-        
+
         if (in_array($sortBy, $allowedSortFields)) {
             $query->orderBy($sortBy, $sortDirection);
         } else {
@@ -66,12 +66,12 @@ class MaterialController extends Controller
     public function create()
     {
         $this->authorize('create_materials', Material::class);
-        
+
         // Get all curricula, classes, and activities for the form
         $curricula = Curriculum::all();
         $classes = Classes::all();
         $activities = Activity::with('curriculum')->get();
-        
+
         return view('pages.materials.create', compact('curricula', 'classes', 'activities'));
     }
 
@@ -141,7 +141,7 @@ class MaterialController extends Controller
     public function show(Material $material)
     {
         $this->authorize('view_materials', $material);
-        
+
         // Load related data for the show page
         $material->load(['curricula', 'activities', 'classes']);
 
@@ -149,19 +149,19 @@ class MaterialController extends Controller
         $relatedClasses = $material->classes;
         $relatedActivities = $material->activities;
         $relatedCurricula = $material->curricula;
-        
+
         return view('pages.materials.show', compact('material', 'relatedClasses', 'relatedActivities', 'relatedCurricula'));
     }
 
     public function edit(Material $material)
     {
         $this->authorize('update_materials', $material);
-        
+
         // Get all curricula, classes, and activities for the form
         $curricula = Curriculum::all();
         $classes = Classes::all();
         $activities = Activity::with('curriculum')->get();
-        
+
         return view('pages.materials.edit', compact('material', 'curricula', 'classes', 'activities'));
     }
 
@@ -244,7 +244,7 @@ class MaterialController extends Controller
     public function exportPdf(Request $request)
     {
         $this->authorize('export', Material::class);
-        
+
         $query = Material::with(['curricula', 'activities']);
 
         // Apply filters
@@ -276,7 +276,7 @@ class MaterialController extends Controller
         $sortBy = $request->get('sort_by', 'created_at');
         $sortDirection = $request->get('sort_direction', 'desc');
         $allowedSortFields = ['name', 'category', 'type', 'quantity_available', 'created_at'];
-        
+
         if (in_array($sortBy, $allowedSortFields)) {
             $query->orderBy($sortBy, $sortDirection);
         } else {
@@ -284,9 +284,9 @@ class MaterialController extends Controller
         }
 
         $materials = $query->get();
-        
+
         $html = view('pages.materials.export-pdf', ['materials' => $materials])->render();
-        
+
         return response()->streamDownload(function () use ($html) {
             echo \OmarAlalwi\Gpdf\Facades\Gpdf::generate($html);
         }, 'materials_export_' . date('Y-m-d_H-i-s') . '.pdf');
@@ -295,7 +295,7 @@ class MaterialController extends Controller
     public function exportExcel(Request $request)
     {
         $this->authorize('export', Material::class);
-        
+
         $query = Material::with(['curricula', 'activities']);
 
         // Apply filters
@@ -327,7 +327,7 @@ class MaterialController extends Controller
         $sortBy = $request->get('sort_by', 'created_at');
         $sortDirection = $request->get('sort_direction', 'desc');
         $allowedSortFields = ['name', 'category', 'type', 'quantity_available', 'created_at'];
-        
+
         if (in_array($sortBy, $allowedSortFields)) {
             $query->orderBy($sortBy, $sortDirection);
         } else {
@@ -335,10 +335,10 @@ class MaterialController extends Controller
         }
 
         $materials = $query->get();
-        
+
         $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
-        
+
         // Set the title
         $sheet->setTitle('Materials');
         $sheet->setCellValue('A1', 'Materials Export');
@@ -348,7 +348,7 @@ class MaterialController extends Controller
 
         // Define headers
         $headers = ['ID', 'Name', 'Category', 'Type', 'Quantity Available', 'Quantity Required', 'Unit Cost', 'Supplier', 'Storage Location', 'Is Consumable', 'Is Digital', 'Is Active', 'Created At'];
-        
+
         // Add headers to sheet
         $col = 'A';
         foreach ($headers as $index => $header) {
@@ -455,7 +455,7 @@ class MaterialController extends Controller
 
         return redirect()->back()->with('success', __('Material detached from activity successfully.'));
     }
-    
+
     // New method to attach materials to classes
     public function attachToClass(Request $request, Material $material)
     {
@@ -463,9 +463,14 @@ class MaterialController extends Controller
 
         $request->validate([
             'class_id' => 'required|exists:classes,id',
+            'quantity_required' => 'required|integer|min:1',
+            'usage_instructions' => 'nullable|string',
         ]);
 
-        $material->classes()->attach($request->class_id);
+        $material->classes()->attach($request->class_id, [
+            'quantity_required' => $request->quantity_required,
+            'usage_instructions' => $request->usage_instructions,
+        ]);
 
         return redirect()->back()->with('success', __('Material attached to class successfully.'));
     }
@@ -483,7 +488,7 @@ class MaterialController extends Controller
 
         return redirect()->back()->with('success', __('Material detached from class successfully.'));
     }
-    
+
     // New method to detach from curriculum with DELETE method
     public function detachFromCurriculumWithDelete(Request $request, Material $material)
     {
@@ -497,7 +502,7 @@ class MaterialController extends Controller
 
         return redirect()->back()->with('success', __('Material detached from curriculum successfully.'));
     }
-    
+
     // New method to detach from activity with DELETE method
     public function detachFromActivityWithDelete(Request $request, Material $material)
     {
@@ -511,7 +516,7 @@ class MaterialController extends Controller
 
         return redirect()->back()->with('success', __('Material detached from activity successfully.'));
     }
-    
+
     // New method to detach from class with DELETE method
     public function detachFromClassWithDelete(Request $request, Material $material)
     {

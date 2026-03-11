@@ -62,7 +62,7 @@
                             description="Today's attendance"
                             icon="UserCheck"
                             color="info"
-                            route="attendance.index"
+                            route="attendances.index"
                         />
                         
                         <!-- Outstanding Balances -->

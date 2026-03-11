@@ -184,6 +184,39 @@ class GuardianController extends Controller
         return redirect()->route('guardians.index')->with('success', __('guardians.messages.created'));
     }
 
+    public function accountStatement($id)
+    {
+        $this->authorize('view_guardians');
+        $guardian = $this->service->find($id);
+        $children_ids = $guardian->children()->pluck('id')->merge($guardian->secondChildren()->pluck('id'))->unique();
+        $payments = \App\Models\Payment::whereIn('child_id', $children_ids)->with(['child', 'fee'])->orderBy('payment_date')->get();
+        
+        $entries = [];
+        $balance = 0;
+        
+        foreach ($payments as $payment) {
+            $debit = 0;
+            $credit = $payment->amount;
+            $balance += $credit - $debit;
+            
+            $entries[] = [
+                'date' => $payment->payment_date,
+                'description' => $payment->child->name . ' - ' . ($payment->fee->name ?? __('global.general_fee')),
+                'debit' => $debit,
+                'credit' => $credit,
+                'balance' => $balance
+            ];
+        }
+        
+        $accountStatement = [
+            'entries' => $entries,
+            'account_name' => $guardian->name,
+            'final_balance' => $balance
+        ];
+        
+        return view('pages.guardians.account-statement', compact('guardian', 'accountStatement'));
+    }
+
     public function show($id)
     {
         $this->authorize('view_guardians');

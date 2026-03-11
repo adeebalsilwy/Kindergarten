@@ -162,6 +162,22 @@ class TeacherController extends Controller
         return redirect()->route('teachers.index')->with('success', __('teachers.messages.created'));
     }
 
+    public function accountStatement($id)
+    {
+        $this->authorize('view_teachers');
+        $teacher = $this->service->find($id);
+        
+        // Teachers usually have salary or expenses, not student payments
+        // For now, let's just return empty entries to avoid errors in the view
+        $accountStatement = [
+            'entries' => [],
+            'account_name' => $teacher->name,
+            'final_balance' => 0
+        ];
+        
+        return view('pages.teachers.account-statement', compact('teacher', 'accountStatement'));
+    }
+
     public function show($id)
     {
         $this->authorize('view_teachers');

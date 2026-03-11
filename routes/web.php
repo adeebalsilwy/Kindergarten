@@ -66,7 +66,7 @@ Route::get('login', [LoginController::class, 'showLoginForm'])->name('login')->m
 Route::post('login', [LoginController::class, 'login'])->name('auth.login.post')->middleware('guest');
 Route::post('logout', [LoginController::class, 'logout'])->name('logout')->middleware('auth');
 Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('register')->middleware('guest');
-Route::post('register', [RegisterController::class, 'register'])->name('register.post')->middleware('guest');
+Route::post('register', [RegisterController::class, 'register'])->name('auth.register.post')->middleware('guest');
 
 Route::get('locale/{locale}', [LocaleController::class, 'switch'])->name('locale.switch');
 
@@ -82,7 +82,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('profile', [ProfileController::class, 'index'])->name('profile.index');
     Route::get('profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::get('change-password', [ProfileController::class, 'changePassword'])->name('change-password');
+    Route::get('change-password', [ProfileController::class, 'changePassword'])->name('profile.change-password');
     Route::patch('change-password', [ProfileController::class, 'updatePassword'])->name('password.update.post');
 });
 
@@ -116,8 +116,14 @@ Route::middleware(['auth', 'verified', 'role:Administrator|Accountant|Principal'
 Route::get('attendances/bulk', [AttendanceController::class, 'bulk'])->name('attendances.bulk')->middleware(['auth', 'role:Administrator|Principal|Teacher']);
 Route::post('attendances/bulk', [AttendanceController::class, 'bulkStore'])->name('attendances.bulk.store')->middleware(['auth', 'role:Administrator|Principal|Teacher']);
 Route::resource('grades', GradeController::class)->middleware(['auth', 'verified', 'role:Administrator|Principal|Teacher']);
+Route::get('children/{child}/account-statement', [ChildrenController::class, 'accountStatement'])->name('children.account-statement')->middleware(['auth', 'verified']);
 Route::resource('children', ChildrenController::class)->middleware(['auth', 'verified', 'role:Administrator|Principal|Teacher']);
-// Route::resource('parents', ParentsController::class); // Replaced by guardians resource below
+
+Route::get('guardians/{guardian}/account-statement', [GuardianController::class, 'accountStatement'])->name('guardians.account-statement')->middleware(['auth', 'verified']);
+Route::resource('guardians', GuardianController::class)->middleware(['auth', 'verified']);
+
+Route::get('teachers/{teacher}/account-statement', [TeacherController::class, 'accountStatement'])->name('teachers.account-statement')->middleware(['auth', 'verified']);
+Route::resource('teachers', TeacherController::class)->middleware(['auth', 'verified', 'role:Administrator|Principal']);
 
 Route::resource('languages', LanguageController::class)->middleware(['auth', 'verified', 'role:Administrator']);
 
@@ -125,8 +131,6 @@ Route::prefix('crud-builder')->middleware(['auth', 'verified', 'role:Administrat
     Route::get('/', [\App\Http\Controllers\CrudBuilderController::class, 'index'])->name('crud-builder.index');
     Route::get('/edit', [\App\Http\Controllers\CrudBuilderController::class, 'edit'])->name('crud-builder.edit');
     Route::post('/generate', [\App\Http\Controllers\CrudBuilderController::class, 'generate'])->name('crud-builder.generate');
-
-    // API for Builder
     Route::get('/api/tables', [\App\Http\Controllers\CrudBuilderController::class, 'getTables'])->name('crud-builder.tables');
     Route::get('/api/table-details', [\App\Http\Controllers\CrudBuilderController::class, 'getTableDetails'])->name('crud-builder.table-details');
     Route::get('/api/columns', [\App\Http\Controllers\CrudBuilderController::class, 'getColumns'])->name('crud-builder.columns');
@@ -169,92 +173,68 @@ Route::prefix('monitoring')->middleware(['auth', 'verified', 'role:Administrator
     Route::get('/{log}/rerun', [\App\Http\Controllers\MonitoringController::class, 'rerun'])->name('monitoring.rerun');
 });
 
-// TestItem demo routes removed
-
 Route::resource('accounting_entries', AccountingEntryController::class)->middleware(['auth', 'verified', 'role:Administrator|Accountant|Principal']);
-
-// Export Routes for AccountingEntry
 Route::get('accounting_entries/export/pdf', [AccountingEntryController::class, 'exportPdf'])->name('accounting_entries.export.pdf')->middleware(['auth', 'verified', 'role:Administrator|Accountant|Principal']);
 Route::get('accounting_entries/export/excel', [AccountingEntryController::class, 'exportExcel'])->name('accounting_entries.export.excel')->middleware(['auth', 'verified', 'role:Administrator|Accountant|Principal']);
-Route::resource('attendances', AttendanceController::class)->middleware(['auth', 'role:Administrator|Principal|Teacher']);
 
-// Export Routes for Attendance
+Route::resource('attendances', AttendanceController::class)->middleware(['auth', 'role:Administrator|Principal|Teacher']);
 Route::get('attendances/export/pdf', [AttendanceController::class, 'exportPdf'])->name('attendances.export.pdf')->middleware(['auth', 'role:Administrator|Principal|Teacher']);
 Route::get('attendances/export/excel', [AttendanceController::class, 'exportExcel'])->name('attendances.export.excel')->middleware(['auth', 'role:Administrator|Principal|Teacher']);
-Route::resource('cache', CacheController::class)->middleware(['auth', 'verified']);
 
-// Export Routes for Cache
+Route::resource('cache', CacheController::class)->middleware(['auth', 'verified']);
 Route::get('cache/export/pdf', [CacheController::class, 'exportPdf'])->name('cache.export.pdf')->middleware(['auth', 'verified']);
 Route::get('cache/export/excel', [CacheController::class, 'exportExcel'])->name('cache.export.excel')->middleware(['auth', 'verified']);
 
-// Export Routes for Children
 Route::get('children/export/pdf', [ChildrenController::class, 'exportPdf'])->name('children.export.pdf')->middleware(['auth', 'verified', 'role:Administrator|Principal|Teacher']);
 Route::get('children/export/excel', [ChildrenController::class, 'exportExcel'])->name('children.export.excel')->middleware(['auth', 'verified', 'role:Administrator|Principal|Teacher']);
-Route::resource('classes', ClassesController::class)->middleware(['auth', 'verified', 'role:Administrator|Principal|Teacher']);
 
-// Export Routes for Classes
+Route::resource('classes', ClassesController::class)->middleware(['auth', 'verified', 'role:Administrator|Principal|Teacher']);
 Route::get('classes/export/pdf', [ClassesController::class, 'exportPdf'])->name('classes.export.pdf')->middleware(['auth', 'verified', 'role:Administrator|Principal|Teacher']);
 Route::get('classes/export/excel', [ClassesController::class, 'exportExcel'])->name('classes.export.excel')->middleware(['auth', 'verified', 'role:Administrator|Principal|Teacher']);
-Route::resource('command_logs', CommandLogController::class)->middleware(['auth', 'verified']);
 
-// Export Routes for CommandLog
+Route::resource('command_logs', CommandLogController::class)->middleware(['auth', 'verified']);
 Route::get('command_logs/export/pdf', [CommandLogController::class, 'exportPdf'])->name('command_logs.export.pdf')->middleware(['auth', 'verified']);
 Route::get('command_logs/export/excel', [CommandLogController::class, 'exportExcel'])->name('command_logs.export.excel')->middleware(['auth', 'verified']);
-Route::resource('dashboard_contents', DashboardContentController::class)->middleware(['auth', 'role:Administrator']);
 
-// Export Routes for DashboardContent
+Route::resource('dashboard_contents', DashboardContentController::class)->middleware(['auth', 'role:Administrator']);
 Route::get('dashboard_contents/export/pdf', [DashboardContentController::class, 'exportPdf'])->name('dashboard_contents.export.pdf')->middleware(['auth', 'verified', 'role:Administrator']);
 Route::get('dashboard_contents/export/excel', [DashboardContentController::class, 'exportExcel'])->name('dashboard_contents.export.excel')->middleware(['auth', 'verified', 'role:Administrator']);
 
-Route::get('dashboard', [ReportController::class, 'dashboard'])->name('dashboard')->middleware(['auth', 'verified', 'role:Administrator|Accountant|Principal']);
 Route::resource('expenses', ExpenseController::class)->middleware(['auth', 'verified', 'role:Administrator|Accountant|Principal']);
-
-// Export Routes for Expense
 Route::get('expenses/export/pdf', [ExpenseController::class, 'exportPdf'])->name('expenses.export.pdf')->middleware(['auth', 'verified', 'role:Administrator|Accountant|Principal']);
 Route::get('expenses/export/excel', [ExpenseController::class, 'exportExcel'])->name('expenses.export.excel')->middleware(['auth', 'verified', 'role:Administrator|Accountant|Principal']);
-Route::resource('fees', FeeController::class)->middleware(['auth', 'verified', 'role:Administrator|Accountant|Principal']);
 
-// Export Routes for Fee
+Route::resource('fees', FeeController::class)->middleware(['auth', 'verified', 'role:Administrator|Accountant|Principal']);
 Route::get('fees/export/pdf', [FeeController::class, 'exportPdf'])->name('fees.export.pdf')->middleware(['auth', 'verified', 'role:Administrator|Accountant|Principal']);
 Route::get('fees/export/excel', [FeeController::class, 'exportExcel'])->name('fees.export.excel')->middleware(['auth', 'verified', 'role:Administrator|Accountant|Principal']);
-Route::resource('financial_reports', FinancialReportController::class)->middleware(['auth', 'verified', 'role:Administrator|Accountant|Principal']);
 
-// Export Routes for FinancialReport
+Route::resource('financial_reports', FinancialReportController::class)->middleware(['auth', 'verified', 'role:Administrator|Accountant|Principal']);
 Route::get('financial_reports/export/pdf', [FinancialReportController::class, 'exportPdf'])->name('financial_reports.export.pdf')->middleware(['auth', 'verified', 'role:Administrator|Accountant|Principal']);
 Route::get('financial_reports/export/excel', [FinancialReportController::class, 'exportExcel'])->name('financial_reports.export.excel')->middleware(['auth', 'verified', 'role:Administrator|Accountant|Principal']);
 
-// Export Routes for Grade
-Route::get('grades/export/pdf', [GradeController::class, 'exportPdf'])->name('grades.export.pdf')->middleware(['auth', 'verified', 'role:Administrator|Principal|Teacher']);
-Route::get('grades/export/excel', [GradeController::class, 'exportExcel'])->name('grades.export.excel')->middleware(['auth', 'verified', 'role:Administrator|Principal|Teacher']);
 Route::resource('jobs', JobController::class)->middleware(['auth', 'verified', 'role:Administrator']);
-
-// Export Routes for Job
 Route::get('jobs/export/pdf', [JobController::class, 'exportPdf'])->name('jobs.export.pdf')->middleware(['auth', 'verified', 'role:Administrator']);
 Route::get('jobs/export/excel', [JobController::class, 'exportExcel'])->name('jobs.export.excel')->middleware(['auth', 'verified', 'role:Administrator']);
 
-// Export Routes for Language
 Route::get('languages/export/pdf', [LanguageController::class, 'exportPdf'])->name('languages.export.pdf')->middleware(['auth', 'verified', 'role:Administrator']);
 Route::get('languages/export/excel', [LanguageController::class, 'exportExcel'])->name('languages.export.excel')->middleware(['auth', 'verified', 'role:Administrator']);
 
-// Export Routes for Guardian
 Route::get('guardians/export/pdf', [GuardianController::class, 'exportPdf'])->name('guardians.export.pdf')->middleware(['auth', 'verified']);
 Route::get('guardians/export/excel', [GuardianController::class, 'exportExcel'])->name('guardians.export.excel')->middleware(['auth', 'verified']);
-Route::resource('guardians', GuardianController::class)->middleware(['auth', 'verified']);
-Route::resource('payments', PaymentController::class)->middleware(['auth', 'verified', 'role:Administrator|Accountant|Principal']);
 
-// Export Routes for Payment
+Route::resource('payments', PaymentController::class)->middleware(['auth', 'verified', 'role:Administrator|Accountant|Principal']);
 Route::get('payments/export/pdf', [PaymentController::class, 'exportPdf'])->name('payments.export.pdf')->middleware(['auth', 'verified', 'role:Administrator|Accountant|Principal']);
 Route::get('payments/export/excel', [PaymentController::class, 'exportExcel'])->name('payments.export.excel')->middleware(['auth', 'verified', 'role:Administrator|Accountant|Principal']);
 
-// Export Routes for Permission
 Route::get('permissions/export/pdf', [PermissionController::class, 'exportPdf'])->name('permissions.export.pdf')->middleware(['auth', 'verified', 'role:Administrator']);
 Route::get('permissions/export/excel', [PermissionController::class, 'exportExcel'])->name('permissions.export.excel')->middleware(['auth', 'verified', 'role:Administrator']);
-Route::resource('teachers', TeacherController::class)->middleware(['auth', 'verified', 'role:Administrator|Principal']);
+Route::get('permission/export/pdf', [PermissionController::class, 'exportPdf'])->name('permission.export.pdf')->middleware(['auth', 'verified', 'role:Administrator']);
 
 // Export Routes for Teacher
 Route::get('teachers/export/pdf', [TeacherController::class, 'exportPdf'])->name('teachers.export.pdf')->middleware(['auth', 'verified', 'role:Administrator|Principal']);
 Route::get('teachers/export/excel', [TeacherController::class, 'exportExcel'])->name('teachers.export.excel')->middleware(['auth', 'verified', 'role:Administrator|Principal']);
 Route::resource('users', UserController::class)->middleware(['auth', 'verified', 'role:Administrator']);
+Route::get('users/export/pdf', [UserController::class, 'exportPdf'])->name('users.export.pdf')->middleware(['auth', 'verified', 'role:Administrator']);
 
 // Export Routes for User
 Route::get('users/export/pdf', [UserController::class, 'exportPdf'])->name('users.export.pdf')->middleware(['auth', 'verified', 'role:Administrator']);

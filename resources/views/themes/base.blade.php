@@ -45,7 +45,7 @@ License: You must have a valid license purchased only from themeforest(the above
     @yield('head')
 
     <!-- BEGIN: CSS Assets - Loading all assets for production mode -->
-    @vite('resources/css/app.css')
+    @vite(['resources/css/app.css', 'resources/css/custom-forms.css'])
     @stack('styles')
     <!-- END: CSS Assets-->
 </head>

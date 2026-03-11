@@ -1,0 +1,253 @@
+/* Custom Forms Global Styles */
+:root {
+    --primary-color: #1e40af; /* Blue 800 */
+    --secondary-color: #64748b; /* Slate 500 */
+    --success-color: #10b981; /* Emerald 500 */
+    --danger-color: #ef4444; /* Red 500 */
+    --warning-color: #f59e0b; /* Amber 500 */
+    --info-color: #3b82f6; /* Blue 500 */
+    --border-color: #e2e8f0; /* Slate 200 */
+    --bg-light: #f8fafc; /* Slate 50 */
+}
+
+/* Tab Styles */
+.tab-content {
+    display: none;
+    animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.tab-button {
+    position: relative;
+    padding: 1rem 1.5rem;
+    font-weight: 600;
+    color: var(--secondary-color);
+    background: transparent;
+    border: none;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-bottom: 2px solid transparent;
+}
+
+.tab-button:hover {
+    color: var(--primary-color);
+    background: rgba(30, 64, 175, 0.05);
+}
+
+.tab-button.active {
+    color: var(--primary-color);
+    border-bottom-color: var(--primary-color);
+    background: rgba(30, 64, 175, 0.08);
+}
+
+.tab-button.active::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--primary-color);
+    border-radius: 3px 3px 0 0;
+}
+
+/* Enhanced Tab Navigation Container */
+.tabs-navigation {
+    display: flex;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 2rem;
+    background: white;
+    border-radius: 0.75rem 0.75rem 0 0;
+}
+
+.tabs-navigation::-webkit-scrollbar {
+    display: none;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+
+/* Form Section Styles */
+.form-section-header {
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 1rem;
+    margin-bottom: 2rem;
+}
+
+.form-section-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    display: flex;
+    align-items: center;
+}
+
+/* Input Styles */
+.custom-form-field {
+    margin-bottom: 1.5rem;
+}
+
+.custom-form-label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--secondary-color);
+    margin-bottom: 0.5rem;
+}
+
+/* Enhanced Input Sizing and Responsiveness */
+.custom-form-input, 
+.form-control, 
+.form-select,
+select,
+input[type="text"],
+input[type="number"],
+input[type="date"],
+input[type="email"],
+input[type="password"],
+textarea {
+    width: 100% !important;
+    padding: 0.625rem 0.875rem !important;
+    font-size: 0.9375rem !important;
+    line-height: 1.5 !important;
+    border-radius: 0.5rem !important;
+    border: 1px solid var(--border-color) !important;
+    background-color: white !important;
+    transition: all 0.2s ease-in-out !important;
+}
+
+.custom-form-input:focus,
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--primary-color) !important;
+    box-shadow: 0 0 0 4px rgba(30, 64, 175, 0.1) !important;
+    outline: none !important;
+}
+
+/* Large Screens (Desktop) */
+@media (min-width: 1024px) {
+    .custom-form-input, .form-control, .form-select {
+        font-size: 1rem !important;
+        padding: 0.75rem 1rem !important;
+    }
+}
+
+/* Small Screens (Mobile) */
+@media (max-width: 640px) {
+    .custom-form-input, .form-control, .form-select {
+        font-size: 0.875rem !important;
+        padding: 0.5rem 0.75rem !important;
+    }
+    
+    .grid-cols-12 {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 1rem !important;
+    }
+    
+    .col-span-12, .md\:col-span-6, .sm\:col-span-6, .lg\:col-span-4 {
+        width: 100% !important;
+    }
+}
+
+/* Form Section Spacing */
+.intro-y.box {
+    margin-bottom: 2rem;
+}
+
+/* Responsive Grid Adjustments */
+@media (max-width: 640px) {
+    .grid-cols-12 {
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
+    
+    .sm\:col-span-6 {
+        grid-column: span 1 / span 1;
+    }
+}
+
+/* Box Styling */
+.intro-y.box {
+    border-radius: 0.75rem;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    border: 1px solid var(--border-color);
+    background-color: white;
+}
+
+/* Button Styling */
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #1e3a8a;
+    border-color: #1e3a8a;
+}
+
+/* RTL Adjustments */
+[dir="rtl"] .me-auto {
+    margin-left: auto;
+    margin-right: 0;
+}
+
+[dir="rtl"] .ms-2 {
+    margin-right: 0.5rem;
+    margin-left: 0;
+}
+
+/* Global Table Responsiveness Fix */
+.overflow-auto, .overflow-x-auto {
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary-color) transparent;
+}
+
+.overflow-auto::-webkit-scrollbar, .overflow-x-auto::-webkit-scrollbar {
+    height: 6px;
+}
+
+.overflow-auto::-webkit-scrollbar-thumb, .overflow-x-auto::-webkit-scrollbar-thumb {
+    background-color: var(--primary-color);
+    border-radius: 10px;
+}
+
+.table-report {
+    width: 100%;
+    min-width: 1000px; /* Ensure table doesn't shrink too much */
+}
+
+/* Fix for containers to prevent overflow */
+.intro-y.col-span-12.overflow-auto {
+    width: 100%;
+    max-width: 100%;
+    position: relative;
+    border-radius: 0.75rem;
+    background: white;
+}
+
+/* Ensure images in tables don't break layout */
+.table-report td .image-fit {
+    flex-shrink: 0;
+}
+
+/* Responsive Table utilities */
+@media (max-width: 1024px) {
+    .table-report th, .table-report td {
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+    }
+}
+

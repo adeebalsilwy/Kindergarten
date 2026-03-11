@@ -2,310 +2,262 @@
 
 @section('head')
     <title>{{ __('User.edit') }} - Laravel</title>
+    @vite(['resources/css/pages/users.css'])
 @endsection
 
 @section('subcontent')
     <!-- Header -->
     <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
-        <h2 class="text-lg font-medium me-auto">{{ __('User.edit') }} - {{ $user->name }}</h2>
-        <div class="w-full sm:w-auto flex mt-4 sm:mt-0">
-            <x-base.button variant="outline-secondary" as="a" href="{{ route('users.show', $user->id) }}" class="flex items-center me-2">
+        <h2 class="text-2xl font-black text-slate-800 dark:text-slate-200 me-auto">
+            {{ __('User.edit') }}: <span class="text-primary">{{ $user->name }}</span>
+        </h2>
+        <div class="w-full sm:w-auto flex mt-4 sm:mt-0 gap-3">
+            <x-base.button variant="outline-secondary" as="a" href="{{ route('users.show', $user->id) }}" class="flex items-center px-4 py-2.5 rounded-xl shadow-sm hover:shadow-md transition-all duration-300">
                 <x-base.lucide icon="Eye" class="w-4 h-4 me-2" />
                 {{ __('global.view_details') }}
             </x-base.button>
-            <x-base.button variant="outline-secondary" as="a" href="{{ route('users.index') }}" class="flex items-center">
+            <x-base.button variant="outline-secondary" as="a" href="{{ route('users.index') }}" class="flex items-center px-4 py-2.5 rounded-xl shadow-sm hover:shadow-md transition-all duration-300">
                 <x-base.lucide icon="ArrowLeft" class="w-4 h-4 me-2" />
                 {{ __('global.back_to_list') }}
             </x-base.button>
         </div>
     </div>
 
-    <!-- Validation Errors -->
-    @if ($errors->any())
-        <div class="alert alert-danger show mb-5">
-            <div class="flex items-center">
-                <x-base.lucide icon="AlertCircle" class="w-6 h-6 me-2" />
-                <div>
-                    <div class="font-medium">{{ __('global.validation_errors') }}</div>
-                    <div class="text-slate-500 mt-1">
-                        <ul class="mt-1 list-disc list-inside">
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
+    <!-- Main Content -->
+    <div class="mt-8">
+        <form action="{{ route('users.update', $user->id) }}" method="POST" id="userForm" enctype="multipart/form-data">
+            @csrf
+            @method('PUT')
+            
+            <div class="intro-y box p-0 mb-8 overflow-hidden rounded-[2rem] shadow-2xl border-0">
+                <!-- Tab Navigation -->
+                <div class="tabs-navigation">
+                    <button type="button" class="tab-button active" data-tab="basic">
+                        <x-base.lucide icon="User" class="w-4 h-4 me-3" />
+                        {{ __('global.basic_info') }}
+                    </button>
+                    <button type="button" class="tab-button" data-tab="security">
+                        <x-base.lucide icon="Shield" class="w-4 h-4 me-3" />
+                        {{ __('global.security') }}
+                    </button>
+                    <button type="button" class="tab-button" data-tab="roles">
+                        <x-base.lucide icon="ShieldCheck" class="w-4 h-4 me-3" />
+                        {{ __('global.roles_permissions') }}
+                    </button>
                 </div>
-            </div>
-        </div>
-    @endif
 
-    <!-- Form -->
-    <div class="grid grid-cols-12 gap-6 mt-5">
-        <div class="intro-y col-span-12">
-            <!-- Tabs -->
-            <div class="intro-y box">
-                <div class="flex flex-col sm:flex-row items-center p-5 border-b border-slate-200/60 dark:border-darkmode-400">
-                    <h2 class="font-medium text-base me-auto">{{ __('global.user_information') }}</h2>
-                    <div class="form-check form-switch w-full sm:w-auto sm:ms-auto mt-3 sm:mt-0">
-                        <x-base.form-input type="checkbox" id="is_active" name="is_active" value="1" class="form-check-input" {{ old('is_active', $user->is_active) ? 'checked' : '' }} />
-                        <x-base.form-label for="is_active" class="ms-3">{{ __('global.active') }}</x-base.form-label>
-                    </div>
-                </div>
-                
-                <div class="p-5">
-                    <div class="border border-slate-200/60 dark:border-darkmode-400 rounded-md">
-                        <!-- Tab Navigation -->
-                        <div class="flex flex-col sm:flex-row">
-                            <div class="flex-1 border-e border-slate-200/60 dark:border-darkmode-400 border-t sm:border-t-0 border-b sm:border-b-0">
-                                <div id="basic-tab" class="cursor-pointer font-medium p-5 text-center border-b sm:border-b-0 border-slate-200/60 dark:border-darkmode-400 transition duration-300 ease-in-out bg-slate-100 dark:bg-darkmode-400 dark:text-slate-300" data-tw-toggle="pill" data-tw-target="#basic" role="tab" aria-controls="basic" aria-selected="true">
-                                    <x-base.lucide icon="User" class="w-4 h-4 me-2 inline" />
-                                    {{ __('global.basic_info') }}
+                <div class="p-10">
+                    <!-- Basic Information Tab -->
+                    <div id="basic" class="tab-content active">
+                        <div class="flex items-center mb-10 pb-6 border-b border-slate-100 dark:border-darkmode-400">
+                            <div class="w-16 h-16 rounded-[1.5rem] bg-primary/5 flex items-center justify-center text-primary shadow-inner me-6">
+                                <x-base.lucide icon="User" class="w-8 h-8" />
+                            </div>
+                            <div>
+                                <h3 class="text-2xl font-black text-slate-800 dark:text-slate-200 tracking-tight">{{ __('global.basic_information') }}</h3>
+                                <p class="text-slate-400 font-bold text-sm mt-1 uppercase tracking-widest">{{ __('global.basic_info_description') }}</p>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-12 gap-x-10 gap-y-8">
+                            <div class="col-span-12 md:col-span-6">
+                                <x-base.form-label class="font-black text-slate-700 dark:text-slate-300 mb-3 block" required>{{ __('users.fields.name') }}</x-base.form-label>
+                                <div class="relative group">
+                                    <div class="absolute inset-y-0 start-0 ps-5 flex items-center text-slate-400 group-focus-within:text-primary transition-colors">
+                                        <x-base.lucide icon="User" class="w-5 h-5" />
+                                    </div>
+                                    <x-base.form-input type="text" name="name" id="name" value="{{ old('name', $user->name) }}" placeholder="{{ __('users.placeholders.name') }}" class="ps-14 py-4 rounded-2xl border-slate-200 focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all text-base font-bold" />
+                                </div>
+                                @error('name') <div class="text-danger mt-3 text-xs font-black flex items-center"><x-base.lucide icon="AlertCircle" class="w-4 h-4 me-2" /> {{ $message }}</div> @enderror
+                            </div>
+                            
+                            <div class="col-span-12 md:col-span-6">
+                                <x-base.form-label class="font-black text-slate-700 dark:text-slate-300 mb-3 block" required>{{ __('users.fields.email') }}</x-base.form-label>
+                                <div class="relative group">
+                                    <div class="absolute inset-y-0 start-0 ps-5 flex items-center text-slate-400 group-focus-within:text-primary transition-colors">
+                                        <x-base.lucide icon="Mail" class="w-5 h-5" />
+                                    </div>
+                                    <x-base.form-input type="email" name="email" id="email" value="{{ old('email', $user->email) }}" placeholder="{{ __('users.placeholders.email') }}" class="ps-14 py-4 rounded-2xl border-slate-200 focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all text-base font-bold" />
+                                </div>
+                                @error('email') <div class="text-danger mt-3 text-xs font-black flex items-center"><x-base.lucide icon="AlertCircle" class="w-4 h-4 me-2" /> {{ $message }}</div> @enderror
+                            </div>
+                            
+                            <div class="col-span-12 md:col-span-6">
+                                <x-base.form-label class="font-black text-slate-700 dark:text-slate-300 mb-3 block">{{ __('users.fields.phone') }}</x-base.form-label>
+                                <div class="relative group">
+                                    <div class="absolute inset-y-0 start-0 ps-5 flex items-center text-slate-400 group-focus-within:text-primary transition-colors">
+                                        <x-base.lucide icon="Phone" class="w-5 h-5" />
+                                    </div>
+                                    <x-base.form-input type="tel" name="phone" id="phone" value="{{ old('phone', $user->phone) }}" placeholder="{{ __('users.placeholders.phone') }}" class="ps-14 py-4 rounded-2xl border-slate-200 focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all text-base font-bold" />
+                                </div>
+                                @error('phone') <div class="text-danger mt-3 text-xs font-black flex items-center"><x-base.lucide icon="AlertCircle" class="w-4 h-4 me-2" /> {{ $message }}</div> @enderror
+                            </div>
+                            
+                            <div class="col-span-12 md:col-span-6">
+                                <x-base.form-label class="font-black text-slate-700 dark:text-slate-300 mb-3 block">{{ __('users.fields.department') }}</x-base.form-label>
+                                <div class="relative group">
+                                    <x-base.tom-select name="department" id="department" class="w-full">
+                                        <option value="">{{ __('global.select_department') }}</option>
+                                        <option value="administration" {{ old('department', $user->department) == 'administration' ? 'selected' : '' }}>{{ __('users.fields.departments.administration') }}</option>
+                                        <option value="teaching" {{ old('department', $user->department) == 'teaching' ? 'selected' : '' }}>{{ __('users.fields.departments.teaching') }}</option>
+                                        <option value="finance" {{ old('department', $user->department) == 'finance' ? 'selected' : '' }}>{{ __('users.fields.departments.finance') }}</option>
+                                        <option value="support" {{ old('department', $user->department) == 'support' ? 'selected' : '' }}>{{ __('users.fields.departments.support') }}</option>
+                                    </x-base.tom-select>
                                 </div>
                             </div>
-                            <div class="flex-1 border-e border-slate-200/60 dark:border-darkmode-400 border-t sm:border-t-0 border-b sm:border-b-0">
-                                <div id="security-tab" class="cursor-pointer font-medium p-5 text-center border-b sm:border-b-0 border-slate-200/60 dark:border-darkmode-400 transition duration-300 ease-in-out" data-tw-toggle="pill" data-tw-target="#security" role="tab" aria-controls="security" aria-selected="false">
-                                    <x-base.lucide icon="Shield" class="w-4 h-4 me-2 inline" />
-                                    {{ __('global.security') }}
-                                </div>
-                            </div>
-                            <div class="flex-1 border-t sm:border-t-0 border-b sm:border-b-0">
-                                <div id="roles-tab" class="cursor-pointer font-medium p-5 text-center border-b sm:border-b-0 border-slate-200/60 dark:border-darkmode-400 transition duration-300 ease-in-out" data-tw-toggle="pill" data-tw-target="#roles" role="tab" aria-controls="roles" aria-selected="false">
-                                    <x-base.lucide icon="ShieldCheck" class="w-4 h-4 me-2 inline" />
-                                    {{ __('global.roles_permissions') }}
+
+                            <div class="col-span-12">
+                                <div class="p-8 bg-slate-50 dark:bg-darkmode-600 rounded-[2rem] border border-slate-100 dark:border-darkmode-400 shadow-inner group hover:bg-primary/5 transition-colors duration-500">
+                                    <div class="flex items-center">
+                                        <div class="w-12 h-12 rounded-xl bg-white dark:bg-darkmode-700 flex items-center justify-center text-success shadow-sm me-5 group-hover:scale-110 transition-transform">
+                                            <x-base.lucide icon="CheckCircle" class="w-6 h-6" />
+                                        </div>
+                                        <x-base.form-label for="is_active" class="font-black mb-0 cursor-pointer text-slate-700 dark:text-slate-300 text-lg">{{ __('global.account_active') }}</x-base.form-label>
+                                        <div class="ms-auto">
+                                            <div class="form-check form-switch scale-150">
+                                                <x-base.form-input type="checkbox" id="is_active" name="is_active" value="1" class="form-check-input w-12 h-6" {{ old('is_active', $user->is_active) ? 'checked' : '' }} />
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    
+                    <!-- Security Tab -->
+                    <div id="security" class="tab-content">
+                        <div class="flex items-center mb-10 pb-6 border-b border-slate-100 dark:border-darkmode-400">
+                            <div class="w-16 h-16 rounded-[1.5rem] bg-info/5 flex items-center justify-center text-info shadow-inner me-6">
+                                <x-base.lucide icon="Shield" class="w-8 h-8" />
+                            </div>
+                            <div>
+                                <h3 class="text-2xl font-black text-slate-800 dark:text-slate-200 tracking-tight">{{ __('global.security_settings') }}</h3>
+                                <p class="text-slate-400 font-bold text-sm mt-1 uppercase tracking-widest">{{ __('global.security_description') }}</p>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-12 gap-x-10 gap-y-8">
+                            <div class="col-span-12 md:col-span-6">
+                                <x-base.form-label class="font-black text-slate-700 dark:text-slate-300 mb-3 block">{{ __('users.fields.password') }}</x-base.form-label>
+                                <div class="relative group">
+                                    <div class="absolute inset-y-0 start-0 ps-5 flex items-center text-slate-400 group-focus-within:text-primary transition-colors">
+                                        <x-base.lucide icon="Lock" class="w-5 h-5" />
+                                    </div>
+                                    <x-base.form-input type="password" name="password" id="password" placeholder="{{ __('users.placeholders.password') }}" autocomplete="new-password" class="ps-14 py-4 rounded-2xl border-slate-200 focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all text-base font-bold" />
+                                    <button type="button" onclick="togglePassword('password')" class="absolute inset-y-0 end-0 pe-5 flex items-center text-slate-400 hover:text-primary transition-colors">
+                                        <x-base.lucide icon="Eye" class="w-5 h-5" />
+                                    </button>
+                                </div>
+                                <div class="mt-5 flex items-center gap-3">
+                                    <x-base.button type="button" variant="soft-primary" onclick="generatePassword()" class="text-[10px] font-black py-2.5 px-6 rounded-xl uppercase tracking-widest flex items-center">
+                                        <x-base.lucide icon="Zap" class="w-4 h-4 me-2" />
+                                        {{ __('global.generate_password') }}
+                                    </x-base.button>
+                                    <div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center">
+                                        <x-base.lucide icon="Info" class="w-3.5 h-3.5 me-1.5" />
+                                        {{ __('global.leave_blank_to_keep_current') }}
+                                    </div>
+                                </div>
+                                @error('password') <div class="text-danger mt-3 text-xs font-black flex items-center"><x-base.lucide icon="AlertCircle" class="w-4 h-4 me-2" /> {{ $message }}</div> @enderror
+                            </div>
+                            
+                            <div class="col-span-12 md:col-span-6">
+                                <x-base.form-label class="font-black text-slate-700 dark:text-slate-300 mb-3 block">{{ __('users.fields.password_confirmation') }}</x-base.form-label>
+                                <div class="relative group">
+                                    <div class="absolute inset-y-0 start-0 ps-5 flex items-center text-slate-400 group-focus-within:text-primary transition-colors">
+                                        <x-base.lucide icon="Lock" class="w-5 h-5" />
+                                    </div>
+                                    <x-base.form-input type="password" name="password_confirmation" id="password_confirmation" placeholder="{{ __('users.placeholders.password_confirmation') }}" autocomplete="new-password" class="ps-14 py-4 rounded-2xl border-slate-200 focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all text-base font-bold" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Roles & Permissions Tab -->
+                    <div id="roles" class="tab-content">
+                        <div class="flex items-center mb-10 pb-6 border-b border-slate-100 dark:border-darkmode-400">
+                            <div class="w-16 h-16 rounded-[1.5rem] bg-warning/5 flex items-center justify-center text-warning shadow-inner me-6">
+                                <x-base.lucide icon="ShieldCheck" class="w-8 h-8" />
+                            </div>
+                            <div>
+                                <h3 class="text-2xl font-black text-slate-800 dark:text-slate-200 tracking-tight">{{ __('global.access_control') }}</h3>
+                                <p class="text-slate-400 font-bold text-sm mt-1 uppercase tracking-widest">{{ __('global.access_control_description') }}</p>
+                            </div>
+                        </div>
+
+                        <div class="mb-12">
+                            <div class="flex items-center mb-10">
+                                <h4 class="text-xl font-black text-slate-700 dark:text-slate-300 tracking-tight">{{ __('global.user_roles') }}</h4>
+                                <div class="ms-6 h-px flex-1 bg-slate-100 dark:bg-darkmode-400"></div>
+                                <span class="ms-6 px-5 py-2 bg-slate-50 dark:bg-darkmode-600 text-slate-400 text-[10px] rounded-full font-black uppercase tracking-[0.2em] border border-slate-100 dark:border-darkmode-400 shadow-sm">{{ __('global.select_roles') }}</span>
+                            </div>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                                @foreach(Spatie\Permission\Models\Role::all() as $role)
+                                <div class="role-card group p-6 rounded-[2rem] border-2 border-slate-100 dark:border-darkmode-400 bg-slate-50/50 dark:bg-darkmode-600/50 hover:border-primary/30 hover:bg-white dark:hover:bg-darkmode-700 transition-all duration-300 cursor-pointer relative overflow-hidden" onclick="this.querySelector('input').click()">
+                                    <div class="flex items-start relative z-10">
+                                        <div class="form-check" onclick="event.stopPropagation()">
+                                            <x-base.form-input type="checkbox" id="role_{{ $role->id }}" name="roles[]" value="{{ $role->id }}" class="form-check-input w-8 h-8 border-slate-300 rounded-xl" {{ in_array($role->id, old('roles', $user->roles->pluck('id')->toArray())) ? 'checked' : '' }} />
+                                        </div>
+                                        <div class="ms-5">
+                                            <x-base.form-label for="role_{{ $role->id }}" class="font-black text-xl text-slate-800 dark:text-slate-200 block mb-2 cursor-pointer group-hover:text-primary transition-colors tracking-tight">
+                                                {{ $role->name }}
+                                            </x-base.form-label>
+                                            <div class="flex items-center gap-5 text-slate-400 text-[10px] font-black uppercase tracking-widest">
+                                                <div class="flex items-center group-hover:text-primary/70 transition-colors">
+                                                    <x-base.lucide icon="Key" class="w-4 h-4 me-1.5" />
+                                                    {{ $role->permissions->count() }}
+                                                </div>
+                                                <div class="flex items-center group-hover:text-info/70 transition-colors">
+                                                    <x-base.lucide icon="Users" class="w-4 h-4 me-1.5" />
+                                                    {{ $role->users->count() }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <x-base.lucide icon="Shield" class="absolute -bottom-10 -right-10 w-32 h-32 text-slate-100 dark:text-darkmode-800 group-hover:text-primary/5 transition-colors" />
+                                </div>
+                                @endforeach
+                            </div>
+                            @error('roles') <div class="text-danger mt-8 text-sm font-black p-6 bg-danger/5 rounded-3xl border border-danger/10 flex items-center shadow-sm"><x-base.lucide icon="AlertCircle" class="w-6 h-6 me-4" /> {{ $message }}</div> @enderror
+                        </div>
                         
-                        <form action="{{ route('users.update', $user->id) }}" method="POST" id="userForm">
-                            @csrf
-                            @method('PUT')
-                            
-                            <!-- Tab Content -->
-                            <div class="tab-content border-l border-r border-b">
-                                <!-- Basic Information Tab -->
-                                <div id="basic" class="tab-pane leading-relaxed p-5 active" role="tabpanel" aria-labelledby="basic-tab">
-                                    <div class="grid grid-cols-12 gap-4">
-                                        <div class="col-span-12 sm:col-span-6">
-                                            <x-base.form-label required>{{ __('users.fields.name') }}</x-base.form-label>
-                                            <div class="relative mt-2">
-                                                <x-base.form-input type="text" name="name" id="name" value="{{ old('name', $user->name ?? '') }}" placeholder="{{ __('users.placeholders.name') }}" />
-                                                <div class="absolute inset-y-0 right-0 pe-3 flex items-center pointer-events-none">
-                                                    <x-base.lucide icon="User" class="h-5 w-5 text-gray-400" />
-                                                </div>
-                                            </div>
-                                            @error('name')
-                                                <div class="text-danger mt-2">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                        
-                                        <div class="col-span-12 sm:col-span-6">
-                                            <x-base.form-label required>{{ __('users.fields.email') }}</x-base.form-label>
-                                            <div class="relative mt-2">
-                                                <x-base.form-input type="email" name="email" id="email" value="{{ old('email', $user->email ?? '') }}" placeholder="{{ __('users.placeholders.email') }}" />
-                                                <div class="absolute inset-y-0 right-0 pe-3 flex items-center pointer-events-none">
-                                                    <x-base.lucide icon="Mail" class="h-5 w-5 text-gray-400" />
-                                                </div>
-                                            </div>
-                                            @error('email')
-                                                <div class="text-danger mt-2">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                        
-                                        <div class="col-span-12 sm:col-span-6">
-                                            <x-base.form-label>{{ __('users.fields.phone') }}</x-base.form-label>
-                                            <div class="relative mt-2">
-                                                <x-base.form-input type="tel" name="phone" id="phone" value="{{ old('phone', $user->phone ?? '') }}" placeholder="{{ __('users.placeholders.phone') }}" />
-                                                <div class="absolute inset-y-0 right-0 pe-3 flex items-center pointer-events-none">
-                                                    <x-base.lucide icon="Phone" class="h-5 w-5 text-gray-400" />
-                                                </div>
-                                            </div>
-                                            @error('phone')
-                                                <div class="text-danger mt-2">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                        
-                                        <div class="col-span-12 sm:col-span-6">
-                                            <x-base.form-label>{{ __('users.fields.department') }}</x-base.form-label>
-                                            <x-base.tom-select name="department" id="department" class="w-full">
-                                                <option value="">{{ __('global.select_department') }}</option>
-                                                <option value="administration" {{ old('department', $user->department ?? '') == 'administration' ? 'selected' : '' }}>{{ __('users.departments.administration') }}</option>
-                                                <option value="teaching" {{ old('department', $user->department ?? '') == 'teaching' ? 'selected' : '' }}>{{ __('users.departments.teaching') }}</option>
-                                                <option value="finance" {{ old('department', $user->department ?? '') == 'finance' ? 'selected' : '' }}>{{ __('users.departments.finance') }}</option>
-                                                <option value="support" {{ old('department', $user->department ?? '') == 'support' ? 'selected' : '' }}>{{ __('users.departments.support') }}</option>
-                                            </x-base.tom-select>
-                                            @error('department')
-                                                <div class="text-danger mt-2">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <!-- Security Tab -->
-                                <div id="security" class="tab-pane leading-relaxed p-5" role="tabpanel" aria-labelledby="security-tab">
-                                    <div class="grid grid-cols-12 gap-4">
-                                        <div class="col-span-12 sm:col-span-6">
-                                            <x-base.form-label>{{ __('users.fields.password') }}</x-base.form-label>
-                                            <div class="relative mt-2">
-                                                <x-base.form-input type="password" name="password" id="password" placeholder="{{ __('users.placeholders.password') }}" />
-                                                <div class="absolute inset-y-0 right-0 pe-3 flex items-center pointer-events-none">
-                                                    <x-base.lucide icon="Lock" class="h-5 w-5 text-gray-400" />
-                                                </div>
-                                            </div>
-                                            <div class="mt-2 text-sm text-slate-500">
-                                                {{ __('users.help.password_update') }}
-                                            </div>
-                                            @error('password')
-                                                <div class="text-danger mt-2">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                        
-                                        <div class="col-span-12 sm:col-span-6">
-                                            <x-base.form-label>{{ __('users.fields.password_confirmation') }}</x-base.form-label>
-                                            <div class="relative mt-2">
-                                                <x-base.form-input type="password" name="password_confirmation" id="password_confirmation" placeholder="{{ __('users.placeholders.password_confirmation') }}" />
-                                                <div class="absolute inset-y-0 right-0 pe-3 flex items-center pointer-events-none">
-                                                    <x-base.lucide icon="Lock" class="h-5 w-5 text-gray-400" />
-                                                </div>
-                                            </div>
-                                            @error('password_confirmation')
-                                                <div class="text-danger mt-2">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                        
-                                        <div class="col-span-12">
-                                            <div class="form-check">
-                                                <x-base.form-input type="checkbox" id="send_notification" name="send_notification" value="1" class="form-check-input" />
-                                                <x-base.form-label for="send_notification" class="ms-2">{{ __('users.fields.send_notification') }}</x-base.form-label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <!-- Roles & Permissions Tab -->
-                                <div id="roles" class="tab-pane leading-relaxed p-5" role="tabpanel" aria-labelledby="roles-tab">
-                                    <div class="mb-6">
-                                        <h3 class="text-lg font-medium mb-4">{{ __('global.current_roles') }}</h3>
-                                        <div class="bg-slate-100 dark:bg-darkmode-600 rounded-lg p-4 mb-4">
-                                            @if($user->roles->count() > 0)
-                                                <div class="flex flex-wrap gap-2">
-                                                    @foreach($user->roles as $role)
-                                                        <span class="px-3 py-1 rounded-full {{ $role->name == 'Administrator' ? 'bg-yellow-100 text-yellow-800' : 'bg-primary/10 text-primary' }} text-sm font-medium">
-                                                            {{ $role->name }}
-                                                            @if($role->name == 'Administrator')
-                                                                <x-base.lucide icon="Crown" class="w-3 h-3 ms-1 inline" />
-                                                            @endif
-                                                        </span>
-                                                    @endforeach
-                                                </div>
-                                            @else
-                                                <p class="text-slate-500">{{ __('global.no_roles_assigned') }}</p>
-                                            @endif
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="mb-6">
-                                        <h3 class="text-lg font-medium mb-4">{{ __('global.assign_roles') }}</h3>
-                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                            @foreach(Spatie\Permission\Models\Role::all() as $role)
-                                            <div class="form-check">
-                                                <x-base.form-input type="checkbox" id="role_{{ $role->id }}" name="roles[]" value="{{ $role->id }}" class="form-check-input" {{ (old('roles') ? in_array($role->id, old('roles')) : $user->hasRole($role->name)) ? 'checked' : '' }} />
-                                                <x-base.form-label for="role_{{ $role->id }}" class="ms-2 font-medium">
-                                                    {{ $role->name }}
-                                                    @if($role->name == 'Administrator')
-                                                        <span class="text-warning text-xs ms-1">
-                                                            <x-base.lucide icon="Crown" class="w-3 h-3 inline" />
-                                                            {{ __('global.admin_role') }}
-                                                        </span>
-                                                    @endif
-                                                </x-base.form-label>
-                                                <p class="text-sm text-slate-500 ms-6 mt-1">{{ $role->permissions->count() }} {{ __('global.permissions') }}</p>
-                                            </div>
-                                            @endforeach
-                                        </div>
-                                        @error('roles')
-                                            <div class="text-danger mt-2">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div>
+                        <div class="pt-12 border-t border-slate-100 dark:border-darkmode-400">
+                            <div class="flex items-center mb-10">
+                                <h4 class="text-xl font-black text-slate-700 dark:text-slate-300 tracking-tight">{{ __('global.direct_permissions') }}</h4>
+                                <div class="ms-6 h-px flex-1 bg-slate-100 dark:bg-darkmode-400"></div>
+                                <span class="ms-6 px-5 py-2 bg-info/5 text-info text-[10px] rounded-full font-black uppercase tracking-[0.2em] border border-info/10 shadow-sm">{{ __('global.optional') }}</span>
                             </div>
                             
-                            <!-- Form Actions -->
-                            <div class="flex justify-end gap-3 p-5 border-t border-slate-200/60 dark:border-darkmode-400">
-                                <x-base.button variant="outline-secondary" as="a" href="{{ route('users.index') }}" class="w-24">
-                                    {{ __('global.cancel') }}
-                                </x-base.button>
-                                <x-base.button type="submit" variant="primary" class="w-24">
-                                    {{ __('global.update') }}
-                                </x-base.button>
+                            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 bg-slate-50 dark:bg-darkmode-800/30 p-10 rounded-[2.5rem] border border-slate-100 dark:border-darkmode-400 shadow-inner">
+                                @foreach(Spatie\Permission\Models\Permission::all()->take(24) as $permission)
+                                <div class="form-check items-center hover:bg-white dark:hover:bg-darkmode-600 p-4 rounded-2xl transition-all duration-300 cursor-pointer group shadow-sm hover:shadow-lg border border-transparent hover:border-slate-100" onclick="this.querySelector('input').click()">
+                                    <div onclick="event.stopPropagation()">
+                                        <x-base.form-input type="checkbox" id="permission_{{ $permission->id }}" name="permissions[]" value="{{ $permission->id }}" class="form-check-input w-6 h-6 border-slate-300 rounded-lg" {{ in_array($permission->id, old('permissions', $user->permissions->pluck('id')->toArray())) ? 'checked' : '' }} />
+                                    </div>
+                                    <x-base.form-label for="permission_{{ $permission->id }}" class="ms-4 text-[11px] font-black text-slate-500 dark:text-slate-400 cursor-pointer group-hover:text-primary transition-colors uppercase tracking-widest leading-tight">
+                                        {{ str_replace('_', ' ', $permission->name) }}
+                                    </x-base.form-label>
+                                </div>
+                                @endforeach
                             </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
+
+                <!-- Sticky Action Bar -->
+                <div class="p-8 bg-slate-50 dark:bg-darkmode-600 border-t border-slate-100 dark:border-darkmode-400 flex justify-end gap-4">
+                    <x-base.button type="button" variant="outline-secondary" as="a" href="{{ route('users.index') }}" class="px-8 py-4 rounded-2xl text-base font-bold border-2 hover:bg-slate-100">
+                        {{ __('global.cancel') }}
+                    </x-base.button>
+                    <x-base.button type="submit" variant="primary" class="px-12 py-4 rounded-2xl shadow-xl shadow-primary/30 text-base font-black tracking-wide transform transition-all hover:scale-[1.02] active:scale-[0.98]">
+                        <x-base.lucide icon="Save" class="w-5 h-5 me-2" />
+                        {{ __('global.update_user') }}
+                    </x-base.button>
+                </div>
             </div>
-        </div>
+        </form>
     </div>
 
-    <!-- JavaScript -->
-    <script>
-        // Tab functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            const tabs = document.querySelectorAll('[data-tw-toggle="pill"]');
-            const tabContents = document.querySelectorAll('.tab-pane');
-            
-            tabs.forEach(tab => {
-                tab.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    
-                    // Remove active classes
-                    tabs.forEach(t => {
-                        t.classList.remove('bg-slate-100', 'dark:bg-darkmode-400', 'dark:text-slate-300');
-                    });
-                    tabContents.forEach(content => {
-                        content.classList.remove('active');
-                    });
-                    
-                    // Add active classes
-                    this.classList.add('bg-slate-100', 'dark:bg-darkmode-400', 'dark:text-slate-300');
-                    const target = document.querySelector(this.getAttribute('data-tw-target'));
-                    if (target) {
-                        target.classList.add('active');
-                    }
-                });
-            });
-            
-            // Initialize Tom Select
-            if (typeof TomSelect !== 'undefined') {
-                new TomSelect('#department', {
-                    plugins: ['dropdown_input'],
-                    allowEmptyOption: true
-                });
-            }
-        });
-        
-        // Form validation
-        document.getElementById('userForm').addEventListener('submit', function(e) {
-            const name = document.getElementById('name').value.trim();
-            const email = document.getElementById('email').value.trim();
-            const password = document.getElementById('password').value;
-            const passwordConfirmation = document.getElementById('password_confirmation').value;
-            
-            if (!name || !email) {
-                e.preventDefault();
-                alert('{{ __('global.please_fill_required_fields') }}');
-                return;
-            }
-            
-            if (password && password !== passwordConfirmation) {
-                e.preventDefault();
-                alert('{{ __('global.passwords_do_not_match') }}');
-                return;
-            }
-            
-            if (password && password.length < 8) {
-                e.preventDefault();
-                alert('{{ __('global.password_min_length') }}');
-                return;
-            }
-        });
-    </script>
+    @vite(['resources/js/pages/users.js'])
 @endsection

@@ -7,6 +7,7 @@
 @section('subcontent')
     <x-access-control.index
         title="access_control.permissions.title"
+        resourceRoute="permissions"
         :items="$permissions"
         :columns="[
             ['key' => 'id', 'label' => 'access_control.fields.id', 'class' => 'whitespace-nowrap'],
@@ -35,7 +36,7 @@
         showStats="false"
         :pagination="$permissions"
     >
-        <x-slot name="header">
+        <x-slot name="actions">
             <x-base.button 
                 variant="primary" 
                 data-tw-toggle="modal" 

@@ -35,8 +35,10 @@ export default defineConfig({
             input: [
                 // CSS General (Must be first to establish base styles and Tailwind)
                 "resources/css/app.css",
+                "resources/css/custom-forms.css",
 "resources/css/pages/curricula.css",
-"resources/css/pages/materials.css",
+                "resources/css/pages/materials.css",
+                "resources/css/pages/users.css",
                 // CSS Vendors (Import order matters for proper cascade)
                 "node_modules/animate.css/animate.min.css",
                 "resources/css/vendors/ckeditor.css",

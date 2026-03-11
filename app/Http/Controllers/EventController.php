@@ -150,14 +150,31 @@ class EventController extends Controller
     public function create()
     {
         $this->authorize('create_events');
+        
+        $classes = \App\Models\Classes::all();
+        $teachers = \App\Models\Teacher::all();
+        $children = \App\Models\Children::all();
 
-        return view('pages.events.create', get_defined_vars());
+        return view('pages.events.create', compact('classes', 'teachers', 'children'));
     }
 
     public function store(StoreEventRequest $request)
     {
         $this->authorize('create_events');
-        $this->service->create($request->validated());
+        
+        $data = $request->validated();
+        
+        // Handle child_ids if they come as a comma-separated string or array
+        if (isset($data['child_ids']) && is_string($data['child_ids'])) {
+            $data['child_ids'] = array_map('trim', explode(',', $data['child_ids']));
+        }
+
+        $event = $this->service->create($data);
+        
+        // Sync children if provided
+        if (isset($data['child_ids'])) {
+            $event->children()->sync($data['child_ids']);
+        }
 
         return redirect()->route('events.index')->with('success', __('events.messages.created'));
     }
@@ -181,14 +198,32 @@ class EventController extends Controller
     {
         $this->authorize('edit_events');
         $event = $this->service->find($id);
+        
+        $classes = \App\Models\Classes::all();
+        $teachers = \App\Models\Teacher::all();
+        $children = \App\Models\Children::all();
 
-        return view('pages.events.edit', get_defined_vars());
+        return view('pages.events.edit', compact('event', 'classes', 'teachers', 'children'));
     }
 
     public function update(UpdateEventRequest $request, $id)
     {
         $this->authorize('edit_events');
-        $this->service->update($id, $request->validated());
+        
+        $data = $request->validated();
+        
+        // Handle child_ids if they come as a comma-separated string or array
+        if (isset($data['child_ids']) && is_string($data['child_ids'])) {
+            $data['child_ids'] = array_map('trim', explode(',', $data['child_ids']));
+        }
+
+        $this->service->update($id, $data);
+        $event = $this->service->find($id);
+        
+        // Sync children if provided
+        if (isset($data['child_ids'])) {
+            $event->children()->sync($data['child_ids']);
+        }
 
         return redirect()->route('events.index')->with('success', __('events.messages.updated'));
     }

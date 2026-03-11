@@ -122,7 +122,7 @@
                             <div class="mb-5">
                                 <a
                                     class="mt-2 flex items-center"
-                                    href="{{ route('attendance.index') }}"
+                                    href="{{ route('attendances.index') }}"
                                 >
                                     <div class="image-fit h-8 w-8">
                                         <div class="flex h-8 w-8 items-center justify-center rounded-full bg-purple-500/20 text-purple-600">

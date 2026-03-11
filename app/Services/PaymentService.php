@@ -38,6 +38,12 @@ class PaymentService
     {
         DB::beginTransaction();
         try {
+            if (!isset($data['receipt_number']) || empty($data['receipt_number'])) {
+                $data['receipt_number'] = 'RCPT-' . strtoupper(uniqid());
+            }
+            if (!isset($data['reference_number']) || empty($data['reference_number'])) {
+                $data['reference_number'] = 'REF-' . strtoupper(uniqid());
+            }
             $result = $this->repository->create($data);
             DB::commit();
 

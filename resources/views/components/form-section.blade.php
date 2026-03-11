@@ -7,7 +7,7 @@
     'id' => uniqid('section_')
 ])
 
-<div {{ $attributes->merge(['class' => 'intro-y box p-5 mb-6']) }} 
+<div {{ $attributes->merge(['class' => 'intro-y box p-6 mb-8 border-l-4 border-primary shadow-sm hover:shadow-md transition-shadow duration-300']) }} 
      x-data="{ 
          collapsed: {{ $collapsible && $collapsed ? 'true' : 'false' }},
          toggle() { 
@@ -18,16 +18,16 @@
      }">
     
     <!-- Section Header -->
-    <div class="flex items-center justify-between mb-4 cursor-pointer" 
+    <div class="flex items-center justify-between mb-6 pb-4 border-b border-slate-100 cursor-pointer" 
          @if($collapsible) x-on:click="toggle()" @endif>
         <div class="flex items-center">
-            <div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center me-3">
-                <x-base.lucide icon="{{ $icon }}" class="w-4 h-4 text-primary" />
+            <div class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center me-4 shadow-inner">
+                <x-base.lucide icon="{{ $icon }}" class="w-5 h-5 text-primary" />
             </div>
             <div>
-                <h3 class="text-lg font-medium">{{ $title }}</h3>
+                <h3 class="text-xl font-bold text-slate-800 tracking-tight">{{ $title }}</h3>
                 @if($description)
-                    <p class="text-sm text-slate-500 mt-1">{{ $description }}</p>
+                    <p class="text-sm text-slate-500 mt-1 font-medium italic opacity-80">{{ $description }}</p>
                 @endif
             </div>
         </div>
@@ -48,6 +48,8 @@
          x-transition:leave="transition ease-in duration-150"
          x-transition:leave-start="opacity-100 transform translate-y-0"
          x-transition:leave-end="opacity-0 transform -translate-y-2">
-        {{ $slot }}
+        <div class="grid grid-cols-12 gap-x-6 gap-y-4">
+            {{ $slot }}
+        </div>
     </div>
 </div>

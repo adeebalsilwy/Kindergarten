@@ -160,14 +160,20 @@ class ExpenseController extends Controller
     public function create()
     {
         $this->authorize('create_expenses');
+        
+        $users = \App\Models\User::all();
 
-        return view('pages.expenses.create', get_defined_vars());
+        return view('pages.expenses.create', compact('users'));
     }
 
     public function store(StoreExpenseRequest $request)
     {
         $this->authorize('create_expenses');
-        $this->service->create($request->validated());
+        
+        $data = $request->validated();
+        $data['created_by'] = auth()->id();
+
+        $this->service->create($data);
 
         return redirect()->route('expenses.index')->with('success', __('expenses.messages.created'));
     }
@@ -176,6 +182,7 @@ class ExpenseController extends Controller
     {
         $this->authorize('view_expenses');
         $expense = $this->service->find($id);
+        $expense->load(['createdBy', 'assignedTo']);
 
         return view('pages.expenses.show', compact('expense'));
     }
@@ -184,8 +191,9 @@ class ExpenseController extends Controller
     {
         $this->authorize('edit_expenses');
         $expense = $this->service->find($id);
+        $users = \App\Models\User::all();
 
-        return view('pages.expenses.edit', get_defined_vars());
+        return view('pages.expenses.edit', compact('expense', 'users'));
     }
 
     public function update(UpdateExpenseRequest $request, $id)

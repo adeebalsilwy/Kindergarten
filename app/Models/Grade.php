@@ -36,6 +36,11 @@ class Grade extends Model
     {
         return $this->belongsTo(Children::class, 'child_id');
     }
+
+    public function evaluator()
+    {
+        return $this->belongsTo(User::class, 'evaluator_id');
+    }
     
     // Model Events
     protected static function boot()

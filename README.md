@@ -1,3 +1,5 @@
+https://www.transfernow.net/dl/20260304FEaXU2XU
+
 # Kindergarten Management System
 
 A professional management system built with Laravel 11.

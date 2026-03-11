@@ -274,9 +274,10 @@
                                     @endcan
                                     @can('delete_attendances')
                                         <x-base.button variant="outline-danger" size="sm" class="px-2 py-1 delete-btn" 
-                                            data-delete-id="{{ $attendance->id }}" 
-                                            data-delete-name="{{ $attendance->date->format('Y-m-d') }} - {{ $attendance->child->name ?? '' }}" 
-                                            data-delete-route="{{ route('attendances.destroy', $attendance->id) }}">
+                                            data-id="{{ $attendance->id }}" 
+                                            data-name="{{ $attendance->date->format('Y-m-d') }} - {{ $attendance->child->name ?? '' }}" 
+                                            data-tw-toggle="modal"
+                                            data-tw-target="#delete-confirmation-modal">
                                             <x-base.lucide icon="Trash2" class="w-4 h-4" />
                                         </x-base.button>
                                     @endcan
@@ -304,54 +305,41 @@
     </div>
 
     <!-- Delete Confirmation Modal -->
-    <div id="deleteModal" class="modal" tabindex="-1" aria-hidden="true" style="display: none;">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-body p-0">
-                    <div class="p-5 text-center">
-                        <x-base.lucide icon="AlertTriangle" class="w-16 h-16 text-danger mx-auto mt-3" />
-                        <div class="text-3xl mt-5">{{ __('global.are_you_sure') }}</div>
-                        <div class="text-slate-500 mt-2">
-                            {{ __('global.delete_confirmation') }} "<span id="deleteItemName"></span>"?
-                        </div>
-                        <div class="text-slate-500 mt-1">
-                            {{ __('global.this_action_cannot_be_undone') }}
-                        </div>
-                    </div>
-                    <form id="deleteForm" method="POST" action="">
-                        @csrf
-                        @method('DELETE')
-                        <div class="px-5 pb-8 text-center">
-                            <x-base.button type="button" data-dismiss="modal" class="btn btn-outline-secondary w-24 mr-1">
-                                {{ __('global.cancel') }}
-                            </x-base.button>
-                            <x-base.button type="submit" class="btn btn-danger w-24">
-                                {{ __('global.delete') }}
-                            </x-base.button>
-                        </div>
-                    </form>
+    <x-base.dialog id="delete-confirmation-modal">
+        <x-base.dialog.panel>
+            <div class="p-5 text-center">
+                <x-base.lucide icon="XCircle" class="w-16 h-16 text-danger mx-auto mt-3" />
+                <div class="text-3xl mt-5">{{ __('global.confirm_delete') }}</div>
+                <div class="text-slate-500 mt-2">
+                    {{ __('global.confirm_delete_message') }}
                 </div>
+                <div class="text-slate-500 mt-2 font-bold" id="deleteAttendanceName"></div>
             </div>
-        </div>
-    </div>
+            <div class="px-5 pb-8 text-center">
+                <x-base.button type="button" data-tw-dismiss="modal" variant="outline-secondary" class="w-24 mr-1">
+                    {{ __('global.cancel') }}
+                </x-base.button>
+                <form id="deleteForm" method="POST" action="" class="inline">
+                    @csrf
+                    @method('DELETE')
+                    <x-base.button type="submit" variant="danger" class="w-24">
+                        {{ __('global.delete') }}
+                    </x-base.button>
+                </form>
+            </div>
+        </x-base.dialog.panel>
+    </x-base.dialog>
 
-    <!-- JavaScript for Attendance Management -->
     <script>
-        // Initialize
         document.addEventListener('DOMContentLoaded', function() {
-            // Delete button click handler
+            // Handle delete button clicks
             document.querySelectorAll('.delete-btn').forEach(button => {
                 button.addEventListener('click', function() {
-                    const id = this.dataset.deleteId;
-                    const name = this.dataset.deleteName;
-                    const route = this.dataset.deleteRoute;
+                    const id = this.getAttribute('data-id');
+                    const name = this.getAttribute('data-name');
                     
-                    document.getElementById('deleteItemName').textContent = name;
-                    document.getElementById('deleteForm').setAttribute('action', route);
-                    
-                    // Show modal
-                    const modal = new bootstrap.Modal(document.getElementById('deleteModal'));
-                    modal.show();
+                    document.getElementById('deleteAttendanceName').textContent = name;
+                    document.getElementById('deleteForm').action = `/attendances/${id}`;
                 });
             });
         });

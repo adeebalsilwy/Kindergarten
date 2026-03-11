@@ -71,7 +71,7 @@ class SideMenu
                         'title' => __('global.activities'),
                     ],
                     'events' => [
-                        'icon' => 'calendar-event',
+                        'icon' => 'calendar',
                         'route_name' => 'events.index',
                         'title' => __('global.events'),
                     ],

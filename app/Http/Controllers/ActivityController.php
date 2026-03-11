@@ -144,14 +144,32 @@ class ActivityController extends Controller
     public function create()
     {
         $this->authorize('create_activities');
+        
+        $classes = \App\Models\Classes::all();
+        $teachers = \App\Models\Teacher::all();
+        $curricula = \App\Models\Curriculum::all();
 
-        return view('pages.activities.create', get_defined_vars());
+        return view('pages.activities.create', compact('classes', 'teachers', 'curricula'));
     }
 
     public function store(StoreActivityRequest $request)
     {
         $this->authorize('create_activities');
-        $this->service->create($request->validated());
+        
+        $data = $request->validated();
+        
+        // Handle JSON fields that might come as comma-separated strings from the frontend
+        if (isset($data['required_materials']) && !is_array($data['required_materials']) && !is_array(json_decode($data['required_materials'], true))) {
+             $data['required_materials'] = array_map('trim', explode(',', $data['required_materials']));
+        }
+        if (isset($data['learning_objectives']) && !is_array($data['learning_objectives']) && !is_array(json_decode($data['learning_objectives'], true))) {
+             $data['learning_objectives'] = array_map('trim', explode(',', $data['learning_objectives']));
+        }
+        if (isset($data['outcomes']) && !is_array($data['outcomes']) && !is_array(json_decode($data['outcomes'], true))) {
+             $data['outcomes'] = array_map('trim', explode(',', $data['outcomes']));
+        }
+
+        $this->service->create($data);
 
         return redirect()->route('activities.index')->with('success', __('activities.messages.created'));
     }
@@ -176,14 +194,32 @@ class ActivityController extends Controller
     {
         $this->authorize('edit_activities');
         $activity = $this->service->find($id);
+        
+        $classes = \App\Models\Classes::all();
+        $teachers = \App\Models\Teacher::all();
+        $curricula = \App\Models\Curriculum::all();
 
-        return view('pages.activities.edit', get_defined_vars());
+        return view('pages.activities.edit', compact('activity', 'classes', 'teachers', 'curricula'));
     }
 
     public function update(UpdateActivityRequest $request, $id)
     {
         $this->authorize('edit_activities');
-        $this->service->update($id, $request->validated());
+        
+        $data = $request->validated();
+        
+        // Handle JSON fields that might come as comma-separated strings from the frontend
+        if (isset($data['required_materials']) && !is_array($data['required_materials']) && !is_array(json_decode($data['required_materials'], true))) {
+             $data['required_materials'] = array_map('trim', explode(',', $data['required_materials']));
+        }
+        if (isset($data['learning_objectives']) && !is_array($data['learning_objectives']) && !is_array(json_decode($data['learning_objectives'], true))) {
+             $data['learning_objectives'] = array_map('trim', explode(',', $data['learning_objectives']));
+        }
+        if (isset($data['outcomes']) && !is_array($data['outcomes']) && !is_array(json_decode($data['outcomes'], true))) {
+             $data['outcomes'] = array_map('trim', explode(',', $data['outcomes']));
+        }
+
+        $this->service->update($id, $data);
 
         return redirect()->route('activities.index')->with('success', __('activities.messages.updated'));
     }

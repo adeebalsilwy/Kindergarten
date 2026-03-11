@@ -7,9 +7,9 @@
 @section('subcontent')
     <x-access-control.index
         title="access_control.roles.title"
+        resourceRoute="roles"
         :items="$roles"
         :columns="[
-            ['key' => 'id', 'label' => 'access_control.fields.id', 'class' => 'whitespace-nowrap'],
             ['key' => 'name', 'label' => 'access_control.fields.name', 'class' => 'whitespace-nowrap'],
             [
                 'key' => 'permissions', 
@@ -18,60 +18,35 @@
                 'render' => function($role) {
                     $permissions = $role->permissions->take(3);
                     $moreCount = $role->permissions->count() - 3;
-                    $html = '<div class="flex flex-wrap justify-center gap-1">;
+                    $html = '<div class=\"flex flex-wrap justify-center gap-1\">';
                     foreach($permissions as $perm) {
-                        $html .= '<span class="px-2 py-1 rounded-full bg-slate-100 text-slate-600 text-xs dark:bg-darkmode-400">' . e($perm->name) . '</span>;
+                        $html .= '<span class=\"px-2 py-1 rounded-full bg-slate-100 text-slate-600 text-xs dark:bg-darkmode-400\">' . e($perm->name) . '</span>';
                     }
                     if($moreCount > 0) {
-                        $html .= '<span class="px-2 py-1 rounded-full bg-primary/10 text-primary text-xs">+' . $moreCount . ' ' . __('access_control.actions.more') . '</span>;
+                        $html .= '<span class=\"px-2 py-1 rounded-full bg-primary/10 text-primary text-xs\">+' . $moreCount . ' ' . __('access_control.actions.more') . '</span>';
                     }
-                    $html .= '</div>;
+                    $html .= '</div>';
                     return $html;
                 }
             ],
-            ['key' => 'guard_name', 'label' => 'access_control.fields.guard_name', 'class' => 'text-center whitespace-nowrap'],
-            ['key' => 'created_at', 'label' => 'access_control.fields.created_at', 'class' => 'text-center whitespace-nowrap'],
+            ['key' => 'created_at', 'label' => 'access_control.fields.created_at', 'class' => 'text-center whitespace-nowrap', 'render' => fn($role) => $role->created_at->format('Y-m-d')],
         ]"
-        :filters="[
-            [
-                'name' => 'guard_name',
-                'label' => 'access_control.fields.guard_name',
-                'type' => 'select',
-                'placeholder' => 'access_control.roles.filter_by_guard',
-                'options' => [
-                    ['value' => 'web', 'label' => 'Web'],
-                    ['value' => 'api', 'label' => 'API'],
-                ]
-            ]
-        ]"
-        :bulkActions="[
-            ['action' => 'delete', 'label' => 'access_control.actions.delete', 'icon' => 'Trash2'],
-            ['action' => 'assign_permissions', 'label' => 'access_control.actions.assign_permissions', 'icon' => 'Shield'],
-        ]"
-        searchPlaceholder="access_control.roles.search"
-        createUrl="{{ route('roles.create') }}"
-        viewType="table"
-        showStats="true"
         :stats="[
             [
-                'value' => $roles->count(),
-                'label' => 'access_control.messages.total_roles',
-                'icon' => 'ShieldCheck',
-                'icon_color' => 'text-info',
-                'icon_bg' => 'bg-info/10',
-                'border' => 'border-info/20',
-                'bg' => 'bg-info/5',
-                'trend' => 'access_control.fields.total'
+                'label' => 'access_control.stats.total_roles',
+                'value' => $roles->total(),
+                'icon' => 'Shield',
+                'trend' => 'Roles'
             ],
             [
-                'value' => $roles->where('guard_name', 'web')->count(),
-                'label' => 'access_control.messages.web_roles',
-                'icon' => 'Globe',
-                'icon_color' => 'text-primary',
-                'icon_bg' => 'bg-primary/10',
-                'border' => 'border-primary/20',
-                'bg' => 'bg-primary/5',
-                'trend' => 'access_control.fields.web'
+                'label' => 'access_control.stats.total_permissions',
+                'value' => Spatie\Permission\Models\Permission::count(),
+                'icon' => 'Key',
+                'trend' => 'Perms',
+                'bg' => 'bg-success/5',
+                'border' => 'border-success/20',
+                'icon_color' => 'text-success',
+                'icon_bg' => 'bg-success/10'
             ]
         ]"
         :pagination="$roles"
@@ -94,7 +69,7 @@
                 class="flex items-center"
             >
                 <x-base.lucide icon="Shield" class="w-4 h-4 me-2" />
-                {{ __('access_control.actions.assign_permissions') }}
+                {{ __('access_control.actions.assign_permissions') }} 
             </x-base.button>
         </x-slot>
         
@@ -104,62 +79,55 @@
     </x-access-control.index>
 
     <!-- Assign Permissions Modal -->
-    <div id="assign-permissions-modal" class="modal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
+    <x-base.dialog id="assign-permissions-modal">
+        <x-base.dialog.panel size="lg">
+            <form action="{{ route('roles.assign-permissions') }}" method="POST">
+                @csrf
+                <div class="modal-header p-5 border-b border-slate-200/60 dark:border-darkmode-400">
                     <h2 class="font-medium text-base me-auto">{{ __('access_control.actions.assign_permissions') }}</h2>
-                    <x-base.button variant="outline-secondary" data-tw-dismiss="modal">
-                        <x-base.lucide icon="X" class="w-4 h-4" />
-                    </x-base.button>
                 </div>
-                <form action="{{ route('roles.assign-permissions') }}" method="POST">
-                    @csrf
-                    <div class="modal-body">
-                        <div class="mb-4">
-                            <x-base.form-label for="role_select" class="required">
-                                {{ __('access_control.fields.role') }} <span class="text-danger">*</span>
-                            </x-base.form-label>
-                            <x-base.tom-select name="role_id" id="role_select" required>
+                <div class="modal-body p-5">
+                    <div class="grid grid-cols-12 gap-4 gap-y-3">
+                        <div class="col-span-12">
+                            <x-base.form-label for="role_id">{{ __('access_control.fields.role') }}</x-base.form-label>
+                            <x-base.tom-select name="role_id" id="role_id" class="w-full" required>
                                 <option value="">{{ __('access_control.actions.select_role') }}</option>
                                 @foreach($roles as $role)
                                     <option value="{{ $role->id }}">{{ $role->name }}</option>
                                 @endforeach
                             </x-base.tom-select>
                         </div>
-                        <div class="mb-4">
-                            <x-base.form-label>
-                                {{ __('access_control.fields.permissions') }}
-                            </x-base.form-label>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-64 overflow-y-auto p-2 border border-slate-200 rounded">
+                        <div class="col-span-12">
+                            <x-base.form-label>{{ __('access_control.fields.permissions') }}</x-base.form-label>
+                            <div class="grid grid-cols-12 gap-2 mt-2">
                                 @foreach(Spatie\Permission\Models\Permission::all() as $permission)
-                                    <div class="flex items-center">
-                                        <x-base.form-check.input 
-                                            type="checkbox" 
-                                            name="permissions[]" 
-                                            value="{{ $permission->id }}" 
-                                            id="perm_{{ $permission->id }}" 
-                                            class="me-2"
-                                        />
-                                        <x-base.form-check.label for="perm_{{ $permission->id }}">
-                                            {{ $permission->name }}
-                                        </x-base.form-check.label>
+                                    <div class="col-span-12 md:col-span-4 lg:col-span-3">
+                                        <div class="flex items-center">
+                                            <x-base.form-check.input 
+                                                type="checkbox" 
+                                                name="permissions[]" 
+                                                value="{{ $permission->name }}" 
+                                                id="perm_{{ $permission->id }}" 
+                                            />
+                                            <x-base.form-check.label for="perm_{{ $permission->id }}" class="ms-2 text-xs">
+                                                {{ $permission->name }}
+                                            </x-base.form-check.label>
+                                        </div>
                                     </div>
                                 @endforeach
                             </div>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <x-base.button variant="outline-secondary" data-tw-dismiss="modal">
-                            {{ __('access_control.actions.cancel') }}
-                        </x-base.button>
-                        <x-base.button variant="primary" type="submit">
-                            <x-base.lucide icon="Save" class="w-4 h-4 me-2" />
-                            {{ __('access_control.actions.assign') }}
-                        </x-base.button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+                </div>
+                <div class="modal-footer p-5 border-t border-slate-200/60 dark:border-darkmode-400 text-end">
+                    <x-base.button type="button" data-tw-dismiss="modal" variant="outline-secondary" class="w-24 me-1">
+                        {{ __('access_control.actions.cancel') }}
+                    </x-base.button>
+                    <x-base.button type="submit" variant="primary" class="w-24">
+                        {{ __('access_control.actions.save') }}
+                    </x-base.button>
+                </div>
+            </form>
+        </x-base.dialog.panel>
+    </x-base.dialog>
 @endsection

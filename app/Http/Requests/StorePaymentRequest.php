@@ -19,9 +19,9 @@ class StorePaymentRequest extends FormRequest
             'amount' => 'required|numeric',
             'payment_date' => 'required|date',
             'payment_method' => 'required|in:cash,bank_transfer,credit_card,check,online',
-            'reference_number' => 'required|string|max:255',
+            'reference_number' => 'nullable|string|max:255',
             'status' => 'required|in:completed,pending,failed,refunded',
-            'receipt_number' => 'required|string|max:255',
+            'receipt_number' => 'nullable|string|max:255',
 
         ];
     }

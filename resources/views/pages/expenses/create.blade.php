@@ -15,97 +15,97 @@
                     @csrf
                     <div class="grid grid-cols-12 gap-4">
                         <div class="col-span-12 sm:col-span-6">
-                            <x-base.form-label>{{ __('expenses.fields.title') }}</x-base.form-label>
-                            <x-base.form-input type="text" name="title" value="{{ old('title', $expense->title ?? '') }}" class="mt-2" />
-                            @error('title')
-                                <div class="text-danger mt-2">{{ $message }}</div>
-                            @enderror
+                            <x-form-field 
+                                label="{{ __('expenses.fields.title') }}" 
+                                name="title" 
+                                value="{{ old('title') }}" 
+                                required="true" 
+                                placeholder="{{ __('expenses.fields.title') }}" 
+                            />
                         </div>
                         <div class="col-span-12">
-                            <x-base.form-label>{{ __('expenses.fields.description') }}</x-base.form-label>
-                            <x-base.form-textarea name="description" rows="4" class="resize-none">{{ old('description', $expense->description ?? '') }}</x-base.form-textarea>
-                            @error('description')
-                                <div class="text-danger mt-2">{{ $message }}</div>
-                            @enderror
+                            <x-form-field 
+                                label="{{ __('expenses.fields.description') }}" 
+                                name="description" 
+                                type="textarea" 
+                                value="{{ old('description') }}" 
+                                placeholder="{{ __('expenses.fields.description') }}" 
+                            />
                         </div>
                         <div class="col-span-12 sm:col-span-6">
-                            <x-base.form-label>{{ __('expenses.fields.amount') }}</x-base.form-label>
-                            <div class="relative mt-2">
-                                <div class="absolute inset-y-0 left-0 ps-3 flex items-center pointer-events-none">
-                                    <span class="text-gray-500 sm:text-sm">{{ config('app.currency', 'USD') }}</span>
-                                </div>
-                                <x-base.form-input type="number" step="0.01" min="0" name="amount" value="{{ old('amount', $expense->amount ?? '') }}" class="ps-12" />
-                            </div>
-                            @error('amount')
-                                <div class="text-danger mt-2">{{ $message }}</div>
-                            @enderror
+                            <x-form-field 
+                                label="{{ __('expenses.fields.amount') }}" 
+                                name="amount" 
+                                type="number" 
+                                value="{{ old('amount') }}" 
+                                required="true" 
+                                step="0.01" 
+                            />
                         </div>
                         <div class="col-span-12 sm:col-span-6">
-                            <x-base.form-label>{{ __('expenses.fields.expense_date') }}</x-base.form-label>
-                            <x-base.form-input type="date" name="expense_date" value="{{ old('expense_date', $expense->expense_date ?? '') }}" class="mt-2" />
-                            @error('expense_date')
-                                <div class="text-danger mt-2">{{ $message }}</div>
-                            @enderror
+                            <x-form-field 
+                                label="{{ __('expenses.fields.expense_date') }}" 
+                                name="expense_date" 
+                                type="date" 
+                                value="{{ old('expense_date', now()->format('Y-m-d')) }}" 
+                                required="true" 
+                            />
                         </div>
                         <div class="col-span-12 sm:col-span-6">
-                            <x-base.form-label>{{ __('expenses.fields.vendor') }}</x-base.form-label>
-                            <x-base.form-input type="text" name="vendor" value="{{ old('vendor', $expense->vendor ?? '') }}" class="mt-2" />
-                            @error('vendor')
-                                <div class="text-danger mt-2">{{ $message }}</div>
-                            @enderror
+                            <x-form-field 
+                                label="{{ __('expenses.fields.vendor') }}" 
+                                name="vendor" 
+                                value="{{ old('vendor') }}" 
+                                placeholder="{{ __('expenses.fields.vendor') }}" 
+                            />
                         </div>
                         <div class="col-span-12 sm:col-span-6">
-                            <x-base.form-label>{{ __('expenses.fields.receipt_number') }}</x-base.form-label>
-                            <x-base.form-input type="text" name="receipt_number" value="{{ old('receipt_number', $expense->receipt_number ?? '') }}" class="mt-2" />
-                            @error('receipt_number')
-                                <div class="text-danger mt-2">{{ $message }}</div>
-                            @enderror
+                            <x-form-field 
+                                label="{{ __('expenses.fields.receipt_number') }}" 
+                                name="receipt_number" 
+                                value="{{ old('receipt_number') }}" 
+                                placeholder="{{ __('expenses.fields.receipt_number') }}" 
+                            />
                         </div>
                         <div class="col-span-12 sm:col-span-6">
-                            <x-base.form-label>{{ __('expenses.fields.payment_method') }}</x-base.form-label>
-                            <x-base.form-input type="text" name="payment_method" value="{{ old('payment_method', $expense->payment_method ?? '') }}" class="mt-2" />
-                            @error('payment_method')
-                                <div class="text-danger mt-2">{{ $message }}</div>
-                            @enderror
+                            <x-form-field 
+                                label="{{ __('expenses.fields.payment_method') }}" 
+                                name="payment_method" 
+                                type="select" 
+                                :options="['cash' => __('global.cash'), 'bank_transfer' => __('global.bank_transfer'), 'credit_card' => __('global.credit_card')]" 
+                                value="{{ old('payment_method') }}" 
+                                placeholder="{{ __('global.select_payment_method') }}" 
+                            />
                         </div>
                         <div class="col-span-12 sm:col-span-6">
-                            <x-base.form-label>{{ __('expenses.fields.reference_number') }}</x-base.form-label>
-                            <x-base.form-input type="text" name="reference_number" value="{{ old('reference_number', $expense->reference_number ?? '') }}" class="mt-2" />
-                            @error('reference_number')
-                                <div class="text-danger mt-2">{{ $message }}</div>
-                            @enderror
+                            <x-form-field 
+                                label="{{ __('expenses.fields.reference_number') }}" 
+                                name="reference_number" 
+                                value="{{ old('reference_number') }}" 
+                                placeholder="{{ __('expenses.fields.reference_number') }}" 
+                            />
                         </div>
                         <div class="col-span-12 sm:col-span-6">
-                            <x-base.form-label>{{ __('expenses.fields.status') }}</x-base.form-label>
-                            <x-base.tom-select name="status" class="mt-2">
-                                <option value="">{{ __('global.select_option') }}</option>
-                                <option value="active" {{ old('status', $expense->status ?? '') == 'active' ? 'selected' : '' }}>{{ __('global.active') }}</option>
-                                <option value="inactive" {{ old('status', $expense->status ?? '') == 'inactive' ? 'selected' : '' }}>{{ __('global.inactive') }}</option>
-                                <option value="pending" {{ old('status', $expense->status ?? '') == 'pending' ? 'selected' : '' }}>{{ __('global.pending') }}</option>
-                                <option value="draft" {{ old('status', $expense->status ?? '') == 'draft' ? 'selected' : '' }}>{{ __('global.draft') }}</option>
-                            </x-base.tom-select>
-                            @error('status')
-                                <div class="text-danger mt-2">{{ $message }}</div>
-                            @enderror
+                            <x-form-field 
+                                label="{{ __('expenses.fields.status') }}" 
+                                name="status" 
+                                type="select" 
+                                :options="['pending' => __('global.pending'), 'approved' => __('global.approved'), 'rejected' => __('global.rejected'), 'paid' => __('global.paid')]" 
+                                value="{{ old('status', 'pending') }}" 
+                            />
                         </div>
                         <div class="col-span-12 sm:col-span-6">
-                            <x-base.form-label>{{ __('expenses.fields.created_by') }}</x-base.form-label>
-                            <x-base.form-input type="text" name="created_by" value="{{ old('created_by', $expense->created_by ?? '') }}" class="mt-2" />
-                            @error('created_by')
-                                <div class="text-danger mt-2">{{ $message }}</div>
-                            @enderror
+                            <x-form-field 
+                                label="{{ __('expenses.fields.assigned_to') }}" 
+                                name="assigned_to" 
+                                type="select" 
+                                :options="$users->pluck('name', 'id')->toArray()" 
+                                value="{{ old('assigned_to') }}" 
+                                placeholder="{{ __('global.select_user') }}" 
+                            />
                         </div>
-                        <div class="col-span-12 sm:col-span-6">
-                            <x-base.form-label>{{ __('expenses.fields.assigned_to') }}</x-base.form-label>
-                            <x-base.form-input type="text" name="assigned_to" value="{{ old('assigned_to', $expense->assigned_to ?? '') }}" class="mt-2" />
-                            @error('assigned_to')
-                                <div class="text-danger mt-2">{{ $message }}</div>
-                            @enderror
-                        </div>
-
                     </div>
                     <div class="flex justify-end mt-5">
-                        <a href="{{ route('expenses.index') }}" class="btn btn-outline-secondary w-24 me-1">{{ __('global.cancel') }}</a>
                         <x-base.button type="submit" variant="primary" class="w-24">{{ __('global.save') }}</x-base.button>
                     </div>
                 </form>

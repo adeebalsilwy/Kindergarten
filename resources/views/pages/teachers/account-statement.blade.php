@@ -23,7 +23,7 @@
         <!-- Filter Section -->
         <div class="intro-y col-span-12">
             <div class="box p-5">
-                <form method="GET" action="{{ route('teachers.account-statement') }}">
+                <form method="GET" action="{{ route('teachers.account-statement', $teacher->id) }}">
                     <div class="flex flex-col sm:flex-row gap-4">
                         <div class="flex-1">
                             <x-base.form-label>{{ __('global.start_date') }}</x-base.form-label>

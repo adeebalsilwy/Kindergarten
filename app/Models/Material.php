@@ -68,7 +68,7 @@ class Material extends Model
                     ->withPivot(['quantity_required', 'usage_instructions'])
                     ->withTimestamps();
     }
-    
+
     public function classes(): BelongsToMany
     {
         return $this->belongsToMany(Classes::class, 'class_materials')
@@ -145,13 +145,13 @@ class Material extends Model
         if (!$this->is_active) {
             return 'out-of-stock';
         }
-        
+
         if ($this->quantity_available <= 0) {
             return 'out-of-stock';
         } elseif ($this->quantity_available < $this->quantity_required) {
             return 'maintenance';
         }
-        
+
         return 'available';
     }
 
@@ -217,7 +217,7 @@ class Material extends Model
         // If we had an expiry date field in the DB, we would set it here
         // For now, we'll ignore it or could add a custom field if needed
     }
-    
+
     // Arabic localized accessor methods
     public function getCategoryNameAttribute()
     {
@@ -231,10 +231,10 @@ class Material extends Model
             'hygiene' => 'النظافة',
             'emergency' => 'الطوارئ',
         ];
-        
+
         return $categories[$this->category] ?? $this->category;
     }
-    
+
     public function getTypeNameAttribute()
     {
         $types = [
@@ -242,7 +242,7 @@ class Material extends Model
             'reusable' => 'قابل لإعادة الاستخدام',
             'digital' => 'رقمي',
         ];
-        
+
         return $types[$this->type] ?? $this->type;
     }
 }

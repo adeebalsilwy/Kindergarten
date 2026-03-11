@@ -196,7 +196,15 @@ class UserController extends Controller
     public function update(UpdateUserRequest $request, $id)
     {
         $this->authorize('edit_users');
-        $this->service->update($id, $request->validated());
+        
+        $data = $request->validated();
+        if (empty($data['password'])) {
+            unset($data['password']);
+        } else {
+            $data['password'] = \Illuminate\Support\Facades\Hash::make($data['password']);
+        }
+
+        $this->service->update($id, $data);
 
         return redirect()->route('users.index')->with('success', __('users.messages.updated'));
     }
@@ -207,5 +215,16 @@ class UserController extends Controller
         $this->service->delete($id);
 
         return redirect()->route('users.index')->with('success', __('users.messages.deleted'));
+    }
+
+    public function exportPdf(Request $request)
+    {
+        $this->authorize('view_users');
+        $users = $this->service->all();
+        $html = view('pages.users.export-pdf', compact('users'))->render();
+        
+        return response()->streamDownload(function () use ($html) {
+            echo \OmarAlalwi\Gpdf\Facade\Gpdf::generate($html);
+        }, 'users_export_'.date('Y-m-d').'.pdf');
     }
 }

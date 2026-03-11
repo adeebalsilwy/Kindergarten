@@ -282,26 +282,33 @@
                         <div class="text-xs text-slate-500">
                             {{ __('global.joined') }}: {{ $teacher->created_at->format('M d, Y') }}
                         </div>
-                        <div class="flex gap-1">
+                        <div class="flex gap-2">
                             @can('view_teachers')
-                            <x-base.button variant="outline-secondary" as="a" href="{{ route('teachers.show', $teacher->id) }}" size="sm" class="px-2 py-1">
-                                <x-base.lucide icon="Eye" class="w-3 h-3" />
+                            <x-base.button variant="outline-secondary" as="a" href="{{ route('teachers.show', $teacher->id) }}" size="sm" class="flex-1 justify-center">
+                                <x-base.lucide icon="Eye" class="w-4 h-4 me-1" />
+                                {{ __('global.view') }}
                             </x-base.button>
                             @endcan
                             
                             @can('edit_teachers')
-                            <x-base.button variant="outline-primary" as="a" href="{{ route('teachers.edit', $teacher->id) }}" size="sm" class="px-2 py-1">
-                                <x-base.lucide icon="Pencil" class="w-3 h-3" />
+                            <x-base.button variant="outline-primary" as="a" href="{{ route('teachers.edit', $teacher->id) }}" size="sm" class="flex-1 justify-center">
+                                <x-base.lucide icon="Pencil" class="w-4 h-4 me-1" />
+                                {{ __('global.edit') }}
                             </x-base.button>
                             @endcan
                             
                             @can('delete_teachers')
-                            <x-base.button variant="outline-danger" 
-                                          data-delete-id="{{ $teacher->id }}" 
-                                          data-delete-name="{{ $teacher->name }}" 
-                                          data-delete-route="{{ route('teachers.destroy', $teacher->id) }}"
-                                          size="sm" class="px-2 py-1 delete-btn">
-                                <x-base.lucide icon="Trash2" class="w-3 h-3" />
+                            <x-base.button 
+                                variant="outline-danger" 
+                                size="sm" 
+                                class="flex-1 justify-center delete-btn"
+                                data-id="{{ $teacher->id }}"
+                                data-name="{{ addslashes($teacher->name) }}"
+                                data-tw-toggle="modal"
+                                data-tw-target="#delete-confirmation-modal"
+                            >
+                                <x-base.lucide icon="Trash2" class="w-4 h-4 me-1" />
+                                {{ __('global.delete') }}
                             </x-base.button>
                             @endcan
                         </div>
@@ -416,97 +423,43 @@
     </div>
 
     <!-- Delete Confirmation Modal -->
-    <div id="deleteModal" class="modal" tabindex="-1" aria-hidden="true" style="display: none;">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-body p-0">
-                    <div class="p-5 text-center">
-                        <x-base.lucide icon="AlertTriangle" class="w-16 h-16 text-danger mx-auto mt-3" />
-                        <div class="text-3xl mt-5">{{ __('global.are_you_sure') }}</div>
-                        <div class="text-slate-500 mt-2">
-                            {{ __('global.delete_confirmation') }} "<span id="deleteItemName"></span>"?
-                        </div>
-                        <div class="text-slate-500 mt-1">
-                            {{ __('global.this_action_cannot_be_undone') }}
-                        </div>
-                    </div>
-                    <form id="deleteForm" method="POST" action="">
-                        @csrf
-                        @method('DELETE')
-                        <div class="px-5 pb-8 text-center">
-                            <x-base.button type="button" data-dismiss="modal" class="btn btn-outline-secondary w-24 mr-1">
-                                {{ __('global.cancel') }}
-                            </x-base.button>
-                            <x-base.button type="submit" class="btn btn-danger w-24">
-                                {{ __('global.delete') }}
-                            </x-base.button>
-                        </div>
-                    </form>
+    <x-base.dialog id="delete-confirmation-modal">
+        <x-base.dialog.panel>
+            <div class="p-5 text-center">
+                <x-base.lucide icon="XCircle" class="w-16 h-16 text-danger mx-auto mt-3" />
+                <div class="text-3xl mt-5">{{ __('global.confirm_delete') }}</div>
+                <div class="text-slate-500 mt-2">
+                    {{ __('global.confirm_delete_message') }}
                 </div>
+                <div class="text-slate-500 mt-2 font-bold" id="deleteTeacherName"></div>
             </div>
-        </div>
-    </div>
+            <div class="px-5 pb-8 text-center">
+                <x-base.button type="button" data-tw-dismiss="modal" variant="outline-secondary" class="w-24 mr-1">
+                    {{ __('global.cancel') }}
+                </x-base.button>
+                <form id="deleteForm" method="POST" action="" class="inline">
+                    @csrf
+                    @method('DELETE')
+                    <x-base.button type="submit" variant="danger" class="w-24">
+                        {{ __('global.delete') }}
+                    </x-base.button>
+                </form>
+            </div>
+        </x-base.dialog.panel>
+    </x-base.dialog>
 
-    <!-- JavaScript for Delete Confirmation -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Delete button click handler
+            // Handle delete button clicks
             document.querySelectorAll('.delete-btn').forEach(button => {
                 button.addEventListener('click', function() {
-                    const id = this.dataset.deleteId;
-                    const name = this.dataset.deleteName;
-                    const route = this.dataset.deleteRoute;
+                    const id = this.getAttribute('data-id');
+                    const name = this.getAttribute('data-name');
                     
-                    document.getElementById('deleteItemName').textContent = name;
-                    document.getElementById('deleteForm').setAttribute('action', route);
-                    
-                    // Show modal
-                    const modal = new bootstrap.Modal(document.getElementById('deleteModal'));
-                    modal.show();
+                    document.getElementById('deleteTeacherName').textContent = name;
+                    document.getElementById('deleteForm').action = `/teachers/${id}`;
                 });
             });
-
-            // Live search and filtering
-            function applyFilters() {
-                const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-                const qualificationFilter = document.getElementById('qualificationFilter').value;
-                const statusFilter = document.getElementById('statusFilter').value;
-                
-                const cards = document.querySelectorAll('#teachersGrid > div');
-                
-                cards.forEach(card => {
-                    const name = card.querySelector('.font-medium.text-base').textContent.toLowerCase();
-                    const qualification = card.querySelector('.text-slate-500.text-xs').textContent.toLowerCase();
-                    const statusElement = card.querySelector('.flex.items-center span:last-child');
-                    const status = statusElement ? statusElement.textContent.trim().toLowerCase() : '';
-                    
-                    const matchesSearch = name.includes(searchTerm);
-                    const matchesQualification = !qualificationFilter || qualification.includes(qualificationFilter);
-                    const matchesStatus = !statusFilter || status.includes(statusFilter);
-                    
-                    if (matchesSearch && matchesQualification && matchesStatus) {
-                        card.style.display = 'block';
-                    } else {
-                        card.style.display = 'none';
-                    }
-                });
-            }
-            
-            // Event listeners for live filtering
-            const searchInput = document.getElementById('searchInput');
-            if (searchInput) {
-                searchInput.addEventListener('input', applyFilters);
-            }
-            
-            const qualificationFilter = document.getElementById('qualificationFilter');
-            if (qualificationFilter) {
-                qualificationFilter.addEventListener('change', applyFilters);
-            }
-            
-            const statusFilter = document.getElementById('statusFilter');
-            if (statusFilter) {
-                statusFilter.addEventListener('change', applyFilters);
-            }
         });
     </script>
 @endsection

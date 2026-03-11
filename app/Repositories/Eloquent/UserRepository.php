@@ -39,6 +39,12 @@ class UserRepository implements UserRepositoryInterface
     public function update($id, array $data)
     {
         $model = $this->model->findOrFail($id);
+
+        // If password is null or empty, remove it from the update array
+        if (empty($data['password'])) {
+            unset($data['password']);
+        }
+
         $model->update($data);
 
         return $model;
