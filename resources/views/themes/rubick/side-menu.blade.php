@@ -115,16 +115,7 @@
             <div
                 class="md:max-w-auto min-h-screen min-w-0 max-w-full flex-1 rounded-[30px] bg-slate-100 px-4 pb-10 before:block before:h-px before:w-full before:content-[''] dark:bg-darkmode-700 md:px-[22px]">
                 <x-themes.rubick.top-bar />
-                @if (session('success'))
-                    <x-base.alert variant="success" class="mb-2 flex items-center">
-                        <x-base.lucide icon="CheckCircle" class="w-6 h-6 me-2" /> {{ session('success') }}
-                    </x-base.alert>
-                @endif
-                @if (session('error'))
-                    <x-base.alert variant="danger" class="mb-2 flex items-center">
-                        <x-base.lucide icon="AlertOctagon" class="w-6 h-6 me-2" /> {{ session('error') }}
-                    </x-base.alert>
-                @endif
+                @include('components.base.toast-handler')
                 @yield('subcontent')
             </div>
             <!-- END: Content -->

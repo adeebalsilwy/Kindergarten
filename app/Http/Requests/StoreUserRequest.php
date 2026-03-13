@@ -15,16 +15,13 @@ class StoreUserRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email|unique:users,email',
-            'email_verified_at' => 'required|date',
-            'password' => 'required|string|min:6',
-            'token' => 'required|string|max:255',
-            'user_id' => 'required',
-            'ip_address' => 'required|string|max:255',
-            'user_agent' => 'nullable|string',
-            'payload' => 'nullable|string',
-            'last_activity' => 'required|integer',
-
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|string|min:6|confirmed',
+            'is_active' => 'nullable|boolean',
+            'roles' => 'nullable|array',
+            'roles.*' => 'exists:roles,id',
+            'permissions' => 'nullable|array',
+            'permissions.*' => 'exists:permissions,id',
         ];
     }
 

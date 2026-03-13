@@ -304,6 +304,7 @@
                                 class="flex-1 justify-center delete-btn"
                                 data-id="{{ $teacher->id }}"
                                 data-name="{{ addslashes($teacher->name) }}"
+                                data-delete-url="{{ route('teachers.destroy', $teacher->id) }}"
                                 data-tw-toggle="modal"
                                 data-tw-target="#delete-confirmation-modal"
                             >
@@ -455,9 +456,14 @@
                 button.addEventListener('click', function() {
                     const id = this.getAttribute('data-id');
                     const name = this.getAttribute('data-name');
+                    const deleteUrl = this.getAttribute('data-delete-url');
                     
                     document.getElementById('deleteTeacherName').textContent = name;
-                    document.getElementById('deleteForm').action = `/teachers/${id}`;
+                    
+                    const formElement = document.getElementById('deleteForm');
+                    if (formElement && deleteUrl) {
+                        formElement.action = deleteUrl;
+                    }
                 });
             });
         });

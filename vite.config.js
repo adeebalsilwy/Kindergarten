@@ -121,6 +121,8 @@ export default defineConfig({
                 "resources/js/pages/slideover.js",
                 "resources/js/pages/tabulator.js",
                 "resources/js/pages/validation.js",
+                "resources/js/pages/users.js",
+
 
                 // JS Themes
                 "resources/js/themes/rubick.js",

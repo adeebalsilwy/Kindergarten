@@ -766,6 +766,91 @@
                                             </div>
                                         <?php endif; ?>
                                     </div>
+
+                                    <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit_users')): ?>
+                                    <div class="mt-12 pt-8 border-t border-slate-100 dark:border-darkmode-400">
+                                        <h4 class="text-lg font-black text-slate-700 dark:text-slate-200 mb-6 flex items-center">
+                                            <?php if (isset($component)) { $__componentOriginal16b2e62e74cde9150905c2d0c2cb6800 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginal16b2e62e74cde9150905c2d0c2cb6800 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.base.lucide.index','data' => ['icon' => 'PlusCircle','class' => 'w-5 h-5 me-3 text-primary']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('base.lucide'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['icon' => 'PlusCircle','class' => 'w-5 h-5 me-3 text-primary']); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginal16b2e62e74cde9150905c2d0c2cb6800)): ?>
+<?php $attributes = $__attributesOriginal16b2e62e74cde9150905c2d0c2cb6800; ?>
+<?php unset($__attributesOriginal16b2e62e74cde9150905c2d0c2cb6800); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginal16b2e62e74cde9150905c2d0c2cb6800)): ?>
+<?php $component = $__componentOriginal16b2e62e74cde9150905c2d0c2cb6800; ?>
+<?php unset($__componentOriginal16b2e62e74cde9150905c2d0c2cb6800); ?>
+<?php endif; ?>
+                                            <?php echo e(__('global.assign_new_role')); ?>
+
+                                        </h4>
+                                        <form action="<?php echo e(route('users.assign-role', $user->id)); ?>" method="POST">
+                                            <?php echo csrf_field(); ?>
+                                            <div class="flex gap-3">
+                                                <div class="flex-1">
+                                                    <?php if (isset($component)) { $__componentOriginalb08e28f9db590bed3446cfb449cfe7fd = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginalb08e28f9db590bed3446cfb449cfe7fd = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.base.tom-select.index','data' => ['name' => 'role_id','class' => 'w-full']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('base.tom-select'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['name' => 'role_id','class' => 'w-full']); ?>
+                                                        <option value=""><?php echo e(__('global.select_role')); ?></option>
+                                                        <?php $__currentLoopData = $allRoles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $role): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                            <option value="<?php echo e($role->id); ?>" <?php echo e($user->hasRole($role->name) ? 'disabled' : ''); ?>>
+                                                                <?php echo e($role->name); ?> <?php echo e($user->hasRole($role->name) ? '(' . __('global.already_assigned') . ')' : ''); ?>
+
+                                                            </option>
+                                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                     <?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginalb08e28f9db590bed3446cfb449cfe7fd)): ?>
+<?php $attributes = $__attributesOriginalb08e28f9db590bed3446cfb449cfe7fd; ?>
+<?php unset($__attributesOriginalb08e28f9db590bed3446cfb449cfe7fd); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginalb08e28f9db590bed3446cfb449cfe7fd)): ?>
+<?php $component = $__componentOriginalb08e28f9db590bed3446cfb449cfe7fd; ?>
+<?php unset($__componentOriginalb08e28f9db590bed3446cfb449cfe7fd); ?>
+<?php endif; ?>
+                                                </div>
+                                                <?php if (isset($component)) { $__componentOriginale00eb601fbe667f0da582732d70c41c5 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginale00eb601fbe667f0da582732d70c41c5 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.base.button.index','data' => ['type' => 'submit','variant' => 'primary','class' => 'px-6 rounded-xl']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('base.button'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['type' => 'submit','variant' => 'primary','class' => 'px-6 rounded-xl']); ?>
+                                                    <?php echo e(__('global.assign')); ?>
+
+                                                 <?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginale00eb601fbe667f0da582732d70c41c5)): ?>
+<?php $attributes = $__attributesOriginale00eb601fbe667f0da582732d70c41c5; ?>
+<?php unset($__attributesOriginale00eb601fbe667f0da582732d70c41c5); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginale00eb601fbe667f0da582732d70c41c5)): ?>
+<?php $component = $__componentOriginale00eb601fbe667f0da582732d70c41c5; ?>
+<?php unset($__componentOriginale00eb601fbe667f0da582732d70c41c5); ?>
+<?php endif; ?>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <?php endif; ?>
                                 </div>
                             </div>
                             

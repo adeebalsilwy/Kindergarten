@@ -18,7 +18,7 @@ class MaterialController extends Controller
 
     public function index(Request $request)
     {
-        $this->authorize('view_materials', Material::class);
+        $this->authorize('viewAny', Material::class);
 
         $query = Material::with(['curricula', 'activities']);
 
@@ -65,7 +65,7 @@ class MaterialController extends Controller
 
     public function create()
     {
-        $this->authorize('create_materials', Material::class);
+        $this->authorize('create', Material::class);
 
         // Get all curricula, classes, and activities for the form
         $curricula = Curriculum::all();
@@ -77,7 +77,7 @@ class MaterialController extends Controller
 
     public function store(Request $request)
     {
-        $this->authorize('create_materials', Material::class);
+        $this->authorize('create', Material::class);
 
         $validated = $request->validate([
             'name' => 'required|string|max:255',
@@ -140,7 +140,7 @@ class MaterialController extends Controller
 
     public function show(Material $material)
     {
-        $this->authorize('view_materials', $material);
+        $this->authorize('view', $material);
 
         // Load related data for the show page
         $material->load(['curricula', 'activities', 'classes']);
@@ -155,7 +155,7 @@ class MaterialController extends Controller
 
     public function edit(Material $material)
     {
-        $this->authorize('update_materials', $material);
+        $this->authorize('update', $material);
 
         // Get all curricula, classes, and activities for the form
         $curricula = Curriculum::all();
@@ -167,7 +167,7 @@ class MaterialController extends Controller
 
     public function update(Request $request, Material $material)
     {
-        $this->authorize('update_materials', $material);
+        $this->authorize('update', $material);
 
         $validated = $request->validate([
             'name' => 'required|string|max:255',
@@ -234,7 +234,7 @@ class MaterialController extends Controller
 
     public function destroy(Material $material)
     {
-        $this->authorize('delete_materials', $material);
+        $this->authorize('delete', $material);
 
         $material->delete();
 

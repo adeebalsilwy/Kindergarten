@@ -310,6 +310,7 @@
                             <x-base.button variant="outline-danger" 
                                           data-id="{{ $class->id }}" 
                                           data-name="{{ addslashes($class->name) }}" 
+                                          data-delete-url="{{ route('classes.destroy', $class->id) }}"
                                           data-tw-toggle="modal"
                                           data-tw-target="#delete-confirmation-modal"
                                           size="sm" class="px-2 py-1 delete-btn">
@@ -483,9 +484,14 @@
                 button.addEventListener('click', function() {
                     const id = this.getAttribute('data-id');
                     const name = this.getAttribute('data-name');
+                    const deleteUrl = this.getAttribute('data-delete-url');
                     
                     document.getElementById('deleteClassName').textContent = name;
-                    document.getElementById('deleteForm').action = `/classes/${id}`;
+                    
+                    const formElement = document.getElementById('deleteForm');
+                    if (formElement && deleteUrl) {
+                        formElement.action = deleteUrl;
+                    }
                 });
             });
         });

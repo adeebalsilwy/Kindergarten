@@ -165,13 +165,11 @@
                                     @endcan
                                     
                                     @can('delete_grades')
-                                    <x-base.button variant="outline-danger" 
+                                    <x-base.button variant="outline-danger" size="sm" class="delete-btn" 
                                                   data-delete-id="{{ $grade->id }}" 
                                                   data-delete-name="{{ $grade->subject ?? 'Grade Record' }}" 
-                                                  data-delete-route="{{ route('grades.destroy', $grade->id) }}"
-                                                  size="sm" class="delete-btn">
-                                        <x-base.lucide icon="Trash2" class="w-4 h-4 me-1" />
-                                        {{ __('global.delete') }}
+                                                  data-delete-route="{{ route('grades.destroy', $grade->id) }}">
+                                        <x-base.lucide icon="Trash2" class="w-4 h-4" />
                                     </x-base.button>
                                     @endcan
                                 </div>

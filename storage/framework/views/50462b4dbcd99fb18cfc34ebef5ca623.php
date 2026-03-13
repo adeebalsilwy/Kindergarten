@@ -269,92 +269,7 @@
 <?php $component = $__componentOriginale63c8370c4658312a30efdb2a2b5bdc5; ?>
 <?php unset($__componentOriginale63c8370c4658312a30efdb2a2b5bdc5); ?>
 <?php endif; ?>
-                <?php if(session('success')): ?>
-                    <?php if (isset($component)) { $__componentOriginalaedd4f8693339056cc3bcfecdf92dacf = $component; } ?>
-<?php if (isset($attributes)) { $__attributesOriginalaedd4f8693339056cc3bcfecdf92dacf = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.base.alert.index','data' => ['variant' => 'success','class' => 'mb-2 flex items-center']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
-<?php $component->withName('base.alert'); ?>
-<?php if ($component->shouldRender()): ?>
-<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
-<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
-<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
-<?php endif; ?>
-<?php $component->withAttributes(['variant' => 'success','class' => 'mb-2 flex items-center']); ?>
-                        <?php if (isset($component)) { $__componentOriginal16b2e62e74cde9150905c2d0c2cb6800 = $component; } ?>
-<?php if (isset($attributes)) { $__attributesOriginal16b2e62e74cde9150905c2d0c2cb6800 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.base.lucide.index','data' => ['icon' => 'CheckCircle','class' => 'w-6 h-6 me-2']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
-<?php $component->withName('base.lucide'); ?>
-<?php if ($component->shouldRender()): ?>
-<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
-<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
-<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
-<?php endif; ?>
-<?php $component->withAttributes(['icon' => 'CheckCircle','class' => 'w-6 h-6 me-2']); ?>
-<?php echo $__env->renderComponent(); ?>
-<?php endif; ?>
-<?php if (isset($__attributesOriginal16b2e62e74cde9150905c2d0c2cb6800)): ?>
-<?php $attributes = $__attributesOriginal16b2e62e74cde9150905c2d0c2cb6800; ?>
-<?php unset($__attributesOriginal16b2e62e74cde9150905c2d0c2cb6800); ?>
-<?php endif; ?>
-<?php if (isset($__componentOriginal16b2e62e74cde9150905c2d0c2cb6800)): ?>
-<?php $component = $__componentOriginal16b2e62e74cde9150905c2d0c2cb6800; ?>
-<?php unset($__componentOriginal16b2e62e74cde9150905c2d0c2cb6800); ?>
-<?php endif; ?> <?php echo e(session('success')); ?>
-
-                     <?php echo $__env->renderComponent(); ?>
-<?php endif; ?>
-<?php if (isset($__attributesOriginalaedd4f8693339056cc3bcfecdf92dacf)): ?>
-<?php $attributes = $__attributesOriginalaedd4f8693339056cc3bcfecdf92dacf; ?>
-<?php unset($__attributesOriginalaedd4f8693339056cc3bcfecdf92dacf); ?>
-<?php endif; ?>
-<?php if (isset($__componentOriginalaedd4f8693339056cc3bcfecdf92dacf)): ?>
-<?php $component = $__componentOriginalaedd4f8693339056cc3bcfecdf92dacf; ?>
-<?php unset($__componentOriginalaedd4f8693339056cc3bcfecdf92dacf); ?>
-<?php endif; ?>
-                <?php endif; ?>
-                <?php if(session('error')): ?>
-                    <?php if (isset($component)) { $__componentOriginalaedd4f8693339056cc3bcfecdf92dacf = $component; } ?>
-<?php if (isset($attributes)) { $__attributesOriginalaedd4f8693339056cc3bcfecdf92dacf = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.base.alert.index','data' => ['variant' => 'danger','class' => 'mb-2 flex items-center']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
-<?php $component->withName('base.alert'); ?>
-<?php if ($component->shouldRender()): ?>
-<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
-<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
-<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
-<?php endif; ?>
-<?php $component->withAttributes(['variant' => 'danger','class' => 'mb-2 flex items-center']); ?>
-                        <?php if (isset($component)) { $__componentOriginal16b2e62e74cde9150905c2d0c2cb6800 = $component; } ?>
-<?php if (isset($attributes)) { $__attributesOriginal16b2e62e74cde9150905c2d0c2cb6800 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.base.lucide.index','data' => ['icon' => 'AlertOctagon','class' => 'w-6 h-6 me-2']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
-<?php $component->withName('base.lucide'); ?>
-<?php if ($component->shouldRender()): ?>
-<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
-<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
-<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
-<?php endif; ?>
-<?php $component->withAttributes(['icon' => 'AlertOctagon','class' => 'w-6 h-6 me-2']); ?>
-<?php echo $__env->renderComponent(); ?>
-<?php endif; ?>
-<?php if (isset($__attributesOriginal16b2e62e74cde9150905c2d0c2cb6800)): ?>
-<?php $attributes = $__attributesOriginal16b2e62e74cde9150905c2d0c2cb6800; ?>
-<?php unset($__attributesOriginal16b2e62e74cde9150905c2d0c2cb6800); ?>
-<?php endif; ?>
-<?php if (isset($__componentOriginal16b2e62e74cde9150905c2d0c2cb6800)): ?>
-<?php $component = $__componentOriginal16b2e62e74cde9150905c2d0c2cb6800; ?>
-<?php unset($__componentOriginal16b2e62e74cde9150905c2d0c2cb6800); ?>
-<?php endif; ?> <?php echo e(session('error')); ?>
-
-                     <?php echo $__env->renderComponent(); ?>
-<?php endif; ?>
-<?php if (isset($__attributesOriginalaedd4f8693339056cc3bcfecdf92dacf)): ?>
-<?php $attributes = $__attributesOriginalaedd4f8693339056cc3bcfecdf92dacf; ?>
-<?php unset($__attributesOriginalaedd4f8693339056cc3bcfecdf92dacf); ?>
-<?php endif; ?>
-<?php if (isset($__componentOriginalaedd4f8693339056cc3bcfecdf92dacf)): ?>
-<?php $component = $__componentOriginalaedd4f8693339056cc3bcfecdf92dacf; ?>
-<?php unset($__componentOriginalaedd4f8693339056cc3bcfecdf92dacf); ?>
-<?php endif; ?>
-                <?php endif; ?>
+                <?php echo $__env->make('components.base.toast-handler', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
                 <?php echo $__env->yieldContent('subcontent'); ?>
             </div>
             <!-- END: Content -->
@@ -362,18 +277,18 @@
     </div>
 <?php $__env->stopSection(); ?>
 
-<?php if (! $__env->hasRenderedOnce('7f8a60bf-dfff-45cd-92cb-eb73f70c9302')): $__env->markAsRenderedOnce('7f8a60bf-dfff-45cd-92cb-eb73f70c9302');
+<?php if (! $__env->hasRenderedOnce('ffd6764c-1d91-4208-9d69-b912bda7f7e1')): $__env->markAsRenderedOnce('ffd6764c-1d91-4208-9d69-b912bda7f7e1');
 $__env->startPush('styles'); ?>
     <?php echo app('Illuminate\Foundation\Vite')('resources/css/vendors/tippy.css'); ?>
     <?php echo app('Illuminate\Foundation\Vite')('resources/css/themes/kindergarten/side-nav.css'); ?>
 <?php $__env->stopPush(); endif; ?>
 
-<?php if (! $__env->hasRenderedOnce('a1842c9c-dc7a-4f96-9657-8938d97facde')): $__env->markAsRenderedOnce('a1842c9c-dc7a-4f96-9657-8938d97facde');
+<?php if (! $__env->hasRenderedOnce('be4e6318-9342-4826-95b6-09704d21802c')): $__env->markAsRenderedOnce('be4e6318-9342-4826-95b6-09704d21802c');
 $__env->startPush('vendors'); ?>
     <?php echo app('Illuminate\Foundation\Vite')('resources/js/vendors/tippy.js'); ?>
 <?php $__env->stopPush(); endif; ?>
 
-<?php if (! $__env->hasRenderedOnce('7d9f5213-3890-44f5-bdb7-d1a3d5e11107')): $__env->markAsRenderedOnce('7d9f5213-3890-44f5-bdb7-d1a3d5e11107');
+<?php if (! $__env->hasRenderedOnce('0cf22010-ab31-4352-88ed-fb9ed3d4214e')): $__env->markAsRenderedOnce('0cf22010-ab31-4352-88ed-fb9ed3d4214e');
 $__env->startPush('scripts'); ?>
     <?php echo app('Illuminate\Foundation\Vite')('resources/js/themes/kindergarten.js'); ?>
 <?php $__env->stopPush(); endif; ?>

@@ -13,6 +13,10 @@ use Illuminate\Support\Facades\App;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+
 class UserController extends Controller
 {
     protected $service;
@@ -20,6 +24,52 @@ class UserController extends Controller
     public function __construct(UserService $service)
     {
         $this->service = $service;
+    }
+
+    public function toggleStatus(Request $request, User $user)
+    {
+        $this->authorize('edit_users');
+        
+        $user->is_active = !$user->is_active;
+        $user->save();
+
+        return response()->json([
+            'success' => true,
+            'is_active' => $user->is_active,
+            'message' => __('global.messages.status_updated_successfully')
+        ]);
+    }
+
+    public function toggleVerification(Request $request, User $user)
+    {
+        $this->authorize('edit_users');
+        
+        if ($user->email_verified_at) {
+            $user->email_verified_at = null;
+        } else {
+            $user->email_verified_at = now();
+        }
+        $user->save();
+
+        return response()->json([
+            'success' => true,
+            'is_verified' => (bool)$user->email_verified_at,
+            'message' => __('global.messages.verification_updated_successfully')
+        ]);
+    }
+
+    public function changePassword(Request $request, User $user)
+    {
+        $this->authorize('edit_users');
+        
+        $request->validate([
+            'password' => 'required|min:8|confirmed',
+        ]);
+
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+        return redirect()->back()->with('success', __('global.messages.password_changed_successfully'));
     }
 
     public function index(Request $request)
@@ -149,16 +199,45 @@ class UserController extends Controller
     public function create()
     {
         $this->authorize('create_users');
+        
+        $roles = \Spatie\Permission\Models\Role::all();
+        $permissions = \Spatie\Permission\Models\Permission::all();
+        $groupedPermissions = $permissions->groupBy(function($p) {
+            $parts = explode('_', $p->name);
+            return count($parts) >= 2 ? $parts[1] : 'other';
+        });
 
-        return view('pages.users.create', get_defined_vars());
+        return view('pages.users.create', compact('roles', 'groupedPermissions'));
     }
 
     public function store(StoreUserRequest $request)
     {
         $this->authorize('create_users');
-        $this->service->create($request->validated());
+        
+        try {
+            $data = $request->validated();
+            $data['password'] = \Illuminate\Support\Facades\Hash::make($data['password']);
+            $data['is_active'] = $request->has('is_active');
+            
+            $user = $this->service->create($data);
+            
+            // Sync roles - convert to integers
+            if ($request->has('roles')) {
+                $roleIds = array_map('intval', $request->roles);
+                $user->syncRoles($roleIds);
+            }
+            
+            // Sync permissions - convert to integers
+            if ($request->has('permissions')) {
+                $permissionIds = array_map('intval', $request->permissions);
+                $user->syncPermissions($permissionIds);
+            }
 
-        return redirect()->route('users.index')->with('success', __('users.messages.created'));
+            return redirect()->route('users.index')->with('success', __('users.messages.created'));
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error('Error creating user: ' . $e->getMessage());
+            return redirect()->back()->withInput()->with('error', __('global.messages.error') . ': ' . $e->getMessage());
+        }
     }
 
     public function show($id)
@@ -169,44 +248,90 @@ class UserController extends Controller
         // Load all related data for the enhanced show page
         $user->load([
             'roles',
-            'permissions',
-            'accountingEntries',
-            'expensesCreated',
-            'expensesAssigned',
-            'financialReports',
-            'createdActivities',
-            'createdEvents',
-            'createdClasses.teacher',
-            'createdClasses.children',
-            'createdClasses.activities',
-            'createdClasses.events'
+            'permissions'
         ]);
 
-        return view('pages.users.show', compact('user'));
+        $allRoles = \Spatie\Permission\Models\Role::all();
+
+        return view('pages.users.show', compact('user', 'allRoles'));
     }
 
     public function edit($id)
     {
         $this->authorize('edit_users');
         $user = $this->service->find($id);
+        
+        $roles = \Spatie\Permission\Models\Role::all();
+        $permissions = \Spatie\Permission\Models\Permission::all();
+        $groupedPermissions = $permissions->groupBy(function($p) {
+            $parts = explode('_', $p->name);
+            return count($parts) >= 2 ? $parts[1] : 'other';
+        });
 
-        return view('pages.users.edit', get_defined_vars());
+        $userRoles = $user->roles->pluck('id')->toArray();
+        $userPermissions = $user->permissions->pluck('id')->toArray();
+
+        return view('pages.users.edit', compact('user', 'roles', 'groupedPermissions', 'userRoles', 'userPermissions'));
     }
 
     public function update(UpdateUserRequest $request, $id)
     {
         $this->authorize('edit_users');
         
-        $data = $request->validated();
-        if (empty($data['password'])) {
-            unset($data['password']);
-        } else {
-            $data['password'] = \Illuminate\Support\Facades\Hash::make($data['password']);
+        try {
+            $data = $request->validated();
+            
+            if (empty($data['password'])) {
+                unset($data['password']);
+            } else {
+                $data['password'] = \Illuminate\Support\Facades\Hash::make($data['password']);
+            }
+
+            $data['is_active'] = $request->has('is_active');
+            
+            $user = $this->service->update($id, $data);
+            
+            // Sync roles - convert to integers
+            if ($request->has('roles')) {
+                $roleIds = array_map('intval', $request->roles);
+                $user->syncRoles($roleIds);
+            } else {
+                $user->syncRoles([]);
+            }
+            
+            // Sync permissions - convert to integers
+            if ($request->has('permissions')) {
+                $permissionIds = array_map('intval', $request->permissions);
+                $user->syncPermissions($permissionIds);
+            } else {
+                $user->syncPermissions([]);
+            }
+
+            return redirect()->route('users.index')->with('success', __('users.messages.updated'));
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error('Error updating user: ' . $e->getMessage());
+            return redirect()->back()->withInput()->with('error', __('global.messages.error') . ': ' . $e->getMessage());
         }
+    }
 
-        $this->service->update($id, $data);
+    public function assignRole(Request $request, $id)
+    {
+        $this->authorize('edit_users');
+        
+        $request->validate([
+            'role_id' => 'required|exists:roles,id'
+        ]);
 
-        return redirect()->route('users.index')->with('success', __('users.messages.updated'));
+        try {
+            $user = $this->service->find($id);
+            $role = \Spatie\Permission\Models\Role::findById($request->role_id);
+            
+            $user->assignRole($role);
+
+            return redirect()->back()->with('success', __('global.messages.role_assigned_successfully'));
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', __('global.messages.error') . ': ' . $e->getMessage());
+        }
     }
 
     public function destroy($id)

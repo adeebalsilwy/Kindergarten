@@ -120,16 +120,7 @@
                 "after:content-[''] after:z-[-1] after:rounded-[40px_0px_0px_0px] after:w-full after:inset-y-0 after:absolute after:left-0 after:bg-white/10 after:mt-8 after:-ms-4 after:dark:bg-darkmode-400/50 after:hidden md:after:block",
             ])>
                 <x-themes.tinker.top-bar />
-                @if (session('success'))
-                    <x-base.alert variant="success" class="mb-2 flex items-center">
-                        <x-base.lucide icon="CheckCircle" class="w-6 h-6 me-2" /> {{ session('success') }}
-                    </x-base.alert>
-                @endif
-                @if (session('error'))
-                    <x-base.alert variant="danger" class="mb-2 flex items-center">
-                        <x-base.lucide icon="AlertOctagon" class="w-6 h-6 me-2" /> {{ session('error') }}
-                    </x-base.alert>
-                @endif
+                @include('components.base.toast-handler')
                 @yield('subcontent')
             </div>
             <!-- END: Content -->

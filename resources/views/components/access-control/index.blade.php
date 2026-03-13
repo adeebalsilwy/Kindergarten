@@ -36,18 +36,18 @@
             
             @if($exportable)
                 <div class="dropdown">
-                    <x-base.button variant="outline-secondary" class="flex items-center">
+                    <x-base.button variant="outline-secondary" class="flex items-center" data-tw-toggle="dropdown">
                         <x-base.lucide icon="Download" class="w-4 h-4 me-2" />
                         {{ __('access_control.actions.export') }}
                         <x-base.lucide icon="ChevronDown" class="w-4 h-4 ms-2" />
                     </x-base.button>
                     <div class="dropdown-menu w-40">
                         <div class="dropdown-content">
-                            <a href="#" class="dropdown-item flex items-center">
+                            <a href="{{ request()->fullUrlWithQuery(['export' => 'pdf']) }}" class="dropdown-item flex items-center">
                                 <x-base.lucide icon="FileText" class="w-4 h-4 me-2" />
                                 {{ __('access_control.actions.export_pdf') }}
                             </a>
-                            <a href="#" class="dropdown-item flex items-center">
+                            <a href="{{ request()->fullUrlWithQuery(['export' => 'excel']) }}" class="dropdown-item flex items-center">
                                 <x-base.lucide icon="FileSpreadsheet" class="w-4 h-4 me-2" />
                                 {{ __('access_control.actions.export_excel') }}
                             </a>
@@ -105,7 +105,7 @@
                                     <x-base.form-input 
                                         name="search" 
                                         value="{{ request('search') }}" 
-                                        placeholder="{{ __($searchPlaceholder) }}" 
+                                        placeholder="{{ __('access_control.actions.search') }}" 
                                         class="w-full"
                                     />
                                 </div>
@@ -153,19 +153,20 @@
     <!-- View Toggle -->
     <div class="intro-y flex flex-col sm:flex-row items-center mt-5">
         <div class="flex items-center gap-2 mb-4 sm:mb-0">
-            <span class="text-sm text-slate-600">{{ __('access_control.messages.showing') }} {{ $items->firstItem() ?? 0 }} {{ __('access_control.messages.to') }} {{ $items->lastItem() ?? 0 }} {{ __('access_control.messages.of') }} {{ $items->total() }} {{ __('access_control.messages.results') }}</span>
+            @if(method_exists($items, 'firstItem'))
+                <span class="text-sm text-slate-600">{{ __('access_control.messages.showing') }} {{ $items->firstItem() ?? 0 }} {{ __('access_control.messages.to') }} {{ $items->lastItem() ?? 0 }} {{ __('access_control.messages.of') }} {{ $items->total() }} {{ __('access_control.messages.results') }}</span>
+            @else
+                <span class="text-sm text-slate-600">{{ __('access_control.messages.showing') }} {{ $items->count() }} {{ __('access_control.messages.results') }}</span>
+            @endif
         </div>
         <div class="flex items-center gap-2">
             <span class="text-sm text-slate-600 me-2">{{ __('access_control.actions.view') }}:</span>
             <div class="flex border border-slate-200 rounded-md overflow-hidden">
-                <button type="button" class="px-3 py-1.5 text-sm {{ $viewType === 'table' ? 'bg-primary text-white' : 'bg-white text-slate-600 hover:bg-slate-50' }}" onclick="changeView('table')">
+                <button type="button" title="{{ __('access_control.actions.view_table') }}" class="px-3 py-1.5 text-sm {{ $viewType === 'table' ? 'bg-primary text-white' : 'bg-white text-slate-600 hover:bg-slate-50' }}" onclick="changeView('table')">
                     <x-base.lucide icon="Table" class="w-4 h-4" />
                 </button>
-                <button type="button" class="px-3 py-1.5 text-sm {{ $viewType === 'grid' ? 'bg-primary text-white' : 'bg-white text-slate-600 hover:bg-slate-50' }}" onclick="changeView('grid')">
+                <button type="button" title="{{ __('access_control.actions.view_grid') }}" class="px-3 py-1.5 text-sm {{ $viewType === 'grid' ? 'bg-primary text-white' : 'bg-white text-slate-600 hover:bg-slate-50' }}" onclick="changeView('grid')">
                     <x-base.lucide icon="Grid" class="w-4 h-4" />
-                </button>
-                <button type="button" class="px-3 py-1.5 text-sm {{ $viewType === 'list' ? 'bg-primary text-white' : 'bg-white text-slate-600 hover:bg-slate-50' }}" onclick="changeView('list')">
-                    <x-base.lucide icon="List" class="w-4 h-4" />
                 </button>
             </div>
         </div>
@@ -246,6 +247,7 @@
                                                     class="px-2 py-1 delete-btn"
                                                     data-id="{{ $item->id }}"
                                                     data-name="{{ $item->name ?? $item->title ?? '' }}"
+                                                    data-delete-url="{{ route($resourceRoute . '.destroy', $item->id) }}"
                                                     data-tw-toggle="modal"
                                                     data-tw-target="#delete-confirmation-modal"
                                                 >
@@ -340,13 +342,18 @@
                                     <x-base.button variant="outline-secondary" size="sm" class="px-2 py-1">
                                         <x-base.lucide icon="Pencil" class="w-3 h-3" />
                                     </x-base.button>
-                                    <form method="POST" onsubmit="return confirm('{{ __('access_control.actions.confirm_delete') }}')" class="inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <x-base.button variant="outline-danger" type="submit" size="sm" class="px-2 py-1">
-                                            <x-base.lucide icon="Trash2" class="w-3 h-3" />
-                                        </x-base.button>
-                                    </form>
+                                    <x-base.button 
+                                        variant="outline-danger" 
+                                        size="sm" 
+                                        class="px-2 py-1 delete-btn"
+                                        data-id="{{ $item->id }}"
+                                        data-name="{{ $item->name ?? $item->title ?? '' }}"
+                                        data-delete-url="{{ route($resourceRoute . '.destroy', $item->id) }}"
+                                        data-tw-toggle="modal"
+                                        data-tw-target="#delete-confirmation-modal"
+                                    >
+                                        <x-base.lucide icon="Trash2" class="w-3 h-3" />
+                                    </x-base.button>
                                 </div>
                             </div>
                         </div>
@@ -374,13 +381,17 @@
         </div>
 
         <!-- Pagination -->
-        @if($pagination)
+        @if($pagination && method_exists($pagination, 'links'))
             <div class="intro-y col-span-12 flex flex-wrap sm:flex-row sm:flex-nowrap items-center">
                 <div class="me-auto">
                     {{ $pagination->withQueryString()->links() }}
                 </div>
                 <div class="text-slate-500 text-sm">
-                    {{ __('access_control.messages.showing') }} {{ $items->firstItem() ?? 0 }} {{ __('access_control.messages.to') }} {{ $items->lastItem() ?? 0 }} {{ __('access_control.messages.of') }} {{ $items->total() }} {{ __('access_control.messages.results') }}
+                    @if(method_exists($items, 'firstItem'))
+                        {{ __('access_control.messages.showing') }} {{ $items->firstItem() ?? 0 }} {{ __('access_control.messages.to') }} {{ $items->lastItem() ?? 0 }} {{ __('access_control.messages.of') }} {{ $items->total() }} {{ __('access_control.messages.results') }}
+                    @else
+                        {{ __('access_control.messages.showing') }} {{ $items->count() }} {{ __('access_control.messages.results') }}
+                    @endif
                 </div>
             </div>
         @endif
@@ -454,18 +465,18 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Handle delete button clicks
-    const resourceRoute = "{{ $resourceRoute }}";
     document.querySelectorAll('.delete-btn').forEach(button => {
         button.addEventListener('click', function() {
             const id = this.getAttribute('data-id');
             const name = this.getAttribute('data-name');
+            const deleteUrl = this.getAttribute('data-delete-url');
             
             const nameElement = document.getElementById('deleteItemName');
             if (nameElement) nameElement.textContent = name;
             
             const formElement = document.getElementById('deleteForm');
-            if (formElement && resourceRoute) {
-                formElement.action = `/${resourceRoute}/${id}`;
+            if (formElement && deleteUrl) {
+                formElement.action = deleteUrl;
             }
         });
     });

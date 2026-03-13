@@ -14,7 +14,7 @@
                 {{ __('global.add_new_child') }}
             </x-base.button>
             @endcan
-            
+
             @can('export_children')
             <div class="dropdown ms-2">
                 <x-base.button variant="outline-secondary" class="flex items-center">
@@ -60,7 +60,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="intro-y">
             <div class="report-box zoom-in">
                 <div class="box p-5 border border-warning/20 bg-warning/5">
@@ -80,7 +80,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="intro-y">
             <div class="report-box zoom-in">
                 <div class="box p-5 border border-info/20 bg-info/5">
@@ -100,7 +100,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="intro-y">
             <div class="report-box zoom-in">
                 <div class="box p-5 border border-success/20 bg-success/5">
@@ -129,12 +129,12 @@
                 <!-- Search Bar -->
                 <div class="flex-1">
                     <div class="relative">
-                        <x-base.form-input 
-                            type="text" 
+                        <x-base.form-input
+                            type="text"
                             name="search"
                             id="searchInput"
                             value="{{ request('search') }}"
-                            placeholder="{{ __('global.search_children') }}..." 
+                            placeholder="{{ __('global.search_children') }}..."
                             class="w-full ps-10 pe-4 py-2"
                         />
                         <div class="absolute inset-y-0 left-0 ps-3 flex items-center pointer-events-none">
@@ -142,7 +142,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- Class Filter -->
                 <div class="w-full lg:w-48">
                     <select name="class_id" id="classFilter" class="form-select w-full box">
@@ -152,7 +152,7 @@
                         @endforeach
                     </select>
                 </div>
-                
+
                 <!-- Status Filter -->
                 <div class="w-full lg:w-40">
                      <select name="enrollment_status" id="statusFilter" class="form-select w-full box">
@@ -162,7 +162,7 @@
                         <option value="graduated" {{ request('enrollment_status') == 'graduated' ? 'selected' : '' }}>{{ __('global.graduated') }}</option>
                     </select>
                 </div>
-                
+
                 <!-- Action Buttons -->
                 <div class="flex gap-2">
                     <x-base.button as="a" href="{{ route('children.index') }}" variant="secondary" class="flex items-center" id="resetFilters">
@@ -191,7 +191,7 @@
                             <span class="text-white text-4xl font-bold">{{ strtoupper(substr($child->name, 0, 1)) }}</span>
                         </div>
                     @endif
-                    
+
                     <!-- Status Badge -->
                     <div class="absolute top-3 right-3">
                         @if($child->enrollment_status === 'active')
@@ -209,7 +209,7 @@
                         @endif
                     </div>
                 </div>
-                
+
                 <!-- Child Info -->
                 <div class="p-5">
                     <div class="flex items-start justify-between">
@@ -227,7 +227,7 @@
                             <div class="font-medium text-sm">{{ $child->class->name ?? '-' }}</div>
                         </div>
                     </div>
-                    
+
                     <!-- Parent Info -->
                     @if($child->parent)
                         <div class="mt-4 pt-4 border-t border-slate-200/60 dark:border-darkmode-400">
@@ -243,7 +243,7 @@
                             @endif
                         </div>
                     @endif
-                    
+
                     <!-- Financial Status -->
                     <div class="mt-4 pt-4 border-t border-slate-200/60 dark:border-darkmode-400">
                         <div class="flex justify-between text-sm">
@@ -257,15 +257,15 @@
                                 @endif
                             </span>
                         </div>
-                        
+
                         <!-- Progress Bar -->
                         <div class="mt-2">
                             @php
-                                $paymentPercentage = $child->fees_required > 0 ? 
+                                $paymentPercentage = $child->fees_required > 0 ?
                                     min(100, ($child->fees_paid / $child->fees_required) * 100) : 0;
                             @endphp
                             <div class="w-full bg-slate-200 rounded-full h-2">
-                                <div class="bg-{{ $paymentPercentage >= 100 ? 'success' : ($paymentPercentage >= 50 ? 'warning' : 'danger') }} h-2 rounded-full" 
+                                <div class="bg-{{ $paymentPercentage >= 100 ? 'success' : ($paymentPercentage >= 50 ? 'warning' : 'danger') }} h-2 rounded-full"
                                      style="width: {{ $paymentPercentage }}%"></div>
                             </div>
                             <div class="text-xs text-slate-500 mt-1 text-end">
@@ -273,7 +273,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <!-- Quick Stats -->
                     <div class="grid grid-cols-3 gap-2 mt-4 pt-4 border-t border-slate-200/60 dark:border-darkmode-400">
                         <div class="text-center">
@@ -289,42 +289,43 @@
                             <div class="text-xs text-slate-500">{{ __('global.grades') }}</div>
                         </div>
                     </div>
-                    
+
                     <!-- Action Buttons -->
                     <div class="mt-5 pt-5 border-t border-slate-200/60 dark:border-darkmode-400 flex gap-2">
                         @can('view_children')
-                            <x-base.button 
-                                variant="outline-secondary" 
-                                as="a" 
-                                href="{{ route('children.show', $child->id) }}" 
-                                size="sm" 
+                            <x-base.button
+                                variant="outline-secondary"
+                                as="a"
+                                href="{{ route('children.show', $child->id) }}"
+                                size="sm"
                                 class="flex-1 justify-center"
                             >
                                 <x-base.lucide icon="Eye" class="w-4 h-4 me-1" />
                                 {{ __('global.view') }}
                             </x-base.button>
                         @endcan
-                        
+
                         @can('edit_children')
-                            <x-base.button 
-                                variant="outline-primary" 
-                                as="a" 
-                                href="{{ route('children.edit', $child->id) }}" 
-                                size="sm" 
+                            <x-base.button
+                                variant="outline-primary"
+                                as="a"
+                                href="{{ route('children.edit', $child->id) }}"
+                                size="sm"
                                 class="flex-1 justify-center"
                             >
                                 <x-base.lucide icon="Pencil" class="w-4 h-4 me-1" />
                                 {{ __('global.edit') }}
                             </x-base.button>
                         @endcan
-                        
+
                         @can('delete_children')
-                            <x-base.button 
-                                variant="outline-danger" 
-                                size="sm" 
+                            <x-base.button
+                                variant="outline-danger"
+                                size="sm"
                                 class="flex-1 justify-center delete-btn"
                                 data-id="{{ $child->id }}"
                                 data-name="{{ addslashes($child->name) }}"
+                                data-delete-url="{{ route('children.destroy', $child->id) }}"
                                 data-tw-toggle="modal"
                                 data-tw-target="#delete-confirmation-modal"
                             >
@@ -346,10 +347,10 @@
                         {{ __('global.no_children_description') }}
                     </p>
                     @can('create_children')
-                        <x-base.button 
-                            variant="primary" 
-                            as="a" 
-                            href="{{ route('children.create') }}" 
+                        <x-base.button
+                            variant="primary"
+                            as="a"
+                            href="{{ route('children.create') }}"
                             class="flex items-center mx-auto"
                         >
                             <x-base.lucide icon="UserPlus" class="w-4 h-4 me-2" />
@@ -369,7 +370,7 @@
             </div>
         </div>
     @endif
-    
+
     <!-- Delete Confirmation Modal -->
     <x-base.dialog id="delete-confirmation-modal">
         <x-base.dialog.panel>
@@ -405,23 +406,23 @@
             const statusFilter = document.getElementById('statusFilter');
             const applyFilters = document.getElementById('applyFilters');
             const resetFilters = document.getElementById('resetFilters');
-            
+
             // Apply filters
             applyFilters?.addEventListener('click', function() {
                 const searchTerm = searchInput?.value || '';
                 const classId = classFilter?.value || '';
                 const status = statusFilter?.value || '';
-                
+
                 // Build query parameters
                 const params = new URLSearchParams();
                 if (searchTerm) params.set('search', searchTerm);
                 if (classId) params.set('class_id', classId);
                 if (status) params.set('enrollment_status', status);
-                
+
                 // Redirect with filters
                 window.location.href = `{{ route('children.index') }}?${params.toString()}`;
             });
-            
+
             // Reset filters
             resetFilters?.addEventListener('click', function() {
                 searchInput.value = '';
@@ -429,25 +430,30 @@
                 statusFilter.value = '';
                 window.location.href = '{{ route('children.index') }}';
             });
-            
+
             // Auto-apply search on enter
             searchInput?.addEventListener('keypress', function(e) {
                 if (e.key === 'Enter') {
                     applyFilters.click();
                 }
             });
-            
+
             // Handle delete button clicks
             document.querySelectorAll('.delete-btn').forEach(button => {
                 button.addEventListener('click', function() {
                     const id = this.getAttribute('data-id');
                     const name = this.getAttribute('data-name');
-                    
+                    const deleteUrl = this.getAttribute('data-delete-url');
+
                     document.getElementById('deleteChildName').textContent = name;
-                    document.getElementById('deleteForm').action = `/children/${id}`;
+                    
+                    const formElement = document.getElementById('deleteForm');
+                    if (formElement && deleteUrl) {
+                        formElement.action = deleteUrl;
+                    }
                 });
             });
-            
+
             // Live search functionality
             let searchTimeout;
             searchInput?.addEventListener('input', function() {
@@ -455,20 +461,20 @@
                 searchTimeout = setTimeout(() => {
                     const searchTerm = this.value.toLowerCase();
                     const cards = document.querySelectorAll('#childrenGrid > div');
-                    
+
                     cards.forEach(card => {
                         const nameElement = card.querySelector('h3');
                         const classNameElement = card.querySelector('.text-end .font-medium');
                         const parentNameElement = card.querySelector('[class*="truncate"]');
-                        
+
                         const name = nameElement?.textContent.toLowerCase() || '';
                         const className = classNameElement?.textContent.toLowerCase() || '';
                         const parentName = parentNameElement?.textContent.toLowerCase() || '';
-                        
-                        const matches = name.includes(searchTerm) || 
-                                       className.includes(searchTerm) || 
+
+                        const matches = name.includes(searchTerm) ||
+                                       className.includes(searchTerm) ||
                                        parentName.includes(searchTerm);
-                        
+
                         card.style.display = matches ? 'block' : 'none';
                     });
                 }, 300);

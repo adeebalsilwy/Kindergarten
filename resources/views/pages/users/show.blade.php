@@ -121,6 +121,12 @@
                     <x-base.lucide icon="Activity" class="w-4 h-4 me-3" />
                     {{ __('global.activity_log') }}
                 </button>
+                @can('edit_users')
+                <button class="tab-button px-6 py-4 text-sm font-black uppercase tracking-widest rounded-2xl flex items-center transition-all duration-300" data-tab="security">
+                    <x-base.lucide icon="Lock" class="w-4 h-4 me-3" />
+                    {{ __('global.security_settings') }}
+                </button>
+                @endcan
                 <button class="tab-button px-6 py-4 text-sm font-black uppercase tracking-widest rounded-2xl flex items-center transition-all duration-300" data-tab="settings">
                     <x-base.lucide icon="Cpu" class="w-4 h-4 me-3" />
                     {{ __('global.system_info') }}
@@ -243,6 +249,33 @@
                                             </div>
                                         @endforelse
                                     </div>
+
+                                    @can('edit_users')
+                                    <div class="mt-12 pt-8 border-t border-slate-100 dark:border-darkmode-400">
+                                        <h4 class="text-lg font-black text-slate-700 dark:text-slate-200 mb-6 flex items-center">
+                                            <x-base.lucide icon="PlusCircle" class="w-5 h-5 me-3 text-primary" />
+                                            {{ __('global.assign_new_role') }}
+                                        </h4>
+                                        <form action="{{ route('users.assign-role', $user->id) }}" method="POST">
+                                            @csrf
+                                            <div class="flex gap-3">
+                                                <div class="flex-1">
+                                                    <x-base.tom-select name="role_id" class="w-full">
+                                                        <option value="">{{ __('global.select_role') }}</option>
+                                                        @foreach($allRoles as $role)
+                                                            <option value="{{ $role->id }}" {{ $user->hasRole($role->name) ? 'disabled' : '' }}>
+                                                                {{ $role->name }} {{ $user->hasRole($role->name) ? '(' . __('global.already_assigned') . ')' : '' }}
+                                                            </option>
+                                                        @endforeach
+                                                    </x-base.tom-select>
+                                                </div>
+                                                <x-base.button type="submit" variant="primary" class="px-6 rounded-xl">
+                                                    {{ __('global.assign') }}
+                                                </x-base.button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    @endcan
                                 </div>
                             </div>
                             
@@ -308,6 +341,48 @@
                             </div>
                         </div>
         </div>
+
+        @can('edit_users')
+        <!-- Security Tab -->
+        <div id="security" class="tab-content">
+            <div class="intro-y box p-12 rounded-[3rem] border-0 shadow-2xl bg-white dark:bg-darkmode-700">
+                <div class="flex items-center mb-16 pb-6 border-b border-slate-100 dark:border-darkmode-400">
+                    <div class="w-14 h-14 rounded-2xl bg-warning/5 flex items-center justify-center text-warning shadow-inner me-6">
+                        <x-base.lucide icon="Lock" class="w-7 h-7" />
+                    </div>
+                    <h3 class="text-2xl font-black text-slate-800 dark:text-slate-200 tracking-tight">{{ __('global.security_settings') }}</h3>
+                </div>
+                
+                <div class="max-w-xl mx-auto">
+                    <div class="bg-slate-50 dark:bg-darkmode-600 p-10 rounded-[3rem] border border-slate-100 dark:border-darkmode-400 shadow-inner group hover:bg-white transition-all duration-500">
+                        <h4 class="text-xl font-black text-slate-800 dark:text-slate-200 mb-8 flex items-center">
+                            <x-base.lucide icon="Shield" class="w-6 h-6 me-4 text-primary" />
+                            {{ __('global.change_user_password') }}
+                        </h4>
+                        
+                        <form action="{{ route('users.change-password', $user->id) }}" method="POST">
+                            @csrf
+                            <div class="space-y-6">
+                                <div>
+                                    <x-base.form-label class="font-black text-slate-700 dark:text-slate-300 mb-3 block text-xs uppercase tracking-widest">{{ __('global.new_password') }}</x-base.form-label>
+                                    <x-base.form-input type="password" name="password" class="py-4 rounded-2xl border-slate-200 focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all text-sm font-bold shadow-sm" required />
+                                </div>
+                                <div>
+                                    <x-base.form-label class="font-black text-slate-700 dark:text-slate-300 mb-3 block text-xs uppercase tracking-widest">{{ __('global.confirm_new_password') }}</x-base.form-label>
+                                    <x-base.form-input type="password" name="password_confirmation" class="py-4 rounded-2xl border-slate-200 focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all text-sm font-bold shadow-sm" required />
+                                </div>
+                                <div class="pt-6">
+                                    <x-base.button type="submit" variant="primary" class="w-full py-4 rounded-2xl shadow-xl shadow-primary/20 font-black uppercase tracking-widest text-xs transition-all hover:scale-[1.02]">
+                                        {{ __('global.update_password') }}
+                                    </x-base.button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endcan
 
         <!-- System Info Tab -->
         <div id="settings" class="tab-content">

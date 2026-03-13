@@ -57,7 +57,7 @@
                             <a class="flex items-center me-3" href="{{ route('dashboard-content.edit', $content) }}">
                                 <i data-lucide="check-square" class="w-4 h-4 me-1"></i> {{ __('global.edit') }}
                             </a>
-                            <a class="flex items-center text-danger" href="javascript:;" data-tw-toggle="modal" data-tw-target="#delete-confirmation-modal" data-id="{{ $content->id }}">
+                            <a class="flex items-center text-danger delete-btn" href="javascript:;" data-tw-toggle="modal" data-tw-target="#delete-confirmation-modal" data-id="{{ $content->id }}" data-delete-url="{{ route('dashboard_contents.destroy', $content->id) }}">
                                 <i data-lucide="trash-2" class="w-4 h-4 me-1"></i> {{ __('global.delete') }}
                             </a>
                         </div>
@@ -109,13 +109,15 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     // Handle delete confirmation
-    const deleteButtons = document.querySelectorAll('[data-tw-target="#delete-confirmation-modal"]');
+    const deleteButtons = document.querySelectorAll('.delete-btn');
     const deleteForm = document.getElementById('delete-form');
     
     deleteButtons.forEach(button => {
         button.addEventListener('click', function() {
-            const contentId = this.getAttribute('data-id');
-            deleteForm.action = '/dashboard-content/' + contentId;
+            const deleteUrl = this.getAttribute('data-delete-url');
+            if (deleteUrl) {
+                deleteForm.action = deleteUrl;
+            }
         });
     });
 });

@@ -75,7 +75,7 @@ Route::get('email/verify', [EmailVerificationController::class, 'notice'])->name
 Route::get('email/verify/{id}/{hash}', [EmailVerificationController::class, 'verify'])->name('verification.verify')->middleware(['auth', 'signed']);
 Route::post('email/verification-notification', [EmailVerificationController::class, 'send'])->name('verification.send')->middleware(['auth', 'throttle:6,1']);
 // Main Dashboard (Protected)
-Route::get('dashboard-overview-1', [PageController::class, 'dashboardOverview1'])->name('dashboard-overview-1')->middleware(['auth', 'verified', 'role:Administrator|Principal|Accountant|Teacher|Staff']);
+Route::get('dashboard-overview-1', [PageController::class, 'dashboardOverview1'])->name('dashboard-overview-1');
 
 // Profile Routes
 Route::middleware(['auth', 'verified'])->group(function () {
@@ -163,6 +163,7 @@ Route::prefix('api-manager')->middleware(['auth', 'verified', 'role:Administrato
 });
 
 Route::prefix('access-control')->middleware(['auth', 'verified', 'role:Administrator'])->group(function () {
+    Route::post('roles/assign-permissions', [\App\Http\Controllers\RoleController::class, 'assignPermissions'])->name('roles.assign-permissions');
     Route::resource('roles', \App\Http\Controllers\RoleController::class);
     Route::resource('permissions', \App\Http\Controllers\PermissionController::class);
 });
@@ -234,6 +235,10 @@ Route::get('permission/export/pdf', [PermissionController::class, 'exportPdf'])-
 Route::get('teachers/export/pdf', [TeacherController::class, 'exportPdf'])->name('teachers.export.pdf')->middleware(['auth', 'verified', 'role:Administrator|Principal']);
 Route::get('teachers/export/excel', [TeacherController::class, 'exportExcel'])->name('teachers.export.excel')->middleware(['auth', 'verified', 'role:Administrator|Principal']);
 Route::resource('users', UserController::class)->middleware(['auth', 'verified', 'role:Administrator']);
+Route::post('users/{user}/toggle-status', [UserController::class, 'toggleStatus'])->name('users.toggle-status')->middleware(['auth', 'verified', 'role:Administrator']);
+Route::post('users/{user}/toggle-verification', [UserController::class, 'toggleVerification'])->name('users.toggle-verification')->middleware(['auth', 'verified', 'role:Administrator']);
+Route::post('users/{user}/change-password', [UserController::class, 'changePassword'])->name('users.change-password')->middleware(['auth', 'verified', 'role:Administrator']);
+Route::post('users/{user}/assign-role', [UserController::class, 'assignRole'])->name('users.assign-role')->middleware(['auth', 'verified', 'role:Administrator']);
 Route::get('users/export/pdf', [UserController::class, 'exportPdf'])->name('users.export.pdf')->middleware(['auth', 'verified', 'role:Administrator']);
 
 // Export Routes for User
@@ -309,5 +314,5 @@ Route::fallback(function () {
         return redirect()->route('dashboard-overview-1');
     }
 
-    return response()->view('pages.error-page', [], 404);
+    return response()->view('errors.404', [], 404);
 });

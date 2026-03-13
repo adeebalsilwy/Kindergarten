@@ -168,14 +168,12 @@
                                     @endcan
 
                                     @can('delete_events')
-                                    <x-base.button variant="outline-danger"
-                                                  data-delete-id="{{ $event->id }}"
-                                                  data-delete-name="{{ $event->title ?? 'Event' }}"
-                                                  data-delete-route="{{ route('events.destroy', $event->id) }}"
-                                                  size="sm" class="delete-btn">
-                                        <x-base.lucide icon="Trash2" class="w-4 h-4 me-1" />
-                                        {{ __('global.delete') }}
-                                    </x-base.button>
+                                        <x-base.button variant="outline-danger" size="sm" class="px-2 py-1 delete-btn" 
+                                            data-delete-id="{{ $event->id }}" 
+                                            data-delete-name="{{ $event->title }}" 
+                                            data-delete-route="{{ route('events.destroy', $event->id) }}">
+                                            <x-base.lucide icon="Trash2" class="w-4 h-4" />
+                                        </x-base.button>
                                     @endcan
                                 </div>
                             </x-base.table.td>

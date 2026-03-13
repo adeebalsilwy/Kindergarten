@@ -182,6 +182,7 @@
                                     <x-base.button variant="outline-danger" size="sm" class="delete-btn"
                                         data-id="{{ $fee->id }}"
                                         data-name="{{ addslashes($fee->name) }}"
+                                        data-delete-url="{{ route('fees.destroy', $fee->id) }}"
                                         data-tw-toggle="modal"
                                         data-tw-target="#delete-confirmation-modal">
                                         <x-base.lucide icon="Trash2" class="w-4 h-4 me-1" />
@@ -313,9 +314,14 @@
                 button.addEventListener('click', function() {
                     const id = this.getAttribute('data-id');
                     const name = this.getAttribute('data-name');
+                    const deleteUrl = this.getAttribute('data-delete-url');
                     
                     document.getElementById('deleteFeeName').textContent = name;
-                    document.getElementById('deleteForm').action = `/fees/${id}`;
+                    
+                    const formElement = document.getElementById('deleteForm');
+                    if (formElement && deleteUrl) {
+                        formElement.action = deleteUrl;
+                    }
                 });
             });
         });

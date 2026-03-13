@@ -100,6 +100,7 @@
                                         <x-base.button variant="outline-danger" 
                                                       data-id="{{ $parent->id }}" 
                                                       data-name="{{ addslashes($parent->name) }}" 
+                                                      data-delete-url="{{ route('parents.destroy', $parent->id) }}"
                                                       data-tw-toggle="modal"
                                                       data-tw-target="#delete-confirmation-modal"
                                                       size="sm" class="delete-btn">
@@ -233,9 +234,14 @@
                 button.addEventListener('click', function() {
                     const id = this.getAttribute('data-id');
                     const name = this.getAttribute('data-name');
+                    const deleteUrl = this.getAttribute('data-delete-url');
                     
                     document.getElementById('deleteParentName').textContent = name;
-                    document.getElementById('deleteForm').action = `/parents/${id}`;
+                    
+                    const formElement = document.getElementById('deleteForm');
+                    if (formElement && deleteUrl) {
+                        formElement.action = deleteUrl;
+                    }
                 });
             });
         });

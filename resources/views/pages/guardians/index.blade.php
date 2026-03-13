@@ -233,6 +233,7 @@
                                 class="flex-1 justify-center delete-btn"
                                 data-id="{{ $guardian->id }}"
                                 data-name="{{ addslashes($guardian->name) }}"
+                                data-delete-url="{{ route('guardians.destroy', $guardian->id) }}"
                                 data-tw-toggle="modal"
                                 data-tw-target="#delete-confirmation-modal"
                             >
@@ -412,9 +413,14 @@
                 button.addEventListener('click', function() {
                     const id = this.getAttribute('data-id');
                     const name = this.getAttribute('data-name');
+                    const deleteUrl = this.getAttribute('data-delete-url');
                     
                     document.getElementById('deleteGuardianName').textContent = name;
-                    document.getElementById('deleteForm').action = `/guardians/${id}`;
+                    
+                    const formElement = document.getElementById('deleteForm');
+                    if (formElement && deleteUrl) {
+                        formElement.action = deleteUrl;
+                    }
                 });
             });
         });

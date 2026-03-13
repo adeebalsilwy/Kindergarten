@@ -153,47 +153,47 @@ class SideMenu
             'divider',
 
             // Developer Tools
-            'developer-tools' => [
-                'icon' => 'code',
-                'title' => 'Developer Tools',
-                'sub_menu' => [
-                    'system-backup' => [
-                        'icon' => 'database',
-                        'route_name' => 'backup.index',
-                        'title' => 'System Backup',
-                    ],
-                    'crud-builder' => [
-                        'icon' => 'zap',
-                        'route_name' => 'crud-builder.index',
-                        'title' => 'Visual CRUD Builder',
-                    ],
-                    'command-monitoring' => [
-                        'icon' => 'monitor',
-                        'route_name' => 'monitoring.index',
-                        'title' => 'Command Monitoring',
-                    ],
-                    'command-logs' => [
-                        'icon' => 'file-text',
-                        'route_name' => 'command_logs.index',
-                        'title' => 'Command Logs',
-                    ],
-                    'database-import' => [
-                        'icon' => 'database',
-                        'route_name' => 'database-import.index',
-                        'title' => 'Database Import',
-                    ],
-                    'api-manager' => [
-                        'icon' => 'server',
-                        'route_name' => 'api-manager.index',
-                        'title' => 'API Manager',
-                    ],
-                    'jobs' => [
-                        'icon' => 'briefcase',
-                        'route_name' => 'jobs.index',
-                        'title' => __('global.jobs'),
-                    ],
-                ],
-            ],
+            // 'developer-tools' => [
+            //     'icon' => 'code',
+            //     'title' => 'Developer Tools',
+            //     'sub_menu' => [
+            //         'system-backup' => [
+            //             'icon' => 'database',
+            //             'route_name' => 'backup.index',
+            //             'title' => 'System Backup',
+            //         ],
+            //         'crud-builder' => [
+            //             'icon' => 'zap',
+            //             'route_name' => 'crud-builder.index',
+            //             'title' => 'Visual CRUD Builder',
+            //         ],
+            //         'command-monitoring' => [
+            //             'icon' => 'monitor',
+            //             'route_name' => 'monitoring.index',
+            //             'title' => 'Command Monitoring',
+            //         ],
+            //         'command-logs' => [
+            //             'icon' => 'file-text',
+            //             'route_name' => 'command_logs.index',
+            //             'title' => 'Command Logs',
+            //         ],
+            //         'database-import' => [
+            //             'icon' => 'database',
+            //             'route_name' => 'database-import.index',
+            //             'title' => 'Database Import',
+            //         ],
+            //         'api-manager' => [
+            //             'icon' => 'server',
+            //             'route_name' => 'api-manager.index',
+            //             'title' => 'API Manager',
+            //         ],
+            //         'jobs' => [
+            //             'icon' => 'briefcase',
+            //             'route_name' => 'jobs.index',
+            //             'title' => __('global.jobs'),
+            //         ],
+            //     ],
+            // ],
 
         ];
     }

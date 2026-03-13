@@ -34,7 +34,7 @@ class PermissionController extends Controller
 
         $permissions = $query->paginate(15);
 
-        return view('pages.permission.index', compact('permissions'));
+        return view('pages.access-control.permissions.index', compact('permissions'));
     }
 
     /**
@@ -60,7 +60,7 @@ class PermissionController extends Controller
      */
     protected function exportToPdf($data)
     {
-        $html = view('pages.permission.export-pdf', ['data' => $data])->render();
+        $html = view('pages.access-control.permissions.export-pdf', ['data' => $data])->render();
         
         return response()->streamDownload(function () use ($html) {
             echo Gpdf::generate($html);
@@ -145,7 +145,7 @@ class PermissionController extends Controller
     {
         $this->authorize('create_permission');
 
-        return view('pages.permission.create', get_defined_vars());
+        return view('pages.access-control.permissions.create', get_defined_vars());
     }
 
     public function store(StorePermissionRequest $request)
@@ -159,7 +159,7 @@ class PermissionController extends Controller
             $adminRole->permissions()->attach($permission->id);
         }
 
-        return redirect()->route('permission.index')->with('success', __('permission.messages.created').' - Automatically assigned to admin role');
+        return redirect()->route('permissions.index')->with('success', __('access_control.messages.created'));
     }
 
     public function show($id)
@@ -167,7 +167,7 @@ class PermissionController extends Controller
         $this->authorize('view_permission');
         $permission = $this->service->find($id);
 
-        return view('pages.permission.show', compact('permission'));
+        return view('pages.access-control.permissions.show', compact('permission'));
     }
 
     public function edit($id)
@@ -175,7 +175,7 @@ class PermissionController extends Controller
         $this->authorize('edit_permission');
         $permission = $this->service->find($id);
 
-        return view('pages.permission.edit', get_defined_vars());
+        return view('pages.access-control.permissions.edit', get_defined_vars());
     }
 
     public function update(UpdatePermissionRequest $request, $id)
@@ -183,7 +183,7 @@ class PermissionController extends Controller
         $this->authorize('edit_permission');
         $this->service->update($id, $request->validated());
 
-        return redirect()->route('permission.index')->with('success', __('permission.messages.updated'));
+        return redirect()->route('permissions.index')->with('success', __('access_control.messages.updated'));
     }
 
     public function destroy($id)
@@ -191,6 +191,6 @@ class PermissionController extends Controller
         $this->authorize('delete_permission');
         $this->service->delete($id);
 
-        return redirect()->route('permission.index')->with('success', __('permission.messages.deleted'));
+        return redirect()->route('permissions.index')->with('success', __('access_control.messages.deleted'));
     }
 }

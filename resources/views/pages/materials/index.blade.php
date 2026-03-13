@@ -1,13 +1,13 @@
 @extends('../themes/' . $activeTheme . '/' . $activeLayout)
 
 @section('head')
-    <title>{{ __('Materials.list') }} - {{ config('app.name') }}</title>
+    <title>{{ __('materials.list') }} - {{ config('app.name') }}</title>
 @endsection
 
 @section('subcontent')
     <!-- Page Header -->
     <x-page-header
-        :title="__('Materials.list')"
+        :title="__('materials.list')"
         :subtitle="__('Manage your materials efficiently')"
         icon="Package"
         :actions="[
@@ -17,7 +17,7 @@
                 'icon' => 'FileText',
                 'label' => __('global.export_pdf'),
                 'href' => route('materials.export.pdf'),
-                'can' => auth()->user()->can('export_materials')
+                'can' => auth()->user()->can('export', App\Models\Material::class)
             ],
             [
                 'type' => 'button',
@@ -25,15 +25,15 @@
                 'icon' => 'FileSpreadsheet',
                 'label' => __('global.export_excel'),
                 'href' => route('materials.export.excel'),
-                'can' => auth()->user()->can('export_materials')
+                'can' => auth()->user()->can('export', App\Models\Material::class)
             ],
             [
                 'type' => 'button',
                 'variant' => 'primary',
                 'icon' => 'Plus',
-                'label' => __('Materials.add_new'),
+                'label' => __('materials.create_new'),
                 'href' => route('materials.create'),
-                'can' => auth()->user()->can('create_materials')
+                'can' => auth()->user()->can('create', App\Models\Material::class)
             ]
         ]"
     />
@@ -165,7 +165,7 @@
         </x-filter-bar>
 
         <!-- Materials Table -->
-        <x-section-container :title="__('Materials.list')" icon="Package" :collapsible="false">
+        <x-section-container :title="__('materials.list')" icon="Package" :collapsible="false">
             @php
                 $columns = [
                     'name' => __('materials.fields.name'),
@@ -178,13 +178,13 @@
                 ];
 
                 $actions = [];
-                if (auth()->user()->can('view_materials')) {
+                if (auth()->user()->can('view', $material)) {
                     $actions[] = ['type' => 'view', 'route' => 'materials.show'];
                 }
-                if (auth()->user()->can('update_materials')) {
+                if (auth()->user()->can('update', $material)) {
                     $actions[] = ['type' => 'edit', 'route' => 'materials.edit'];
                 }
-                if (auth()->user()->can('delete_materials')) {
+                if (auth()->user()->can('delete', $material)) {
                     $actions[] = ['type' => 'delete', 'route' => 'materials.destroy'];
                 }
             @endphp
@@ -293,10 +293,10 @@
                                         <x-base.lucide icon="Inbox" class="w-16 h-16 text-slate-300 mb-4" />
                                         <h3 class="text-lg font-bold text-slate-700">{{ __('global.no_data_found') }}</h3>
                                         <p class="text-slate-500 mt-2 mb-4">{{ __('Start by adding your first material') }}</p>
-                                        @can('create_materials')
+                                        @can('create', App\Models\Material::class)
                                         <x-base.button variant="primary" as="a" href="{{ route('materials.create') }}">
                                             <x-base.lucide icon="Plus" class="w-4 h-4 me-2" />
-                                            {{ __('Materials.add_new') }}
+                                            {{ __('materials.create_new') }}
                                         </x-base.button>
                                         @endcan
                                     </div>

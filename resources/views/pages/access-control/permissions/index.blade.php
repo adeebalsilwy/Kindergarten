@@ -10,30 +10,10 @@
         resourceRoute="permissions"
         :items="$permissions"
         :columns="[
-            ['key' => 'id', 'label' => 'access_control.fields.id', 'class' => 'whitespace-nowrap'],
             ['key' => 'name', 'label' => 'access_control.fields.name', 'class' => 'whitespace-nowrap'],
-            ['key' => 'guard_name', 'label' => 'access_control.fields.guard_name', 'class' => 'text-center whitespace-nowrap'],
-            ['key' => 'created_at', 'label' => 'access_control.fields.created_at', 'class' => 'text-center whitespace-nowrap'],
+            ['key' => 'guard_name', 'label' => 'access_control.fields.guard', 'class' => 'text-center whitespace-nowrap'],
+            ['key' => 'created_at', 'label' => 'access_control.fields.created_at', 'class' => 'text-center whitespace-nowrap', 'render' => fn($p) => $p->created_at->format('Y-m-d')],
         ]"
-        :filters="[
-            [
-                'name' => 'guard_name',
-                'label' => 'access_control.fields.guard_name',
-                'type' => 'select',
-                'placeholder' => 'access_control.permissions.filter_by_guard',
-                'options' => [
-                    ['value' => 'web', 'label' => 'Web'],
-                    ['value' => 'api', 'label' => 'API'],
-                ]
-            ]
-        ]"
-        :bulkActions="[
-            ['action' => 'delete', 'label' => 'access_control.actions.delete', 'icon' => 'Trash2'],
-        ]"
-        searchPlaceholder="access_control.permissions.search"
-        createUrl="{{ route('permissions.create') }}"
-        viewType="table"
-        showStats="false"
         :pagination="$permissions"
     >
         <x-slot name="actions">
@@ -47,69 +27,48 @@
                 {{ __('access_control.permissions.add_new') }}
             </x-base.button>
         </x-slot>
-        
-        <x-slot name="afterContent">
-            {{ $permissions->links() }}
-        </x-slot>
     </x-access-control.index>
 
     <!-- Create Permission Modal -->
-    <div id="create-permission-modal" class="modal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
+    <x-base.dialog id="create-permission-modal">
+        <x-base.dialog.panel>
+            <form action="{{ route('permissions.store') }}" method="POST">
+                @csrf
+                <div class="modal-header p-5 border-b border-slate-200/60 dark:border-darkmode-400">
                     <h2 class="font-medium text-base me-auto">{{ __('access_control.permissions.add_new') }}</h2>
-                    <x-base.button variant="outline-secondary" data-tw-dismiss="modal">
-                        <x-base.lucide icon="X" class="w-4 h-4" />
-                    </x-base.button>
                 </div>
-                <form action="{{ route('permissions.store') }}" method="POST">
-                    @csrf
-                    <div class="modal-body">
-                        <div class="mb-4">
-                            <x-base.form-label for="modal_name" class="required">
-                                {{ __('access_control.fields.name') }} <span class="text-danger">*</span>
-                            </x-base.form-label>
+                <div class="modal-body p-10">
+                    <div class="grid grid-cols-12 gap-6">
+                        <div class="col-span-12">
+                            <x-base.form-label for="modal_name" class="font-bold required">{{ __('access_control.fields.name') }}</x-base.form-label>
                             <x-base.form-input 
-                                id="modal_name" 
+                                id="modal_name"
                                 name="name" 
                                 type="text" 
-                                placeholder="e.g. view_reports" 
-                                required 
+                                class="w-full" 
+                                placeholder="e.g. view_users"
+                                required
                             />
                         </div>
-                        <div class="mb-4">
-                            <x-base.form-label for="modal_guard_name">
-                                {{ __('access_control.fields.guard_name') }}
-                            </x-base.form-label>
-                            <x-base.tom-select name="guard_name" id="modal_guard_name">
-                                <option value="web">Web</option>
-                                <option value="api">API</option>
+                        <div class="col-span-12">
+                            <x-base.form-label for="modal_guard" class="font-bold">{{ __('access_control.fields.guard') }}</x-base.form-label>
+                            <x-base.tom-select name="guard_name" id="modal_guard" class="w-full">
+                                <option value="web">web</option>
+                                <option value="api">api</option>
                             </x-base.tom-select>
                         </div>
-                        <div class="mb-4">
-                            <x-base.form-label for="modal_description">
-                                {{ __('access_control.fields.description') }}
-                            </x-base.form-label>
-                            <x-base.form-textarea 
-                                id="modal_description" 
-                                name="description" 
-                                rows="3" 
-                                placeholder="{{ __('access_control.messages.description_placeholder') }}"
-                            ></x-base.form-textarea>
-                        </div>
                     </div>
-                    <div class="modal-footer">
-                        <x-base.button variant="outline-secondary" data-tw-dismiss="modal">
-                            {{ __('access_control.actions.cancel') }}
-                        </x-base.button>
-                        <x-base.button variant="primary" type="submit">
-                            <x-base.lucide icon="Save" class="w-4 h-4 me-2" />
-                            {{ __('access_control.actions.create') }}
-                        </x-base.button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+                </div>
+                <div class="modal-footer p-5 text-end border-t border-slate-200/60 dark:border-darkmode-400">
+                    <x-base.button type="button" data-tw-dismiss="modal" variant="outline-secondary" class="w-32 me-1">
+                        {{ __('access_control.actions.cancel') }}
+                    </x-base.button>
+                    <x-base.button type="submit" variant="primary" class="w-32">
+                        <x-base.lucide icon="Save" class="w-4 h-4 me-2" />
+                        {{ __('access_control.actions.save') }}
+                    </x-base.button>
+                </div>
+            </form>
+        </x-base.dialog.panel>
+    </x-base.dialog>
 @endsection

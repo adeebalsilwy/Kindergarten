@@ -24,95 +24,103 @@
                 <x-form-section title="{{ __('global.payment_information') }}" 
                                description="{{ __('global.payment_details_description') }}" 
                                icon="CreditCard">
-                    <div class="grid grid-cols-12 gap-6">
-                        <div class="col-span-12">
-                            <x-form-field name="child_id" 
-                                         label="{{ __('global.select_student') }}" 
-                                         type="select" 
-                                         :required="true" 
-                                         :options="$children->pluck('name', 'id')->toArray()" 
-                                         :value="old('child_id')" 
-                                         icon="User" />
-                        </div>
-                        
-                        <div class="col-span-12 md:col-span-6">
-                            <x-form-field name="fee_id" 
-                                         label="{{ __('global.select_fee') }}" 
-                                         type="select" 
-                                         :required="true" 
-                                         :options="$fees->pluck('name', 'id')->toArray()" 
-                                         :value="old('fee_id')" 
-                                         icon="FileText" />
-                        </div>
-                        
-                        <div class="col-span-12 md:col-span-6">
-                            <x-form-field name="amount" 
-                                         label="{{ __('global.amount') }}" 
-                                         type="number" 
-                                         :required="true" 
-                                         :value="old('amount')" 
-                                         placeholder="0.00" 
-                                         icon="DollarSign" />
-                        </div>
-                        
-                        <div class="col-span-12 md:col-span-6">
-                            <x-form-field name="payment_date" 
-                                         label="{{ __('global.payment_date') }}" 
-                                         type="date" 
-                                         :required="true" 
-                                         :value="old('payment_date', now()->format('Y-m-d'))" 
-                                         icon="Calendar" />
-                        </div>
-                        
-                        <div class="col-span-12 md:col-span-6">
-                            <x-form-field name="payment_method" 
-                                         label="{{ __('global.payment_method') }}" 
-                                         type="select" 
-                                         :required="true" 
-                                         :options="[
-                                             'cash' => __('global.payment_method_cash'),
-                                             'bank_transfer' => __('global.payment_method_bank_transfer'),
-                                             'credit_card' => __('global.payment_method_credit_card'),
-                                             'check' => __('global.payment_method_check')
-                                         ]" 
-                                         :value="old('payment_method')" 
-                                         icon="Wallet" />
-                        </div>
-                        
-                        <div class="col-span-12 md:col-span-6">
-                            <x-form-field name="reference_number" 
-                                         label="{{ __('global.reference_number') }}" 
-                                         type="text" 
-                                         :value="old('reference_number')" 
-                                         placeholder="{{ __('global.reference_number_placeholder') }}" 
-                                         icon="Hash" />
-                        </div>
-                        
-                        <div class="col-span-12 md:col-span-6">
-                            <x-form-field name="status" 
-                                         label="{{ __('global.status') }}" 
-                                         type="select" 
-                                         :required="true" 
-                                         :options="[
-                                             'completed' => __('global.payment_status_completed'),
-                                             'pending' => __('global.payment_status_pending'),
-                                             'failed' => __('global.payment_status_failed')
-                                         ]" 
-                                         :value="old('status', 'completed')" 
-                                         icon="Activity" />
-                        </div>
-                        
-                        <div class="col-span-12">
-                            <x-form-field name="notes" 
-                                         label="{{ __('global.notes') }}" 
-                                         type="textarea" 
-                                         :value="old('notes')" 
-                                         placeholder="{{ __('global.add_notes_here') }}" 
-                                         icon="MessageSquare" />
-                        </div>
+                    <div class="col-span-12">
+                        <x-form-field name="child_id" 
+                                     label="{{ __('global.select_student') }}" 
+                                     type="select" 
+                                     :required="true" 
+                                     :options="$children->pluck('name', 'id')->toArray()" 
+                                     :value="old('child_id')" 
+                                     icon="User" 
+                                     class="col-span-12" />
                     </div>
                     
-                    <x-form-actions backUrl="{{ route('payments.index') }}" />
+                    <div class="col-span-12 md:col-span-6">
+                        <x-form-field name="fee_id" 
+                                     label="{{ __('global.select_fee') }}" 
+                                     type="select" 
+                                     :required="true" 
+                                     :options="$fees->pluck('name', 'id')->toArray()" 
+                                     :value="old('fee_id')" 
+                                     icon="FileText" 
+                                     class="col-span-12" />
+                    </div>
+                    
+                    <div class="col-span-12 md:col-span-6">
+                        <x-form-field name="amount" 
+                                     label="{{ __('global.amount') }}" 
+                                     type="number" 
+                                     :required="true" 
+                                     :value="old('amount')" 
+                                     placeholder="0.00" 
+                                     icon="DollarSign" 
+                                     class="col-span-12" />
+                    </div>
+                    
+                    <div class="col-span-12 md:col-span-6">
+                        <x-form-field name="payment_date" 
+                                     label="{{ __('global.payment_date') }}" 
+                                     type="date" 
+                                     :required="true" 
+                                     :value="old('payment_date', now()->format('Y-m-d'))" 
+                                     icon="Calendar" 
+                                     class="col-span-12" />
+                    </div>
+                    
+                    <div class="col-span-12 md:col-span-6">
+                        <x-form-field name="payment_method" 
+                                     label="{{ __('global.payment_method') }}" 
+                                     type="select" 
+                                     :required="true" 
+                                     :options="[
+                                         'cash' => __('global.payment_method_cash'),
+                                         'bank_transfer' => __('global.payment_method_bank_transfer'),
+                                         'credit_card' => __('global.payment_method_credit_card'),
+                                         'check' => __('global.payment_method_check')
+                                     ]" 
+                                     :value="old('payment_method')" 
+                                     icon="Wallet" 
+                                     class="col-span-12" />
+                    </div>
+                    
+                    <div class="col-span-12 md:col-span-6">
+                        <x-form-field name="reference_number" 
+                                     label="{{ __('global.reference_number') }}" 
+                                     type="text" 
+                                     :value="old('reference_number')" 
+                                     placeholder="{{ __('global.reference_number_placeholder') }}" 
+                                     icon="Hash" 
+                                     class="col-span-12" />
+                    </div>
+                    
+                    <div class="col-span-12 md:col-span-6">
+                        <x-form-field name="status" 
+                                     label="{{ __('global.status') }}" 
+                                     type="select" 
+                                     :required="true" 
+                                     :options="[
+                                         'completed' => __('global.payment_status_completed'),
+                                         'pending' => __('global.payment_status_pending'),
+                                         'failed' => __('global.payment_status_failed')
+                                     ]" 
+                                     :value="old('status', 'completed')" 
+                                     icon="Activity" 
+                                     class="col-span-12" />
+                    </div>
+                    
+                    <div class="col-span-12">
+                        <x-form-field name="notes" 
+                                     label="{{ __('global.notes') }}" 
+                                     type="textarea" 
+                                     :value="old('notes')" 
+                                     placeholder="{{ __('global.add_notes_here') }}" 
+                                     icon="MessageSquare" 
+                                     class="col-span-12" />
+                    </div>
+                    
+                    <div class="col-span-12">
+                        <x-form-actions backUrl="{{ route('payments.index') }}" />
+                    </div>
                 </x-form-section>
             </form>
         </div>

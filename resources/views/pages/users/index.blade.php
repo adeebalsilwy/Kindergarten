@@ -201,15 +201,55 @@
                             </div>
                         </td>
                         <td class="px-8 py-6 text-center">
-                            @if($user->is_active)
-                                <span class="px-5 py-2 rounded-full bg-success/10 text-success text-[10px] font-black uppercase tracking-widest border border-success/10 shadow-sm">
-                                    {{ __('global.active') }}
-                                </span>
+                            @can('edit_users')
+                            <div class="flex flex-col items-center gap-2">
+                                <x-base.form-switch class="w-full justify-center">
+                                    <x-base.form-switch.input 
+                                        type="checkbox" 
+                                        class="status-toggle" 
+                                        data-id="{{ $user->id }}"
+                                        data-url="{{ route('users.toggle-status', $user->id) }}"
+                                        {{ $user->is_active ? 'checked' : '' }} />
+                                    <x-base.form-switch.label class="ms-2 text-[10px] font-black uppercase tracking-widest text-slate-500">
+                                        {{ $user->is_active ? __('global.active') : __('global.inactive') }}
+                                    </x-base.form-switch.label>
+                                </x-base.form-switch>
+
+                                <x-base.form-switch class="w-full justify-center mt-2">
+                                    <x-base.form-switch.input 
+                                        type="checkbox" 
+                                        class="verification-toggle" 
+                                        data-id="{{ $user->id }}"
+                                        data-url="{{ route('users.toggle-verification', $user->id) }}"
+                                        {{ $user->email_verified_at ? 'checked' : '' }} />
+                                    <x-base.form-switch.label class="ms-2 text-[10px] font-black uppercase tracking-widest text-slate-500">
+                                        {{ $user->email_verified_at ? __('global.verified') : __('global.unverified') }}
+                                    </x-base.form-switch.label>
+                                </x-base.form-switch>
+                            </div>
                             @else
-                                <span class="px-5 py-2 rounded-full bg-danger/10 text-danger text-[10px] font-black uppercase tracking-widest border border-danger/10 shadow-sm">
-                                    {{ __('global.inactive') }}
-                                </span>
-                            @endif
+                                <div class="flex flex-col items-center gap-2">
+                                    @if($user->is_active)
+                                        <span class="px-5 py-2 rounded-full bg-success/10 text-success text-[10px] font-black uppercase tracking-widest border border-success/10 shadow-sm">
+                                            {{ __('global.active') }}
+                                        </span>
+                                    @else
+                                        <span class="px-5 py-2 rounded-full bg-danger/10 text-danger text-[10px] font-black uppercase tracking-widest border border-danger/10 shadow-sm">
+                                            {{ __('global.inactive') }}
+                                        </span>
+                                    @endif
+                                    
+                                    @if($user->email_verified_at)
+                                        <span class="px-5 py-2 rounded-full bg-primary/10 text-primary text-[10px] font-black uppercase tracking-widest border border-primary/10 shadow-sm mt-1">
+                                            {{ __('global.verified') }}
+                                        </span>
+                                    @else
+                                        <span class="px-5 py-2 rounded-full bg-slate-100 text-slate-400 text-[10px] font-black uppercase tracking-widest border border-slate-200 shadow-sm mt-1">
+                                            {{ __('global.unverified') }}
+                                        </span>
+                                    @endif
+                                </div>
+                            @endcan
                         </td>
                         <td class="px-8 py-6 text-center">
                             @if($user->roles->count() > 0)
@@ -248,7 +288,7 @@
                                 @endcan
 
                                 @can('delete_users')
-                                <x-base.button variant="soft-danger" class="w-10 h-10 rounded-xl p-0 flex items-center justify-center transition-all hover:bg-danger hover:text-white hover:scale-110 shadow-sm delete-btn" data-id="{{ $user->id }}" data-name="{{ $user->name }}" data-tw-toggle="modal" data-tw-target="#delete-confirmation-modal">
+                                <x-base.button variant="soft-danger" class="w-10 h-10 rounded-xl p-0 flex items-center justify-center transition-all hover:bg-danger hover:text-white hover:scale-110 shadow-sm delete-btn" data-id="{{ $user->id }}" data-name="{{ $user->name }}" data-delete-url="{{ route('users.destroy', $user->id) }}" data-tw-toggle="modal" data-tw-target="#delete-confirmation-modal">
                                     <x-base.lucide icon="Trash2" class="w-5 h-5" />
                                 </x-base.button>
                                 @endcan
@@ -318,4 +358,25 @@
     </x-base.dialog>
 
     @vite(['resources/js/pages/users.js'])
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Handle delete button clicks
+            document.querySelectorAll('.delete-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const id = this.getAttribute('data-id');
+                    const name = this.getAttribute('data-name');
+                    
+                    const deleteUrl = this.getAttribute('data-delete-url');
+                    
+                    const nameElement = document.getElementById('deleteUserName');
+                    if (nameElement) nameElement.textContent = name;
+                    
+                    const formElement = document.getElementById('deleteForm');
+                    if (formElement && deleteUrl) {
+                        formElement.action = deleteUrl;
+                    }
+                });
+            });
+        });
+    </script>
 @endsection

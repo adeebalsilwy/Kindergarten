@@ -35,4 +35,34 @@
             </x-base.dropdown.menu>
         </x-base.dropdown>
     </div>
+
+    <div class="intro-x dropdown w-10 h-10 me-4 sm:me-6">
+        <x-base.dropdown>
+            <x-base.dropdown.button class="w-10 h-10 rounded-full overflow-hidden shadow-lg image-fit zoom-in intro-x">
+                <img alt="{{ auth()->user()->name }}" src="{{ auth()->user()->photo_url ?? asset('build/assets/images/profile-1.jpg') }}">
+            </x-base.dropdown.button>
+            <x-base.dropdown.menu class="w-56">
+                <x-base.dropdown.content class="bg-primary/80 before:block before:absolute before:bg-black before:inset-0 before:rounded-md before:z-[-1] text-white">
+                    <x-base.dropdown.header tag="div" class="p-4 border-b border-white/10">
+                        <div class="font-black text-base">{{ auth()->user()->name }}</div>
+                        <div class="text-xs text-white/70 mt-0.5 font-bold">{{ auth()->user()->email }}</div>
+                    </x-base.dropdown.header>
+                    <x-base.dropdown.divider class="bg-white/10" />
+                    <x-base.dropdown.item href="{{ route('profile.index') }}" class="hover:bg-white/10 rounded-md p-3">
+                        <x-base.lucide icon="User" class="w-4 h-4 me-2" /> {{ __('global.profile') }}
+                    </x-base.dropdown.item>
+                    <x-base.dropdown.item href="{{ route('profile.edit') }}" class="hover:bg-white/10 rounded-md p-3">
+                        <x-base.lucide icon="Settings" class="w-4 h-4 me-2" /> {{ __('global.settings') }}
+                    </x-base.dropdown.item>
+                    <x-base.dropdown.divider class="bg-white/10" />
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <x-base.dropdown.item as="button" type="submit" class="w-full text-start hover:bg-white/10 rounded-md p-3">
+                            <x-base.lucide icon="LogOut" class="w-4 h-4 me-2" /> {{ __('global.logout') }}
+                        </x-base.dropdown.item>
+                    </form>
+                </x-base.dropdown.content>
+            </x-base.dropdown.menu>
+        </x-base.dropdown>
+    </div>
 </div>

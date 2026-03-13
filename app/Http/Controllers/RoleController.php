@@ -2,18 +2,45 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Permission;
-use App\Models\Role;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 use Illuminate\Http\Request;
 
 class RoleController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $roles = Role::with('permissions')->get();
+        $query = Role::with('permissions');
 
-        return view('pages.access-control.roles.index', compact('roles'));
+        // Handle export functionality if needed
+        if ($request->has('export')) {
+            // Logic for export could go here, for now we just continue
+        }
 
+        $roles = $query->paginate(15);
+        $allPermissions = Permission::all();
+
+        return view('pages.access-control.roles.index', compact('roles', 'allPermissions'));
+
+    }
+
+    public function show(Role $role)
+    {
+        $role->load('permissions');
+        return view('pages.access-control.roles.show', compact('role'));
+    }
+
+    public function assignPermissions(Request $request)
+    {
+        $request->validate([
+            'role_id' => 'required|exists:roles,id',
+            'permissions' => 'required|array',
+        ]);
+
+        $role = Role::findById($request->role_id);
+        $role->syncPermissions($request->permissions);
+
+        return redirect()->route('roles.index')->with('success', __('access_control.messages.permissions_updated'));
     }
 
     public function create()
@@ -44,7 +71,7 @@ class RoleController extends Controller
             $role->permissions()->sync($request->permissions);
         }
 
-        return redirect()->route('roles.index')->with('success', 'Role created successfully with automatic permission assignment');
+        return redirect()->route('roles.index')->with('success', __('access_control.messages.created'));
     }
 
     public function edit(Role $role)
@@ -73,13 +100,13 @@ class RoleController extends Controller
             $role->permissions()->sync($request->permissions ?? []);
         }
 
-        return redirect()->route('roles.index')->with('success', 'Role updated successfully');
+        return redirect()->route('roles.index')->with('success', __('access_control.messages.updated'));
     }
 
     public function destroy(Role $role)
     {
         $role->delete();
 
-        return redirect()->route('roles.index')->with('success', 'Role deleted successfully');
+        return redirect()->route('roles.index')->with('success', __('access_control.messages.deleted'));
     }
 }

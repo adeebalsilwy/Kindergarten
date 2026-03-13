@@ -24,7 +24,7 @@ class DashboardContentController extends Controller
 
     public function index(Request $request)
     {
-        $this->authorize('view_dashboard_contents');
+      //  $this->authorize('view_dashboard_contents');
         $query = $this->service->query();
 
         // Handle export functionality
@@ -61,7 +61,7 @@ class DashboardContentController extends Controller
     protected function exportToPdf($data)
     {
         $html = view('pages.dashboard_contents.export-pdf', ['data' => $data])->render();
-        
+
         return response()->streamDownload(function () use ($html) {
             echo Gpdf::generate($html);
         }, 'DashboardContent_export_'.date('Y-m-d_H-i-s').'.pdf');
@@ -158,7 +158,7 @@ class DashboardContentController extends Controller
 
     public function show($id)
     {
-        $this->authorize('view_dashboard_contents');
+      //  $this->authorize('view_dashboard_contents');
         $dashboardContent = $this->service->find($id);
 
         return view('pages.dashboard_contents.show', compact('dashboardContent'));

@@ -80,6 +80,7 @@ class UserManager {
             this.initTabs();
             this.initManualTabs(); // Add support for new manual tabs
             this.initRoleCards();
+            this.initPermissions(); // Add permissions management
             this.initFormTracking();
             this.setupSecurityTools();
             this.handleValidationContext();
@@ -89,6 +90,67 @@ class UserManager {
         } catch (err) {
             Logger.error('💥 Critical failure during UserManager boot sequence.', err);
         }
+    }
+
+    /**
+     * Advanced Permissions Management
+     */
+    initPermissions() {
+        const selectAllBtn = document.getElementById('selectAllPermissions');
+        const deselectAllBtn = document.getElementById('deselectAllPermissions');
+        const groupCheckboxes = document.querySelectorAll('.group-select-permission');
+        const permCheckboxes = document.querySelectorAll('.permission-checkbox');
+
+        if (selectAllBtn) {
+            selectAllBtn.addEventListener('click', () => {
+                permCheckboxes.forEach(cb => {
+                    cb.checked = true;
+                    cb.dispatchEvent(new Event('change'));
+                });
+                groupCheckboxes.forEach(cb => cb.checked = true);
+                Logger.debug('All permissions selected');
+            });
+        }
+
+        if (deselectAllBtn) {
+            deselectAllBtn.addEventListener('click', () => {
+                permCheckboxes.forEach(cb => {
+                    cb.checked = false;
+                    cb.dispatchEvent(new Event('change'));
+                });
+                groupCheckboxes.forEach(cb => cb.checked = false);
+                Logger.debug('All permissions deselected');
+            });
+        }
+
+        groupCheckboxes.forEach(groupCb => {
+            groupCb.addEventListener('change', () => {
+                const group = groupCb.getAttribute('data-group');
+                const isChecked = groupCb.checked;
+                document.querySelectorAll(`.permission-checkbox[data-group="${group}"]`).forEach(cb => {
+                    cb.checked = isChecked;
+                    cb.dispatchEvent(new Event('change'));
+                });
+            });
+        });
+
+        permCheckboxes.forEach(cb => {
+            cb.addEventListener('change', () => {
+                const group = cb.getAttribute('data-group');
+                const groupCb = document.querySelector(`.group-select-permission[data-group="${group}"]`);
+                if (!groupCb) return;
+
+                const groupPerms = document.querySelectorAll(`.permission-checkbox[data-group="${group}"]`);
+                const allChecked = Array.from(groupPerms).every(p => p.checked);
+                const someChecked = Array.from(groupPerms).some(p => p.checked);
+
+                groupCb.checked = allChecked;
+                groupCb.indeterminate = someChecked && !allChecked;
+            });
+            
+            // Initial state
+            cb.dispatchEvent(new Event('change'));
+        });
     }
 
     /**
@@ -367,26 +429,86 @@ class UserManager {
 
     initFormTracking() {
         const form = document.querySelector(this.selectors.userForm);
-        if (!form) return;
+        if (form) {
+            form.addEventListener('input', () => {
+                if (!this.state.formIsDirty) {
+                    this.state.formIsDirty = true;
+                    Logger.debug('Form state changed to: DIRTY');
+                }
+            });
 
-        form.addEventListener('input', () => {
-            if (!this.state.formIsDirty) {
-                this.state.formIsDirty = true;
-                Logger.debug('Form state changed to: DIRTY');
-            }
+            // Warn before navigation if dirty
+            window.addEventListener('beforeunload', (e) => {
+                if (this.state.formIsDirty) {
+                    e.preventDefault();
+                    e.returnValue = '';
+                }
+            });
+
+            form.addEventListener('submit', () => {
+                this.state.formIsDirty = false;
+                Logger.info('Form submission initiated.');
+            });
+        }
+        this.initToggles();
+    }
+
+    initToggles() {
+        const statusToggles = document.querySelectorAll('.status-toggle');
+        const verificationToggles = document.querySelectorAll('.verification-toggle');
+
+        statusToggles.forEach(toggle => {
+            toggle.addEventListener('change', async (e) => {
+                const url = toggle.dataset.url;
+                const label = toggle.nextElementSibling;
+                
+                try {
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        }
+                    });
+
+                    const data = await response.json();
+                    if (data.success) {
+                        label.textContent = data.is_active ? 'نشط' : 'غير نشط';
+                        Logger.success(data.message);
+                    }
+                } catch (error) {
+                    toggle.checked = !toggle.checked;
+                    Logger.error('فشل تحديث الحالة');
+                }
+            });
         });
 
-        // Warn before navigation if dirty
-        window.addEventListener('beforeunload', (e) => {
-            if (this.state.formIsDirty) {
-                e.preventDefault();
-                e.returnValue = '';
-            }
-        });
+        verificationToggles.forEach(toggle => {
+            toggle.addEventListener('change', async (e) => {
+                const url = toggle.dataset.url;
+                const label = toggle.nextElementSibling;
+                
+                try {
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        }
+                    });
 
-        form.addEventListener('submit', () => {
-            this.state.formIsDirty = false;
-            Logger.info('Form submission initiated.');
+                    const data = await response.json();
+                    if (data.success) {
+                        label.textContent = data.is_verified ? 'تم التحقق' : 'غير محقق';
+                        Logger.success(data.message);
+                    }
+                } catch (error) {
+                    toggle.checked = !toggle.checked;
+                    Logger.error('فشل تحديث حالة التحقق');
+                }
+            });
         });
     }
 
@@ -437,18 +559,69 @@ class UserManager {
             const phoneInput = document.getElementById('phone');
             const deptSelect = document.getElementById('department');
 
-            if (nameInput) nameInput.value = 'Demo User ' + Math.floor(Math.random() * 1000);
-            if (emailInput) emailInput.value = 'demo' + Math.floor(Math.random() * 1000) + '@example.com';
-            if (phoneInput) phoneInput.value = '+9665' + Math.floor(Math.random() * 10000000);
+            const names = ['أحمد محمد', 'سارة علي', 'خالد محمود', 'ليلى حسن', 'عمر فاروق'];
+            const depts = ['administration', 'teaching', 'finance', 'support'];
+            
+            if (nameInput) nameInput.value = names[Math.floor(Math.random() * names.length)];
+            if (emailInput) emailInput.value = 'user' + Math.floor(Math.random() * 10000) + '@example.com';
+            if (phoneInput) phoneInput.value = '05' + Math.floor(Math.random() * 100000000);
             
             if (deptSelect && deptSelect.tomselect) {
-                const options = ['administration', 'teaching', 'finance', 'support'];
-                const randomOption = options[Math.floor(Math.random() * options.length)];
+                const randomOption = depts[Math.floor(Math.random() * depts.length)];
                 deptSelect.tomselect.setValue(randomOption);
             }
             
             window.generatePassword();
-            Logger.info('Demo data populated.');
+
+            // Select a random role
+            const roleCards = document.querySelectorAll('.role-card');
+            if (roleCards.length > 0) {
+                // Deselect all first
+                roleCards.forEach(card => {
+                    const cb = card.querySelector('.role-checkbox');
+                    if (cb) {
+                        cb.checked = false;
+                        card.classList.remove('selected', 'active', 'border-primary', 'bg-primary/5');
+                    }
+                });
+                
+                // Select one
+                const randomRole = roleCards[Math.floor(Math.random() * roleCards.length)];
+                const cb = randomRole.querySelector('.role-checkbox');
+                if (cb) {
+                    cb.checked = true;
+                    randomRole.classList.add('selected', 'active', 'border-primary', 'bg-primary/5');
+                    Logger.debug('Demo: Role selected');
+                }
+            }
+
+            // Select some random permissions
+            const permCheckboxes = document.querySelectorAll('.permission-checkbox');
+            if (permCheckboxes.length > 0) {
+                permCheckboxes.forEach(cb => {
+                    cb.checked = false;
+                    cb.dispatchEvent(new Event('change'));
+                });
+
+                for (let i = 0; i < 5; i++) {
+                    const randomPerm = permCheckboxes[Math.floor(Math.random() * permCheckboxes.length)];
+                    randomPerm.checked = true;
+                    randomPerm.dispatchEvent(new Event('change'));
+                }
+            }
+            
+            Logger.info('Demo data populated professionally.');
+            
+            // Success notification if available
+            if (typeof Toastify !== 'undefined') {
+                Toastify({
+                    text: "تم توليد البيانات التجريبية بنجاح",
+                    duration: 3000,
+                    gravity: "top",
+                    position: "right",
+                    backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
+                }).showToast();
+            }
         };
     }
 
