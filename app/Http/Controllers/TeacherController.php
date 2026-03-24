@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateTeacherRequest;
 use App\Services\TeacherService;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\App;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -157,7 +158,17 @@ class TeacherController extends Controller
     public function store(StoreTeacherRequest $request)
     {
         $this->authorize('create_teachers');
-        $this->service->create($request->validated());
+        $data = $request->validated();
+
+        // Handle photo_path file upload
+        if ($request->hasFile('photo_path') && $request->file('photo_path')->isValid()) {
+            $path = $request->file('photo_path')->store('photos/teachers', 'public');
+            $data['photo_path'] = $path;
+        } else {
+            unset($data['photo_path']);
+        }
+
+        $this->service->create($data);
 
         return redirect()->route('teachers.index')->with('success', __('teachers.messages.created'));
     }
@@ -216,7 +227,24 @@ class TeacherController extends Controller
     public function update(UpdateTeacherRequest $request, $id)
     {
         $this->authorize('edit_teachers');
-        $this->service->update($id, $request->validated());
+        $data = $request->validated();
+
+        // Handle photo_path file upload
+        if ($request->hasFile('photo_path') && $request->file('photo_path')->isValid()) {
+            $teacher = $this->service->find($id);
+            
+            // Delete old photo if exists
+            if ($teacher->photo_path && Storage::disk('public')->exists($teacher->photo_path)) {
+                Storage::disk('public')->delete($teacher->photo_path);
+            }
+            
+            $path = $request->file('photo_path')->store('photos/teachers', 'public');
+            $data['photo_path'] = $path;
+        } else {
+            unset($data['photo_path']);
+        }
+
+        $this->service->update($id, $data);
 
         return redirect()->route('teachers.index')->with('success', __('teachers.messages.updated'));
     }

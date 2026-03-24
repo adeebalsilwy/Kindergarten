@@ -323,6 +323,36 @@
         </div>
     </div>
 
+    <!-- Toggle Confirmation Modal -->
+    <x-base.dialog id="toggle-confirmation-modal">
+        <x-base.dialog.panel class="p-0 overflow-hidden rounded-[3rem] border-0 shadow-2xl">
+            <div class="p-12 text-center relative">
+                <div class="absolute top-0 right-0 p-10 opacity-5">
+                    <x-base.lucide icon="AlertCircle" class="w-48 h-48 text-warning" />
+                </div>
+                
+                <div class="w-24 h-24 rounded-[2.5rem] bg-warning/10 flex items-center justify-center text-warning mx-auto mb-10 shadow-inner relative z-10">
+                    <x-base.lucide icon="ToggleLeft" class="w-12 h-12" />
+                </div>
+                
+                <div class="relative z-10">
+                    <h3 class="text-3xl font-black text-slate-800 dark:text-slate-200 tracking-tight mb-4">{{ __('global.confirm_toggle_title') }}</h3>
+                    <p id="toggleUserName" class="text-slate-500 font-bold text-lg leading-relaxed mb-2"></p>
+                    <p id="toggleActionText" class="text-warning font-black text-xl tracking-tight mb-12"></p>
+                </div>
+
+                <div class="flex justify-center gap-4 relative z-10">
+                    <x-base.button type="button" data-tw-dismiss="modal" variant="outline-secondary" class="px-10 py-4 rounded-2xl font-black uppercase tracking-widest text-[10px] border-2">
+                        {{ __('global.cancel') }}
+                    </x-base.button>
+                    <x-base.button type="button" id="confirmToggleBtn" variant="warning" class="px-10 py-4 rounded-2xl font-black uppercase tracking-widest text-[10px] shadow-xl shadow-warning/20">
+                        {{ __('global.confirm') }}
+                    </x-base.button>
+                </div>
+            </div>
+        </x-base.dialog.panel>
+    </x-base.dialog>
+
     <!-- Delete Confirmation Modal -->
     <x-base.dialog id="delete-confirmation-modal">
         <x-base.dialog.panel class="p-0 overflow-hidden rounded-[3rem] border-0 shadow-2xl">
@@ -365,7 +395,6 @@
                 button.addEventListener('click', function() {
                     const id = this.getAttribute('data-id');
                     const name = this.getAttribute('data-name');
-                    
                     const deleteUrl = this.getAttribute('data-delete-url');
                     
                     const nameElement = document.getElementById('deleteUserName');
@@ -376,6 +405,130 @@
                         formElement.action = deleteUrl;
                     }
                 });
+            });
+
+            // Handle AJAX toggles with confirmation
+            let pendingToggle = null;
+            const toggleModal = document.getElementById('toggle-confirmation-modal');
+            const confirmToggleBtn = document.getElementById('confirmToggleBtn');
+            const toggleUserName = document.getElementById('toggleUserName');
+            const toggleActionText = document.getElementById('toggleActionText');
+
+            // Status toggles
+            document.querySelectorAll('.status-toggle').forEach(toggle => {
+                toggle.addEventListener('change', function(e) {
+                    e.preventDefault();
+                    const url = this.dataset.url;
+                    const userName = this.closest('tr').querySelector('.font-black')?.textContent || '';
+                    const newStatus = this.checked ? '{{ __("global.active") }}' : '{{ __("global.inactive") }}';
+                    
+                    pendingToggle = {
+                        element: this,
+                        url: url,
+                        type: 'status',
+                        newValue: this.checked
+                    };
+
+                    if (toggleUserName) toggleUserName.textContent = userName;
+                    if (toggleActionText) toggleActionText.textContent = '{{ __("global.change_status_to") }}: ' + newStatus;
+                    
+                    // Show modal
+                    const modalInstance = tailwind.Modal.getOrCreateInstance(toggleModal);
+                    modalInstance.show();
+                });
+            });
+
+            // Verification toggles
+            document.querySelectorAll('.verification-toggle').forEach(toggle => {
+                toggle.addEventListener('change', function(e) {
+                    e.preventDefault();
+                    const url = this.dataset.url;
+                    const userName = this.closest('tr').querySelector('.font-black')?.textContent || '';
+                    const newStatus = this.checked ? '{{ __("global.verified") }}' : '{{ __("global.unverified") }}';
+                    
+                    pendingToggle = {
+                        element: this,
+                        url: url,
+                        type: 'verification',
+                        newValue: this.checked
+                    };
+
+                    if (toggleUserName) toggleUserName.textContent = userName;
+                    if (toggleActionText) toggleActionText.textContent = '{{ __("global.change_verification_to") }}: ' + newStatus;
+                    
+                    // Show modal
+                    const modalInstance = tailwind.Modal.getOrCreateInstance(toggleModal);
+                    modalInstance.show();
+                });
+            });
+
+            // Confirm toggle action
+            if (confirmToggleBtn) {
+                confirmToggleBtn.addEventListener('click', async function() {
+                    if (!pendingToggle) return;
+
+                    const { element, url, type } = pendingToggle;
+                    const label = element.closest('.flex-col')?.querySelector('label');
+                    
+                    try {
+                        const response = await fetch(url, {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                                'Accept': 'application/json',
+                                'Content-Type': 'application/json'
+                            }
+                        });
+
+                        const data = await response.json();
+                        if (data.success) {
+                            // Update label text
+                            if (type === 'status' && label) {
+                                label.textContent = data.is_active ? '{{ __("global.active") }}' : '{{ __("global.inactive") }}';
+                            } else if (type === 'verification' && label) {
+                                label.textContent = data.is_verified ? '{{ __("global.verified") }}' : '{{ __("global.unverified") }}';
+                            }
+                            
+                            // Show success toast if available
+                            if (typeof Toastify !== 'undefined') {
+                                Toastify({
+                                    text: data.message,
+                                    duration: 3000,
+                                    gravity: "top",
+                                    position: "right",
+                                    style: { background: "linear-gradient(to right, #00b09b, #96c93d)" }
+                                }).showToast();
+                            }
+                        } else {
+                            // Revert checkbox on failure
+                            element.checked = !element.checked;
+                        }
+                    } catch (error) {
+                        element.checked = !element.checked;
+                        if (typeof Toastify !== 'undefined') {
+                            Toastify({
+                                text: '{{ __("global.error_occurred") }}',
+                                duration: 3000,
+                                gravity: "top",
+                                position: "right",
+                                style: { background: "linear-gradient(to right, #ff5f6d, #ffc371)" }
+                            }).showToast();
+                        }
+                    }
+
+                    // Close modal
+                    const modalInstance = tailwind.Modal.getOrCreateInstance(toggleModal);
+                    modalInstance.hide();
+                    pendingToggle = null;
+                });
+            }
+
+            // Cancel toggle - revert checkbox
+            toggleModal?.addEventListener('hidden.tw.modal', function() {
+                if (pendingToggle) {
+                    pendingToggle.element.checked = !pendingToggle.element.checked;
+                    pendingToggle = null;
+                }
             });
         });
     </script>

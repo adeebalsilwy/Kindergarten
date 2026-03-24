@@ -8,6 +8,7 @@ use App\Http\Requests\StoreChildrenRequest;
 use App\Http\Requests\UpdateChildrenRequest;
 use App\Services\ChildrenService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\App;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -198,7 +199,17 @@ class ChildrenController extends Controller
     public function store(StoreChildrenRequest $request)
     {
         $this->authorize('create_children');
-        $this->service->create($request->validated());
+        $data = $request->validated();
+
+        // Handle photo_path file upload
+        if ($request->hasFile('photo_path') && $request->file('photo_path')->isValid()) {
+            $path = $request->file('photo_path')->store('photos/children', 'public');
+            $data['photo_path'] = $path;
+        } else {
+            unset($data['photo_path']);
+        }
+
+        $this->service->create($data);
 
         return redirect()->route('children.index')->with('success', __('children.messages.created'));
     }
@@ -276,7 +287,24 @@ class ChildrenController extends Controller
     public function update(UpdateChildrenRequest $request, $id)
     {
         $this->authorize('edit_children');
-        $this->service->update($id, $request->validated());
+        $data = $request->validated();
+
+        // Handle photo_path file upload
+        if ($request->hasFile('photo_path') && $request->file('photo_path')->isValid()) {
+            $child = $this->service->find($id);
+            
+            // Delete old photo if exists
+            if ($child->photo_path && Storage::disk('public')->exists($child->photo_path)) {
+                Storage::disk('public')->delete($child->photo_path);
+            }
+            
+            $path = $request->file('photo_path')->store('photos/children', 'public');
+            $data['photo_path'] = $path;
+        } else {
+            unset($data['photo_path']);
+        }
+
+        $this->service->update($id, $data);
 
         return redirect()->route('children.index')->with('success', __('children.messages.updated'));
     }

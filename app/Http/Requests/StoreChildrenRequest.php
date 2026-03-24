@@ -20,7 +20,7 @@ class StoreChildrenRequest extends FormRequest
             'class_id' => 'nullable|integer|exists:classes,id',
             'parent_id' => 'required|integer|exists:guardians,id',
             'second_parent_id' => 'nullable|integer|exists:guardians,id',
-            'photo_path' => 'nullable|string|max:255',
+            'photo_path' => 'nullable|image',
             'fees_required' => 'required|numeric',
             'fees_paid' => 'required|numeric',
             'emergency_contact_name' => 'nullable|string|max:255',

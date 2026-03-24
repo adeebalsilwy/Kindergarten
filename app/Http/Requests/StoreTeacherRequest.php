@@ -24,7 +24,7 @@ class StoreTeacherRequest extends FormRequest
             'experience' => 'nullable|string',
             'salary' => 'required|numeric',
             'hire_date' => 'required|date',
-            'photo_path' => 'required|string|max:255',
+            'photo_path' => 'nullable|image',
             'is_active' => 'required|boolean',
             'notes' => 'nullable|string',
 

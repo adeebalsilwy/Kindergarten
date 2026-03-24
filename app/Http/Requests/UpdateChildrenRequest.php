@@ -15,12 +15,12 @@ class UpdateChildrenRequest extends FormRequest
     {
         return [
             'name' => 'nullable|string|max:255',
+            'photo_path' => 'nullable|image',
             'dob' => 'nullable|date',
             'gender' => 'nullable|in:male,female',
             'class_id' => 'nullable|integer|exists:classes,id',
             'parent_id' => 'nullable|integer|exists:guardians,id',
             'second_parent_id' => 'nullable|integer|exists:guardians,id',
-            'photo_path' => 'nullable|string|max:255',
             'fees_required' => 'nullable|numeric',
             'fees_paid' => 'nullable|numeric',
             'emergency_contact_name' => 'nullable|string|max:255',

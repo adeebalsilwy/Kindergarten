@@ -24,7 +24,7 @@ class UpdateTeacherRequest extends FormRequest
             'experience' => 'nullable|string',
             'salary' => 'nullable|numeric',
             'hire_date' => 'nullable|date',
-            'photo_path' => 'nullable|string|max:255',
+            'photo_path' => 'nullable|image',
             'is_active' => 'nullable|boolean',
             'notes' => 'nullable|string',
 

@@ -189,18 +189,39 @@
                             </div>
 
                             <div class="col-span-12">
-                                <div class="p-10 bg-slate-50 dark:bg-darkmode-700 rounded-[2.5rem] border border-slate-100 dark:border-darkmode-400 shadow-inner group hover:bg-primary/5 transition-all duration-500">
+                                <div class="p-10 bg-slate-50 dark:bg-darkmode-700 rounded-[2.5rem] border border-slate-100 dark:border-darkmode-400 shadow-inner group hover:bg-primary/5 transition-all duration-500 cursor-pointer" onclick="toggleCheckbox('is_active')">
                                     <div class="flex items-center">
                                         <div class="w-14 h-14 rounded-2xl bg-white dark:bg-darkmode-600 flex items-center justify-center text-success shadow-sm me-6 group-hover:scale-110 transition-transform">
                                             <x-base.lucide icon="CheckCircle" class="w-7 h-7" />
                                         </div>
                                         <div>
-                                            <x-base.form-label for="is_active" class="font-black mb-0 cursor-pointer text-slate-700 dark:text-slate-300 text-xl">{{ __('global.account_active') }}</x-base.form-label>
+                                            <label for="is_active" class="font-black mb-0 cursor-pointer text-slate-700 dark:text-slate-300 text-xl">{{ __('global.account_active') }}</label>
                                             <p class="text-slate-400 text-xs font-bold mt-1">{{ __('global.account_active_help') }}</p>
                                         </div>
                                         <div class="ms-auto">
-                                            <div class="form-check form-switch scale-150">
-                                                <x-base.form-input type="checkbox" id="is_active" name="is_active" value="1" class="form-check-input w-14 h-7" checked />
+                                            <div class="relative inline-block w-14 h-7 align-middle select-none">
+                                                <input type="checkbox" id="is_active" name="is_active" value="1" class="toggle-checkbox absolute block w-7 h-7 rounded-full bg-white border-4 border-slate-300 appearance-none cursor-pointer transition-transform duration-200 ease-in-out checked:translate-x-7 checked:border-success checked:bg-success" checked />
+                                                <label for="is_active" class="toggle-label block overflow-hidden h-7 rounded-full bg-slate-300 cursor-pointer transition-colors duration-200 ease-in-out"></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-span-12">
+                                <div class="p-10 bg-slate-50 dark:bg-darkmode-700 rounded-[2.5rem] border border-slate-100 dark:border-darkmode-400 shadow-inner group hover:bg-warning/5 transition-all duration-500 cursor-pointer" onclick="toggleCheckbox('email_verified')">
+                                    <div class="flex items-center">
+                                        <div class="w-14 h-14 rounded-2xl bg-white dark:bg-darkmode-600 flex items-center justify-center text-warning shadow-sm me-6 group-hover:scale-110 transition-transform">
+                                            <x-base.lucide icon="MailCheck" class="w-7 h-7" />
+                                        </div>
+                                        <div>
+                                            <label for="email_verified" class="font-black mb-0 cursor-pointer text-slate-700 dark:text-slate-300 text-xl">{{ __('global.email_verified') }}</label>
+                                            <p class="text-slate-400 text-xs font-bold mt-1">{{ __('global.email_verified_help') }}</p>
+                                        </div>
+                                        <div class="ms-auto">
+                                            <div class="relative inline-block w-14 h-7 align-middle select-none">
+                                                <input type="checkbox" id="email_verified" name="email_verified" value="1" class="toggle-checkbox absolute block w-7 h-7 rounded-full bg-white border-4 border-slate-300 appearance-none cursor-pointer transition-transform duration-200 ease-in-out checked:translate-x-7 checked:border-warning checked:bg-warning" checked />
+                                                <label for="email_verified" class="toggle-label block overflow-hidden h-7 rounded-full bg-slate-300 cursor-pointer transition-colors duration-200 ease-in-out"></label>
                                             </div>
                                         </div>
                                     </div>
@@ -389,4 +410,35 @@
     </div>
 
     @vite(['resources/js/pages/users.js'])
+    <style>
+        /* Toggle Switch Styles */
+        .toggle-checkbox {
+            top: 0;
+            left: 0;
+            z-index: 10;
+        }
+        .toggle-checkbox:checked + .toggle-label {
+            background-color: rgb(var(--color-success) / 0.3);
+        }
+        .toggle-checkbox:checked {
+            border-color: rgb(var(--color-success));
+            background-color: rgb(var(--color-success));
+        }
+        /* Warning state for email_verified */
+        #email_verified.toggle-checkbox:checked {
+            border-color: rgb(var(--color-warning));
+            background-color: rgb(var(--color-warning));
+        }
+        #email_verified.toggle-checkbox:checked + .toggle-label {
+            background-color: rgb(var(--color-warning) / 0.3);
+        }
+    </style>
+    <script>
+        function toggleCheckbox(checkboxId) {
+            const checkbox = document.getElementById(checkboxId);
+            if (checkbox && event.target.tagName !== 'INPUT') {
+                checkbox.checked = !checkbox.checked;
+            }
+        }
+    </script>
 @endsection

@@ -217,7 +217,8 @@ class UserController extends Controller
         try {
             $data = $request->validated();
             $data['password'] = \Illuminate\Support\Facades\Hash::make($data['password']);
-            $data['is_active'] = $request->has('is_active');
+            $data['is_active'] = true;
+            $data['email_verified_at'] = now();
             
             $user = $this->service->create($data);
             
@@ -225,6 +226,12 @@ class UserController extends Controller
             if ($request->has('roles')) {
                 $roleIds = array_map('intval', $request->roles);
                 $user->syncRoles($roleIds);
+            } else {
+                // Assign default Teacher role if no roles selected
+                $teacherRole = \Spatie\Permission\Models\Role::where('name', 'Teacher')->first();
+                if ($teacherRole) {
+                    $user->assignRole($teacherRole);
+                }
             }
             
             // Sync permissions - convert to integers
@@ -289,23 +296,28 @@ class UserController extends Controller
 
             $data['is_active'] = $request->has('is_active');
             
+            // Handle email_verified_at based on request
+            if ($request->has('email_verified')) {
+                $data['email_verified_at'] = now();
+            } else {
+                $data['email_verified_at'] = null;
+            }
+            
             $user = $this->service->update($id, $data);
             
             // Sync roles - convert to integers
             if ($request->has('roles')) {
                 $roleIds = array_map('intval', $request->roles);
                 $user->syncRoles($roleIds);
-            } else {
-                $user->syncRoles([]);
             }
+            // If no roles submitted, keep existing roles (don't remove them)
             
-            // Sync permissions - convert to integers
+            // Sync permissions - convert to integers  
             if ($request->has('permissions')) {
                 $permissionIds = array_map('intval', $request->permissions);
                 $user->syncPermissions($permissionIds);
-            } else {
-                $user->syncPermissions([]);
             }
+            // If no permissions submitted, keep existing permissions (don't remove them)
 
             return redirect()->route('users.index')->with('success', __('users.messages.updated'));
         } catch (\Exception $e) {
