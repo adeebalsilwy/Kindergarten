@@ -35,12 +35,12 @@ unset($__defined_vars); ?>
 
 ></i>
 
-<?php if (! $__env->hasRenderedOnce('d4b31043-fe2e-4092-9b41-c0fee445a572')): $__env->markAsRenderedOnce('d4b31043-fe2e-4092-9b41-c0fee445a572');
+<?php if (! $__env->hasRenderedOnce('510d573d-34c5-4bb3-af56-c0043901cf8e')): $__env->markAsRenderedOnce('510d573d-34c5-4bb3-af56-c0043901cf8e');
 $__env->startPush('vendors'); ?>
     <?php echo app('Illuminate\Foundation\Vite')('resources/js/vendors/lucide.js'); ?>
 <?php $__env->stopPush(); endif; ?>
 
-<?php if (! $__env->hasRenderedOnce('01057f5c-57e8-42c0-bf71-7073ad1b0b3a')): $__env->markAsRenderedOnce('01057f5c-57e8-42c0-bf71-7073ad1b0b3a');
+<?php if (! $__env->hasRenderedOnce('470fbf8e-661e-4939-b552-9a8144298b18')): $__env->markAsRenderedOnce('470fbf8e-661e-4939-b552-9a8144298b18');
 $__env->startPush('scripts'); ?>
     <?php echo app('Illuminate\Foundation\Vite')('resources/js/components/base/lucide.js'); ?>
 <?php $__env->stopPush(); endif; ?>

@@ -28,7 +28,7 @@ foreach ($attributes->all() as $__key => $__value) {
 
 unset($__defined_vars); ?>
 
-<?php if (! $__env->hasRenderedOnce('c794e133-5561-42db-bc0d-1331d5274062')): $__env->markAsRenderedOnce('c794e133-5561-42db-bc0d-1331d5274062');
+<?php if (! $__env->hasRenderedOnce('e5bbd1bd-3ebf-4ee1-a933-4c65f27ef0f0')): $__env->markAsRenderedOnce('e5bbd1bd-3ebf-4ee1-a933-4c65f27ef0f0');
 $__env->startPush('vendors'); ?>
     <?php echo app('Illuminate\Foundation\Vite')('resources/js/vendors/popper.js'); ?>
     <?php echo app('Illuminate\Foundation\Vite')('resources/js/vendors/dropdown.js'); ?>
@@ -41,4 +41,4 @@ $__env->startPush('vendors'); ?>
     <?php echo e($attributes->class(['dropdown relative'])->merge($attributes->whereDoesntStartWith('class')->getAttributes())); ?>
 
 ><?php echo e($slot); ?></<?php echo e($as); ?>>
-<?php /**PATH E:\backup\Source\resources\views/components/base/dropdown/index.blade.php ENDPATH**/ ?>
+<?php /**PATH E:\backup\Source\resources\views/components/base/menu/index.blade.php ENDPATH**/ ?>

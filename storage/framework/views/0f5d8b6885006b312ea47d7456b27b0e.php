@@ -1,16 +1,7 @@
 <?php $attributes ??= new \Illuminate\View\ComponentAttributeBag;
 
 $__newAttributes = [];
-$__propNames = \Illuminate\View\ComponentAttributeBag::extractPropNames(([
-    'as' => 'div',
-    'selector' => null,
-    'enter' => null,
-    'enterFrom' => null,
-    'enterTo' => null,
-    'leave' => null,
-    'leaveFrom' => null,
-    'leaveTo' => null,
-]));
+$__propNames = \Illuminate\View\ComponentAttributeBag::extractPropNames((['as' => 'button']));
 
 foreach ($attributes->all() as $__key => $__value) {
     if (in_array($__key, $__propNames)) {
@@ -25,16 +16,7 @@ $attributes = new \Illuminate\View\ComponentAttributeBag($__newAttributes);
 unset($__propNames);
 unset($__newAttributes);
 
-foreach (array_filter(([
-    'as' => 'div',
-    'selector' => null,
-    'enter' => null,
-    'enterFrom' => null,
-    'enterTo' => null,
-    'leave' => null,
-    'leaveFrom' => null,
-    'leaveTo' => null,
-]), 'is_string', ARRAY_FILTER_USE_KEY) as $__key => $__value) {
+foreach (array_filter((['as' => 'button']), 'is_string', ARRAY_FILTER_USE_KEY) as $__key => $__value) {
     $$__key = $$__key ?? $__value;
 }
 
@@ -46,11 +28,6 @@ foreach ($attributes->all() as $__key => $__value) {
 
 unset($__defined_vars); ?>
 
-<?php if (! $__env->hasRenderedOnce('96d31a09-9d4f-48d2-8c7a-6ae161b389e0')): $__env->markAsRenderedOnce('96d31a09-9d4f-48d2-8c7a-6ae161b389e0');
-$__env->startPush('vendors'); ?>
-    <?php echo app('Illuminate\Foundation\Vite')('resources/js/vendors/transition.js'); ?>
-<?php $__env->stopPush(); endif; ?>
-
 <?php if(substr($as, 0, 2) == 'x-'): ?>
     <?php if (isset($component)) { $__componentOriginal511d4862ff04963c3c16115c05a86a9d = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal511d4862ff04963c3c16115c05a86a9d = $attributes; } ?>
@@ -61,7 +38,7 @@ $__env->startPush('vendors'); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\DynamicComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['data-transition' => true,'data-selector' => ''.e($selector).'','data-enter' => ''.e($enter).'','data-enter-from' => ''.e($enterFrom).'','data-enter-to' => ''.e($enterTo).'','data-leave' => ''.e($leave).'','data-leave-from' => ''.e($leaveFrom).'','data-leave-to' => ''.e($leaveTo).'','attributes' => $attributes]); ?><?php echo e($slot); ?> <?php echo $__env->renderComponent(); ?>
+<?php $component->withAttributes(['data-tw-toggle' => 'dropdown','aria-expanded' => 'false','attributes' => $attributes->class(['cursor-pointer'])->merge($attributes->whereDoesntStartWith('class')->getAttributes())]); ?><?php echo e($slot); ?> <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginal511d4862ff04963c3c16115c05a86a9d)): ?>
 <?php $attributes = $__attributesOriginal511d4862ff04963c3c16115c05a86a9d; ?>
@@ -74,16 +51,12 @@ $__env->startPush('vendors'); ?>
 <?php else: ?>
     <<?php echo e($as); ?>
 
-        data-transition
-        data-selector="<?php echo e($selector); ?>"
-        data-enter="<?php echo e($enter); ?>"
-        data-enter-from="<?php echo e($enterFrom); ?>"
-        data-enter-to="<?php echo e($enterTo); ?>"
-        data-leave="<?php echo e($leave); ?>"
-        data-leave-from="<?php echo e($leaveFrom); ?>"
-        data-leave-to="<?php echo e($leaveTo); ?>"
-        <?php echo e($attributes); ?>
+        data-tw-toggle="dropdown"
+        aria-expanded="false"
+        <?php echo e($attributes->whereDoesntStartWith('href')->class(['cursor-pointer'])->merge($attributes->whereDoesntStartWith(['class', 'href'])->getAttributes())->merge($as == 'a' ? ['href' => 'javascript:;'] : [])); ?>
 
-    ><?php echo e($slot); ?></<?php echo e($as); ?>>
+    ><?php echo e($slot); ?>
+
+        </<?php echo e($as); ?>>
 <?php endif; ?>
-<?php /**PATH E:\backup\Source\resources\views/components/base/transition/index.blade.php ENDPATH**/ ?>
+<?php /**PATH E:\backup\Source\resources\views/components/base/menu/button.blade.php ENDPATH**/ ?>
