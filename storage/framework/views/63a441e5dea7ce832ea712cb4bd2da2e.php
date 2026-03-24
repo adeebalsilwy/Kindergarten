@@ -4,6 +4,31 @@
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('subcontent'); ?>
+    <style>
+        /* Enhanced Toggle Styles for Index Page */
+        .toggle-label {
+            transition: background-color 0.2s ease-in-out;
+        }
+
+        .status-toggle:checked + .toggle-label {
+            background-color: rgb(var(--color-success) / 0.3);
+        }
+
+        .status-toggle:checked {
+            border-color: rgb(var(--color-success));
+            background-color: rgb(var(--color-success));
+        }
+
+        .verification-toggle:checked + .toggle-label {
+            background-color: rgb(var(--color-warning) / 0.3);
+        }
+
+        .verification-toggle:checked {
+            border-color: rgb(var(--color-warning));
+            background-color: rgb(var(--color-warning));
+        }
+    </style>
+
     <!-- Professional Header -->
     <div class="intro-y flex flex-col sm:flex-row items-center mt-10 mb-8">
         <div class="me-auto">
@@ -259,7 +284,7 @@
 <?php endif; ?>
             </div>
         </div>
-        
+
         <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
             <div class="box p-8 rounded-[2.5rem] border-0 shadow-xl bg-gradient-to-br from-success/10 to-transparent relative overflow-hidden group">
                 <div class="flex items-center relative z-10">
@@ -438,7 +463,7 @@
 <?php unset($__componentOriginal16b2e62e74cde9150905c2d0c2cb6800); ?>
 <?php endif; ?>
         </div>
-        
+
         <form method="GET" action="<?php echo e(route('users.index')); ?>" class="relative z-10">
             <div class="grid grid-cols-12 gap-x-8 gap-y-6">
                 <div class="col-span-12 lg:col-span-4">
@@ -506,7 +531,7 @@
 <?php endif; ?>
                     </div>
                 </div>
-                
+
                 <div class="col-span-12 sm:col-span-6 lg:col-span-2">
                     <?php if (isset($component)) { $__componentOriginal0b5a207e31917d1ae3d42744188acbdf = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal0b5a207e31917d1ae3d42744188acbdf = $attributes; } ?>
@@ -784,104 +809,40 @@
                         </td>
                         <td class="px-8 py-6 text-center">
                             <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit_users')): ?>
-                            <div class="flex flex-col items-center gap-2">
-                                <?php if (isset($component)) { $__componentOriginal0e9b1708c541f0772f542e0482be43cc = $component; } ?>
-<?php if (isset($attributes)) { $__attributesOriginal0e9b1708c541f0772f542e0482be43cc = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.base.form-switch.index','data' => ['class' => 'w-full justify-center']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
-<?php $component->withName('base.form-switch'); ?>
-<?php if ($component->shouldRender()): ?>
-<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
-<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
-<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
-<?php endif; ?>
-<?php $component->withAttributes(['class' => 'w-full justify-center']); ?>
-                                    <x-base.form-switch.input 
-                                        type="checkbox" 
-                                        class="status-toggle" 
+                            <div class="flex flex-col items-center gap-3">
+                                <!-- Status Toggle -->
+                                <div class="relative inline-block w-16 h-8 align-middle select-none">
+                                    <input type="checkbox"
+                                        id="status_<?php echo e($user->id); ?>"
+                                        class="status-toggle absolute block w-8 h-8 rounded-full bg-white border-4 border-slate-300 appearance-none cursor-pointer transition-transform duration-200 ease-in-out checked:translate-x-8 checked:border-success checked:bg-success"
                                         data-id="<?php echo e($user->id); ?>"
                                         data-url="<?php echo e(route('users.toggle-status', $user->id)); ?>"
-                                        <?php echo e($user->is_active ? 'checked' : ''); ?> />
-                                    <?php if (isset($component)) { $__componentOriginal2d72b4ed762a09d18a89903d2344442f = $component; } ?>
-<?php if (isset($attributes)) { $__attributesOriginal2d72b4ed762a09d18a89903d2344442f = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.base.form-switch.label','data' => ['class' => 'ms-2 text-[10px] font-black uppercase tracking-widest text-slate-500']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
-<?php $component->withName('base.form-switch.label'); ?>
-<?php if ($component->shouldRender()): ?>
-<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
-<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
-<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
-<?php endif; ?>
-<?php $component->withAttributes(['class' => 'ms-2 text-[10px] font-black uppercase tracking-widest text-slate-500']); ?>
-                                        <?php echo e($user->is_active ? __('global.active') : __('global.inactive')); ?>
+                                        <?php echo e($user->is_active ? 'checked' : ''); ?>
 
-                                     <?php echo $__env->renderComponent(); ?>
-<?php endif; ?>
-<?php if (isset($__attributesOriginal2d72b4ed762a09d18a89903d2344442f)): ?>
-<?php $attributes = $__attributesOriginal2d72b4ed762a09d18a89903d2344442f; ?>
-<?php unset($__attributesOriginal2d72b4ed762a09d18a89903d2344442f); ?>
-<?php endif; ?>
-<?php if (isset($__componentOriginal2d72b4ed762a09d18a89903d2344442f)): ?>
-<?php $component = $__componentOriginal2d72b4ed762a09d18a89903d2344442f; ?>
-<?php unset($__componentOriginal2d72b4ed762a09d18a89903d2344442f); ?>
-<?php endif; ?>
-                                 <?php echo $__env->renderComponent(); ?>
-<?php endif; ?>
-<?php if (isset($__attributesOriginal0e9b1708c541f0772f542e0482be43cc)): ?>
-<?php $attributes = $__attributesOriginal0e9b1708c541f0772f542e0482be43cc; ?>
-<?php unset($__attributesOriginal0e9b1708c541f0772f542e0482be43cc); ?>
-<?php endif; ?>
-<?php if (isset($__componentOriginal0e9b1708c541f0772f542e0482be43cc)): ?>
-<?php $component = $__componentOriginal0e9b1708c541f0772f542e0482be43cc; ?>
-<?php unset($__componentOriginal0e9b1708c541f0772f542e0482be43cc); ?>
-<?php endif; ?>
+                                        style="top: 0; left: 0; z-index: 10;" />
+                                    <label for="status_<?php echo e($user->id); ?>" class="toggle-label block overflow-hidden h-8 rounded-full bg-slate-300 cursor-pointer transition-colors duration-200 ease-in-out"></label>
+                                </div>
+                                <label for="status_<?php echo e($user->id); ?>" class="text-[10px] font-black uppercase tracking-widest text-slate-500 status-label">
+                                    <?php echo e($user->is_active ? __('global.active') : __('global.inactive')); ?>
 
-                                <?php if (isset($component)) { $__componentOriginal0e9b1708c541f0772f542e0482be43cc = $component; } ?>
-<?php if (isset($attributes)) { $__attributesOriginal0e9b1708c541f0772f542e0482be43cc = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.base.form-switch.index','data' => ['class' => 'w-full justify-center mt-2']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
-<?php $component->withName('base.form-switch'); ?>
-<?php if ($component->shouldRender()): ?>
-<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
-<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
-<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
-<?php endif; ?>
-<?php $component->withAttributes(['class' => 'w-full justify-center mt-2']); ?>
-                                    <x-base.form-switch.input 
-                                        type="checkbox" 
-                                        class="verification-toggle" 
+                                </label>
+
+                                <!-- Verification Toggle -->
+                                <div class="relative inline-block w-16 h-8 align-middle select-none mt-2">
+                                    <input type="checkbox"
+                                        id="verification_<?php echo e($user->id); ?>"
+                                        class="verification-toggle absolute block w-8 h-8 rounded-full bg-white border-4 border-slate-300 appearance-none cursor-pointer transition-transform duration-200 ease-in-out checked:translate-x-8 checked:border-warning checked:bg-warning"
                                         data-id="<?php echo e($user->id); ?>"
                                         data-url="<?php echo e(route('users.toggle-verification', $user->id)); ?>"
-                                        <?php echo e($user->email_verified_at ? 'checked' : ''); ?> />
-                                    <?php if (isset($component)) { $__componentOriginal2d72b4ed762a09d18a89903d2344442f = $component; } ?>
-<?php if (isset($attributes)) { $__attributesOriginal2d72b4ed762a09d18a89903d2344442f = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.base.form-switch.label','data' => ['class' => 'ms-2 text-[10px] font-black uppercase tracking-widest text-slate-500']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
-<?php $component->withName('base.form-switch.label'); ?>
-<?php if ($component->shouldRender()): ?>
-<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
-<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
-<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
-<?php endif; ?>
-<?php $component->withAttributes(['class' => 'ms-2 text-[10px] font-black uppercase tracking-widest text-slate-500']); ?>
-                                        <?php echo e($user->email_verified_at ? __('global.verified') : __('global.unverified')); ?>
+                                        <?php echo e($user->email_verified_at ? 'checked' : ''); ?>
 
-                                     <?php echo $__env->renderComponent(); ?>
-<?php endif; ?>
-<?php if (isset($__attributesOriginal2d72b4ed762a09d18a89903d2344442f)): ?>
-<?php $attributes = $__attributesOriginal2d72b4ed762a09d18a89903d2344442f; ?>
-<?php unset($__attributesOriginal2d72b4ed762a09d18a89903d2344442f); ?>
-<?php endif; ?>
-<?php if (isset($__componentOriginal2d72b4ed762a09d18a89903d2344442f)): ?>
-<?php $component = $__componentOriginal2d72b4ed762a09d18a89903d2344442f; ?>
-<?php unset($__componentOriginal2d72b4ed762a09d18a89903d2344442f); ?>
-<?php endif; ?>
-                                 <?php echo $__env->renderComponent(); ?>
-<?php endif; ?>
-<?php if (isset($__attributesOriginal0e9b1708c541f0772f542e0482be43cc)): ?>
-<?php $attributes = $__attributesOriginal0e9b1708c541f0772f542e0482be43cc; ?>
-<?php unset($__attributesOriginal0e9b1708c541f0772f542e0482be43cc); ?>
-<?php endif; ?>
-<?php if (isset($__componentOriginal0e9b1708c541f0772f542e0482be43cc)): ?>
-<?php $component = $__componentOriginal0e9b1708c541f0772f542e0482be43cc; ?>
-<?php unset($__componentOriginal0e9b1708c541f0772f542e0482be43cc); ?>
-<?php endif; ?>
+                                        style="top: 0; left: 0; z-index: 10;" />
+                                    <label for="verification_<?php echo e($user->id); ?>" class="toggle-label block overflow-hidden h-8 rounded-full bg-slate-300 cursor-pointer transition-colors duration-200 ease-in-out"></label>
+                                </div>
+                                <label for="verification_<?php echo e($user->id); ?>" class="text-[10px] font-black uppercase tracking-widest text-slate-500 verification-label">
+                                    <?php echo e($user->email_verified_at ? __('global.verified') : __('global.unverified')); ?>
+
+                                </label>
                             </div>
                             <?php else: ?>
                                 <div class="flex flex-col items-center gap-2">
@@ -896,7 +857,7 @@
 
                                         </span>
                                     <?php endif; ?>
-                                    
+
                                     <?php if($user->email_verified_at): ?>
                                         <span class="px-5 py-2 rounded-full bg-primary/10 text-primary text-[10px] font-black uppercase tracking-widest border border-primary/10 shadow-sm mt-1">
                                             <?php echo e(__('global.verified')); ?>
@@ -980,7 +941,7 @@
 <?php unset($__componentOriginale00eb601fbe667f0da582732d70c41c5); ?>
 <?php endif; ?>
                                 <?php endif; ?>
-                                
+
                                 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit_users')): ?>
                                 <?php if (isset($component)) { $__componentOriginale00eb601fbe667f0da582732d70c41c5 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginale00eb601fbe667f0da582732d70c41c5 = $attributes; } ?>
@@ -1104,7 +1065,7 @@
                 </tbody>
             </table>
         </div>
-        
+
         <!-- Pagination -->
         <div class="px-10 py-10 bg-slate-50 dark:bg-darkmode-600 flex flex-col sm:flex-row items-center gap-6">
             <div class="me-auto text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">
@@ -1162,7 +1123,7 @@
 <?php unset($__componentOriginal16b2e62e74cde9150905c2d0c2cb6800); ?>
 <?php endif; ?>
                 </div>
-                
+
                 <div class="w-24 h-24 rounded-[2.5rem] bg-warning/10 flex items-center justify-center text-warning mx-auto mb-10 shadow-inner relative z-10">
                     <?php if (isset($component)) { $__componentOriginal16b2e62e74cde9150905c2d0c2cb6800 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal16b2e62e74cde9150905c2d0c2cb6800 = $attributes; } ?>
@@ -1185,7 +1146,7 @@
 <?php unset($__componentOriginal16b2e62e74cde9150905c2d0c2cb6800); ?>
 <?php endif; ?>
                 </div>
-                
+
                 <div class="relative z-10">
                     <h3 class="text-3xl font-black text-slate-800 dark:text-slate-200 tracking-tight mb-4"><?php echo e(__('global.confirm_toggle_title')); ?></h3>
                     <p id="toggleUserName" class="text-slate-500 font-bold text-lg leading-relaxed mb-2"></p>
@@ -1304,7 +1265,7 @@
 <?php unset($__componentOriginal16b2e62e74cde9150905c2d0c2cb6800); ?>
 <?php endif; ?>
                 </div>
-                
+
                 <div class="w-24 h-24 rounded-[2.5rem] bg-danger/10 flex items-center justify-center text-danger mx-auto mb-10 shadow-inner relative z-10">
                     <?php if (isset($component)) { $__componentOriginal16b2e62e74cde9150905c2d0c2cb6800 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal16b2e62e74cde9150905c2d0c2cb6800 = $attributes; } ?>
@@ -1327,7 +1288,7 @@
 <?php unset($__componentOriginal16b2e62e74cde9150905c2d0c2cb6800); ?>
 <?php endif; ?>
                 </div>
-                
+
                 <div class="relative z-10">
                     <h3 class="text-3xl font-black text-slate-800 dark:text-slate-200 tracking-tight mb-4"><?php echo e(__('global.are_you_sure')); ?></h3>
                     <p class="text-slate-500 font-bold text-lg leading-relaxed mb-2"><?php echo e(__('global.delete_user_warning')); ?></p>
@@ -1415,10 +1376,10 @@
                     const id = this.getAttribute('data-id');
                     const name = this.getAttribute('data-name');
                     const deleteUrl = this.getAttribute('data-delete-url');
-                    
+
                     const nameElement = document.getElementById('deleteUserName');
                     if (nameElement) nameElement.textContent = name;
-                    
+
                     const formElement = document.getElementById('deleteForm');
                     if (formElement && deleteUrl) {
                         formElement.action = deleteUrl;
@@ -1440,7 +1401,7 @@
                     const url = this.dataset.url;
                     const userName = this.closest('tr').querySelector('.font-black')?.textContent || '';
                     const newStatus = this.checked ? '<?php echo e(__("global.active")); ?>' : '<?php echo e(__("global.inactive")); ?>';
-                    
+
                     pendingToggle = {
                         element: this,
                         url: url,
@@ -1450,7 +1411,7 @@
 
                     if (toggleUserName) toggleUserName.textContent = userName;
                     if (toggleActionText) toggleActionText.textContent = '<?php echo e(__("global.change_status_to")); ?>: ' + newStatus;
-                    
+
                     // Show modal
                     const modalInstance = tailwind.Modal.getOrCreateInstance(toggleModal);
                     modalInstance.show();
@@ -1464,7 +1425,7 @@
                     const url = this.dataset.url;
                     const userName = this.closest('tr').querySelector('.font-black')?.textContent || '';
                     const newStatus = this.checked ? '<?php echo e(__("global.verified")); ?>' : '<?php echo e(__("global.unverified")); ?>';
-                    
+
                     pendingToggle = {
                         element: this,
                         url: url,
@@ -1474,7 +1435,7 @@
 
                     if (toggleUserName) toggleUserName.textContent = userName;
                     if (toggleActionText) toggleActionText.textContent = '<?php echo e(__("global.change_verification_to")); ?>: ' + newStatus;
-                    
+
                     // Show modal
                     const modalInstance = tailwind.Modal.getOrCreateInstance(toggleModal);
                     modalInstance.show();
@@ -1488,7 +1449,7 @@
 
                     const { element, url, type } = pendingToggle;
                     const label = element.closest('.flex-col')?.querySelector('label');
-                    
+
                     try {
                         const response = await fetch(url, {
                             method: 'POST',
@@ -1507,7 +1468,7 @@
                             } else if (type === 'verification' && label) {
                                 label.textContent = data.is_verified ? '<?php echo e(__("global.verified")); ?>' : '<?php echo e(__("global.unverified")); ?>';
                             }
-                            
+
                             // Show success toast if available
                             if (typeof Toastify !== 'undefined') {
                                 Toastify({

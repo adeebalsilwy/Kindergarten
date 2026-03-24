@@ -248,7 +248,7 @@
         <form action="<?php echo e(route('users.update', $user->id)); ?>" method="POST" id="userForm" enctype="multipart/form-data">
             <?php echo csrf_field(); ?>
             <?php echo method_field('PUT'); ?>
-            
+
             <div class="intro-y box p-0 mb-8 overflow-hidden rounded-[2.5rem] shadow-2xl border-0 bg-white dark:bg-darkmode-600">
                 <!-- Tab Navigation -->
                 <div class="tabs-navigation bg-slate-50/50 dark:bg-darkmode-700/50">
@@ -451,7 +451,7 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                             </div>
-                            
+
                             <div class="col-span-12 md:col-span-6">
                                 <?php if (isset($component)) { $__componentOriginal0b5a207e31917d1ae3d42744188acbdf = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal0b5a207e31917d1ae3d42744188acbdf = $attributes; } ?>
@@ -544,7 +544,7 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                             </div>
-                            
+
                             <div class="col-span-12 md:col-span-6">
                                 <?php if (isset($component)) { $__componentOriginal0b5a207e31917d1ae3d42744188acbdf = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal0b5a207e31917d1ae3d42744188acbdf = $attributes; } ?>
@@ -637,7 +637,7 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                             </div>
-                            
+
                             <div class="col-span-12 md:col-span-6">
                                 <?php if (isset($component)) { $__componentOriginal0b5a207e31917d1ae3d42744188acbdf = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal0b5a207e31917d1ae3d42744188acbdf = $attributes; } ?>
@@ -716,7 +716,7 @@ unset($__errorArgs, $__bag); ?>
                                         </div>
                                         <div class="ms-auto">
                                             <div class="relative inline-block w-14 h-7 align-middle select-none">
-                                                <input type="checkbox" id="is_active" name="is_active" value="1" class="toggle-checkbox absolute block w-7 h-7 rounded-full bg-white border-4 border-slate-300 appearance-none cursor-pointer transition-transform duration-200 ease-in-out checked:translate-x-7 checked:border-success checked:bg-success" <?php echo e(old('is_active', $user->is_active) ? 'checked' : ''); ?> />
+                                                <input type="checkbox" id="is_active" name="is_active" value="1" class="toggle-checkbox absolute block w-7 h-7 rounded-full bg-white border-4 border-slate-300 appearance-none cursor-pointer transition-transform duration-200 ease-in-out checked:translate-x-7 checked:border-success checked:bg-success" <?php echo e(old('is_active', $user->is_active) == true ? 'checked' : ''); ?> />
                                                 <label for="is_active" class="toggle-label block overflow-hidden h-7 rounded-full bg-slate-300 cursor-pointer transition-colors duration-200 ease-in-out"></label>
                                             </div>
                                         </div>
@@ -755,7 +755,7 @@ unset($__errorArgs, $__bag); ?>
                                         </div>
                                         <div class="ms-auto">
                                             <div class="relative inline-block w-14 h-7 align-middle select-none">
-                                                <input type="checkbox" id="email_verified" name="email_verified" value="1" class="toggle-checkbox absolute block w-7 h-7 rounded-full bg-white border-4 border-slate-300 appearance-none cursor-pointer transition-transform duration-200 ease-in-out checked:translate-x-7 checked:border-warning checked:bg-warning" <?php echo e(old('email_verified', $user->email_verified_at) ? 'checked' : ''); ?> />
+                                                <input type="checkbox" id="email_verified" name="email_verified" value="1" class="toggle-checkbox absolute block w-7 h-7 rounded-full bg-white border-4 border-slate-300 appearance-none cursor-pointer transition-transform duration-200 ease-in-out checked:translate-x-7 checked:border-warning checked:bg-warning" <?php echo e(old('email_verified', isset($user->email_verified_at)) ? 'checked' : ''); ?> />
                                                 <label for="email_verified" class="toggle-label block overflow-hidden h-7 rounded-full bg-slate-300 cursor-pointer transition-colors duration-200 ease-in-out"></label>
                                             </div>
                                         </div>
@@ -764,7 +764,7 @@ unset($__errorArgs, $__bag); ?>
                             </div>
                         </div>
                     </div>
-                    
+
                     <!-- Security Tab -->
                     <div id="security" class="tab-content">
                         <div class="flex items-center mb-12 pb-8 border-b border-slate-100 dark:border-darkmode-400">
@@ -979,7 +979,7 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                             </div>
-                            
+
                             <div class="col-span-12 md:col-span-6">
                                 <?php if (isset($component)) { $__componentOriginal0b5a207e31917d1ae3d42744188acbdf = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal0b5a207e31917d1ae3d42744188acbdf = $attributes; } ?>
@@ -1047,7 +1047,7 @@ unset($__errorArgs, $__bag); ?>
                             </div>
                         </div>
                     </div>
-                    
+
                     <!-- Roles & Permissions Tab -->
                     <div id="roles" class="tab-content">
                         <div class="flex items-center mb-12 pb-8 border-b border-slate-100 dark:border-darkmode-400">
@@ -1085,7 +1085,7 @@ unset($__errorArgs, $__bag); ?>
                                 <div class="ms-6 h-px flex-1 bg-slate-100 dark:bg-darkmode-400"></div>
                                 <span class="ms-6 px-6 py-2.5 bg-slate-50 dark:bg-darkmode-700 text-slate-400 text-[10px] rounded-full font-black uppercase tracking-[0.2em] border border-slate-100 dark:border-darkmode-400 shadow-sm"><?php echo e(__('global.select_user_roles')); ?></span>
                             </div>
-                            
+
                             <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
                                 <?php $__currentLoopData = $roles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $role): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <div class="role-card group p-8 rounded-[2.5rem] border-2 border-slate-100 dark:border-darkmode-400 bg-slate-50/50 dark:bg-darkmode-700/50 hover:border-primary/30 hover:bg-white dark:hover:bg-darkmode-600 transition-all duration-300 cursor-pointer relative overflow-hidden">
@@ -1197,7 +1197,7 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                         </div>
-                        
+
                         <div class="pt-12 border-t border-slate-100 dark:border-darkmode-400">
                             <div class="flex flex-col sm:flex-row items-center mb-10">
                                 <div class="me-auto">
@@ -1291,7 +1291,7 @@ unset($__errorArgs, $__bag); ?>
 <?php endif; ?>
                                 </div>
                             </div>
-                            
+
                             <div class="permission-container grid grid-cols-12 gap-8 bg-slate-50 dark:bg-darkmode-800/30 p-10 lg:p-12 rounded-[3rem] border border-slate-100 dark:border-darkmode-400 shadow-inner" style="max-height: 500px; overflow-y: auto;">
                                 <?php $__currentLoopData = $groupedPermissions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $group => $groupPerms): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <div class="col-span-12 md:col-span-6 xl:col-span-4">

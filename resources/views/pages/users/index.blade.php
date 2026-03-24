@@ -6,6 +6,31 @@
 @endsection
 
 @section('subcontent')
+    <style>
+        /* Enhanced Toggle Styles for Index Page */
+        .toggle-label {
+            transition: background-color 0.2s ease-in-out;
+        }
+
+        .status-toggle:checked + .toggle-label {
+            background-color: rgb(var(--color-success) / 0.3);
+        }
+
+        .status-toggle:checked {
+            border-color: rgb(var(--color-success));
+            background-color: rgb(var(--color-success));
+        }
+
+        .verification-toggle:checked + .toggle-label {
+            background-color: rgb(var(--color-warning) / 0.3);
+        }
+
+        .verification-toggle:checked {
+            border-color: rgb(var(--color-warning));
+            background-color: rgb(var(--color-warning));
+        }
+    </style>
+
     <!-- Professional Header -->
     <div class="intro-y flex flex-col sm:flex-row items-center mt-10 mb-8">
         <div class="me-auto">
@@ -69,7 +94,7 @@
                 <x-base.lucide icon="Users" class="absolute -bottom-6 -right-6 w-32 h-32 text-primary/5 group-hover:rotate-12 transition-transform duration-700" />
             </div>
         </div>
-        
+
         <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
             <div class="box p-8 rounded-[2.5rem] border-0 shadow-xl bg-gradient-to-br from-success/10 to-transparent relative overflow-hidden group">
                 <div class="flex items-center relative z-10">
@@ -115,7 +140,7 @@
         <div class="absolute top-0 right-0 p-10 opacity-5">
             <x-base.lucide icon="Filter" class="w-48 h-48 text-primary" />
         </div>
-        
+
         <form method="GET" action="{{ route('users.index') }}" class="relative z-10">
             <div class="grid grid-cols-12 gap-x-8 gap-y-6">
                 <div class="col-span-12 lg:col-span-4">
@@ -127,7 +152,7 @@
                         <x-base.form-input name="search" value="{{ request('search') }}" placeholder="{{ __('global.search_users_placeholder') }}" class="ps-14 py-4 rounded-2xl border-slate-200 focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all text-sm font-bold shadow-sm" />
                     </div>
                 </div>
-                
+
                 <div class="col-span-12 sm:col-span-6 lg:col-span-2">
                     <x-base.form-label class="font-black text-slate-700 dark:text-slate-300 mb-3 block">{{ __('users.fields.status') }}</x-base.form-label>
                     <x-base.tom-select name="is_active" class="w-full">
@@ -202,30 +227,36 @@
                         </td>
                         <td class="px-8 py-6 text-center">
                             @can('edit_users')
-                            <div class="flex flex-col items-center gap-2">
-                                <x-base.form-switch class="w-full justify-center">
-                                    <x-base.form-switch.input 
-                                        type="checkbox" 
-                                        class="status-toggle" 
+                            <div class="flex flex-col items-center gap-3">
+                                <!-- Status Toggle -->
+                                <div class="relative inline-block w-16 h-8 align-middle select-none">
+                                    <input type="checkbox"
+                                        id="status_{{ $user->id }}"
+                                        class="status-toggle absolute block w-8 h-8 rounded-full bg-white border-4 border-slate-300 appearance-none cursor-pointer transition-transform duration-200 ease-in-out checked:translate-x-8 checked:border-success checked:bg-success"
                                         data-id="{{ $user->id }}"
                                         data-url="{{ route('users.toggle-status', $user->id) }}"
-                                        {{ $user->is_active ? 'checked' : '' }} />
-                                    <x-base.form-switch.label class="ms-2 text-[10px] font-black uppercase tracking-widest text-slate-500">
-                                        {{ $user->is_active ? __('global.active') : __('global.inactive') }}
-                                    </x-base.form-switch.label>
-                                </x-base.form-switch>
+                                        {{ $user->is_active ? 'checked' : '' }}
+                                        style="top: 0; left: 0; z-index: 10;" />
+                                    <label for="status_{{ $user->id }}" class="toggle-label block overflow-hidden h-8 rounded-full bg-slate-300 cursor-pointer transition-colors duration-200 ease-in-out"></label>
+                                </div>
+                                <label for="status_{{ $user->id }}" class="text-[10px] font-black uppercase tracking-widest text-slate-500 status-label">
+                                    {{ $user->is_active ? __('global.active') : __('global.inactive') }}
+                                </label>
 
-                                <x-base.form-switch class="w-full justify-center mt-2">
-                                    <x-base.form-switch.input 
-                                        type="checkbox" 
-                                        class="verification-toggle" 
+                                <!-- Verification Toggle -->
+                                <div class="relative inline-block w-16 h-8 align-middle select-none mt-2">
+                                    <input type="checkbox"
+                                        id="verification_{{ $user->id }}"
+                                        class="verification-toggle absolute block w-8 h-8 rounded-full bg-white border-4 border-slate-300 appearance-none cursor-pointer transition-transform duration-200 ease-in-out checked:translate-x-8 checked:border-warning checked:bg-warning"
                                         data-id="{{ $user->id }}"
                                         data-url="{{ route('users.toggle-verification', $user->id) }}"
-                                        {{ $user->email_verified_at ? 'checked' : '' }} />
-                                    <x-base.form-switch.label class="ms-2 text-[10px] font-black uppercase tracking-widest text-slate-500">
-                                        {{ $user->email_verified_at ? __('global.verified') : __('global.unverified') }}
-                                    </x-base.form-switch.label>
-                                </x-base.form-switch>
+                                        {{ $user->email_verified_at ? 'checked' : '' }}
+                                        style="top: 0; left: 0; z-index: 10;" />
+                                    <label for="verification_{{ $user->id }}" class="toggle-label block overflow-hidden h-8 rounded-full bg-slate-300 cursor-pointer transition-colors duration-200 ease-in-out"></label>
+                                </div>
+                                <label for="verification_{{ $user->id }}" class="text-[10px] font-black uppercase tracking-widest text-slate-500 verification-label">
+                                    {{ $user->email_verified_at ? __('global.verified') : __('global.unverified') }}
+                                </label>
                             </div>
                             @else
                                 <div class="flex flex-col items-center gap-2">
@@ -238,7 +269,7 @@
                                             {{ __('global.inactive') }}
                                         </span>
                                     @endif
-                                    
+
                                     @if($user->email_verified_at)
                                         <span class="px-5 py-2 rounded-full bg-primary/10 text-primary text-[10px] font-black uppercase tracking-widest border border-primary/10 shadow-sm mt-1">
                                             {{ __('global.verified') }}
@@ -280,7 +311,7 @@
                                     <x-base.lucide icon="Eye" class="w-5 h-5" />
                                 </x-base.button>
                                 @endcan
-                                
+
                                 @can('edit_users')
                                 <x-base.button as="a" href="{{ route('users.edit', $user->id) }}" variant="soft-secondary" class="w-10 h-10 rounded-xl p-0 flex items-center justify-center transition-all hover:bg-info/10 hover:text-info hover:scale-110 shadow-sm">
                                     <x-base.lucide icon="Pencil" class="w-5 h-5" />
@@ -311,7 +342,7 @@
                 </tbody>
             </table>
         </div>
-        
+
         <!-- Pagination -->
         <div class="px-10 py-10 bg-slate-50 dark:bg-darkmode-600 flex flex-col sm:flex-row items-center gap-6">
             <div class="me-auto text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">
@@ -330,11 +361,11 @@
                 <div class="absolute top-0 right-0 p-10 opacity-5">
                     <x-base.lucide icon="AlertCircle" class="w-48 h-48 text-warning" />
                 </div>
-                
+
                 <div class="w-24 h-24 rounded-[2.5rem] bg-warning/10 flex items-center justify-center text-warning mx-auto mb-10 shadow-inner relative z-10">
                     <x-base.lucide icon="ToggleLeft" class="w-12 h-12" />
                 </div>
-                
+
                 <div class="relative z-10">
                     <h3 class="text-3xl font-black text-slate-800 dark:text-slate-200 tracking-tight mb-4">{{ __('global.confirm_toggle_title') }}</h3>
                     <p id="toggleUserName" class="text-slate-500 font-bold text-lg leading-relaxed mb-2"></p>
@@ -360,11 +391,11 @@
                 <div class="absolute top-0 right-0 p-10 opacity-5">
                     <x-base.lucide icon="Trash2" class="w-48 h-48 text-danger" />
                 </div>
-                
+
                 <div class="w-24 h-24 rounded-[2.5rem] bg-danger/10 flex items-center justify-center text-danger mx-auto mb-10 shadow-inner relative z-10">
                     <x-base.lucide icon="XCircle" class="w-12 h-12" />
                 </div>
-                
+
                 <div class="relative z-10">
                     <h3 class="text-3xl font-black text-slate-800 dark:text-slate-200 tracking-tight mb-4">{{ __('global.are_you_sure') }}</h3>
                     <p class="text-slate-500 font-bold text-lg leading-relaxed mb-2">{{ __('global.delete_user_warning') }}</p>
@@ -396,10 +427,10 @@
                     const id = this.getAttribute('data-id');
                     const name = this.getAttribute('data-name');
                     const deleteUrl = this.getAttribute('data-delete-url');
-                    
+
                     const nameElement = document.getElementById('deleteUserName');
                     if (nameElement) nameElement.textContent = name;
-                    
+
                     const formElement = document.getElementById('deleteForm');
                     if (formElement && deleteUrl) {
                         formElement.action = deleteUrl;
@@ -421,7 +452,7 @@
                     const url = this.dataset.url;
                     const userName = this.closest('tr').querySelector('.font-black')?.textContent || '';
                     const newStatus = this.checked ? '{{ __("global.active") }}' : '{{ __("global.inactive") }}';
-                    
+
                     pendingToggle = {
                         element: this,
                         url: url,
@@ -431,7 +462,7 @@
 
                     if (toggleUserName) toggleUserName.textContent = userName;
                     if (toggleActionText) toggleActionText.textContent = '{{ __("global.change_status_to") }}: ' + newStatus;
-                    
+
                     // Show modal
                     const modalInstance = tailwind.Modal.getOrCreateInstance(toggleModal);
                     modalInstance.show();
@@ -445,7 +476,7 @@
                     const url = this.dataset.url;
                     const userName = this.closest('tr').querySelector('.font-black')?.textContent || '';
                     const newStatus = this.checked ? '{{ __("global.verified") }}' : '{{ __("global.unverified") }}';
-                    
+
                     pendingToggle = {
                         element: this,
                         url: url,
@@ -455,7 +486,7 @@
 
                     if (toggleUserName) toggleUserName.textContent = userName;
                     if (toggleActionText) toggleActionText.textContent = '{{ __("global.change_verification_to") }}: ' + newStatus;
-                    
+
                     // Show modal
                     const modalInstance = tailwind.Modal.getOrCreateInstance(toggleModal);
                     modalInstance.show();
@@ -469,7 +500,7 @@
 
                     const { element, url, type } = pendingToggle;
                     const label = element.closest('.flex-col')?.querySelector('label');
-                    
+
                     try {
                         const response = await fetch(url, {
                             method: 'POST',
@@ -488,7 +519,7 @@
                             } else if (type === 'verification' && label) {
                                 label.textContent = data.is_verified ? '{{ __("global.verified") }}' : '{{ __("global.unverified") }}';
                             }
-                            
+
                             // Show success toast if available
                             if (typeof Toastify !== 'undefined') {
                                 Toastify({

@@ -117,7 +117,7 @@
         <form action="{{ route('users.update', $user->id) }}" method="POST" id="userForm" enctype="multipart/form-data">
             @csrf
             @method('PUT')
-            
+
             <div class="intro-y box p-0 mb-8 overflow-hidden rounded-[2.5rem] shadow-2xl border-0 bg-white dark:bg-darkmode-600">
                 <!-- Tab Navigation -->
                 <div class="tabs-navigation bg-slate-50/50 dark:bg-darkmode-700/50">
@@ -159,7 +159,7 @@
                                 </div>
                                 @error('name') <div class="text-danger mt-3 text-xs font-black flex items-center"><x-base.lucide icon="AlertCircle" class="w-4 h-4 me-2" /> {{ $message }}</div> @enderror
                             </div>
-                            
+
                             <div class="col-span-12 md:col-span-6">
                                 <x-base.form-label class="font-black text-slate-700 dark:text-slate-300 mb-4 block" required>{{ __('users.fields.email') }}</x-base.form-label>
                                 <div class="relative group">
@@ -170,7 +170,7 @@
                                 </div>
                                 @error('email') <div class="text-danger mt-3 text-xs font-black flex items-center"><x-base.lucide icon="AlertCircle" class="w-4 h-4 me-2" /> {{ $message }}</div> @enderror
                             </div>
-                            
+
                             <div class="col-span-12 md:col-span-6">
                                 <x-base.form-label class="font-black text-slate-700 dark:text-slate-300 mb-4 block">{{ __('users.fields.phone') }}</x-base.form-label>
                                 <div class="relative group">
@@ -181,7 +181,7 @@
                                 </div>
                                 @error('phone') <div class="text-danger mt-3 text-xs font-black flex items-center"><x-base.lucide icon="AlertCircle" class="w-4 h-4 me-2" /> {{ $message }}</div> @enderror
                             </div>
-                            
+
                             <div class="col-span-12 md:col-span-6">
                                 <x-base.form-label class="font-black text-slate-700 dark:text-slate-300 mb-4 block">{{ __('users.fields.department') }}</x-base.form-label>
                                 <x-base.tom-select name="department" id="department" class="w-full">
@@ -205,7 +205,7 @@
                                         </div>
                                         <div class="ms-auto">
                                             <div class="relative inline-block w-14 h-7 align-middle select-none">
-                                                <input type="checkbox" id="is_active" name="is_active" value="1" class="toggle-checkbox absolute block w-7 h-7 rounded-full bg-white border-4 border-slate-300 appearance-none cursor-pointer transition-transform duration-200 ease-in-out checked:translate-x-7 checked:border-success checked:bg-success" {{ old('is_active', $user->is_active) ? 'checked' : '' }} />
+                                                <input type="checkbox" id="is_active" name="is_active" value="1" class="toggle-checkbox absolute block w-7 h-7 rounded-full bg-white border-4 border-slate-300 appearance-none cursor-pointer transition-transform duration-200 ease-in-out checked:translate-x-7 checked:border-success checked:bg-success" {{ old('is_active', $user->is_active) == true ? 'checked' : '' }} />
                                                 <label for="is_active" class="toggle-label block overflow-hidden h-7 rounded-full bg-slate-300 cursor-pointer transition-colors duration-200 ease-in-out"></label>
                                             </div>
                                         </div>
@@ -225,7 +225,7 @@
                                         </div>
                                         <div class="ms-auto">
                                             <div class="relative inline-block w-14 h-7 align-middle select-none">
-                                                <input type="checkbox" id="email_verified" name="email_verified" value="1" class="toggle-checkbox absolute block w-7 h-7 rounded-full bg-white border-4 border-slate-300 appearance-none cursor-pointer transition-transform duration-200 ease-in-out checked:translate-x-7 checked:border-warning checked:bg-warning" {{ old('email_verified', $user->email_verified_at) ? 'checked' : '' }} />
+                                                <input type="checkbox" id="email_verified" name="email_verified" value="1" class="toggle-checkbox absolute block w-7 h-7 rounded-full bg-white border-4 border-slate-300 appearance-none cursor-pointer transition-transform duration-200 ease-in-out checked:translate-x-7 checked:border-warning checked:bg-warning" {{ old('email_verified', isset($user->email_verified_at)) ? 'checked' : '' }} />
                                                 <label for="email_verified" class="toggle-label block overflow-hidden h-7 rounded-full bg-slate-300 cursor-pointer transition-colors duration-200 ease-in-out"></label>
                                             </div>
                                         </div>
@@ -234,7 +234,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <!-- Security Tab -->
                     <div id="security" class="tab-content">
                         <div class="flex items-center mb-12 pb-8 border-b border-slate-100 dark:border-darkmode-400">
@@ -271,7 +271,7 @@
                                 </div>
                                 @error('password') <div class="text-danger mt-3 text-xs font-black flex items-center"><x-base.lucide icon="AlertCircle" class="w-4 h-4 me-2" /> {{ $message }}</div> @enderror
                             </div>
-                            
+
                             <div class="col-span-12 md:col-span-6">
                                 <x-base.form-label class="font-black text-slate-700 dark:text-slate-300 mb-4 block">{{ __('users.fields.password_confirmation') }}</x-base.form-label>
                                 <div class="relative group">
@@ -283,7 +283,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <!-- Roles & Permissions Tab -->
                     <div id="roles" class="tab-content">
                         <div class="flex items-center mb-12 pb-8 border-b border-slate-100 dark:border-darkmode-400">
@@ -302,7 +302,7 @@
                                 <div class="ms-6 h-px flex-1 bg-slate-100 dark:bg-darkmode-400"></div>
                                 <span class="ms-6 px-6 py-2.5 bg-slate-50 dark:bg-darkmode-700 text-slate-400 text-[10px] rounded-full font-black uppercase tracking-[0.2em] border border-slate-100 dark:border-darkmode-400 shadow-sm">{{ __('global.select_user_roles') }}</span>
                             </div>
-                            
+
                             <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
                                 @foreach($roles as $role)
                                 <div class="role-card group p-8 rounded-[2.5rem] border-2 border-slate-100 dark:border-darkmode-400 bg-slate-50/50 dark:bg-darkmode-700/50 hover:border-primary/30 hover:bg-white dark:hover:bg-darkmode-600 transition-all duration-300 cursor-pointer relative overflow-hidden">
@@ -330,7 +330,7 @@
                             </div>
                             @error('roles') <div class="text-danger mt-8 text-sm font-black p-8 bg-danger/5 rounded-[2rem] border border-danger/10 flex items-center shadow-sm"><x-base.lucide icon="AlertCircle" class="w-6 h-6 me-4" /> {{ $message }}</div> @enderror
                         </div>
-                        
+
                         <div class="pt-12 border-t border-slate-100 dark:border-darkmode-400">
                             <div class="flex flex-col sm:flex-row items-center mb-10">
                                 <div class="me-auto">
@@ -348,7 +348,7 @@
                                     </x-base.button>
                                 </div>
                             </div>
-                            
+
                             <div class="permission-container grid grid-cols-12 gap-8 bg-slate-50 dark:bg-darkmode-800/30 p-10 lg:p-12 rounded-[3rem] border border-slate-100 dark:border-darkmode-400 shadow-inner" style="max-height: 500px; overflow-y: auto;">
                                 @foreach($groupedPermissions as $group => $groupPerms)
                                 <div class="col-span-12 md:col-span-6 xl:col-span-4">

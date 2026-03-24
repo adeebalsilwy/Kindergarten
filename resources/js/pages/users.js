@@ -15,7 +15,7 @@ const UserManagerConfig = {
 const Logger = {
     _log: (level, msg, data = null) => {
         if (!UserManagerConfig.DEBUG_MODE && level === 'debug') return;
-        
+
         const timestamp = new Date().toLocaleTimeString('en-GB', { hour12: false });
         const styles = {
             info: 'color: #3b82f6; font-weight: bold;',
@@ -43,13 +43,13 @@ class UserManager {
             // New Manual Tabs (Children Management Style)
             manualTabButtons: '.tab-button',
             manualTabContents: '.tab-content',
-            
+
             // Legacy/Component Tabs
             tabGroup: '.x-base-tab-group',
             tabList: '[role="tablist"]',
             tabButtons: '[data-tw-toggle="tab"]',
             tabPanels: '.tab-pane',
-            
+
             // Other selectors
             roleCards: '.role-card',
             passwordInput: '#password',
@@ -84,7 +84,7 @@ class UserManager {
             this.initFormTracking();
             this.setupSecurityTools();
             this.handleValidationContext();
-            
+
             this.state.initialized = true;
             Logger.success('✨ UserManager ready and operational.');
         } catch (err) {
@@ -147,7 +147,7 @@ class UserManager {
                 groupCb.checked = allChecked;
                 groupCb.indeterminate = someChecked && !allChecked;
             });
-            
+
             // Initial state
             cb.dispatchEvent(new Event('change'));
         });
@@ -205,7 +205,7 @@ class UserManager {
 
             this.state.activeTabId = cleanId;
             if (shouldPersist) sessionStorage.setItem(UserManagerConfig.STORAGE_KEY, cleanId);
-            
+
             Logger.debug(`Manual Tab Activated: ${cleanId}`);
         };
 
@@ -225,7 +225,7 @@ class UserManager {
         const hash = window.location.hash;
         const persisted = sessionStorage.getItem(UserManagerConfig.STORAGE_KEY);
         const firstError = document.querySelector(this.selectors.errorInputs);
-        
+
         if (hash && document.getElementById(hash.substring(1))) {
             activator(hash.substring(1), false);
         } else if (firstError) {
@@ -313,12 +313,12 @@ class UserManager {
             // 2. Update Panels State with Professional Transitions
             panels.forEach(panel => {
                 const isMatch = `#${panel.id}` === cleanId;
-                
+
                 if (isMatch) {
                     // Show active panel
                     panel.style.display = 'block';
                     panel.classList.add('active');
-                    
+
                     // Trigger animations
                     requestAnimationFrame(() => {
                         panel.style.opacity = '1';
@@ -330,7 +330,7 @@ class UserManager {
                     panel.classList.remove('active');
                     panel.style.opacity = '0';
                     panel.style.transform = 'translateY(15px)';
-                    
+
                     // Use timeout to hide after transition
                     setTimeout(() => {
                         if (!panel.classList.contains('active')) {
@@ -342,7 +342,7 @@ class UserManager {
 
             this.state.activeTabId = cleanId;
             if (shouldPersist) sessionStorage.setItem(UserManagerConfig.STORAGE_KEY, cleanId);
-            
+
             Logger.info(`Tab ${cleanId} is now active.`);
         };
 
@@ -366,7 +366,7 @@ class UserManager {
         const hash = window.location.hash;
         const persisted = sessionStorage.getItem(UserManagerConfig.STORAGE_KEY);
         const firstError = document.querySelector(this.selectors.errorInputs);
-        
+
         Logger.debug('Resolving initial tab context...', { hash, persisted, hasError: !!firstError });
 
         if (hash && document.querySelector(hash)) {
@@ -415,7 +415,7 @@ class UserManager {
                     // Trigger change event for any other listeners
                     checkbox.dispatchEvent(new Event('change', { bubbles: true }));
                 }
-                
+
                 if (checkbox.checked) {
                     card.classList.add('active', 'border-primary', 'bg-primary/5');
                     Logger.debug('Role selected:', checkbox.value);
@@ -454,19 +454,69 @@ class UserManager {
     }
 
     initToggles() {
-        const statusToggles = document.querySelectorAll('.status-toggle');
-        const verificationToggles = document.querySelectorAll('.verification-toggle');
+        let pendingToggle = null;
+        const toggleModal = document.getElementById('toggle-confirmation-modal');
+        const confirmToggleBtn = document.getElementById('confirmToggleBtn');
+        const toggleUserName = document.getElementById('toggleUserName');
+        const toggleActionText = document.getElementById('toggleActionText');
 
-        statusToggles.forEach(toggle => {
-            toggle.addEventListener('change', async (e) => {
-                const url = toggle.dataset.url;
-                const label = toggle.nextElementSibling;
-                
+        const openConfirmationModal = (toggle, type, userName) => {
+            const newStatus = toggle.checked
+                ? (type === 'status' ? '{{ __("global.active") }}' : '{{ __("global.verified") }}')
+                : (type === 'status' ? '{{ __("global.inactive") }}' : '{{ __("global.unverified") }}');
+
+            pendingToggle = {
+                element: toggle,
+                type: type,
+                newValue: toggle.checked
+            };
+
+            if (toggleUserName) toggleUserName.textContent = userName;
+            if (toggleActionText) {
+                const actionLabel = type === 'status'
+                    ? '{{ __("global.change_status_to") }}'
+                    : '{{ __("global.change_verification_to") }}';
+                toggleActionText.textContent = actionLabel + ': ' + newStatus;
+            }
+
+            // Show modal using Tailwind Modal API
+            const modalInstance = tailwind.Modal.getOrCreateInstance(toggleModal);
+            modalInstance.show();
+        };
+
+        // Status toggles
+        document.querySelectorAll('.status-toggle').forEach(toggle => {
+            toggle.addEventListener('change', function(e) {
+                e.preventDefault();
+                const row = this.closest('tr');
+                const userName = row?.querySelector('.font-black')?.textContent?.trim() || '';
+                openConfirmationModal(this, 'status', userName);
+            });
+        });
+
+        // Verification toggles
+        document.querySelectorAll('.verification-toggle').forEach(toggle => {
+            toggle.addEventListener('change', function(e) {
+                e.preventDefault();
+                const row = this.closest('tr');
+                const userName = row?.querySelector('.font-black')?.textContent?.trim() || '';
+                openConfirmationModal(this, 'verification', userName);
+            });
+        });
+
+        // Confirm toggle action
+        if (confirmToggleBtn && toggleModal) {
+            confirmToggleBtn.addEventListener('click', async function() {
+                if (!pendingToggle) return;
+
+                const { element, type, newValue } = pendingToggle;
+                const url = element.dataset.url;
+
                 try {
                     const response = await fetch(url, {
                         method: 'POST',
                         headers: {
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || '',
                             'Accept': 'application/json',
                             'Content-Type': 'application/json'
                         }
@@ -474,42 +524,64 @@ class UserManager {
 
                     const data = await response.json();
                     if (data.success) {
-                        label.textContent = data.is_active ? 'نشط' : 'غير نشط';
-                        Logger.success(data.message);
-                    }
-                } catch (error) {
-                    toggle.checked = !toggle.checked;
-                    Logger.error('فشل تحديث الحالة');
-                }
-            });
-        });
+                        // Update label text
+                        const labelSelector = type === 'status' ? '.status-label' : '.verification-label';
+                        const label = element.closest('.flex-col')?.querySelector(labelSelector);
 
-        verificationToggles.forEach(toggle => {
-            toggle.addEventListener('change', async (e) => {
-                const url = toggle.dataset.url;
-                const label = toggle.nextElementSibling;
-                
-                try {
-                    const response = await fetch(url, {
-                        method: 'POST',
-                        headers: {
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                            'Accept': 'application/json',
-                            'Content-Type': 'application/json'
+                        if (label) {
+                            label.textContent = type === 'status'
+                                ? (data.is_active ? '{{ __("global.active") }}' : '{{ __("global.inactive") }}')
+                                : (data.is_verified ? '{{ __("global.verified") }}' : '{{ __("global.unverified") }}');
                         }
-                    });
 
-                    const data = await response.json();
-                    if (data.success) {
-                        label.textContent = data.is_verified ? 'تم التحقق' : 'غير محقق';
-                        Logger.success(data.message);
+                        // Show success toast if available
+                        if (typeof Toastify !== 'undefined') {
+                            Toastify({
+                                text: data.message,
+                                duration: 3000,
+                                gravity: "top",
+                                position: "right",
+                                style: { background: "linear-gradient(to right, #00b09b, #96c93d)" }
+                            }).showToast();
+                        }
+
+                        Logger.success('Toggle updated successfully');
+                    } else {
+                        // Revert checkbox on failure
+                        element.checked = !element.checked;
+                        Logger.error('Toggle failed:', data);
                     }
                 } catch (error) {
-                    toggle.checked = !toggle.checked;
-                    Logger.error('فشل تحديث حالة التحقق');
+                    element.checked = !element.checked;
+                    Logger.error('Toggle error:', error);
+
+                    if (typeof Toastify !== 'undefined') {
+                        Toastify({
+                            text: '{{ __("global.error_occurred") }}',
+                            duration: 3000,
+                            gravity: "top",
+                            position: "right",
+                            style: { background: "linear-gradient(to right, #ff5f6d, #ffc371)" }
+                        }).showToast();
+                    }
+                }
+
+                // Close modal
+                const modalInstance = tailwind.Modal.getOrCreateInstance(toggleModal);
+                modalInstance.hide();
+                pendingToggle = null;
+            });
+        }
+
+        // Cancel toggle - revert checkbox when modal is closed without confirming
+        if (toggleModal) {
+            toggleModal.addEventListener('hidden.tw.modal', function() {
+                if (pendingToggle) {
+                    pendingToggle.element.checked = !pendingToggle.element.checked;
+                    pendingToggle = null;
                 }
             });
-        });
+        }
     }
 
     setupSecurityTools() {
@@ -517,7 +589,7 @@ class UserManager {
         window.togglePassword = (id) => {
             const input = document.getElementById(id);
             if (!input) return;
-            
+
             const type = input.type === 'password' ? 'text' : 'password';
             input.type = type;
             Logger.debug(`Password visibility toggled for: ${id} to ${type}`);
@@ -531,7 +603,7 @@ class UserManager {
             for (let i = 0, n = charset.length; i < length; ++i) {
                 retVal += charset.charAt(Math.floor(Math.random() * n));
             }
-            
+
             const pwdInputs = document.querySelectorAll('input[type="password"], #password');
             pwdInputs.forEach(input => {
                 if (input.name.includes('password')) {
@@ -541,9 +613,9 @@ class UserManager {
                     setTimeout(() => input.type = 'password', 3000);
                 }
             });
-            
+
             Logger.success('Secure password generated and applied.');
-            
+
             // Try to copy to clipboard
             navigator.clipboard.writeText(retVal).then(() => {
                 Logger.info('Password copied to clipboard.');
@@ -561,16 +633,16 @@ class UserManager {
 
             const names = ['أحمد محمد', 'سارة علي', 'خالد محمود', 'ليلى حسن', 'عمر فاروق'];
             const depts = ['administration', 'teaching', 'finance', 'support'];
-            
+
             if (nameInput) nameInput.value = names[Math.floor(Math.random() * names.length)];
             if (emailInput) emailInput.value = 'user' + Math.floor(Math.random() * 10000) + '@example.com';
             if (phoneInput) phoneInput.value = '05' + Math.floor(Math.random() * 100000000);
-            
+
             if (deptSelect && deptSelect.tomselect) {
                 const randomOption = depts[Math.floor(Math.random() * depts.length)];
                 deptSelect.tomselect.setValue(randomOption);
             }
-            
+
             window.generatePassword();
 
             // Select a random role
@@ -584,7 +656,7 @@ class UserManager {
                         card.classList.remove('selected', 'active', 'border-primary', 'bg-primary/5');
                     }
                 });
-                
+
                 // Select one
                 const randomRole = roleCards[Math.floor(Math.random() * roleCards.length)];
                 const cb = randomRole.querySelector('.role-checkbox');
@@ -609,9 +681,9 @@ class UserManager {
                     randomPerm.dispatchEvent(new Event('change'));
                 }
             }
-            
+
             Logger.info('Demo data populated professionally.');
-            
+
             // Success notification if available
             if (typeof Toastify !== 'undefined') {
                 Toastify({
