@@ -35,6 +35,10 @@ class MenuComposer
                 if ($activeTheme === 'kindergarten' && isset($mainMenu['kindergarten'])) {
                     $mainMenu = ['kindergarten' => $mainMenu['kindergarten']];
                 }
+                // Add developer tools if enabled
+                if (config('developer.enabled', false)) {
+                    $mainMenu = $this->addDeveloperTools($mainMenu);
+                }
                 $view->with('mainMenu', $mainMenu);
             }
 
@@ -52,6 +56,24 @@ class MenuComposer
 
             $view->with('pageName', $pageName);
         }
+    }
+
+    /**
+     * Add developer tools to menu if enabled.
+     */
+    private function addDeveloperTools(array $menu): array
+    {
+        $developerItems = config('developer.menu_items', []);
+        
+        if (!empty($developerItems)) {
+            $menu['developer-tools'] = [
+                'icon' => 'code',
+                'title' => 'Developer Tools',
+                'sub_menu' => $developerItems,
+            ];
+        }
+        
+        return $menu;
     }
 
     /**
