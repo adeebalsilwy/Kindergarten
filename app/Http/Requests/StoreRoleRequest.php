@@ -14,10 +14,18 @@ class StoreRoleRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:255',
-            'guard_name' => 'required|string|max:255',
+            'name' => 'nullable|string|max:255',
+            'guard_name' => 'nullable|string|max:255',
 
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'name' => $this->name ?? 'role_' . time(),
+            'guard_name' => $this->guard_name ?? 'web',
+        ]);
     }
 
     public function attributes()

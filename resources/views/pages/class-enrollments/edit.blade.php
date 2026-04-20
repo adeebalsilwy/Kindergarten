@@ -128,8 +128,8 @@
                             <!-- Class Selection -->
                             <div class="col-md-6">
                                 <div class="mb-4">
-                                    <label for="class_id" class="form-label fw-bold text-dark">{{ __('الصف') }} <span class="text-danger">*</span></label>
-                                    <select name="class_id" id="class_id" class="form-select @error('class_id') is-invalid @enderror" required>
+                                    <label for="class_id" class="form-label fw-bold text-dark">{{ __('الصف') }}</label>
+                                    <select name="class_id" id="class_id" class="form-select @error('class_id') is-invalid @enderror">
                                         <option value="">{{ __('اختر الصف') }}</option>
                                         @foreach($classes as $class)
                                             <option value="{{ $class->id }}" 
@@ -148,8 +148,8 @@
                             <!-- Child Selection -->
                             <div class="col-md-6">
                                 <div class="mb-4">
-                                    <label for="child_id" class="form-label fw-bold text-dark">{{ __('الطفل') }} <span class="text-danger">*</span></label>
-                                    <select name="child_id" id="child_id" class="form-select @error('child_id') is-invalid @enderror" required>
+                                    <label for="child_id" class="form-label fw-bold text-dark">{{ __('الطفل') }}</label>
+                                    <select name="child_id" id="child_id" class="form-select @error('child_id') is-invalid @enderror">
                                         <option value="">{{ __('اختر الطفل') }}</option>
                                         @foreach($children as $child)
                                             <option value="{{ $child->id }}" 
@@ -170,10 +170,10 @@
                             <!-- Enrollment Date -->
                             <div class="col-md-6">
                                 <div class="mb-4">
-                                    <label for="enrollment_date" class="form-label fw-bold text-dark">{{ __('تاريخ التسجيل') }} <span class="text-danger">*</span></label>
+                                    <label for="enrollment_date" class="form-label fw-bold text-dark">{{ __('تاريخ التسجيل') }}</label>
                                     <input type="date" name="enrollment_date" id="enrollment_date" 
                                            class="form-control @error('enrollment_date') is-invalid @enderror" 
-                                           value="{{ old('enrollment_date', $classEnrollment->enrollment_date->format('Y-m-d')) }}" required>
+                                           value="{{ old('enrollment_date', $classEnrollment->enrollment_date->format('Y-m-d')) }}">
                                     @error('enrollment_date')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -200,8 +200,8 @@
                             <!-- Status -->
                             <div class="col-md-6">
                                 <div class="mb-4">
-                                    <label for="status" class="form-label fw-bold text-dark">{{ __('الحالة') }} <span class="text-danger">*</span></label>
-                                    <select name="status" id="status" class="form-select @error('status') is-invalid @enderror" required>
+                                    <label for="status" class="form-label fw-bold text-dark">{{ __('الحالة') }}</label>
+                                    <select name="status" id="status" class="form-select @error('status') is-invalid @enderror">
                                         <option value="active" {{ old('status', $classEnrollment->status) == 'active' ? 'selected' : '' }}>{{ __('نشط') }}</option>
                                         <option value="inactive" {{ old('status', $classEnrollment->status) == 'inactive' ? 'selected' : '' }}>{{ __('غير نشط') }}</option>
                                         <option value="completed" {{ old('status', $classEnrollment->status) == 'completed' ? 'selected' : '' }}>{{ __('مكتمل') }}</option>
@@ -311,8 +311,8 @@
                     @method('PUT')
                     <div class="modal-body">
                         <div class="mb-3">
-                            <label for="new_class_id" class="form-label">{{ __('الصف الجديد') }} <span class="text-danger">*</span></label>
-                            <select name="new_class_id" id="new_class_id" class="form-select" required>
+                            <label for="new_class_id" class="form-label">{{ __('الصف الجديد') }}</label>
+                            <select name="new_class_id" id="new_class_id" class="form-select">
                                 <option value="">{{ __('اختر الصف الجديد') }}</option>
                                 @foreach($classes as $class)
                                     @if($class->id != $classEnrollment->class_id)
@@ -329,9 +329,9 @@
                                       placeholder="{{ __('أدخل سبب نقل الطفل إلى الصف الجديد') }}"></textarea>
                         </div>
                         <div class="mb-3">
-                            <label for="transfer_date" class="form-label">{{ __('تاريخ النقل') }} <span class="text-danger">*</span></label>
+                            <label for="transfer_date" class="form-label">{{ __('تاريخ النقل') }}</label>
                             <input type="date" name="transfer_date" id="transfer_date" class="form-control" 
-                                   value="{{ date('Y-m-d') }}" required>
+                                   value="{{ date('Y-m-d') }}">
                         </div>
                     </div>
                     <div class="modal-footer">

@@ -107,7 +107,7 @@
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                                 <div>
                                     <x-base.form-label class="font-medium text-slate-700 dark:text-slate-300 mb-2">
-                                        {{ __('global.first_name') }} *
+                                        {{ __('global.first_name') }}
                                     </x-base.form-label>
                                     <x-base.form-input
                                         class="intro-x block min-w-full px-4 py-3 xl:min-w-[350px] border-slate-300 focus:border-primary focus:ring-primary"
@@ -116,7 +116,6 @@
                                         id="first_name"
                                         placeholder="{{ __('global.enter_first_name') }}"
                                         value="{{ old('first_name') }}"
-                                        required
                                         autocomplete="given-name"
                                     />
                                     @if($errors->has('first_name'))
@@ -126,7 +125,7 @@
                                 
                                 <div>
                                     <x-base.form-label class="font-medium text-slate-700 dark:text-slate-300 mb-2">
-                                        {{ __('global.last_name') }} *
+                                        {{ __('global.last_name') }}
                                     </x-base.form-label>
                                     <x-base.form-input
                                         class="intro-x block min-w-full px-4 py-3 xl:min-w-[350px] border-slate-300 focus:border-primary focus:ring-primary"
@@ -135,7 +134,6 @@
                                         id="last_name"
                                         placeholder="{{ __('global.enter_last_name') }}"
                                         value="{{ old('last_name') }}"
-                                        required
                                         autocomplete="family-name"
                                     />
                                     @if($errors->has('last_name'))
@@ -147,7 +145,7 @@
                             <!-- Email Field -->
                             <div class="mb-4">
                                 <x-base.form-label class="font-medium text-slate-700 dark:text-slate-300 mb-2">
-                                    {{ __('global.email_address') }} *
+                                    {{ __('global.email_address') }}
                                 </x-base.form-label>
                                 <x-base.form-input
                                     class="intro-x block min-w-full px-4 py-3 xl:min-w-[350px] border-slate-300 focus:border-primary focus:ring-primary"
@@ -156,7 +154,6 @@
                                     id="email"
                                     placeholder="{{ __('global.enter_your_email') }}"
                                     value="{{ old('email') }}"
-                                    required
                                     autocomplete="email"
                                 />
                                 @if($errors->has('email'))
@@ -186,13 +183,12 @@
                             <!-- Role Selection -->
                             <div class="mb-4">
                                 <x-base.form-label class="font-medium text-slate-700 dark:text-slate-300 mb-2">
-                                    {{ __('global.role') }} *
+                                    {{ __('global.role') }}
                                 </x-base.form-label>
                                 <select 
                                     name="role" 
                                     id="role"
                                     class="intro-x block min-w-full px-4 py-3 xl:min-w-[350px] border-slate-300 focus:border-primary focus:ring-primary rounded-md"
-                                    required
                                 >
                                     <option value="">{{ __('global.select_role') }}</option>
                                     @foreach($availableRoles ?? [] as $role)
@@ -209,7 +205,7 @@
                             <!-- Password Fields -->
                             <div class="mb-4">
                                 <x-base.form-label class="font-medium text-slate-700 dark:text-slate-300 mb-2">
-                                    {{ __('global.password') }} *
+                                    {{ __('global.password') }}
                                 </x-base.form-label>
                                 <div class="relative">
                                     <x-base.form-input
@@ -218,7 +214,6 @@
                                         name="password"
                                         id="password"
                                         placeholder="{{ __('global.enter_strong_password') }}"
-                                        required
                                         autocomplete="new-password"
                                     />
                                     <button type="button" class="absolute inset-y-0 right-0 pe-3 flex items-center" onclick="togglePasswordVisibility('password', 'password-eye')">
@@ -249,7 +244,7 @@
                             <!-- Password Confirmation -->
                             <div class="mb-4">
                                 <x-base.form-label class="font-medium text-slate-700 dark:text-slate-300 mb-2">
-                                    {{ __('global.confirm_password') }} *
+                                    {{ __('global.confirm_password') }}
                                 </x-base.form-label>
                                 <div class="relative">
                                     <x-base.form-input
@@ -258,7 +253,6 @@
                                         name="password_confirmation"
                                         id="password_confirmation"
                                         placeholder="{{ __('global.confirm_your_password') }}"
-                                        required
                                         autocomplete="new-password"
                                     />
                                     <button type="button" class="absolute inset-y-0 right-0 pe-3 flex items-center" onclick="togglePasswordVisibility('password_confirmation', 'confirm-eye')">
@@ -277,7 +271,6 @@
                                         id="accept_terms"
                                         name="accept_terms"
                                         type="checkbox"
-                                        required
                                     />
                                     <label
                                         class="cursor-pointer select-none text-sm text-slate-700 dark:text-slate-300"
@@ -299,7 +292,6 @@
                                         >
                                             {{ __('global.privacy_policy') }}
                                         </a>
-                                        *
                                     </label>
                                 </div>
                                 @if($errors->has('accept_terms'))
@@ -426,21 +418,7 @@
                 });
             }
             
-            // Input validation feedback
-            const inputs = form.querySelectorAll('input, select');
-            inputs.forEach(input => {
-                input.addEventListener('blur', function() {
-                    if (this.value && this.checkValidity()) {
-                        this.classList.add('border-green-500');
-                        this.classList.remove('border-red-500');
-                    } else if (this.value) {
-                        this.classList.add('border-red-500');
-                        this.classList.remove('border-green-500');
-                    } else {
-                        this.classList.remove('border-green-500', 'border-red-500');
-                    }
-                });
-            });
+            // Form validation removed - all fields are now optional
         });
     </script>
 @endPushOnce

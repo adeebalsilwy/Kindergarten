@@ -23,7 +23,6 @@
                                 name="name" 
                                 type="text" 
                                 value="{{ old('name', $permission->name) }}" 
-                                required 
                                 class="w-full"
                             />
                         </div>

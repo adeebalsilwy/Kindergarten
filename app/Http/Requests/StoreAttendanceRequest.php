@@ -14,12 +14,20 @@ class StoreAttendanceRequest extends FormRequest
     public function rules()
     {
         return [
-            'child_id' => 'required',
-            'date' => 'required|date',
-            'status' => 'required|in:present,absent,sick,late,excused',
+            'child_id' => 'nullable',
+            'date' => 'nullable|date',
+            'status' => 'nullable|in:present,absent,sick,late,excused',
             'notes' => 'nullable|string',
 
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'date' => $this->date ?? now()->format('Y-m-d'),
+            'status' => $this->status ?? 'present',
+        ]);
     }
 
     public function attributes()

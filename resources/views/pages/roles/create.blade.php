@@ -32,14 +32,13 @@
                         
                         <div class="grid grid-cols-12 gap-4">
                             <div class="col-span-12 sm:col-span-6">
-                                <x-base.form-label class="font-medium">{{ __('global.role_name') }} *</x-base.form-label>
+                                <x-base.form-label class="font-medium">{{ __('global.role_name') }}</x-base.form-label>
                                 <x-base.form-input 
                                     type="text" 
                                     name="name" 
                                     value="{{ old('name') }}" 
                                     class="mt-2" 
                                     placeholder="{{ __('global.enter_role_name') }}"
-                                    required
                                 />
                                 @error('name')
                                     <div class="text-danger mt-2 text-sm">{{ $message }}</div>

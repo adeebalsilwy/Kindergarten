@@ -28,7 +28,6 @@
                         <x-form-field name="child_id" 
                                      label="{{ __('global.select_student') }}" 
                                      type="select" 
-                                     :required="true" 
                                      :options="$children->pluck('name', 'id')->toArray()" 
                                      :value="old('child_id')" 
                                      icon="User" 
@@ -39,7 +38,6 @@
                         <x-form-field name="fee_id" 
                                      label="{{ __('global.select_fee') }}" 
                                      type="select" 
-                                     :required="true" 
                                      :options="$fees->pluck('name', 'id')->toArray()" 
                                      :value="old('fee_id')" 
                                      icon="FileText" 
@@ -50,7 +48,6 @@
                         <x-form-field name="amount" 
                                      label="{{ __('global.amount') }}" 
                                      type="number" 
-                                     :required="true" 
                                      :value="old('amount')" 
                                      placeholder="0.00" 
                                      icon="DollarSign" 
@@ -61,7 +58,6 @@
                         <x-form-field name="payment_date" 
                                      label="{{ __('global.payment_date') }}" 
                                      type="date" 
-                                     :required="true" 
                                      :value="old('payment_date', now()->format('Y-m-d'))" 
                                      icon="Calendar" 
                                      class="col-span-12" />
@@ -71,7 +67,6 @@
                         <x-form-field name="payment_method" 
                                      label="{{ __('global.payment_method') }}" 
                                      type="select" 
-                                     :required="true" 
                                      :options="[
                                          'cash' => __('global.payment_method_cash'),
                                          'bank_transfer' => __('global.payment_method_bank_transfer'),
@@ -97,7 +92,6 @@
                         <x-form-field name="status" 
                                      label="{{ __('global.status') }}" 
                                      type="select" 
-                                     :required="true" 
                                      :options="[
                                          'completed' => __('global.payment_status_completed'),
                                          'pending' => __('global.payment_status_pending'),

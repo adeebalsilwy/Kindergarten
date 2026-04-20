@@ -14,29 +14,47 @@ class StoreEventRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|string|max:255',
+            'title' => 'nullable|string|max:255',
             'description' => 'nullable|string',
-            'start_datetime' => 'required|date',
-            'end_datetime' => 'required|date',
-            'location' => 'required|string|max:255',
-            'event_type' => 'required|string|max:255',
-            'organizer' => 'required|string|max:255',
-            'class_id' => 'required',
-            'teacher_id' => 'required',
-            'attendees' => 'required|json',
-            'requires_confirmation' => 'required|boolean',
-            'is_public' => 'required|boolean',
-            'is_recurring' => 'required|boolean',
-            'recurrence_pattern' => 'required|string|max:255',
-            'recurrence_end_date' => 'required|date',
-            'recurring_days' => 'required|json',
-            'status' => 'required|string|max:255',
-            'send_reminders' => 'required|boolean',
-            'reminder_hours_before' => 'required|integer',
-            'documents' => 'required|json',
+            'start_datetime' => 'nullable|date',
+            'end_datetime' => 'nullable|date',
+            'location' => 'nullable|string|max:255',
+            'event_type' => 'nullable|string|max:255',
+            'organizer' => 'nullable|string|max:255',
+            'class_id' => 'nullable',
+            'teacher_id' => 'nullable',
+            'attendees' => 'nullable|json',
+            'requires_confirmation' => 'nullable|boolean',
+            'is_public' => 'nullable|boolean',
+            'is_recurring' => 'nullable|boolean',
+            'recurrence_pattern' => 'nullable|string|max:255',
+            'recurrence_end_date' => 'nullable|date',
+            'recurring_days' => 'nullable|json',
+            'status' => 'nullable|string|max:255',
+            'send_reminders' => 'nullable|boolean',
+            'reminder_hours_before' => 'nullable|integer',
+            'documents' => 'nullable|json',
             'notes' => 'nullable|string',
 
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'title' => $this->title ?? 'Event ' . time(),
+            'start_datetime' => $this->start_datetime ?? now()->format('Y-m-d H:i:s'),
+            'end_datetime' => $this->end_datetime ?? now()->addHours(2)->format('Y-m-d H:i:s'),
+            'location' => $this->location ?? 'School Hall',
+            'event_type' => $this->event_type ?? 'general',
+            'organizer' => $this->organizer ?? 'School Admin',
+            'requires_confirmation' => $this->requires_confirmation ?? false,
+            'is_public' => $this->is_public ?? true,
+            'is_recurring' => $this->is_recurring ?? false,
+            'status' => $this->status ?? 'upcoming',
+            'send_reminders' => $this->send_reminders ?? false,
+            'reminder_hours_before' => $this->reminder_hours_before ?? 24,
+        ]);
     }
 
     public function attributes()

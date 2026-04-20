@@ -14,9 +14,16 @@ class StoreTestItem1769275927Request extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:255',
+            'name' => 'nullable|string|max:255',
 
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'name' => $this->name ?? 'Item ' . time(),
+        ]);
     }
 
     public function attributes()

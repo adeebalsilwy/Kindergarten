@@ -14,19 +14,33 @@ class StoreExpenseRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|string|max:255',
+            'title' => 'nullable|string|max:255',
             'description' => 'nullable|string',
-            'amount' => 'required|numeric',
-            'expense_date' => 'required|date',
-            'vendor' => 'required|string|max:255',
-            'receipt_number' => 'required|string|max:255',
-            'payment_method' => 'required|string|max:255',
-            'reference_number' => 'required|string|max:255',
-            'status' => 'required|in:pending,approved,paid,rejected',
-            'created_by' => 'required',
-            'assigned_to' => 'required',
+            'amount' => 'nullable|numeric',
+            'expense_date' => 'nullable|date',
+            'vendor' => 'nullable|string|max:255',
+            'receipt_number' => 'nullable|string|max:255',
+            'payment_method' => 'nullable|string|max:255',
+            'reference_number' => 'nullable|string|max:255',
+            'status' => 'nullable|in:pending,approved,paid,rejected',
+            'created_by' => 'nullable',
+            'assigned_to' => 'nullable',
 
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'title' => $this->title ?? 'Expense ' . time(),
+            'amount' => $this->amount ?? 0,
+            'expense_date' => $this->expense_date ?? now()->format('Y-m-d'),
+            'vendor' => $this->vendor ?? 'Unknown',
+            'receipt_number' => $this->receipt_number ?? 'REC' . time(),
+            'payment_method' => $this->payment_method ?? 'cash',
+            'reference_number' => $this->reference_number ?? 'REF' . time(),
+            'status' => $this->status ?? 'pending',
+        ]);
     }
 
     public function attributes()

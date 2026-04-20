@@ -19,7 +19,6 @@
                                 label="{{ __('expenses.fields.title') }}" 
                                 name="title" 
                                 value="{{ old('title') }}" 
-                                required="true" 
                                 placeholder="{{ __('expenses.fields.title') }}" 
                             />
                         </div>
@@ -38,7 +37,6 @@
                                 name="amount" 
                                 type="number" 
                                 value="{{ old('amount') }}" 
-                                required="true" 
                                 step="0.01" 
                             />
                         </div>
@@ -48,7 +46,6 @@
                                 name="expense_date" 
                                 type="date" 
                                 value="{{ old('expense_date', now()->format('Y-m-d')) }}" 
-                                required="true" 
                             />
                         </div>
                         <div class="col-span-12 sm:col-span-6">

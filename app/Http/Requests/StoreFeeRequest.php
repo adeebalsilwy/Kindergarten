@@ -14,12 +14,21 @@ class StoreFeeRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:255',
-            'amount' => 'required|numeric',
+            'name' => 'nullable|string|max:255',
+            'amount' => 'nullable|numeric',
             'description' => 'nullable|string',
-            'is_active' => 'required|boolean',
+            'is_active' => 'nullable|boolean',
 
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'name' => $this->name ?? 'Fee ' . time(),
+            'amount' => $this->amount ?? 0,
+            'is_active' => $this->is_active ?? true,
+        ]);
     }
 
     public function attributes()

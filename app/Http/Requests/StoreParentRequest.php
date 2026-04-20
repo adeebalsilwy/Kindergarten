@@ -14,12 +14,21 @@ class StoreParentRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:255',
-            'phone' => 'required|string|max:255',
+            'name' => 'nullable|string|max:255',
+            'phone' => 'nullable|string|max:255',
             'address' => 'nullable|string',
-            'relation' => 'required|string|max:255',
+            'relation' => 'nullable|string|max:255',
 
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'name' => $this->name ?? 'Parent',
+            'phone' => $this->phone ?? '0000000000',
+            'relation' => $this->relation ?? 'parent',
+        ]);
     }
 
     public function attributes()

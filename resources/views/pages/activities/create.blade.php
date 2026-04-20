@@ -19,7 +19,6 @@
                                 label="{{ __('activities.fields.title') }}" 
                                 name="title" 
                                 value="{{ old('title', $activity->title ?? '') }}" 
-                                required="true" 
                                 placeholder="{{ __('activities.fields.title') }}" 
                             />
                         </div>
@@ -48,7 +47,6 @@
                                 type="select" 
                                 :options="$classes->pluck('name', 'id')->toArray()" 
                                 value="{{ old('class_id', $activity->class_id ?? '') }}" 
-                                required="true" 
                                 placeholder="{{ __('global.select_class') }}" 
                             />
                         </div>
@@ -59,7 +57,6 @@
                                 type="select" 
                                 :options="$teachers->pluck('name', 'id')->toArray()" 
                                 value="{{ old('teacher_id', $activity->teacher_id ?? '') }}" 
-                                required="true" 
                                 placeholder="{{ __('global.select_teacher') }}" 
                             />
                         </div>
@@ -70,7 +67,6 @@
                                 type="select" 
                                 :options="$curricula->pluck('title', 'id')->toArray()" 
                                 value="{{ old('curriculum_id', $activity->curriculum_id ?? '') }}" 
-                                required="true" 
                                 placeholder="{{ __('global.select_curriculum') }}" 
                             />
                         </div>
@@ -80,7 +76,6 @@
                                 name="scheduled_date" 
                                 type="date" 
                                 value="{{ old('scheduled_date', $activity->scheduled_date ?? '') }}" 
-                                required="true" 
                             />
                         </div>
                         <div class="col-span-12 sm:col-span-6">
@@ -89,7 +84,6 @@
                                 name="start_time" 
                                 type="time" 
                                 value="{{ old('start_time', $activity->start_time ?? '') }}" 
-                                required="true" 
                             />
                         </div>
                         <div class="col-span-12 sm:col-span-6">
@@ -98,7 +92,6 @@
                                 name="end_time" 
                                 type="time" 
                                 value="{{ old('end_time', $activity->end_time ?? '') }}" 
-                                required="true" 
                             />
                         </div>
                         <div class="col-span-12 sm:col-span-6">
@@ -106,7 +99,6 @@
                                 label="{{ __('activities.fields.activity_type') }}" 
                                 name="activity_type" 
                                 value="{{ old('activity_type', $activity->activity_type ?? '') }}" 
-                                required="true" 
                                 placeholder="{{ __('activities.fields.activity_type') }}" 
                             />
                         </div>
@@ -115,7 +107,6 @@
                                 label="{{ __('activities.fields.difficulty_level') }}" 
                                 name="difficulty_level" 
                                 value="{{ old('difficulty_level', $activity->difficulty_level ?? '') }}" 
-                                required="true" 
                                 placeholder="{{ __('activities.fields.difficulty_level') }}" 
                             />
                         </div>
@@ -134,7 +125,6 @@
                                 name="estimated_duration" 
                                 type="number" 
                                 value="{{ old('estimated_duration', $activity->estimated_duration ?? '') }}" 
-                                required="true" 
                             />
                         </div>
                         <div class="col-span-12 sm:col-span-6">
@@ -142,7 +132,6 @@
                                 label="{{ __('activities.fields.location') }}" 
                                 name="location" 
                                 value="{{ old('location', $activity->location ?? '') }}" 
-                                required="true" 
                                 placeholder="{{ __('activities.fields.location') }}" 
                             />
                         </div>

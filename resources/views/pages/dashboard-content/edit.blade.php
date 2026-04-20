@@ -15,8 +15,8 @@
                         @method('PUT')
                         <div class="grid grid-cols-12 gap-4">
                             <div class="col-span-12">
-                                <label for="section" class="form-label">{{ __('global.section') }} <span class="text-danger">*</span></label>
-                                <x-base.form-select id="section" name="section" class="form-control @error('section') is-invalid @enderror" required>
+                                <label for="section" class="form-label">{{ __('global.section') }}</label>
+                                <x-base.form-select id="section" name="section" class="form-control @error('section') is-invalid @enderror">
                                     <option value="">{{ __('global.select_section') }}</option>
                                     <option value="welcome_section" {{ old('section', $dashboardContent->section) == 'welcome_section' ? 'selected' : '' }}>Welcome Section</option>
                                     <option value="stats_cards" {{ old('section', $dashboardContent->section) == 'stats_cards' ? 'selected' : '' }}>Stats Cards</option>
@@ -33,27 +33,27 @@
                             </div>
 
                             <div class="col-span-12">
-                                <label for="key" class="form-label">{{ __('global.key') }} <span class="text-danger">*</span></label>
+                                <label for="key" class="form-label">{{ __('global.key') }}</label>
                                 <x-base.form-input id="key" name="key" type="text" class="form-control @error('key') is-invalid @enderror" 
-                                    placeholder="{{ __('global.enter_key') }}" value="{{ old('key', $dashboardContent->key) }}" required />
+                                    placeholder="{{ __('global.enter_key') }}" value="{{ old('key', $dashboardContent->key) }}" />
                                 @error('key')
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
 
                             <div class="col-span-12">
-                                <label for="content_en" class="form-label">{{ __('global.content_en') }} <span class="text-danger">*</span></label>
+                                <label for="content_en" class="form-label">{{ __('global.content_en') }}</label>
                                 <x-base.form-textarea id="content_en" name="content_en" class="form-control @error('content_en') is-invalid @enderror" 
-                                    placeholder="{{ __('global.enter_content_en') }}" rows="4" required>{{ old('content_en', $dashboardContent->content['en'] ?? '') }}</x-base.form-textarea>
+                                    placeholder="{{ __('global.enter_content_en') }}" rows="4">{{ old('content_en', $dashboardContent->content['en'] ?? '') }}</x-base.form-textarea>
                                 @error('content_en')
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
 
                             <div class="col-span-12">
-                                <label for="content_ar" class="form-label">{{ __('global.content_ar') }} <span class="text-danger">*</span></label>
+                                <label for="content_ar" class="form-label">{{ __('global.content_ar') }}</label>
                                 <x-base.form-textarea id="content_ar" name="content_ar" class="form-control @error('content_ar') is-invalid @enderror" 
-                                    placeholder="{{ __('global.enter_content_ar') }}" rows="4" required>{{ old('content_ar', $dashboardContent->content['ar'] ?? '') }}</x-base.form-textarea>
+                                    placeholder="{{ __('global.enter_content_ar') }}" rows="4">{{ old('content_ar', $dashboardContent->content['ar'] ?? '') }}</x-base.form-textarea>
                                 @error('content_ar')
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror

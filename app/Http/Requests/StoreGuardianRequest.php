@@ -14,7 +14,7 @@ class StoreGuardianRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:255',
+            'name' => 'nullable|string|max:255',
             'email' => 'nullable|email|max:255',
             'phone' => 'nullable|string|max:50',
             'secondary_phone' => 'nullable|string|max:50',
@@ -29,6 +29,16 @@ class StoreGuardianRequest extends FormRequest
             'is_primary_guardian' => 'nullable|boolean',
             'preferred_language' => 'nullable|in:english,arabic',
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'name' => $this->name ?? 'Guardian',
+            'phone' => $this->phone ?? '0000000000',
+            'relationship' => $this->relationship ?? 'parent',
+            'preferred_language' => $this->preferred_language ?? 'arabic',
+        ]);
     }
 
     public function attributes()

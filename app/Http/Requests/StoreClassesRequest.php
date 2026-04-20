@@ -14,25 +14,40 @@ class StoreClassesRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:255',
-            'code' => 'required|string|max:255|unique:classes,code',
+            'name' => 'nullable|string|max:255',
+            'code' => 'nullable|string|max:255|unique:classes,code',
             'description' => 'nullable|string',
-            'teacher_id' => 'required|integer|exists:teachers,id',
-            'grade_id' => 'required|integer|exists:grades,id',
-            'age_group' => 'required|in:toddlers,preschool,pre_k,kindergarten',
-            'capacity' => 'required|integer',
-            'current_students' => 'required|integer',
-            'start_time' => 'required',
-            'end_time' => 'required',
-            'room_number' => 'required|string|max:255',
-            'monthly_fee' => 'required|numeric',
-            'is_active' => 'required|boolean',
+            'teacher_id' => 'nullable|integer|exists:teachers,id',
+            'grade_id' => 'nullable|integer|exists:grades,id',
+            'age_group' => 'nullable|in:toddlers,preschool,pre_k,kindergarten',
+            'capacity' => 'nullable|integer',
+            'current_students' => 'nullable|integer',
+            'start_time' => 'nullable',
+            'end_time' => 'nullable',
+            'room_number' => 'nullable|string|max:255',
+            'monthly_fee' => 'nullable|numeric',
+            'is_active' => 'nullable|boolean',
             'schedule' => 'nullable|string|max:255',
             'location' => 'nullable|string|max:255',
             'start_date' => 'nullable|date',
             'end_date' => 'nullable|date',
 
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'name' => $this->name ?? 'Class ' . time(),
+            'code' => $this->code ?? 'CLS' . time(),
+            'capacity' => $this->capacity ?? 20,
+            'current_students' => $this->current_students ?? 0,
+            'monthly_fee' => $this->monthly_fee ?? 0,
+            'is_active' => $this->is_active ?? true,
+            'start_time' => $this->start_time ?? '08:00',
+            'end_time' => $this->end_time ?? '14:00',
+            'room_number' => $this->room_number ?? '101',
+        ]);
     }
 
     public function attributes()

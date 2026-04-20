@@ -40,14 +40,13 @@
                 <div class="modal-body p-10">
                     <div class="grid grid-cols-12 gap-6">
                         <div class="col-span-12">
-                            <x-base.form-label for="modal_name" class="font-bold required">{{ __('access_control.fields.name') }}</x-base.form-label>
+                            <x-base.form-label for="modal_name" class="font-bold">{{ __('access_control.fields.name') }}</x-base.form-label>
                             <x-base.form-input 
                                 id="modal_name"
                                 name="name" 
                                 type="text" 
                                 class="w-full" 
                                 placeholder="e.g. view_users"
-                                required
                             />
                         </div>
                         <div class="col-span-12">

@@ -39,7 +39,6 @@
                                 type="select" 
                                 :options="$children->pluck('name', 'id')->toArray()" 
                                 value="{{ old('child_id') }}" 
-                                required="true" 
                                 placeholder="{{ __('global.select_child') }}" 
                                 :error="$errors->first('child_id')" 
                             />
@@ -52,7 +51,6 @@
                                 type="text" 
                                 value="{{ old('subject') }}" 
                                 placeholder="{{ __('global.enter_subject') }}" 
-                                required="true" 
                                 :error="$errors->first('subject')" 
                             />
                         </div>
@@ -67,7 +65,6 @@
                                 min="0" 
                                 max="100" 
                                 step="0.01" 
-                                required="true" 
                                 :error="$errors->first('score')" 
                             />
                         </div>
@@ -78,7 +75,6 @@
                                 name="date" 
                                 type="date" 
                                 value="{{ old('date', now()->format('Y-m-d')) }}" 
-                                required="true" 
                                 :error="$errors->first('date')" 
                             />
                         </div>

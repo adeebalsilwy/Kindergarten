@@ -46,7 +46,6 @@
                         <x-form-field name="fee_id" 
                                      label="{{ __('global.fee_type') }}" 
                                      type="select" 
-                                     :required="true" 
                                      :options="$fees->pluck('name', 'id')->toArray()" 
                                      :value="old('fee_id', $payment->fee_id)" 
                                      icon="FileText" 
@@ -57,7 +56,6 @@
                         <x-form-field name="amount" 
                                      label="{{ __('global.amount') }}" 
                                      type="number" 
-                                     :required="true" 
                                      :value="old('amount', $payment->amount)" 
                                      placeholder="0.00" 
                                      icon="DollarSign" 
@@ -68,7 +66,6 @@
                         <x-form-field name="payment_date" 
                                      label="{{ __('global.payment_date') }}" 
                                      type="date" 
-                                     :required="true" 
                                      :value="old('payment_date', $payment->payment_date ? $payment->payment_date->format('Y-m-d') : '')" 
                                      icon="Calendar" 
                                      class="col-span-12" />
@@ -78,7 +75,6 @@
                         <x-form-field name="payment_method" 
                                      label="{{ __('global.payment_method') }}" 
                                      type="select" 
-                                     :required="true" 
                                      :options="[
                                          'cash' => __('global.payment_method_cash'),
                                          'bank_transfer' => __('global.payment_method_bank_transfer'),
@@ -94,7 +90,6 @@
                         <x-form-field name="status" 
                                      label="{{ __('global.status') }}" 
                                      type="select" 
-                                     :required="true" 
                                      :options="[
                                          'completed' => __('global.payment_status_completed'),
                                          'pending' => __('global.payment_status_pending'),

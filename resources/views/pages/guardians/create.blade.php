@@ -59,7 +59,6 @@
                     <x-form-field name="name" 
                                  label="{{ __('guardians.fields.name') }}" 
                                  type="text" 
-                                 :required="true" 
                                  :value="old('name')" 
                                  placeholder="{{ __('guardians.placeholders.name') }}" 
                                  class="col-span-12 sm:col-span-6" />
@@ -67,7 +66,6 @@
                     <x-form-field name="email" 
                                  label="{{ __('guardians.fields.email') }}" 
                                  type="email" 
-                                 :required="true" 
                                  :value="old('email')" 
                                  placeholder="{{ __('guardians.placeholders.email') }}" 
                                  class="col-span-12 sm:col-span-6" />
@@ -75,7 +73,6 @@
                     <x-form-field name="phone" 
                                  label="{{ __('guardians.fields.phone') }}" 
                                  type="text" 
-                                 :required="true" 
                                  :value="old('phone')" 
                                  placeholder="{{ __('guardians.placeholders.phone') }}" 
                                  class="col-span-12 sm:col-span-6" />
@@ -162,7 +159,6 @@
                     <x-form-field name="relationship" 
                                  label="{{ __('guardians.fields.relationship') }}" 
                                  type="select" 
-                                 :required="true" 
                                  :value="old('relationship')" 
                                  :options="[
                                      'Father' => __('guardians.relationships.father'),
@@ -294,42 +290,7 @@
             });
         });
         
-        // Form validation
-        const form = document.querySelector('form');
-        form.addEventListener('submit', function(e) {
-            let isValid = true;
-            const requiredFields = form.querySelectorAll('[required]');
-            
-            requiredFields.forEach(field => {
-                if (!field.value.trim()) {
-                    isValid = false;
-                    field.classList.add('border-danger');
-                    // Add error message
-                    if (!field.parentNode.querySelector('.text-danger')) {
-                        const errorDiv = document.createElement('div');
-                        errorDiv.className = 'text-danger text-sm mt-1';
-                        errorDiv.textContent = '{{ __('global.field_required') }}';
-                        field.parentNode.appendChild(errorDiv);
-                    }
-                } else {
-                    field.classList.remove('border-danger');
-                    const errorDiv = field.parentNode.querySelector('.text-danger');
-                    if (errorDiv) errorDiv.remove();
-                }
-            });
-            
-            if (!isValid) {
-                e.preventDefault();
-                // Switch to first tab with errors
-                const firstErrorTab = document.querySelector('.tab-content .border-danger');
-                if (firstErrorTab) {
-                    const tabContent = firstErrorTab.closest('.tab-content');
-                    const tabId = tabContent.id.replace('tab-', '');
-                    document.querySelector(`[data-tab="${tabId}"]`).click();
-                }
-                return false;
-            }
-        });
+        // Form validation removed - all fields are now optional
     });
 </script>
 @endsection

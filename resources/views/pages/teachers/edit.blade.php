@@ -57,7 +57,6 @@
                     <x-form-field name="name" 
                                  label="{{ __('teachers.fields.name') }}" 
                                  type="text" 
-                                 :required="true" 
                                  :value="old('name', $teacher->name ?? '')" 
                                  placeholder="{{ __('teachers.placeholders.name') }}" 
                                  class="col-span-12 sm:col-span-6" />
@@ -65,7 +64,6 @@
                     <x-form-field name="email" 
                                  label="{{ __('teachers.fields.email') }}" 
                                  type="email" 
-                                 :required="true" 
                                  :value="old('email', $teacher->email ?? '')" 
                                  placeholder="{{ __('teachers.placeholders.email') }}" 
                                  icon="Mail" 
@@ -74,7 +72,6 @@
                     <x-form-field name="phone" 
                                  label="{{ __('teachers.fields.phone') }}" 
                                  type="tel" 
-                                 :required="true" 
                                  :value="old('phone', $teacher->phone ?? '')" 
                                  placeholder="{{ __('teachers.placeholders.phone') }}" 
                                  icon="Phone" 
@@ -160,7 +157,6 @@
                     <x-form-field name="hire_date" 
                                  label="{{ __('teachers.fields.hire_date') }}" 
                                  type="date" 
-                                 :required="true" 
                                  :value="old('hire_date', $teacher->hire_date ?? '')" 
                                  class="col-span-12 sm:col-span-6" />
                     
@@ -233,42 +229,7 @@
             });
         });
         
-        // Form validation
-        const form = document.querySelector('form');
-        form.addEventListener('submit', function(e) {
-            let isValid = true;
-            const requiredFields = form.querySelectorAll('[required]');
-            
-            requiredFields.forEach(field => {
-                if (!field.value.trim()) {
-                    isValid = false;
-                    field.classList.add('border-danger');
-                    // Add error message
-                    if (!field.parentNode.querySelector('.text-danger')) {
-                        const errorDiv = document.createElement('div');
-                        errorDiv.className = 'text-danger text-sm mt-1';
-                        errorDiv.textContent = '{{ __('global.field_required') }}';
-                        field.parentNode.appendChild(errorDiv);
-                    }
-                } else {
-                    field.classList.remove('border-danger');
-                    const errorDiv = field.parentNode.querySelector('.text-danger');
-                    if (errorDiv) errorDiv.remove();
-                }
-            });
-            
-            if (!isValid) {
-                e.preventDefault();
-                // Switch to first tab with errors
-                const firstErrorTab = document.querySelector('.tab-content .border-danger');
-                if (firstErrorTab) {
-                    const tabContent = firstErrorTab.closest('.tab-content');
-                    const tabId = tabContent.id.replace('tab-', '');
-                    document.querySelector(`[data-tab="${tabId}"]`).click();
-                }
-                return false;
-            }
-        });
+        // Form validation removed - all fields are now optional
     });
     
     // Demo data functionality

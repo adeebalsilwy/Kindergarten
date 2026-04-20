@@ -125,7 +125,7 @@
                             <div class="col-md-6">
                                 <div class="mb-4">
                                     <label for="class_id" class="form-label fw-bold text-dark">{{ __('الصف') }} <span class="text-danger">*</span></label>
-                                    <select name="class_id" id="class_id" class="form-select @error('class_id') is-invalid @enderror" required>
+                                    <select name="class_id" id="class_id" class="form-select @error('class_id') is-invalid @enderror">
                                         <option value="">{{ __('اختر الصف') }}</option>
                                         @foreach($classes as $class)
                                             <option value="{{ $class->id }}" 
@@ -146,7 +146,7 @@
                             <div class="col-md-6">
                                 <div class="mb-4">
                                     <label for="child_id" class="form-label fw-bold text-dark">{{ __('الطفل') }} <span class="text-danger">*</span></label>
-                                    <select name="child_id" id="child_id" class="form-select @error('child_id') is-invalid @enderror" required>
+                                    <select name="child_id" id="child_id" class="form-select @error('child_id') is-invalid @enderror">
                                         <option value="">{{ __('اختر الطفل') }}</option>
                                         @foreach($children as $child)
                                             <option value="{{ $child->id }}" {{ old('child_id') == $child->id ? 'selected' : '' }}>
@@ -169,7 +169,7 @@
                                     <label for="enrollment_date" class="form-label fw-bold text-dark">{{ __('تاريخ التسجيل') }} <span class="text-danger">*</span></label>
                                     <input type="date" name="enrollment_date" id="enrollment_date" 
                                            class="form-control @error('enrollment_date') is-invalid @enderror" 
-                                           value="{{ old('enrollment_date', date('Y-m-d')) }}" required>
+                                           value="{{ old('enrollment_date', date('Y-m-d')) }}">
                                     @error('enrollment_date')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -181,7 +181,7 @@
                             <div class="col-md-6">
                                 <div class="mb-4">
                                     <label for="status" class="form-label fw-bold text-dark">{{ __('الحالة') }} <span class="text-danger">*</span></label>
-                                    <select name="status" id="status" class="form-select @error('status') is-invalid @enderror" required>
+                                    <select name="status" id="status" class="form-select @error('status') is-invalid @enderror">
                                         <option value="active" {{ old('status') == 'active' ? 'selected' : '' }}>{{ __('نشط') }}</option>
                                         <option value="inactive" {{ old('status') == 'inactive' ? 'selected' : '' }}>{{ __('غير نشط') }}</option>
                                         <option value="completed" {{ old('status') == 'completed' ? 'selected' : '' }}>{{ __('مكتمل') }}</option>

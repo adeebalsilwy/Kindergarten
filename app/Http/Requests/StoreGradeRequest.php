@@ -14,13 +14,22 @@ class StoreGradeRequest extends FormRequest
     public function rules()
     {
         return [
-            'child_id' => 'required|exists:children,id',
-            'subject' => 'required|string|max:255',
-            'score' => 'required|string|max:255',
-            'date' => 'required|date',
+            'child_id' => 'nullable|exists:children,id',
+            'subject' => 'nullable|string|max:255',
+            'score' => 'nullable|string|max:255',
+            'date' => 'nullable|date',
             'comments' => 'nullable|string|max:1000',
             'evaluator_id' => 'nullable|exists:users,id',
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'subject' => $this->subject ?? 'General',
+            'score' => $this->score ?? '0',
+            'date' => $this->date ?? now()->format('Y-m-d'),
+        ]);
     }
 
     public function attributes()

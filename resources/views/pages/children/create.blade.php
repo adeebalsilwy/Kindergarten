@@ -77,7 +77,6 @@
                     <x-form-field name="name" 
                                  label="{{ __('childrens.fields.name') }}" 
                                  type="text" 
-                                 :required="true" 
                                  :value="old('name')" 
                                  placeholder="{{ __('childrens.placeholders.name') }}" 
                                  class="col-span-12 sm:col-span-6" />
@@ -85,14 +84,12 @@
                     <x-form-field name="dob" 
                                  label="{{ __('childrens.fields.dob') }}" 
                                  type="date" 
-                                 :required="true" 
                                  :value="old('dob')" 
                                  class="col-span-12 sm:col-span-6" />
                     
                     <x-form-field name="gender" 
                                  label="{{ __('childrens.fields.gender') }}" 
                                  type="select" 
-                                 :required="true" 
                                  :value="old('gender')" 
                                  :options="[
                                      'male' => __('global.male'),
@@ -128,7 +125,6 @@
                     <x-form-field name="class_id" 
                                  label="{{ __('childrens.fields.class_id') }}" 
                                  type="select" 
-                                 :required="true" 
                                  :value="old('class_id')" 
                                  :options="$classes->pluck('name', 'id')" 
                                  placeholder="{{ __('global.select_option') }}" 
@@ -144,7 +140,6 @@
                     <x-form-field name="parent_id" 
                                  label="{{ __('childrens.fields.parent_id') }}" 
                                  type="select" 
-                                 :required="true" 
                                  :value="old('parent_id')" 
                                  :options="$parents->pluck('name', 'id')" 
                                  placeholder="{{ __('global.select_option') }}" 
@@ -166,7 +161,6 @@
                     <x-form-field name="emergency_contact_name" 
                                  label="{{ __('childrens.fields.emergency_contact_name') }}" 
                                  type="text" 
-                                 :required="true" 
                                  :value="old('emergency_contact_name')" 
                                  placeholder="{{ __('childrens.placeholders.emergency_contact_name') }}" 
                                  class="col-span-12 sm:col-span-6" />
@@ -174,7 +168,6 @@
                     <x-form-field name="emergency_contact_phone" 
                                  label="{{ __('childrens.fields.emergency_contact_phone') }}" 
                                  type="text" 
-                                 :required="true" 
                                  :value="old('emergency_contact_phone')" 
                                  placeholder="{{ __('childrens.placeholders.emergency_contact_phone') }}" 
                                  class="col-span-12 sm:col-span-6" />
@@ -182,7 +175,6 @@
                     <x-form-field name="emergency_contact_relation" 
                                  label="{{ __('childrens.fields.emergency_contact_relation') }}" 
                                  type="text" 
-                                 :required="true" 
                                  :value="old('emergency_contact_relation')" 
                                  placeholder="{{ __('childrens.placeholders.emergency_contact_relation') }}" 
                                  class="col-span-12" />
@@ -387,54 +379,6 @@
         alert('{{ __("childrens.demo_data_filled") }}');
     }
     
-    // Form validation
-    document.addEventListener('DOMContentLoaded', function() {
-        const form = document.querySelector('#children-form');
-        form.addEventListener('submit', function(e) {
-            let isValid = true;
-            const requiredFields = form.querySelectorAll('[required]');
-            
-            // Clear previous error styles
-            const previousErrors = form.querySelectorAll('.field-error');
-            previousErrors.forEach(el => el.classList.remove('field-error'));
-            
-            const previousMessages = form.querySelectorAll('.error-message');
-            previousMessages.forEach(el => el.remove());
-            
-            requiredFields.forEach(field => {
-                if (!field.value.trim()) {
-                    isValid = false;
-                    field.classList.add('field-error');
-                    
-                    // Add error message
-                    const errorDiv = document.createElement('div');
-                    errorDiv.className = 'error-message';
-                    errorDiv.textContent = '{{ __('global.field_required') }}';
-                    field.parentNode.appendChild(errorDiv);
-                }
-            });
-            
-            if (!isValid) {
-                e.preventDefault();
-                
-                // Switch to first tab with errors
-                const firstErrorTab = document.querySelector('.tab-content .field-error');
-                if (firstErrorTab) {
-                    const tabContent = firstErrorTab.closest('.tab-content');
-                    const tabId = tabContent.id.replace('tab-', '');
-                    document.querySelector(`[data-tab="${tabId}"]`).click();
-                }
-                
-                // Scroll to first error
-                const firstError = document.querySelector('.field-error');
-                if (firstError) {
-                    firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    firstError.focus();
-                }
-                
-                return false;
-            }
-        });
-    });
+    // Form validation removed - all fields are now optional
 </script>
 @endsection

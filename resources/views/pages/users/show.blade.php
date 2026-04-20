@@ -365,11 +365,11 @@
                             <div class="space-y-6">
                                 <div>
                                     <x-base.form-label class="font-black text-slate-700 dark:text-slate-300 mb-3 block text-xs uppercase tracking-widest">{{ __('global.new_password') }}</x-base.form-label>
-                                    <x-base.form-input type="password" name="password" class="py-4 rounded-2xl border-slate-200 focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all text-sm font-bold shadow-sm" required />
+                                    <x-base.form-input type="password" name="password" class="py-4 rounded-2xl border-slate-200 focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all text-sm font-bold shadow-sm" />
                                 </div>
                                 <div>
                                     <x-base.form-label class="font-black text-slate-700 dark:text-slate-300 mb-3 block text-xs uppercase tracking-widest">{{ __('global.confirm_new_password') }}</x-base.form-label>
-                                    <x-base.form-input type="password" name="password_confirmation" class="py-4 rounded-2xl border-slate-200 focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all text-sm font-bold shadow-sm" required />
+                                    <x-base.form-input type="password" name="password_confirmation" class="py-4 rounded-2xl border-slate-200 focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all text-sm font-bold shadow-sm" />
                                 </div>
                                 <div class="pt-6">
                                     <x-base.button type="submit" variant="primary" class="w-full py-4 rounded-2xl shadow-xl shadow-primary/20 font-black uppercase tracking-widest text-xs transition-all hover:scale-[1.02]">

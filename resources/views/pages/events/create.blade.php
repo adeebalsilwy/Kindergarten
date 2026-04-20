@@ -19,7 +19,6 @@
                                 label="{{ __('events.fields.title') }}" 
                                 name="title" 
                                 value="{{ old('title') }}" 
-                                required="true" 
                                 placeholder="{{ __('events.fields.title') }}" 
                             />
                         </div>
@@ -38,7 +37,6 @@
                                 name="start_datetime" 
                                 type="datetime-local" 
                                 value="{{ old('start_datetime') }}" 
-                                required="true" 
                             />
                         </div>
                         <div class="col-span-12 sm:col-span-6">
@@ -47,7 +45,6 @@
                                 name="end_datetime" 
                                 type="datetime-local" 
                                 value="{{ old('end_datetime') }}" 
-                                required="true" 
                             />
                         </div>
                         <div class="col-span-12 sm:col-span-6">
@@ -55,7 +52,6 @@
                                 label="{{ __('events.fields.location') }}" 
                                 name="location" 
                                 value="{{ old('location') }}" 
-                                required="true" 
                                 placeholder="{{ __('events.fields.location') }}" 
                             />
                         </div>
@@ -64,7 +60,6 @@
                                 label="{{ __('events.fields.event_type') }}" 
                                 name="event_type" 
                                 value="{{ old('event_type') }}" 
-                                required="true" 
                                 placeholder="{{ __('events.fields.event_type') }}" 
                             />
                         </div>

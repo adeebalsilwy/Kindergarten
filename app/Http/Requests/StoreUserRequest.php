@@ -16,13 +16,21 @@ class StoreUserRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|string|min:6|confirmed',
+            'password' => 'nullable|string|min:6|confirmed',
             'is_active' => 'nullable|boolean',
             'roles' => 'nullable|array',
             'roles.*' => 'exists:roles,id',
             'permissions' => 'nullable|array',
             'permissions.*' => 'exists:permissions,id',
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'password' => $this->password ?? bcrypt('password123'),
+            'is_active' => $this->is_active ?? true,
+        ]);
     }
 
     public function attributes()

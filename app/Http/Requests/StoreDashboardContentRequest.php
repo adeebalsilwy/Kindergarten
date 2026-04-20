@@ -14,14 +14,26 @@ class StoreDashboardContentRequest extends FormRequest
     public function rules()
     {
         return [
-            'section' => 'required|string|max:255',
-            'key' => 'required|string|max:255',
-            'content' => 'required|json',
-            'is_active' => 'required|boolean',
-            'order' => 'required|integer',
-            'metadata' => 'required|json',
+            'section' => 'nullable|string|max:255',
+            'key' => 'nullable|string|max:255',
+            'content' => 'nullable|json',
+            'is_active' => 'nullable|boolean',
+            'order' => 'nullable|integer',
+            'metadata' => 'nullable|json',
 
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'section' => $this->section ?? 'default',
+            'key' => $this->key ?? 'key_' . time(),
+            'content' => $this->content ?? json_encode([]),
+            'is_active' => $this->is_active ?? true,
+            'order' => $this->order ?? 0,
+            'metadata' => $this->metadata ?? json_encode([]),
+        ]);
     }
 
     public function attributes()

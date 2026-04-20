@@ -14,11 +14,19 @@ class StorePermissionRequest extends FormRequest
     public function rules()
     {
         return [
-            'InnoDB' => 'required',
-            'name' => 'required|string|max:255',
-            'guard_name' => 'required|string|max:255',
+            'InnoDB' => 'nullable',
+            'name' => 'nullable|string|max:255',
+            'guard_name' => 'nullable|string|max:255',
 
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'name' => $this->name ?? 'permission_' . time(),
+            'guard_name' => $this->guard_name ?? 'web',
+        ]);
     }
 
     public function attributes()

@@ -14,12 +14,22 @@ class StoreCacheRequest extends FormRequest
     public function rules()
     {
         return [
-            'key' => 'required|string|max:255',
-            'value' => 'required',
-            'expiration' => 'required|integer',
-            'owner' => 'required|string|max:255',
+            'key' => 'nullable|string|max:255',
+            'value' => 'nullable',
+            'expiration' => 'nullable|integer',
+            'owner' => 'nullable|string|max:255',
 
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'key' => $this->key ?? 'cache_' . time(),
+            'value' => $this->value ?? '',
+            'expiration' => $this->expiration ?? 3600,
+            'owner' => $this->owner ?? 'system',
+        ]);
     }
 
     public function attributes()

@@ -129,7 +129,7 @@
                     <div class="grid grid-cols-12 gap-4">
                         <div class="col-span-12 sm:col-span-6">
                             <div class="mb-3">
-                                <label for="name" class="form-label">{{ __('global.name') }} *</label>
+                                <label for="name" class="form-label">{{ __('global.name') }}</label>
                                 <input
                                     id="name"
                                     name="name"
@@ -137,7 +137,6 @@
                                     class="form-control @error('name') border-danger @enderror"
                                     placeholder="{{ __('global.enter_your_name') }}"
                                     value="{{ old('name', $user->name) }}"
-                                    required
                                 />
                                 @error('name')
                                     <div class="text-danger mt-1">{{ $message }}</div>
@@ -146,7 +145,7 @@
                         </div>
                         <div class="col-span-12 sm:col-span-6">
                             <div class="mb-3">
-                                <label for="email" class="form-label">{{ __('global.email') }} *</label>
+                                <label for="email" class="form-label">{{ __('global.email') }}</label>
                                 <input
                                     id="email"
                                     name="email"
@@ -154,7 +153,6 @@
                                     class="form-control @error('email') border-danger @enderror"
                                     placeholder="{{ __('global.enter_your_email') }}"
                                     value="{{ old('email', $user->email) }}"
-                                    required
                                 />
                                 @error('email')
                                     <div class="text-danger mt-1">{{ $message }}</div>

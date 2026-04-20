@@ -150,7 +150,7 @@
 
                         <div class="grid grid-cols-12 gap-x-10 gap-y-10">
                             <div class="col-span-12 md:col-span-6">
-                                <x-base.form-label class="font-black text-slate-700 dark:text-slate-300 mb-4 block" required>{{ __('users.fields.name') }}</x-base.form-label>
+                                <x-base.form-label class="font-black text-slate-700 dark:text-slate-300 mb-4 block">{{ __('users.fields.name') }}</x-base.form-label>
                                 <div class="relative group">
                                     <div class="absolute inset-y-0 start-0 ps-6 flex items-center text-slate-400 group-focus-within:text-primary transition-colors">
                                         <x-base.lucide icon="User" class="w-5 h-5" />
@@ -161,7 +161,7 @@
                             </div>
 
                             <div class="col-span-12 md:col-span-6">
-                                <x-base.form-label class="font-black text-slate-700 dark:text-slate-300 mb-4 block" required>{{ __('users.fields.email') }}</x-base.form-label>
+                                <x-base.form-label class="font-black text-slate-700 dark:text-slate-300 mb-4 block">{{ __('users.fields.email') }}</x-base.form-label>
                                 <div class="relative group">
                                     <div class="absolute inset-y-0 start-0 ps-6 flex items-center text-slate-400 group-focus-within:text-primary transition-colors">
                                         <x-base.lucide icon="Mail" class="w-5 h-5" />

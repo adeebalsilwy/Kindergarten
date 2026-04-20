@@ -14,13 +14,22 @@ class StoreCommandLogRequest extends FormRequest
     public function rules()
     {
         return [
-            'command' => 'required|string|max:255',
-            'parameters' => 'required|json',
+            'command' => 'nullable|string|max:255',
+            'parameters' => 'nullable|json',
             'output' => 'nullable|string',
-            'status' => 'required|string|max:255',
+            'status' => 'nullable|string|max:255',
             'error_message' => 'nullable|string',
 
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'command' => $this->command ?? 'unknown',
+            'parameters' => $this->parameters ?? json_encode([]),
+            'status' => $this->status ?? 'pending',
+        ]);
     }
 
     public function attributes()

@@ -195,15 +195,7 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Form validation
-    if (document.querySelector('.form-validate')) {
-        // Add real-time validation
-        document.querySelectorAll('.form-validate input, .form-validate select, .form-validate textarea').forEach(element => {
-            element.addEventListener('blur', function() {
-                validateField(this);
-            });
-        });
-    }
+    // Form validation removed - all fields are now optional
 
     // Tab functionality
     if (document.querySelector('[data-tab]')) {
@@ -236,64 +228,5 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-function validateField(field) {
-    const value = field.value.trim();
-    const required = field.hasAttribute('required');
-    const errorElement = field.parentNode.querySelector('.field-error');
-    
-    // Clear previous errors
-    if (errorElement) {
-        errorElement.remove();
-    }
-    
-    field.classList.remove('border-danger');
-    
-    if (required && !value) {
-        showError(field, '{{ __('access_control.messages.field_required') }}');
-        return false;
-    }
-    
-    // Additional validation based on field type
-    if (field.type === 'email' && value && !isValidEmail(value)) {
-        showError(field, '{{ __('access_control.messages.invalid_email') }}');
-        return false;
-    }
-    
-    return true;
-}
-
-function showError(field, message) {
-    field.classList.add('border-danger');
-    const errorDiv = document.createElement('div');
-    errorDiv.className = 'field-error text-danger text-xs mt-1';
-    errorDiv.textContent = message;
-    field.parentNode.appendChild(errorDiv);
-}
-
-function isValidEmail(email) {
-    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return re.test(email);
-}
-
-// Form submission handling
-document.getElementById('{{ $formId }}')?.addEventListener('submit', function(e) {
-    let isValid = true;
-    
-    // Validate all required fields
-    this.querySelectorAll('[required]').forEach(field => {
-        if (!validateField(field)) {
-            isValid = false;
-        }
-    });
-    
-    if (!isValid) {
-        e.preventDefault();
-        // Scroll to first error
-        const firstError = this.querySelector('.border-danger');
-        if (firstError) {
-            firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            firstError.focus();
-        }
-    }
-});
+// Form validation removed - all fields are now optional
 </script>

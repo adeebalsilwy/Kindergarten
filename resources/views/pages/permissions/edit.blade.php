@@ -33,14 +33,13 @@
                         
                         <div class="grid grid-cols-12 gap-4">
                             <div class="col-span-12">
-                                <x-base.form-label class="font-medium">{{ __('global.permission_name') }} *</x-base.form-label>
+                                <x-base.form-label class="font-medium">{{ __('global.permission_name') }}</x-base.form-label>
                                 <x-base.form-input 
                                     type="text" 
                                     name="name" 
                                     value="{{ old('name', $permission->name) }}" 
                                     class="mt-2" 
                                     placeholder="{{ __('global.enter_permission_name') }}"
-                                    required
                                 />
                                 <div class="text-slate-500 text-xs mt-1">{{ __('global.permission_name_format') }}</div>
                                 @error('name')
@@ -266,25 +265,6 @@
             updatePreview();
         });
         
-        // Form validation
-        document.querySelector('form').addEventListener('submit', function(e) {
-            const name = document.querySelector('input[name="name"]').value.trim();
-            
-            if (!name) {
-                e.preventDefault();
-                alert('{{ __('global.please_enter_permission_name') }}');
-                return;
-            }
-            
-            // Warn about name changes affecting roles
-            @if($permission->roles->count() > 0)
-            if (name !== '{{ $permission->name }}') {
-                if (!confirm('{{ __('global.name_change_warning', ['count' => $permission->roles->count()]) }}')) {
-                    e.preventDefault();
-                    return;
-                }
-            }
-            @endif
-        });
+        // Form validation removed - all fields are now optional
     </script>
 @endsection

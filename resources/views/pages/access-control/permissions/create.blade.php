@@ -23,7 +23,6 @@
                                 type="text" 
                                 value="{{ old('name') }}" 
                                 placeholder="e.g. edit_users"
-                                required 
                                 class="w-full"
                             />
                         </div>

@@ -60,7 +60,7 @@
                         <div class="grid grid-cols-12 gap-4">
                             <div class="col-span-12 sm:col-span-6">
                                 <x-base.form-label>{{ __('curricula.fields.name') }}</x-base.form-label>
-                                <x-base.form-input type="text" name="name" value="{{ old('name', '') }}" class="mt-2" required />
+                                <x-base.form-input type="text" name="name" value="{{ old('name', '') }}" class="mt-2" />
                             </div>
                             <div class="col-span-12 sm:col-span-6">
                                 <x-base.form-label>{{ __('curricula.fields.code') }}</x-base.form-label>

@@ -14,21 +14,34 @@ class StoreTeacherRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:teachers,email|unique:teachers,email',
-            'phone' => 'required|string|max:255',
+            'name' => 'nullable|string|max:255',
+            'email' => 'nullable|email|unique:teachers,email|unique:teachers,email',
+            'phone' => 'nullable|string|max:255',
             'address' => 'nullable|string',
-            'date_of_birth' => 'required|date',
-            'gender' => 'required|in:male,female',
-            'qualification' => 'required|string|max:255',
+            'date_of_birth' => 'nullable|date',
+            'gender' => 'nullable|in:male,female',
+            'qualification' => 'nullable|string|max:255',
             'experience' => 'nullable|string',
-            'salary' => 'required|numeric',
-            'hire_date' => 'required|date',
+            'salary' => 'nullable|numeric',
+            'hire_date' => 'nullable|date',
             'photo_path' => 'nullable|image',
-            'is_active' => 'required|boolean',
+            'is_active' => 'nullable|boolean',
             'notes' => 'nullable|string',
 
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'name' => $this->name ?? 'Teacher',
+            'email' => $this->email ?? 'teacher' . time() . '@school.com',
+            'phone' => $this->phone ?? '0000000000',
+            'gender' => $this->gender ?? 'female',
+            'salary' => $this->salary ?? 0,
+            'hire_date' => $this->hire_date ?? now()->format('Y-m-d'),
+            'is_active' => $this->is_active ?? true,
+        ]);
     }
 
     public function attributes()

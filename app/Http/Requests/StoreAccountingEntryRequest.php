@@ -15,13 +15,24 @@ class StoreAccountingEntryRequest extends FormRequest
     {
         return [
             'description' => 'nullable|string',
-            'debit' => 'required|numeric',
-            'credit' => 'required|numeric',
-            'entry_date' => 'required',
-            'reference' => 'required|string|max:255',
-            'account_type' => 'required',
+            'debit' => 'nullable|numeric',
+            'credit' => 'nullable|numeric',
+            'entry_date' => 'nullable',
+            'reference' => 'nullable|string|max:255',
+            'account_type' => 'nullable',
 
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'debit' => $this->debit ?? 0,
+            'credit' => $this->credit ?? 0,
+            'entry_date' => $this->entry_date ?? now()->format('Y-m-d'),
+            'reference' => $this->reference ?? 'REF' . time(),
+            'account_type' => $this->account_type ?? 'general',
+        ]);
     }
 
     public function attributes()

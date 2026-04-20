@@ -14,16 +14,26 @@ class StorePaymentRequest extends FormRequest
     public function rules()
     {
         return [
-            'child_id' => 'required',
-            'fee_id' => 'required',
-            'amount' => 'required|numeric',
-            'payment_date' => 'required|date',
-            'payment_method' => 'required|in:cash,bank_transfer,credit_card,check,online',
+            'child_id' => 'nullable',
+            'fee_id' => 'nullable',
+            'amount' => 'nullable|numeric',
+            'payment_date' => 'nullable|date',
+            'payment_method' => 'nullable|in:cash,bank_transfer,credit_card,check,online',
             'reference_number' => 'nullable|string|max:255',
-            'status' => 'required|in:completed,pending,failed,refunded',
+            'status' => 'nullable|in:completed,pending,failed,refunded',
             'receipt_number' => 'nullable|string|max:255',
 
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'amount' => $this->amount ?? 0,
+            'payment_date' => $this->payment_date ?? now()->format('Y-m-d'),
+            'payment_method' => $this->payment_method ?? 'cash',
+            'status' => $this->status ?? 'pending',
+        ]);
     }
 
     public function attributes()

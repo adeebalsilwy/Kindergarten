@@ -47,7 +47,7 @@
                                         </x-base.popover.panel>
                                     </x-base.popover>
                                 </div>
-                                <x-base.form-input id="model_name" name="model_name" type="text" placeholder="e.g. Product" required class="py-3 px-4 text-sm rounded-lg border-2 border-slate-200 focus:border-blue-500 dark:border-darkmode-300 dark:bg-darkmode-700 dark:text-slate-200" />
+                                <x-base.form-input id="model_name" name="model_name" type="text" placeholder="e.g. Product" class="py-3 px-4 text-sm rounded-lg border-2 border-slate-200 focus:border-blue-500 dark:border-darkmode-300 dark:bg-darkmode-700 dark:text-slate-200" />
                                 <div class="form-help text-slate-500 text-xs mt-2">PascalCase (e.g. UserProfile)</div>
                             </div>
                             <div class="col-span-12 sm:col-span-6">
@@ -62,7 +62,7 @@
                                         </x-base.popover.panel>
                                     </x-base.popover>
                                 </div>
-                                <x-base.form-input id="table_name" name="table_name" type="text" placeholder="e.g. products" required class="py-3 px-4 text-sm rounded-lg border-2 border-slate-200 focus:border-blue-500 dark:border-darkmode-300 dark:bg-darkmode-700 dark:text-slate-200" />
+                                <x-base.form-input id="table_name" name="table_name" type="text" placeholder="e.g. products" class="py-3 px-4 text-sm rounded-lg border-2 border-slate-200 focus:border-blue-500 dark:border-darkmode-300 dark:bg-darkmode-700 dark:text-slate-200" />
                                 <div class="form-help text-slate-500 text-xs mt-2">snake_case (e.g. user_profiles)</div>
                             </div>
                         </div>
@@ -92,7 +92,7 @@
                             <div class="field-row grid grid-cols-12 gap-3 items-center p-5 rounded-lg border bg-white border-blue-100 shadow-md dark:bg-darkmode-600 dark:border-blue-500/30 hover:border-blue-300 transition-all duration-300">
                                 <div class="col-span-12 md:col-span-3">
                                     <x-base.form-label class="text-xs font-semibold text-slate-600 dark:text-slate-300 mb-2 block">Column Name</x-base.form-label>
-                                    <x-base.form-input name="fields[0][name]" placeholder="name" required class="form-control-sm py-2 px-3 text-sm rounded-lg border-2 border-slate-200 focus:border-blue-500 dark:border-darkmode-300 dark:bg-darkmode-700 dark:text-slate-200" />
+                                    <x-base.form-input name="fields[0][name]" placeholder="name" class="form-control-sm py-2 px-3 text-sm rounded-lg border-2 border-slate-200 focus:border-blue-500 dark:border-darkmode-300 dark:bg-darkmode-700 dark:text-slate-200" />
                                 </div>
                                 <div class="col-span-12 md:col-span-3">
                                     <x-base.form-label class="text-xs font-semibold text-slate-600 dark:text-slate-300 mb-2 block">Type</x-base.form-label>
@@ -207,7 +207,7 @@
                 row.innerHTML = `
                     <div class="col-span-12 md:col-span-3">
                         <label class="text-xs font-semibold text-slate-600 dark:text-slate-300 mb-2 block">Column Name</label>
-                        <input type="text" name="fields[${index}][name]" value="${name}" placeholder="column_name" required class="form-control form-control-sm py-2 px-3 text-sm rounded-lg border-2 border-slate-200 focus:border-blue-500 dark:border-darkmode-300 dark:bg-darkmode-700 dark:text-slate-200" />
+                        <input type="text" name="fields[${index}][name]" value="${name}" placeholder="column_name" class="form-control form-control-sm py-2 px-3 text-sm rounded-lg border-2 border-slate-200 focus:border-blue-500 dark:border-darkmode-300 dark:bg-darkmode-700 dark:text-slate-200" />
                     </div>
                     <div class="col-span-12 md:col-span-3">
                         <label class="text-xs font-semibold text-slate-600 dark:text-slate-300 mb-2 block">Type</label>
@@ -298,7 +298,7 @@
                     </div>
                     <div class="col-span-12 md:col-span-3">
                         <label class="form-label text-xs font-semibold text-slate-600 dark:text-slate-300 mb-2">Related Table</label>
-                        <select name="relationships[${index}][related_table]" class="tom-select rel-table-select" required>
+                        <select name="relationships[${index}][related_table]" class="tom-select rel-table-select">
                             ${tableOptions}
                         </select>
                     </div>

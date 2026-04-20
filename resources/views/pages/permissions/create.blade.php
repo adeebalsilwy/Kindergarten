@@ -32,14 +32,13 @@
                         
                         <div class="grid grid-cols-12 gap-4">
                             <div class="col-span-12">
-                                <x-base.form-label class="font-medium">{{ __('global.permission_name') }} *</x-base.form-label>
+                                <x-base.form-label class="font-medium">{{ __('global.permission_name') }}</x-base.form-label>
                                 <x-base.form-input 
                                     type="text" 
                                     name="name" 
                                     value="{{ old('name') }}" 
                                     class="mt-2" 
                                     placeholder="{{ __('global.enter_permission_name') }}"
-                                    required
                                 />
                                 <div class="text-slate-500 text-xs mt-1">{{ __('global.permission_name_format') }}</div>
                                 @error('name')
@@ -192,23 +191,6 @@
             updatePreview();
         });
         
-        // Form validation
-        document.querySelector('form').addEventListener('submit', function(e) {
-            const name = document.querySelector('input[name="name"]').value.trim();
-            
-            if (!name) {
-                e.preventDefault();
-                alert('{{ __('global.please_enter_permission_name') }}');
-                return;
-            }
-            
-            // Validate naming convention
-            if (!/^[a-z_]+$/.test(name)) {
-                if (!confirm('{{ __('global.naming_convention_warning') }}')) {
-                    e.preventDefault();
-                    return;
-                }
-            }
-        });
+        // Form validation removed - all fields are now optional
     </script>
 @endsection

@@ -45,7 +45,7 @@
                     <div class="grid grid-cols-12 gap-6">
                         <div class="col-span-12">
                             <x-base.form-label for="role_id">{{ __('access_control.fields.role') }}</x-base.form-label>
-                            <x-base.tom-select name="role_id" id="role_id" class="w-full" required>
+                            <x-base.tom-select name="role_id" id="role_id" class="w-full">
                                 <option value="">{{ __('access_control.actions.select_role') }}</option>
                                 @foreach($roles as $role)
                                     <option value="{{ $role->id }}">{{ $role->name }}</option>

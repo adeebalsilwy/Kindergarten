@@ -21,7 +21,6 @@
                             name="email"
                             placeholder="{{ __('global.email') }}"
                             value="{{ old('email', $email ?? '') }}"
-                            required
                         />
                         @error('email')
                             <x-base.form-help class="text-danger mt-2">{{ $message }}</x-base.form-help>
@@ -31,7 +30,6 @@
                             type="password"
                             name="password"
                             placeholder="{{ __('global.new_password') }}"
-                            required
                         />
                         @error('password')
                             <x-base.form-help class="text-danger mt-2">{{ $message }}</x-base.form-help>
@@ -41,7 +39,6 @@
                             type="password"
                             name="password_confirmation"
                             placeholder="{{ __('global.confirm_new_password') }}"
-                            required
                         />
                         @error('password_confirmation')
                             <x-base.form-help class="text-danger mt-2">{{ $message }}</x-base.form-help>

@@ -14,25 +14,38 @@ class StoreCurriculumRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:255',
-            'code' => 'required|string|max:255|unique:curriculas,code',
+            'name' => 'nullable|string|max:255',
+            'code' => 'nullable|string|max:255|unique:curriculas,code',
             'description' => 'nullable|string',
             'objectives' => 'nullable|string',
             'learning_outcomes' => 'nullable|string',
-            'grade_level' => 'required|string|max:255',
-            'subject_area' => 'required|string|max:255',
-            'topics' => 'required|json',
-            'materials_needed' => 'required|json',
-            'curriculum_type' => 'required|string|max:255',
-            'duration_weeks' => 'required|integer',
-            'assessment_methods' => 'required|json',
-            'is_active' => 'required|boolean',
-            'published_at' => 'required|date',
-            'created_by' => 'required',
+            'grade_level' => 'nullable|string|max:255',
+            'subject_area' => 'nullable|string|max:255',
+            'topics' => 'nullable|json',
+            'materials_needed' => 'nullable|json',
+            'curriculum_type' => 'nullable|string|max:255',
+            'duration_weeks' => 'nullable|integer',
+            'assessment_methods' => 'nullable|json',
+            'is_active' => 'nullable|boolean',
+            'published_at' => 'nullable|date',
+            'created_by' => 'nullable',
             'connected_materials' => 'array',
             'connected_materials.*' => 'exists:materials,id',
 
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'name' => $this->name ?? 'Curriculum ' . time(),
+            'code' => $this->code ?? 'CUR' . time(),
+            'grade_level' => $this->grade_level ?? 'primary',
+            'subject_area' => $this->subject_area ?? 'general',
+            'duration_weeks' => $this->duration_weeks ?? 12,
+            'is_active' => $this->is_active ?? true,
+            'published_at' => $this->published_at ?? now()->format('Y-m-d'),
+        ]);
     }
 
     public function attributes()

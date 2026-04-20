@@ -558,7 +558,7 @@
                 row.innerHTML = `
                     <div class="col-span-12 md:col-span-3">
                         <label class="text-xs font-medium text-slate-500 mb-1 block">Column Name <span class="text-primary">(New)</span></label>
-                        <input type="text" name="fields[${fieldCount}][name]" class="form-control form-control-sm" required placeholder="e.g. phone_number">
+                        <input type="text" name="fields[${fieldCount}][name]" class="form-control form-control-sm" placeholder="e.g. phone_number">
                         <input type="hidden" name="fields[${fieldCount}][is_new]" value="1">
                     </div>
                     <div class="col-span-12 md:col-span-3">

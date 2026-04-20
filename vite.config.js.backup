@@ -3,7 +3,6 @@ import laravel from "laravel-vite-plugin";
 import path from "path";
 
 export default defineConfig({
-    // Performance optimization: Reduced entry points and improved code splitting
     build: {
         commonjsOptions: {
             include: ["tailwind.config.js", "node_modules/**"],
@@ -191,4 +190,3 @@ export default defineConfig({
         },
     },
 });
-

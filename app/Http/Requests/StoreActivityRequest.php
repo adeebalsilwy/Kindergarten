@@ -14,27 +14,40 @@ class StoreActivityRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|string|max:255',
+            'title' => 'nullable|string|max:255',
             'description' => 'nullable|string',
             'instructions' => 'nullable|string',
-            'class_id' => 'required',
-            'teacher_id' => 'required',
-            'curriculum_id' => 'required',
-            'scheduled_date' => 'required|date',
-            'start_time' => 'required',
-            'end_time' => 'required',
-            'activity_type' => 'required|string|max:255',
-            'difficulty_level' => 'required|string|max:255',
-            'required_materials' => 'required',
-            'estimated_duration' => 'required|integer',
-            'location' => 'required|string|max:255',
-            'is_active' => 'required|boolean',
-            'learning_objectives' => 'required',
-            'outcomes' => 'required',
-            'completed_at' => 'required|date',
+            'class_id' => 'nullable',
+            'teacher_id' => 'nullable',
+            'curriculum_id' => 'nullable',
+            'scheduled_date' => 'nullable|date',
+            'start_time' => 'nullable',
+            'end_time' => 'nullable',
+            'activity_type' => 'nullable|string|max:255',
+            'difficulty_level' => 'nullable|string|max:255',
+            'required_materials' => 'nullable',
+            'estimated_duration' => 'nullable|integer',
+            'location' => 'nullable|string|max:255',
+            'is_active' => 'nullable|boolean',
+            'learning_objectives' => 'nullable',
+            'outcomes' => 'nullable',
+            'completed_at' => 'nullable|date',
             'notes' => 'nullable|string',
 
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'title' => $this->title ?? 'Activity ' . time(),
+            'scheduled_date' => $this->scheduled_date ?? now()->format('Y-m-d'),
+            'start_time' => $this->start_time ?? '08:00',
+            'end_time' => $this->end_time ?? '10:00',
+            'estimated_duration' => $this->estimated_duration ?? 60,
+            'is_active' => $this->is_active ?? true,
+            'completed_at' => $this->completed_at ?? now()->format('Y-m-d'),
+        ]);
     }
 
     public function attributes()

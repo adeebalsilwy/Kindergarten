@@ -14,12 +14,22 @@ class StoreLanguageRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:255',
-            'code' => 'required|string|max:255|unique:languages,code',
-            'is_rtl' => 'required|boolean',
-            'is_active' => 'required|boolean',
+            'name' => 'nullable|string|max:255',
+            'code' => 'nullable|string|max:255|unique:languages,code',
+            'is_rtl' => 'nullable|boolean',
+            'is_active' => 'nullable|boolean',
 
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'name' => $this->name ?? 'Language ' . time(),
+            'code' => $this->code ?? 'lang' . time(),
+            'is_rtl' => $this->is_rtl ?? false,
+            'is_active' => $this->is_active ?? true,
+        ]);
     }
 
     public function attributes()

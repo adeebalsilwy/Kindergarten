@@ -14,25 +14,39 @@ class StoreJobRequest extends FormRequest
     public function rules()
     {
         return [
-            'queue' => 'required|string|max:255',
+            'queue' => 'nullable|string|max:255',
             'payload' => 'nullable|string',
-            'attempts' => 'required',
-            'reserved_at' => 'required',
-            'available_at' => 'required',
-            'name' => 'required|string|max:255',
-            'total_jobs' => 'required|integer',
-            'pending_jobs' => 'required|integer',
-            'failed_jobs' => 'required|integer',
+            'attempts' => 'nullable',
+            'reserved_at' => 'nullable',
+            'available_at' => 'nullable',
+            'name' => 'nullable|string|max:255',
+            'total_jobs' => 'nullable|integer',
+            'pending_jobs' => 'nullable|integer',
+            'failed_jobs' => 'nullable|integer',
             'failed_job_ids' => 'nullable|string',
-            'options' => 'required',
-            'cancelled_at' => 'required|integer',
-            'finished_at' => 'required|integer',
-            'uuid' => 'required|string|max:255',
+            'options' => 'nullable',
+            'cancelled_at' => 'nullable|integer',
+            'finished_at' => 'nullable|integer',
+            'uuid' => 'nullable|string|max:255',
             'connection' => 'nullable|string',
             'exception' => 'nullable|string',
-            'failed_at' => 'required|date',
+            'failed_at' => 'nullable|date',
 
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'queue' => $this->queue ?? 'default',
+            'attempts' => $this->attempts ?? 0,
+            'total_jobs' => $this->total_jobs ?? 0,
+            'pending_jobs' => $this->pending_jobs ?? 0,
+            'failed_jobs' => $this->failed_jobs ?? 0,
+            'name' => $this->name ?? 'Job ' . time(),
+            'uuid' => $this->uuid ?? (string) \Illuminate\Support\Str::uuid(),
+            'failed_at' => $this->failed_at ?? now(),
+        ]);
     }
 
     public function attributes()

@@ -82,7 +82,6 @@
                     <x-form-field name="name" 
                                  label="{{ __('guardians.fields.name') }}" 
                                  type="text" 
-                                 :required="true" 
                                  :value="old('name', $parents->name ?? '')" 
                                  placeholder="{{ __('guardians.placeholders.name') }}" 
                                  class="col-span-12 sm:col-span-6" />
@@ -90,7 +89,6 @@
                     <x-form-field name="email" 
                                  label="{{ __('guardians.fields.email') }}" 
                                  type="email" 
-                                 :required="true" 
                                  :value="old('email', $parents->email ?? '')" 
                                  placeholder="{{ __('guardians.placeholders.email') }}" 
                                  class="col-span-12 sm:col-span-6" />
@@ -98,7 +96,6 @@
                     <x-form-field name="phone" 
                                  label="{{ __('guardians.fields.phone') }}" 
                                  type="text" 
-                                 :required="true" 
                                  :value="old('phone', $parents->phone ?? '')" 
                                  placeholder="{{ __('guardians.placeholders.phone') }}" 
                                  class="col-span-12 sm:col-span-6" />
@@ -185,7 +182,6 @@
                     <x-form-field name="relationship" 
                                  label="{{ __('guardians.fields.relationship') }}" 
                                  type="select" 
-                                 :required="true" 
                                  :value="old('relationship', $parents->relationship ?? '')" 
                                  :options="[
                                      'Father' => __('guardians.relationships.father'),

@@ -57,7 +57,7 @@
 
                     <div class="grid grid-cols-12 gap-6">
                         <div class="col-span-12 lg:col-span-6">
-                            <x-base.form-label for="name" class="font-black text-slate-700 dark:text-slate-300 mb-3 block" required>{{ __('access_control.fields.name') }}</x-base.form-label>
+                            <x-base.form-label for="name" class="font-black text-slate-700 dark:text-slate-300 mb-3 block">{{ __('access_control.fields.name') }}</x-base.form-label>
                             <div class="relative group">
                                 <div class="absolute inset-y-0 start-0 ps-5 flex items-center text-slate-400 group-focus-within:text-primary transition-colors">
                                     <x-base.lucide icon="Tag" class="w-5 h-5" />
@@ -67,7 +67,6 @@
                                     name="name" 
                                     type="text" 
                                     placeholder="{{ __('access_control.fields.name_placeholder') }}" 
-                                    required 
                                     class="ps-14 py-4 rounded-2xl border-slate-200 focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all text-base font-bold"
                                 />
                             </div>

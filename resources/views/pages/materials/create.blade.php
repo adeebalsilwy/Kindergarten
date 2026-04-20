@@ -31,8 +31,8 @@
                         <div class="mt-5">
                             <div class="grid grid-cols-12 gap-4">
                                 <div class="col-span-12">
-                                    <x-base.form-label>{{ __('materials.fields.name') }} <span class="text-danger">*</span></x-base.form-label>
-                                    <x-base.form-input type="text" name="name" value="{{ old('name') }}" placeholder="{{ __('materials.fields.name') }}" required />
+                                    <x-base.form-label>{{ __('materials.fields.name') }}</x-base.form-label>
+                                    <x-base.form-input type="text" name="name" value="{{ old('name') }}" placeholder="{{ __('materials.fields.name') }}" />
                                     @error('name')
                                         <div class="text-danger mt-1">{{ $message }}</div>
                                     @enderror
@@ -79,8 +79,8 @@
                                 </div>
                                 
                                 <div class="col-span-6">
-                                    <x-base.form-label>{{ __('materials.fields.quantity') }} <span class="text-danger">*</span></x-base.form-label>
-                                    <x-base.form-input type="number" name="quantity" value="{{ old('quantity', 0) }}" placeholder="{{ __('materials.fields.quantity') }}" min="0" required />
+                                    <x-base.form-label>{{ __('materials.fields.quantity') }}</x-base.form-label>
+                                    <x-base.form-input type="number" name="quantity" value="{{ old('quantity', 0) }}" placeholder="{{ __('materials.fields.quantity') }}" min="0" />
                                     @error('quantity')
                                         <div class="text-danger mt-1">{{ $message }}</div>
                                     @enderror
@@ -95,8 +95,8 @@
                                 </div>
                                 
                                 <div class="col-span-6">
-                                    <x-base.form-label>{{ __('materials.fields.status') }} <span class="text-danger">*</span></x-base.form-label>
-                                    <x-base.form-select name="status" required>
+                                    <x-base.form-label>{{ __('materials.fields.status') }}</x-base.form-label>
+                                    <x-base.form-select name="status">
                                         <option value="available" {{ old('status') == 'available' ? 'selected' : '' }}>{{ __('materials.status.available') }}</option>
                                         <option value="in-use" {{ old('status') == 'in-use' ? 'selected' : '' }}>{{ __('materials.status.in_use') }}</option>
                                         <option value="maintenance" {{ old('status') == 'maintenance' ? 'selected' : '' }}>{{ __('materials.status.maintenance') }}</option>

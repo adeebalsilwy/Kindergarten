@@ -28,7 +28,6 @@
                             name="email"
                             placeholder="{{ __('global.email') }}"
                             value="{{ old('email') }}"
-                            required
                         />
                         @error('email')
                             <x-base.form-help class="text-danger mt-2">{{ $message }}</x-base.form-help>

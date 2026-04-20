@@ -15,14 +15,14 @@ class StoreChildrenRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'dob' => 'required|date',
-            'gender' => 'required|in:male,female',
+            'dob' => 'nullable|date',
+            'gender' => 'nullable|in:male,female',
             'class_id' => 'nullable|integer|exists:classes,id',
-            'parent_id' => 'required|integer|exists:guardians,id',
+            'parent_id' => 'nullable|integer|exists:guardians,id',
             'second_parent_id' => 'nullable|integer|exists:guardians,id',
             'photo_path' => 'nullable|image',
-            'fees_required' => 'required|numeric',
-            'fees_paid' => 'required|numeric',
+            'fees_required' => 'nullable|numeric',
+            'fees_paid' => 'nullable|numeric',
             'emergency_contact_name' => 'nullable|string|max:255',
             'emergency_contact_phone' => 'nullable|string|max:50',
             'emergency_contact_relation' => 'nullable|string|max:100',
@@ -39,6 +39,18 @@ class StoreChildrenRequest extends FormRequest
             'last_attended_at' => 'nullable|date',
 
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'dob' => $this->dob ?? now()->subYears(5)->format('Y-m-d'),
+            'gender' => $this->gender ?? 'male',
+            'fees_required' => $this->fees_required ?? 0,
+            'fees_paid' => $this->fees_paid ?? 0,
+            'enrollment_status' => $this->enrollment_status ?? 'active',
+            'enrollment_date' => $this->enrollment_date ?? now()->format('Y-m-d'),
+        ]);
     }
 
     public function attributes()

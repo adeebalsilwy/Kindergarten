@@ -14,9 +14,16 @@ class StoreFinancialReportRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:255',
+            'name' => 'nullable|string|max:255',
 
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'name' => $this->name ?? 'Financial Report ' . time(),
+        ]);
     }
 
     public function attributes()

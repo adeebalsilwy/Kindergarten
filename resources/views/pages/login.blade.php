@@ -2,6 +2,20 @@
 
 @section('head')
     <title>{{ __('global.login') }} - {{ config('app.name') }}</title>
+    <!-- Login page specific styles - minimal CSS -->
+    <style>
+        /* Critical CSS for login page */
+        .login-page {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .login-form-container {
+            max-width: 450px;
+            width: 100%;
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -153,7 +167,6 @@
                                         id="email"
                                         placeholder="{{ __('global.enter_your_email') }}"
                                         value="{{ old('email') }}"
-                                        required
                                         autocomplete="email"
                                     />
                                     @if($errors->has('email'))
@@ -172,7 +185,6 @@
                                             name="password"
                                             id="password"
                                             placeholder="{{ __('global.enter_your_password') }}"
-                                            required
                                             autocomplete="current-password"
                                         />
                                         <button type="button" class="absolute inset-y-0 right-0 pe-3 flex items-center" onclick="togglePasswordVisibility()">
@@ -390,18 +402,7 @@
             const submitButton = form.querySelector('button[type="submit"]');
             submitButton.dataset.original = submitButton.innerHTML;
             
-            // Add input validation classes
-            emailInput.addEventListener('input', function() {
-                if (this.value && this.checkValidity()) {
-                    this.classList.add('border-green-500');
-                    this.classList.remove('border-red-500');
-                } else if (this.value) {
-                    this.classList.add('border-red-500');
-                    this.classList.remove('border-green-500');
-                } else {
-                    this.classList.remove('border-green-500', 'border-red-500');
-                }
-            });
+            // Form validation removed - all fields are now optional
             
             // Bind demo account events
             demoButtons.forEach(btn => {
@@ -457,27 +458,7 @@
                 });
             });
             
-            // Form submission enhancement
-            form.addEventListener('submit', function(e) {
-                if (submitButton.disabled) {
-                    e.preventDefault();
-                    return;
-                }
-                
-                // Show loading state
-                const originalContent = submitButton.innerHTML;
-                submitButton.dataset.original = originalContent;
-                submitButton.innerHTML = '<i data-lucide="loader" class="w-4 h-4 me-2 animate-spin"></i> {{ __('global.signing_in') }}';
-                lucide.createIcons();
-                submitButton.disabled = true;
-                
-                // Revert after 5 seconds if no response (fallback)
-                setTimeout(() => {
-                    submitButton.innerHTML = originalContent;
-                    submitButton.disabled = false;
-                    lucide.createIcons();
-                }, 8000);
-            });
+            // Form submission enhancement - validation removed
             
             const demoGrid = document.getElementById('demo-grid');
             const demoToggle = document.getElementById('demo-toggle');
