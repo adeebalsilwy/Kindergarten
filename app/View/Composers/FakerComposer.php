@@ -261,9 +261,11 @@ class FakerComposer
      */
     public function compose(View $view): void
     {
-        $fakerData = [];
-        for ($i = 0; $i < 20; $i++) {
-            $fakerData[] = [
+        // Generate faker data once and cache it to prevent timeout
+        static $cachedFakerData = null;
+
+        if ($cachedFakerData === null) {
+            $cachedFakerData = [
                 'users' => $this->fakeUsers(),
                 'photos' => $this->fakePhotos(),
                 'images' => $this->fakeImages(),
@@ -282,6 +284,9 @@ class FakerComposer
                 'foods' => $this->fakeFoods(),
             ];
         }
+
+        // Create array of 5 items (reduced from 20) using the same cached data
+        $fakerData = array_fill(0, 5, $cachedFakerData);
 
         $view->with('fakers', $fakerData);
     }

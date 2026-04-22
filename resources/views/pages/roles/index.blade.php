@@ -280,7 +280,7 @@
 
         <!-- Pagination -->
         <div class="intro-y col-span-12 flex flex-wrap sm:flex-row sm:flex-nowrap items-center">
-            {{ $roles->links() }}
+            {{ $roles->withQueryString()->links() }}
         </div>
 
         <!-- Detailed Statistics -->

@@ -366,7 +366,7 @@
     @if($childrens->hasPages())
         <div class="intro-y col-span-12 flex flex-wrap sm:flex-row sm:flex-nowrap items-center mt-6">
             <div class="mx-auto">
-                {{ $childrens->links() }}
+                {{ $childrens->withQueryString()->links() }}
             </div>
         </div>
     @endif
@@ -404,37 +404,19 @@
             const searchInput = document.getElementById('searchInput');
             const classFilter = document.getElementById('classFilter');
             const statusFilter = document.getElementById('statusFilter');
-            const applyFilters = document.getElementById('applyFilters');
             const resetFilters = document.getElementById('resetFilters');
 
-            // Apply filters
-            applyFilters?.addEventListener('click', function() {
-                const searchTerm = searchInput?.value || '';
-                const classId = classFilter?.value || '';
-                const status = statusFilter?.value || '';
-
-                // Build query parameters
-                const params = new URLSearchParams();
-                if (searchTerm) params.set('search', searchTerm);
-                if (classId) params.set('class_id', classId);
-                if (status) params.set('enrollment_status', status);
-
-                // Redirect with filters
-                window.location.href = `{{ route('children.index') }}?${params.toString()}`;
-            });
-
-            // Reset filters
-            resetFilters?.addEventListener('click', function() {
-                searchInput.value = '';
-                classFilter.value = '';
-                statusFilter.value = '';
+            // Reset filters - properly redirect to clean URL
+            resetFilters?.addEventListener('click', function(e) {
+                e.preventDefault();
                 window.location.href = '{{ route('children.index') }}';
             });
 
-            // Auto-apply search on enter
+            // Auto-apply search on enter - submit the form
             searchInput?.addEventListener('keypress', function(e) {
                 if (e.key === 'Enter') {
-                    applyFilters.click();
+                    e.preventDefault();
+                    this.closest('form').submit();
                 }
             });
 

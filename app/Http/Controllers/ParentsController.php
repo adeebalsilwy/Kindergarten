@@ -29,7 +29,7 @@ class ParentsController extends Controller
 
         // Apply filters
         if (method_exists($query->getModel(), 'scopeFilter')) {
-            $query->filter($request);
+            $query->filter($request->all());
         }
 
         // Handle export functionality
@@ -198,30 +198,30 @@ class ParentsController extends Controller
     public function exportPdf(Request $request)
     {
         $this->authorize('export_parents');
-        
+
         $query = $this->service->query();
 
         if (method_exists($query->getModel(), 'scopeFilter')) {
-            $query->filter($request);
+            $query->filter($request->all());
         }
 
         $data = $query->get();
-        
+
         return $this->exportToPdf($data);
     }
 
     public function exportExcel(Request $request)
     {
         $this->authorize('export_parents');
-        
+
         $query = $this->service->query();
 
         if (method_exists($query->getModel(), 'scopeFilter')) {
-            $query->filter($request);
+            $query->filter($request->all());
         }
 
         $data = $query->get();
-        
+
         return $this->exportToExcel($data);
     }
 }

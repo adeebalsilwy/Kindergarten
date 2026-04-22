@@ -28,9 +28,9 @@ class GradeController extends Controller
         $query = $this->service->query()->with(['child']);
 
         if (method_exists($query->getModel(), 'scopeFilter')) {
-            $query->filter($request);
+            $query->filter($request->all());
         }
-        
+
         // Additional filtering for child_id
         if ($request->filled('child_id')) {
             $query->where('child_id', $request->child_id);
@@ -211,36 +211,36 @@ class GradeController extends Controller
         $query = $this->service->query()->with(['child']);
 
         if (method_exists($query->getModel(), 'scopeFilter')) {
-            $query->filter($request);
+            $query->filter($request->all());
         }
-        
+
         // Additional filtering for child_id
         if ($request->filled('child_id')) {
             $query->where('child_id', $request->child_id);
         }
 
         $data = $query->get();
-        
+
         return $this->exportToPdf($data);
     }
 
     public function exportExcel(Request $request)
     {
         $this->authorize('export_grades');
-        
+
         $query = $this->service->query()->with(['child']);
 
         if (method_exists($query->getModel(), 'scopeFilter')) {
-            $query->filter($request);
+            $query->filter($request->all());
         }
-        
+
         // Additional filtering for child_id
         if ($request->filled('child_id')) {
             $query->where('child_id', $request->child_id);
         }
 
         $data = $query->get();
-        
+
         return $this->exportToExcel($data);
     }
 }

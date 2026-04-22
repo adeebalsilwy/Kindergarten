@@ -48,17 +48,21 @@
                             $activeLangs = \App\Models\Language::where('is_active', true)->get();
                             $currentLocale = app()->getLocale();
                             $nextLang = $activeLangs->where('code', '!=', $currentLocale)->first() ?? $activeLangs->first();
+                            $nextLangCode = $nextLang ? $nextLang->code : $currentLocale;
+                            $nextLangName = $nextLang ? $nextLang->name : 'English';
                         @endphp
+                        @if($activeLangs->count() > 1)
                         <div class="flex justify-end mb-4">
-                            <a href="{{ route('locale.switch', $nextLang->code) }}">
+                            <a href="{{ route('locale.switch', $nextLangCode) }}">
                                 <x-base.button variant="outline-secondary" class="px-3 py-2">
                                     <x-base.lucide icon="Languages" class="w-5 h-5 me-2" />
                                     <span>
-                                        <span class="font-semibold text-primary">{{ $nextLang->name }}</span>
+                                        <span class="font-semibold text-primary">{{ $nextLangName }}</span>
                                     </span>
                                 </x-base.button>
                             </a>
                         </div>
+                        @endif
                         <h2 class="intro-x text-center text-2xl font-bold xl:text-start xl:text-3xl">
                             {{ __('global.register') }}
                         </h2>
@@ -72,7 +76,10 @@
                                 <div>
                                     <div class="font-medium text-green-800">{{ __('global.secure_registration') }}</div>
                                     <div class="text-sm text-green-600 mt-1">
-                                        {{ __('global.registration_attempts_remaining', ['attempts' => $remainingAttempts ?? 3]) }}
+                                        @php
+                                            $attempts = is_array($remainingAttempts ?? null) ? 3 : ($remainingAttempts ?? 3);
+                                        @endphp
+                                        {{ __('global.registration_attempts_remaining', ['attempts' => $attempts]) }}
                                     </div>
                                 </div>
                             </div>

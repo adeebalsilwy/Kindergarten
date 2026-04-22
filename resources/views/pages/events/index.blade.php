@@ -201,7 +201,7 @@
 
         <!-- Pagination -->
         <div class="intro-y col-span-12 flex flex-wrap sm:flex-row sm:flex-nowrap items-center">
-            {!! $events->links() !!}
+            {!! $events->withQueryString()->links() !!}
         </div>
 
         <!-- Summary Cards -->

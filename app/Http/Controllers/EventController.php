@@ -28,7 +28,7 @@ class EventController extends Controller
         $query = $this->service->query()->with(['class', 'teacher']);
 
         if (method_exists($query->getModel(), 'scopeFilter')) {
-            $query->filter($request);
+            $query->filter($request->all());
         }
 
         // Handle export functionality
@@ -243,26 +243,26 @@ class EventController extends Controller
         $query = $this->service->query()->with(['class', 'teacher']);
 
         if (method_exists($query->getModel(), 'scopeFilter')) {
-            $query->filter($request);
+            $query->filter($request->all());
         }
 
         $data = $query->get();
-        
+
         return $this->exportToPdf($data);
     }
 
     public function exportExcel(Request $request)
     {
         $this->authorize('export_events');
-        
+
         $query = $this->service->query()->with(['class', 'teacher']);
 
         if (method_exists($query->getModel(), 'scopeFilter')) {
-            $query->filter($request);
+            $query->filter($request->all());
         }
 
         $data = $query->get();
-        
+
         return $this->exportToExcel($data);
     }
 }

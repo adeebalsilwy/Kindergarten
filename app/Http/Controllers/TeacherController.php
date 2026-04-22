@@ -29,7 +29,7 @@ class TeacherController extends Controller
         $query = $this->service->query()->with(['classes', 'user']);
 
         if (method_exists($query->getModel(), 'scopeFilter')) {
-            $query->filter($request);
+            $query->filter($request->all());
         }
 
         // Handle export functionality

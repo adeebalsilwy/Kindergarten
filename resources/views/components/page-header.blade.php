@@ -67,12 +67,10 @@
                     </x-base.button>
                 @elseif($action['type'] === 'dropdown')
                     <x-base.dropdown>
-                        <x-base.dropdown.trigger>
-                            <x-base.button variant="secondary" class="flex items-center">
-                                {{ $action['label'] }}
-                                <x-base.lucide icon="ChevronDown" class="w-4 h-4 ms-2" />
-                            </x-base.button>
-                        </x-base.dropdown.trigger>
+                        <x-base.button variant="secondary" class="flex items-center">
+                            {{ $action['label'] }}
+                            <x-base.lucide icon="ChevronDown" class="w-4 h-4 ms-2" />
+                        </x-base.button>
                         <x-base.dropdown.content>
                             @foreach($action['items'] as $item)
                                 <x-base.dropdown.content>

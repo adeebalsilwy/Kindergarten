@@ -349,7 +349,7 @@
                 {{ __('global.showing') }} {{ $users->firstItem() ?? 0 }} {{ __('global.to') }} {{ $users->lastItem() ?? 0 }} {{ __('global.of') }} {{ $users->total() }} {{ __('global.entries') }}
             </div>
             <div class="pagination-container">
-                {{ $users->links() }}
+                {{ $users->withQueryString()->links() }}
             </div>
         </div>
     </div>

@@ -264,7 +264,7 @@
 
         <!-- Pagination -->
         <div class="intro-y col-span-12 flex flex-wrap sm:flex-row sm:flex-nowrap items-center">
-            {!! $parents->links() !!}
+            {!! $parents->withQueryString()->links() !!}
         </div>
 
         <!-- Summary Cards -->
@@ -377,46 +377,26 @@
     </x-base.dialog>
 
     <script>
-        function applyFilters() {
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            const relationshipFilter = document.getElementById('relationshipFilter').value;
-            const statusFilter = document.getElementById('statusFilter').value;
-            
-            const cards = document.querySelectorAll('#guardiansGrid > div');
-            
-            cards.forEach(card => {
-                const name = card.querySelector('.font-medium.text-base').textContent.toLowerCase();
-                const relationship = card.querySelector('.text-slate-500.text-xs').textContent.toLowerCase();
-                const statusElement = card.querySelector('.flex.items-center span:last-child');
-                const status = statusElement ? statusElement.textContent.trim().toLowerCase() : '';
-                
-                const matchesSearch = name.includes(searchTerm);
-                const matchesRelationship = !relationshipFilter || relationship.includes(relationshipFilter);
-                const matchesStatus = !statusFilter || status.includes(statusFilter);
-                
-                if (matchesSearch && matchesRelationship && matchesStatus) {
-                    card.style.display = 'block';
-                } else {
-                    card.style.display = 'none';
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('searchInput');
+
+            // Auto-submit form on Enter key
+            searchInput?.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    this.closest('form').submit();
                 }
             });
-        }
-        
-        // Live search
-        document.getElementById('searchInput').addEventListener('input', applyFilters);
-        document.getElementById('relationshipFilter').addEventListener('change', applyFilters);
-        document.getElementById('statusFilter').addEventListener('change', applyFilters);
-        
-        document.addEventListener('DOMContentLoaded', function() {
+
             // Handle delete button clicks
             document.querySelectorAll('.delete-btn').forEach(button => {
                 button.addEventListener('click', function() {
                     const id = this.getAttribute('data-id');
                     const name = this.getAttribute('data-name');
                     const deleteUrl = this.getAttribute('data-delete-url');
-                    
+
                     document.getElementById('deleteGuardianName').textContent = name;
-                    
+
                     const formElement = document.getElementById('deleteForm');
                     if (formElement && deleteUrl) {
                         formElement.action = deleteUrl;

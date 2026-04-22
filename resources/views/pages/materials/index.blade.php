@@ -178,13 +178,13 @@
                 ];
 
                 $actions = [];
-                if (auth()->user()->can('view', $material)) {
+                if (auth()->user()->can('view', App\Models\Material::class)) {
                     $actions[] = ['type' => 'view', 'route' => 'materials.show'];
                 }
-                if (auth()->user()->can('update', $material)) {
+                if (auth()->user()->can('update', App\Models\Material::class)) {
                     $actions[] = ['type' => 'edit', 'route' => 'materials.edit'];
                 }
-                if (auth()->user()->can('delete', $material)) {
+                if (auth()->user()->can('delete', App\Models\Material::class)) {
                     $actions[] = ['type' => 'delete', 'route' => 'materials.destroy'];
                 }
             @endphp

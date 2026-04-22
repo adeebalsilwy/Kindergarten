@@ -52,17 +52,39 @@ class GuardianController extends Controller
 
         $parents = $query->paginate(15)->withQueryString();
 
-        // Calculate statistics
-        $totalActive = clone $query;
-        $totalActive = $totalActive->where('is_active', true)->count();
+        // Calculate statistics - rebuild query to avoid clone issues
+        $statsQuery = $this->service->query()->with(['children', 'secondChildren']);
 
-        $totalChildren = $query->get()->sum(function($guardian) {
+        // Apply same filters to stats query
+        if ($request->filled('search')) {
+            $statsQuery->where(function($q) use ($request) {
+                $q->where('name', 'LIKE', '%' . $request->search . '%')
+                  ->orWhere('phone', 'LIKE', '%' . $request->search . '%')
+                  ->orWhere('email', 'LIKE', '%' . $request->search . '%')
+                  ->orWhere('address', 'LIKE', '%' . $request->search . '%')
+                  ->orWhere('relationship', 'LIKE', '%' . $request->search . '%');
+            });
+        }
+
+        if ($request->filled('is_active')) {
+            $statsQuery->where('is_active', $request->is_active);
+        }
+
+        $totalActive = (clone $statsQuery)->where('is_active', true)->count();
+        $totalGuardians = $parents->total();
+
+        // Calculate total children from filtered guardians
+        $filteredGuardians = $statsQuery->get();
+        $totalChildren = $filteredGuardians->sum(function($guardian) {
             return $guardian->children()->count() + $guardian->secondChildren()->count();
         });
 
-        $totalGuardians = $parents->total();
+        // Calculate additional statistics for the view
+        $primaryGuardians = $filteredGuardians->where('relationship_type', 'father')->count() + 
+                           $filteredGuardians->where('relationship_type', 'mother')->count();
+        $contactableGuardians = $filteredGuardians->whereNotNull('phone')->count();
 
-        return view('pages.guardians.index', compact('parents', 'totalActive', 'totalChildren', 'totalGuardians'));
+        return view('pages.guardians.index', compact('parents', 'totalActive', 'totalChildren', 'totalGuardians', 'primaryGuardians', 'contactableGuardians'));
     }
 
     /**

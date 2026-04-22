@@ -58,12 +58,29 @@ class ChildrenController extends Controller
         $childrens = $query->paginate(15)->withQueryString();
         $classes = \App\Models\Classes::select('id', 'name')->orderBy('name')->get();
 
-        // Calculate statistics for the filtered results
-        $totalActive = clone $query;
-        $totalActive = $totalActive->where('enrollment_status', 'active')->count();
+        // Calculate statistics for the filtered results - rebuild query for accurate stats
+        $statsQuery = $this->service->query();
 
-        $totalOutstanding = clone $query;
-        $totalOutstanding = $totalOutstanding->sum('fees_required') - $totalOutstanding->sum('fees_paid');
+        // Apply same filters to stats query
+        if ($request->filled('search')) {
+            $statsQuery->where(function($q) use ($request) {
+                $q->where('name', 'LIKE', '%' . $request->search . '%')
+                  ->orWhere('emergency_contact_name', 'LIKE', '%' . $request->search . '%')
+                  ->orWhere('emergency_contact_phone', 'LIKE', '%' . $request->search . '%')
+                  ->orWhere('nationality', 'LIKE', '%' . $request->search . '%');
+            });
+        }
+
+        if ($request->filled('class_id')) {
+            $statsQuery->where('class_id', $request->class_id);
+        }
+
+        if ($request->filled('enrollment_status')) {
+            $statsQuery->where('enrollment_status', $request->enrollment_status);
+        }
+
+        $totalActive = (clone $statsQuery)->where('enrollment_status', 'active')->count();
+        $totalOutstanding = (clone $statsQuery)->sum('fees_required') - (clone $statsQuery)->sum('fees_paid');
 
         $totalClasses = \App\Models\Classes::count();
 

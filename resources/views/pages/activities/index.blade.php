@@ -154,7 +154,7 @@
 
         <!-- Pagination -->
         <div class="intro-y col-span-12 flex flex-wrap sm:flex-row sm:flex-nowrap items-center">
-            {!! $activities->links() !!}
+            {!! $activities->withQueryString()->links() !!}
         </div>
 
         <!-- Summary Cards -->

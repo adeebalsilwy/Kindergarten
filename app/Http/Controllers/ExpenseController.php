@@ -28,7 +28,7 @@ class ExpenseController extends Controller
         $query = $this->service->query();
 
         if (method_exists($query->getModel(), 'scopeFilter')) {
-            $query->filter($request);
+            $query->filter($request->all());
         }
 
         // Handle export functionality
@@ -36,7 +36,7 @@ class ExpenseController extends Controller
             return $this->export($request->get('export'), $query);
         }
 
-        $expenses = $query->paginate(15);
+        $expenses = $query->paginate(15)->withQueryString();
 
         // Statistics
         $totalExpenses = \App\Models\Expense::sum('amount');

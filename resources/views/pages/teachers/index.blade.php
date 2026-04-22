@@ -335,7 +335,7 @@
 
         <!-- Pagination -->
         <div class="intro-y col-span-12 flex flex-wrap sm:flex-row sm:flex-nowrap items-center">
-            {!! $teachers->links() !!}
+            {!! $teachers->withQueryString()->links() !!}
         </div>
 
         <!-- Summary Cards -->

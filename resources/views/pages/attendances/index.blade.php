@@ -301,7 +301,7 @@
         
         <!-- Pagination -->
         <div class="intro-y col-span-12 flex flex-wrap sm:flex-row sm:flex-nowrap items-center mt-5">
-            {{ $attendances->links() }}
+            {{ $attendances->withQueryString()->links() }}
         </div>
     </div>
 
