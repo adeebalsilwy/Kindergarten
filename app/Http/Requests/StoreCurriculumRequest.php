@@ -38,13 +38,25 @@ class StoreCurriculumRequest extends FormRequest
     protected function prepareForValidation()
     {
         $this->merge([
-            'name' => $this->name ?? 'Curriculum ' . time(),
-            'code' => $this->code ?? 'CUR' . time(),
-            'grade_level' => $this->grade_level ?? 'primary',
-            'subject_area' => $this->subject_area ?? 'general',
+            'name' => $this->name ?: 'Curriculum ' . time(),
+            'code' => $this->code ?: 'CUR' . time(),
+            'grade_level' => $this->grade_level ?: 'primary',
+            'subject_area' => $this->subject_area ?: 'general',
             'duration_weeks' => $this->duration_weeks ?? 12,
             'is_active' => $this->is_active ?? true,
-            'published_at' => $this->published_at ?? now()->format('Y-m-d'),
+            'published_at' => $this->published_at ?: now()->format('Y-m-d H:i:s'),
+            'status' => $this->status ?: 'active',
+            'curriculum_type' => $this->curriculum_type ?: 'standard',
+            'description' => $this->description ?: null,
+            'objectives' => $this->objectives ?: null,
+            'learning_outcomes' => $this->learning_outcomes ?: null,
+            'topics' => $this->topics ?: null,
+            'materials_needed' => $this->materials_needed ?: null,
+            'assessment_methods' => $this->assessment_methods ?: null,
+            'prerequisites' => $this->prerequisites ?: null,
+            'syllabus' => $this->syllabus ?: null,
+            'learning_objectives' => $this->learning_objectives ?: null,
+            'created_by' => auth()->id(),
         ]);
     }
 

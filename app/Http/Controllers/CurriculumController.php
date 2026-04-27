@@ -328,7 +328,7 @@ class CurriculumController extends Controller
             $curriculum->materials()->attach($connectedMaterials);
         }
 
-        return redirect()->route('curricula.index')->with('success', __('curricula.messages.created'));
+        return redirect()->back()->with('success', __('curricula.messages.created'));
     }
 
     public function show($id)
@@ -385,7 +385,7 @@ class CurriculumController extends Controller
         $curriculum = \App\Models\Curriculum::findOrFail($id);
         $curriculum->materials()->sync($connectedMaterials);
 
-        return redirect()->route('curricula.index')->with('success', __('curricula.messages.updated'));
+        return redirect()->back()->with('success', __('curricula.messages.updated'));
     }
 
     public function destroy($id)
