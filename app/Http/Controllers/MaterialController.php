@@ -85,12 +85,13 @@ class MaterialController extends Controller
             'category' => 'nullable|string|max:100',
             'type' => 'nullable|in:physical,digital,consumable,equipment',
             'quantity' => 'required|integer|min:0',
+            'quantity_required' => 'nullable|integer|min:0',
             'unit' => 'nullable|string|max:50',
             'status' => 'required|in:available,in-use,maintenance,out-of-stock',
             'supplier' => 'nullable|string|max:255',
             'cost' => 'nullable|numeric|min:0',
             'purchase_date' => 'nullable|date',
-            'expiry_date' => 'nullable|date',
+            'specifications' => 'nullable|string',
             'curricula' => 'array',
             'curricula.*' => 'exists:curricula,id',
             'classes' => 'array',
@@ -99,6 +100,18 @@ class MaterialController extends Controller
             'activities.*' => 'exists:activities,id',
         ]);
 
+        // Parse specifications from string to JSON if provided
+        $specifications = [];
+        if (!empty($validated['specifications'])) {
+            $decoded = json_decode($validated['specifications'], true);
+            if (json_last_error() === JSON_ERROR_NONE) {
+                $specifications = $decoded;
+            } else {
+                // If not valid JSON, store as simple text in an array
+                $specifications = ['details' => $validated['specifications']];
+            }
+        }
+
         // Map the form fields to the database fields
         $materialData = [
             'name' => $validated['name'],
@@ -106,14 +119,14 @@ class MaterialController extends Controller
             'category' => $validated['category'],
             'type' => $validated['type'],
             'quantity_available' => $validated['quantity'],
-            'quantity_required' => 0, // Default to 0
+            'quantity_required' => $validated['quantity_required'] ?? 0,
             'unit_cost' => $validated['cost'] ?? null,
             'supplier' => $validated['supplier'],
             'storage_location' => $validated['unit'],
             'is_consumable' => in_array($validated['type'], ['consumable']),
             'is_digital' => in_array($validated['type'], ['digital']),
             'is_active' => $validated['status'] !== 'out-of-stock',
-            'specifications' => [], // Default empty array
+            'specifications' => $specifications,
             'purchased_at' => $validated['purchase_date'],
             'created_by' => auth()->id(),
         ];
@@ -175,12 +188,13 @@ class MaterialController extends Controller
             'category' => 'nullable|string|max:100',
             'type' => 'nullable|in:physical,digital,consumable,equipment',
             'quantity' => 'required|integer|min:0',
+            'quantity_required' => 'nullable|integer|min:0',
             'unit' => 'nullable|string|max:50',
             'status' => 'required|in:available,in-use,maintenance,out-of-stock',
             'supplier' => 'nullable|string|max:255',
             'cost' => 'nullable|numeric|min:0',
             'purchase_date' => 'nullable|date',
-            'expiry_date' => 'nullable|date',
+            'specifications' => 'nullable|string',
             'curricula' => 'array',
             'curricula.*' => 'exists:curricula,id',
             'classes' => 'array',
@@ -189,6 +203,18 @@ class MaterialController extends Controller
             'activities.*' => 'exists:activities,id',
         ]);
 
+        // Parse specifications from string to JSON if provided
+        $specifications = [];
+        if (!empty($validated['specifications'])) {
+            $decoded = json_decode($validated['specifications'], true);
+            if (json_last_error() === JSON_ERROR_NONE) {
+                $specifications = $decoded;
+            } else {
+                // If not valid JSON, store as simple text in an array
+                $specifications = ['details' => $validated['specifications']];
+            }
+        }
+
         // Map the form fields to the database fields
         $materialData = [
             'name' => $validated['name'],
@@ -196,13 +222,14 @@ class MaterialController extends Controller
             'category' => $validated['category'],
             'type' => $validated['type'],
             'quantity_available' => $validated['quantity'],
-            'quantity_required' => 0, // Default to 0
+            'quantity_required' => $validated['quantity_required'] ?? 0,
             'unit_cost' => $validated['cost'] ?? null,
             'supplier' => $validated['supplier'],
             'storage_location' => $validated['unit'],
             'is_consumable' => in_array($validated['type'], ['consumable']),
             'is_digital' => in_array($validated['type'], ['digital']),
             'is_active' => $validated['status'] !== 'out-of-stock',
+            'specifications' => $specifications,
             'purchased_at' => $validated['purchase_date'],
         ];
 

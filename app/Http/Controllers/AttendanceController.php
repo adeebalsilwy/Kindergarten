@@ -136,6 +136,7 @@ class AttendanceController extends Controller
             'notes' => 'nullable|string',
             'check_in' => 'nullable',
             'check_out' => 'nullable',
+            'absence_reason' => 'nullable|string',
         ]);
 
         $this->service->create($data);
@@ -168,6 +169,7 @@ class AttendanceController extends Controller
             'notes' => 'nullable|string',
             'check_in' => 'nullable',
             'check_out' => 'nullable',
+            'absence_reason' => 'nullable|string',
         ]);
 
         $this->service->update($id, $data);

@@ -61,9 +61,9 @@ class ActivityController extends Controller
     protected function exportToPdf($data)
     {
         $html = view('pages.activities.export-pdf', ['data' => $data])->render();
-        
+
         return response()->streamDownload(function () use ($html) {
-            echo Gpdf::generate($html);
+            echo \OmarAlalwi\Gpdf\Facades\Gpdf::generate($html);
         }, 'Activity_export_'.date('Y-m-d_H-i-s').'.pdf');
     }
 
@@ -119,8 +119,10 @@ class ActivityController extends Controller
                 if (! in_array($key, ['id', 'created_at', 'updated_at', 'deleted_at'])) {
                     if (is_a($value, 'Carbon\Carbon')) {
                         $sheet->setCellValue($col.$row, $value->format('Y-m-d H:i:s'));
+                    } elseif (is_array($value)) {
+                        $sheet->setCellValue($col.$row, implode(', ', $value));
                     } else {
-                        $sheet->setCellValue($col.$row, $value);
+                        $sheet->setCellValue($col.$row, $value ?? '-');
                     }
                     $col++;
                 }
@@ -159,14 +161,16 @@ class ActivityController extends Controller
         $data = $request->validated();
         
         // Handle JSON fields that might come as comma-separated strings from the frontend
-        if (isset($data['required_materials']) && !is_array($data['required_materials']) && !is_array(json_decode($data['required_materials'], true))) {
-             $data['required_materials'] = array_map('trim', explode(',', $data['required_materials']));
-        }
-        if (isset($data['learning_objectives']) && !is_array($data['learning_objectives']) && !is_array(json_decode($data['learning_objectives'], true))) {
-             $data['learning_objectives'] = array_map('trim', explode(',', $data['learning_objectives']));
-        }
-        if (isset($data['outcomes']) && !is_array($data['outcomes']) && !is_array(json_decode($data['outcomes'], true))) {
-             $data['outcomes'] = array_map('trim', explode(',', $data['outcomes']));
+        $jsonFields = ['required_materials', 'learning_objectives', 'outcomes'];
+        foreach ($jsonFields as $field) {
+            if (isset($data[$field]) && !is_array($data[$field])) {
+                $decoded = json_decode($data[$field], true);
+                if (json_last_error() !== JSON_ERROR_NONE || !is_array($decoded)) {
+                    $data[$field] = !empty(trim($data[$field])) ? array_map('trim', explode(',', $data[$field])) : [];
+                } else {
+                    $data[$field] = $decoded;
+                }
+            }
         }
 
         $this->service->create($data);
@@ -209,14 +213,16 @@ class ActivityController extends Controller
         $data = $request->validated();
         
         // Handle JSON fields that might come as comma-separated strings from the frontend
-        if (isset($data['required_materials']) && !is_array($data['required_materials']) && !is_array(json_decode($data['required_materials'], true))) {
-             $data['required_materials'] = array_map('trim', explode(',', $data['required_materials']));
-        }
-        if (isset($data['learning_objectives']) && !is_array($data['learning_objectives']) && !is_array(json_decode($data['learning_objectives'], true))) {
-             $data['learning_objectives'] = array_map('trim', explode(',', $data['learning_objectives']));
-        }
-        if (isset($data['outcomes']) && !is_array($data['outcomes']) && !is_array(json_decode($data['outcomes'], true))) {
-             $data['outcomes'] = array_map('trim', explode(',', $data['outcomes']));
+        $jsonFields = ['required_materials', 'learning_objectives', 'outcomes'];
+        foreach ($jsonFields as $field) {
+            if (isset($data[$field]) && !is_array($data[$field])) {
+                $decoded = json_decode($data[$field], true);
+                if (json_last_error() !== JSON_ERROR_NONE || !is_array($decoded)) {
+                    $data[$field] = !empty(trim($data[$field])) ? array_map('trim', explode(',', $data[$field])) : [];
+                } else {
+                    $data[$field] = $decoded;
+                }
+            }
         }
 
         $this->service->update($id, $data);

@@ -47,6 +47,7 @@ class Activity extends Model
         'is_active' => 'boolean',
         'learning_objectives' => 'array',
         'outcomes' => 'array',
+        'assessment_criteria' => 'array',
         'completed_at' => 'datetime',
         'max_participants' => 'integer',
         'deleted_at' => 'datetime',

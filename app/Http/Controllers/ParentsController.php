@@ -66,9 +66,9 @@ class ParentsController extends Controller
     protected function exportToPdf($data)
     {
         $html = view('pages.parents.export-pdf', ['data' => $data])->render();
-        
+
         return response()->streamDownload(function () use ($html) {
-            echo Gpdf::generate($html);
+            echo \OmarAlalwi\Gpdf\Facades\Gpdf::generate($html);
         }, 'Parent_export_'.date('Y-m-d_H-i-s').'.pdf');
     }
 
@@ -126,8 +126,10 @@ class ParentsController extends Controller
                 if (! in_array($key, ['id', 'created_at', 'updated_at', 'deleted_at'])) {
                     if (is_a($value, 'Carbon\Carbon')) {
                         $sheet->setCellValue($col.$row, $value->format('Y-m-d H:i:s'));
+                    } elseif (is_array($value)) {
+                        $sheet->setCellValue($col.$row, implode(', ', $value));
                     } else {
-                        $sheet->setCellValue($col.$row, $value);
+                        $sheet->setCellValue($col.$row, $value ?? '-');
                     }
                     $col++;
                 }

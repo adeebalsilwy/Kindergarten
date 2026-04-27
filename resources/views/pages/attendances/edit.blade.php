@@ -63,6 +63,14 @@
                         </div>
 
                         <div class="col-span-12">
+                            <x-base.form-label class="font-bold">{{ __('global.absence_reason') }}</x-base.form-label>
+                            <x-base.form-input type="text" name="absence_reason" value="{{ old('absence_reason', $attendance->absence_reason) }}" class="w-full mt-1" placeholder="{{ __('global.absence_reason_field') }}..." />
+                            @error('absence_reason')
+                                <div class="text-danger mt-1 text-xs">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="col-span-12">
                             <x-base.form-label class="font-bold">{{ __('global.notes') }}</x-base.form-label>
                             <x-base.form-textarea name="notes" rows="3" class="w-full mt-1 resize-none" placeholder="{{ __('global.add_notes_here') }}...">{{ old('notes', $attendance->notes) }}</x-base.form-textarea>
                         </div>

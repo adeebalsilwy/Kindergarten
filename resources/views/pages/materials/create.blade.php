@@ -130,11 +130,20 @@
                                         <div class="text-danger mt-1">{{ $message }}</div>
                                     @enderror
                                 </div>
-                                
+
                                 <div class="col-span-6">
-                                    <x-base.form-label>{{ __('materials.fields.expiry_date') }}</x-base.form-label>
-                                    <x-base.form-input type="date" name="expiry_date" value="{{ old('expiry_date') }}" />
-                                    @error('expiry_date')
+                                    <x-base.form-label>{{ __('materials.fields.quantity_required') }}</x-base.form-label>
+                                    <x-base.form-input type="number" name="quantity_required" value="{{ old('quantity_required', 0) }}" min="0" />
+                                    @error('quantity_required')
+                                        <div class="text-danger mt-1">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                <div class="col-span-12">
+                                    <x-base.form-label>{{ __('materials.fields.specifications') }}</x-base.form-label>
+                                    <x-base.form-textarea name="specifications" rows="3" placeholder="{{ __('materials.specifications_placeholder') }}">{{ old('specifications') }}</x-base.form-textarea>
+                                    <small class="text-slate-500">{{ __('materials.specifications_hint') }}</small>
+                                    @error('specifications')
                                         <div class="text-danger mt-1">{{ $message }}</div>
                                     @enderror
                                 </div>

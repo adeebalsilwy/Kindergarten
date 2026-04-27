@@ -47,7 +47,7 @@
                 :value="$materials->count()"
                 icon="Database"
                 color="blue"
-                trend="{{ min(100, ($materials->count() / max(1, $materials->total())) * 100) }}"
+                trend="{{ $materials instanceof \Illuminate\Pagination\LengthAwarePaginator ? min(100, ($materials->count() / max(1, $materials->total())) * 100) : 100 }}"
                 trend-label="{{ __('global.this_month') }}"
             />
         </div>

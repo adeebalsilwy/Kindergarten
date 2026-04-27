@@ -225,6 +225,11 @@ Route::get('languages/export/excel', [LanguageController::class, 'exportExcel'])
 Route::get('guardians/export/pdf', [GuardianController::class, 'exportPdf'])->name('guardians.export.pdf')->middleware(['auth', 'verified']);
 Route::get('guardians/export/excel', [GuardianController::class, 'exportExcel'])->name('guardians.export.excel')->middleware(['auth', 'verified']);
 
+// Parents Routes (using ParentsController but same underlying guardians table)
+Route::resource('parents', ParentsController::class)->middleware(['auth', 'verified']);
+Route::get('parents/export/pdf', [ParentsController::class, 'exportPdf'])->name('parents.export.pdf')->middleware(['auth', 'verified']);
+Route::get('parents/export/excel', [ParentsController::class, 'exportExcel'])->name('parents.export.excel')->middleware(['auth', 'verified']);
+
 Route::resource('payments', PaymentController::class)->middleware(['auth', 'verified', 'role:Administrator|Accountant|Principal']);
 Route::get('payments/export/pdf', [PaymentController::class, 'exportPdf'])->name('payments.export.pdf')->middleware(['auth', 'verified', 'role:Administrator|Accountant|Principal']);
 Route::get('payments/export/excel', [PaymentController::class, 'exportExcel'])->name('payments.export.excel')->middleware(['auth', 'verified', 'role:Administrator|Accountant|Principal']);

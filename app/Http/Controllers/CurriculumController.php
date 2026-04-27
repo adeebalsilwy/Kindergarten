@@ -104,8 +104,9 @@ class CurriculumController extends Controller
     {
         $html = view('pages.curricula.export-pdf', ['data' => $data])->render();
 
-        $pdf = Pdf::loadView('pages.curricula.export-pdf', ['data' => $data]);
-        return $pdf->download('Curriculum_export_'.date('Y-m-d_H-i-s').'.pdf');
+        return response()->streamDownload(function () use ($html) {
+            echo Gpdf::generate($html);
+        }, 'Curriculum_export_'.date('Y-m-d_H-i-s').'.pdf');
     }
 
     /**
@@ -160,8 +161,10 @@ class CurriculumController extends Controller
                 if (! in_array($key, ['id', 'created_at', 'updated_at', 'deleted_at'])) {
                     if (is_a($value, 'Carbon\Carbon')) {
                         $sheet->setCellValue($col.$row, $value->format('Y-m-d H:i:s'));
+                    } elseif (is_array($value)) {
+                        $sheet->setCellValue($col.$row, implode(', ', $value));
                     } else {
-                        $sheet->setCellValue($col.$row, $value);
+                        $sheet->setCellValue($col.$row, $value ?? '-');
                     }
                     $col++;
                 }
@@ -302,6 +305,17 @@ class CurriculumController extends Controller
 
         $validatedData = $request->validated();
 
+        // Convert comma-separated string fields to JSON arrays
+        $arrayFields = ['topics', 'objectives', 'learning_outcomes', 'materials_needed', 'assessment_methods'];
+        foreach ($arrayFields as $field) {
+            if (isset($validatedData[$field]) && is_string($validatedData[$field]) && !empty($validatedData[$field])) {
+                $decoded = json_decode($validatedData[$field], true);
+                if (json_last_error() !== JSON_ERROR_NONE || !is_array($decoded)) {
+                    $validatedData[$field] = array_map('trim', explode(',', $validatedData[$field]));
+                }
+            }
+        }
+
         // Extract connected materials from validated data
         $connectedMaterials = $validatedData['connected_materials'] ?? [];
         unset($validatedData['connected_materials']);
@@ -348,6 +362,17 @@ class CurriculumController extends Controller
         $this->authorize('edit_curricula');
 
         $validatedData = $request->validated();
+
+        // Convert comma-separated string fields to JSON arrays
+        $arrayFields = ['topics', 'objectives', 'learning_outcomes', 'materials_needed', 'assessment_methods'];
+        foreach ($arrayFields as $field) {
+            if (isset($validatedData[$field]) && is_string($validatedData[$field]) && !empty($validatedData[$field])) {
+                $decoded = json_decode($validatedData[$field], true);
+                if (json_last_error() !== JSON_ERROR_NONE || !is_array($decoded)) {
+                    $validatedData[$field] = array_map('trim', explode(',', $validatedData[$field]));
+                }
+            }
+        }
 
         // Extract connected materials from validated data
         $connectedMaterials = $validatedData['connected_materials'] ?? [];

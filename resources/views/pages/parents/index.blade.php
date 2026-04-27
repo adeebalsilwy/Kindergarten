@@ -66,7 +66,7 @@
 @endphp
                             <x-base.table.th class="whitespace-nowrap text-center">{{ __('kindergarten.parents.name') }}</x-base.table.th>
                             <x-base.table.th class="whitespace-nowrap text-center">{{ __('kindergarten.parents.phone') }}</x-base.table.th>
-                            <x-base.table.th class="whitespace-nowrap text-center">{{ __('kindergarten.parents.relation') }}</x-base.table.th>
+                            <x-base.table.th class="whitespace-nowrap text-center">{{ __('kindergarten.parents.relationship') }}</x-base.table.th>
                             @if($canEdit || $canDelete || $canView)
                             <x-base.table.th class="text-center whitespace-nowrap">{{ __('global.actions') }}</x-base.table.th>
                             @endif

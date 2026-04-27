@@ -207,6 +207,17 @@
                         </div>
                         <div class="grid grid-cols-12 gap-4">
                             <div class="col-span-12 sm:col-span-6">
+                                <x-base.form-label>{{ __('curricula.fields.status') }}</x-base.form-label>
+                                <x-base.form-select name="status" class="mt-2">
+                                    <option value="draft" {{ old('status', '') == 'draft' ? 'selected' : '' }}>{{ __('curricula.status.draft') }}</option>
+                                    <option value="active" {{ old('status', '') == 'active' ? 'selected' : '' }}>{{ __('curricula.status.active') }}</option>
+                                    <option value="archived" {{ old('status', '') == 'archived' ? 'selected' : '' }}>{{ __('curricula.status.archived') }}</option>
+                                </x-base.form-select>
+                                @error('status')
+                                    <div class="text-danger mt-2">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-span-12 sm:col-span-6">
                                 <x-base.form-label>{{ __('curricula.fields.is_active') }}</x-base.form-label>
                                 <div class="mt-2 space-y-2">
                                     <!-- Hidden input to send 0 if unchecked -->
@@ -222,9 +233,28 @@
                                 <x-base.form-label>{{ __('curricula.fields.published_at') }}</x-base.form-label>
                                 <x-base.form-input type="datetime-local" name="published_at" value="{{ old('published_at', '') }}" class="mt-2" />
                             </div>
-                            <div class="col-span-12 sm:col-span-6">
-                                <x-base.form-label>{{ __('curricula.fields.created_by') }}</x-base.form-label>
-                                <x-base.form-input type="text" name="created_by" value="{{ old('created_by', '') }}" class="mt-2" />
+                            <div class="col-span-12">
+                                <x-base.form-label>{{ __('curricula.fields.prerequisites') }}</x-base.form-label>
+                                <x-base.form-textarea name="prerequisites" rows="3" class="resize-none mt-2" placeholder="{{ __('global.enter_prerequisites_separated_by_commas') }}">{{ old('prerequisites', '') }}</x-base.form-textarea>
+                                <small class="text-slate-500">{{ __('global.separate_with_commas') }}</small>
+                                @error('prerequisites')
+                                    <div class="text-danger mt-2">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-span-12">
+                                <x-base.form-label>{{ __('curricula.fields.syllabus') }}</x-base.form-label>
+                                <x-base.form-textarea name="syllabus" rows="4" class="resize-none mt-2">{{ old('syllabus', '') }}</x-base.form-textarea>
+                                @error('syllabus')
+                                    <div class="text-danger mt-2">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-span-12">
+                                <x-base.form-label>{{ __('curricula.fields.learning_objectives') }}</x-base.form-label>
+                                <x-base.form-textarea name="learning_objectives" rows="4" class="resize-none mt-2" placeholder="{{ __('global.enter_learning_objectives_separated_by_commas') }}">{{ old('learning_objectives', '') }}</x-base.form-textarea>
+                                <small class="text-slate-500">{{ __('global.separate_with_commas') }}</small>
+                                @error('learning_objectives')
+                                    <div class="text-danger mt-2">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
                     </div>

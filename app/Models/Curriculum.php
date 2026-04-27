@@ -14,6 +14,8 @@ class Curriculum extends Model
 {
     use HasFactory, SoftDeletes;
 
+    protected $table = 'curricula';
+
     protected $fillable = [
         'name',
         'code',

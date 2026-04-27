@@ -136,47 +136,90 @@
                             />
                         </div>
                         <div class="col-span-12 sm:col-span-6">
-                            <x-form-field 
-                                label="{{ __('activities.fields.is_active') }}" 
-                                name="is_active" 
-                                type="checkbox" 
-                                value="{{ old('is_active', $activity->is_active ?? 1) }}" 
-                                placeholder="{{ __('global.active') }}" 
-                            />
-                        </div>
-                        <div class="col-span-12">
-                            <x-form-field 
-                                label="{{ __('activities.fields.learning_objectives') }}" 
-                                name="learning_objectives" 
-                                type="textarea" 
-                                value="{{ old('learning_objectives', $activity->learning_objectives ?? '') }}" 
-                                placeholder="{{ __('global.enter_comma_separated_values') }}" 
-                            />
-                        </div>
-                        <div class="col-span-12">
-                            <x-form-field 
-                                label="{{ __('activities.fields.outcomes') }}" 
-                                name="outcomes" 
-                                type="textarea" 
-                                value="{{ old('outcomes', $activity->outcomes ?? '') }}" 
-                                placeholder="{{ __('global.enter_comma_separated_values') }}" 
+                            <x-form-field
+                                label="{{ __('activities.fields.status') }}"
+                                name="status"
+                                type="select"
+                                :options="['active' => __('activities.status.active'), 'completed' => __('activities.status.completed'), 'cancelled' => __('activities.status.cancelled'), 'postponed' => __('activities.status.postponed')]"
+                                value="{{ old('status', $activity->status ?? 'active') }}"
                             />
                         </div>
                         <div class="col-span-12 sm:col-span-6">
-                            <x-form-field 
-                                label="{{ __('activities.fields.completed_at') }}" 
-                                name="completed_at" 
-                                type="datetime-local" 
-                                value="{{ old('completed_at', $activity->completed_at ?? '') }}" 
+                            <x-form-field
+                                label="{{ __('activities.fields.category') }}"
+                                name="category"
+                                value="{{ old('category', $activity->category ?? '') }}"
+                                placeholder="{{ __('activities.fields.category') }}"
+                            />
+                        </div>
+                        <div class="col-span-12 sm:col-span-6">
+                            <x-form-field
+                                label="{{ __('activities.fields.max_participants') }}"
+                                name="max_participants"
+                                type="number"
+                                value="{{ old('max_participants', $activity->max_participants ?? '') }}"
+                            />
+                        </div>
+                        <div class="col-span-12 sm:col-span-6">
+                            <x-form-field
+                                label="{{ __('activities.fields.is_active') }}"
+                                name="is_active"
+                                type="checkbox"
+                                value="{{ old('is_active', $activity->is_active ?? 1) }}"
+                                placeholder="{{ __('global.active') }}"
                             />
                         </div>
                         <div class="col-span-12">
-                            <x-form-field 
-                                label="{{ __('activities.fields.notes') }}" 
-                                name="notes" 
-                                type="textarea" 
-                                value="{{ old('notes', $activity->notes ?? '') }}" 
-                                placeholder="{{ __('activities.fields.notes') }}" 
+                            <x-form-field
+                                label="{{ __('activities.fields.materials_needed') }}"
+                                name="materials_needed"
+                                type="textarea"
+                                value="{{ old('materials_needed', $activity->materials_needed ?? '') }}"
+                                placeholder="{{ __('global.enter_comma_separated_values') }}"
+                            />
+                        </div>
+                        <div class="col-span-12">
+                            <x-form-field
+                                label="{{ __('activities.fields.learning_objectives') }}"
+                                name="learning_objectives"
+                                type="textarea"
+                                value="{{ old('learning_objectives', $activity->learning_objectives ?? '') }}"
+                                placeholder="{{ __('global.enter_comma_separated_values') }}"
+                            />
+                        </div>
+                        <div class="col-span-12">
+                            <x-form-field
+                                label="{{ __('activities.fields.outcomes') }}"
+                                name="outcomes"
+                                type="textarea"
+                                value="{{ old('outcomes', $activity->outcomes ?? '') }}"
+                                placeholder="{{ __('global.enter_comma_separated_values') }}"
+                            />
+                        </div>
+                        <div class="col-span-12">
+                            <x-form-field
+                                label="{{ __('activities.fields.assessment_criteria') }}"
+                                name="assessment_criteria"
+                                type="textarea"
+                                value="{{ old('assessment_criteria', $activity->assessment_criteria ?? '') }}"
+                                placeholder="{{ __('global.enter_comma_separated_values') }}"
+                            />
+                        </div>
+                        <div class="col-span-12 sm:col-span-6">
+                            <x-form-field
+                                label="{{ __('activities.fields.completed_at') }}"
+                                name="completed_at"
+                                type="datetime-local"
+                                value="{{ old('completed_at', $activity->completed_at ?? '') }}"
+                            />
+                        </div>
+                        <div class="col-span-12">
+                            <x-form-field
+                                label="{{ __('activities.fields.notes') }}"
+                                name="notes"
+                                type="textarea"
+                                value="{{ old('notes', $activity->notes ?? '') }}"
+                                placeholder="{{ __('activities.fields.notes') }}"
                             />
                         </div>
                     </div>
