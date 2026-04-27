@@ -889,6 +889,7 @@ class ComprehensiveDataSeeder extends Seeder
         // Create operational expenses with English categories
         $expenseCategoriesList = ['supplies', 'utilities', 'salaries', 'maintenance', 'activities', 'insurance', 'equipment', 'food', 'transportation', 'training'];
         $vendors = ['Office Supply Co.', 'Electric Company', 'Water Company', 'Cleaning Service', 'Security Service', 'IT Support', 'Medical Clinic', 'Transport Company', 'Training Institute', 'Construction Co.'];
+        $expenseStatuses = ['pending', 'approved', 'paid', 'rejected'];
 
         foreach ($expenseCategoriesList as $category) {
             for ($i = 0; $i < rand(3, 6); $i++) {
@@ -901,7 +902,7 @@ class ComprehensiveDataSeeder extends Seeder
                         'expense_date' => Carbon::now()->subDays(rand(0, 120)),
                         'payment_method' => $paymentMethods[rand(0, 2)], // cash, bank_transfer, check
                         'vendor' => $vendors[rand(0, count($vendors) - 1)],
-                        'status' => $paymentStatuses[rand(0, 3)],
+                        'status' => $expenseStatuses[rand(0, 3)],
                         'created_by' => $createdUsers->random()->id,
                         'assigned_to' => $createdUsers->random()->id,
                         'created_at' => Carbon::now(),

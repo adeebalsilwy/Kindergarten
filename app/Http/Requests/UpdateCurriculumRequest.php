@@ -15,7 +15,7 @@ class UpdateCurriculumRequest extends FormRequest
     {
         return [
             'name' => 'nullable|string|max:255',
-            'code' => 'nullable|string|max:255|unique:curriculas,code,'.$this->route('curriculum').'',
+            'code' => 'nullable|string|max:255|unique:curricula,code,'.$this->route('curriculum').'',
             'description' => 'nullable|string',
             'objectives' => 'nullable|string',
             'learning_outcomes' => 'nullable|string',

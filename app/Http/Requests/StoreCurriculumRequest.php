@@ -15,7 +15,7 @@ class StoreCurriculumRequest extends FormRequest
     {
         return [
             'name' => 'nullable|string|max:255',
-            'code' => 'nullable|string|max:255|unique:curriculas,code',
+            'code' => 'nullable|string|max:255|unique:curricula,code',
             'description' => 'nullable|string',
             'objectives' => 'nullable|string',
             'learning_outcomes' => 'nullable|string',
