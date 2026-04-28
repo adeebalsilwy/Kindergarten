@@ -37,11 +37,35 @@ class StoreParentRequest extends FormRequest
 
     protected function prepareForValidation()
     {
+        $maleNames = ['خالد عبدالله', 'سعد محمد', 'فهد سالم', 'ناصر أحمد'];
+        $femaleNames = ['نورة خالد', 'مريم سعد', 'هند محمد', 'ريم فهد'];
+        $occupations = ['موظف حكومي', 'مهندس', 'طبيب', 'مدير شركة', 'تاجر'];
+        $workplaces = ['وزارة التربية', 'شركة أرامكو', 'المستشفى الجامعي', 'شركة الاتصالات'];
+        $addresses = ['الرياض - حي الروضة', 'جدة - حي الصفا', 'الدمام - حي الشاطئ'];
+        $banks = ['البنك الأهلي', 'بنك الرياض', 'بنك البلاد', 'البنك السعودي الفرنسي'];
+
+        $gender = rand(0, 1) ? 'male' : 'female';
+        $names = $gender === 'male' ? $maleNames : $femaleNames;
+
         $this->merge([
-            'is_primary_emergency_contact' => $this->boolean('is_primary_emergency_contact'),
-            'receives_sms_notifications' => $this->boolean('receives_sms_notifications'),
-            'receives_email_notifications' => $this->boolean('receives_email_notifications'),
-            'is_active' => $this->boolean('is_active'),
+            'name' => $this->name ?? $names[array_rand($names)],
+            'phone' => $this->phone ?? '05' . rand(10000000, 99999999),
+            'address' => $this->address ?? $addresses[array_rand($addresses)],
+            'relationship' => $this->relationship ?? ($gender === 'male' ? 'father' : 'mother'),
+            'email' => $this->email ?? 'parent' . time() . '@email.com',
+            'secondary_phone' => $this->secondary_phone ?? '05' . rand(10000000, 99999999),
+            'occupation' => $this->occupation ?? $occupations[array_rand($occupations)],
+            'workplace' => $this->workplace ?? $workplaces[array_rand($workplaces)],
+            'is_primary_emergency_contact' => $this->is_primary_emergency_contact ?? true,
+            'bank_account_number' => $this->bank_account_number ?? 'SA' . rand(1000000000000, 9999999999999),
+            'bank_name' => $this->bank_name ?? $banks[array_rand($banks)],
+            'preferred_language' => $this->preferred_language ?? 'english',
+            'receives_sms_notifications' => $this->receives_sms_notifications ?? true,
+            'receives_email_notifications' => $this->receives_email_notifications ?? true,
+            'date_of_birth' => $this->date_of_birth ?? now()->subYears(rand(28, 50))->format('Y-m-d'),
+            'national_id' => $this->national_id ?? '1' . rand(100000000, 999999999),
+            'passport_number' => $this->passport_number ?? null,
+            'is_active' => $this->is_active ?? true,
         ]);
     }
 

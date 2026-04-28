@@ -20,6 +20,16 @@ class UpdateRoleRequest extends FormRequest
         ];
     }
 
+    protected function prepareForValidation()
+    {
+        $roleNames = ['مدير النظام', 'معلم', 'ولي أمر', 'محاسب', 'مشرف'];
+
+        $this->merge([
+            'name' => $this->name ?? $roleNames[array_rand($roleNames)],
+            'guard_name' => $this->guard_name ?? 'web',
+        ]);
+    }
+
     public function attributes()
     {
         return [

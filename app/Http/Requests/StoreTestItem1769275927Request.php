@@ -21,8 +21,10 @@ class StoreTestItem1769275927Request extends FormRequest
 
     protected function prepareForValidation()
     {
+        $itemNames = ['عنصر اختبار 1', 'عنصر تقييم', 'بند فحص', 'عنصر تحليل', 'بند مراقبة'];
+
         $this->merge([
-            'name' => $this->name ?? 'Item ' . time(),
+            'name' => $this->name ?? $itemNames[array_rand($itemNames)] . ' #' . rand(100, 999),
         ]);
     }
 

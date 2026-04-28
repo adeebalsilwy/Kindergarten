@@ -39,14 +39,36 @@ class StoreActivityRequest extends FormRequest
 
     protected function prepareForValidation()
     {
+        $activityTitles = ['تعلم الأحرف العربية', 'نشاط الرسم والتلوين', 'رياضة صباحية', 'تعلم الأرقام', 'نشاط القصص', 'تعليم النظافة الشخصية'];
+        $activityTypes = ['educational', 'sports', 'art', 'music', 'social'];
+        $difficultyLevels = ['easy', 'medium', 'hard'];
+        $locations = ['قاعة الأنشطة الرئيسية', 'الحديقة الخارجية', 'غرفة الفنون', 'المكتبة'];
+
         $this->merge([
-            'title' => $this->title ?? 'Activity ' . time(),
+            'title' => $this->title ?? $activityTitles[array_rand($activityTitles)],
+            'description' => $this->description ?? 'نشاط تعليمي ممتع ومفيد للأطفال',
+            'instructions' => $this->instructions ?? 'اتباع خطوات النشاط بعناية والاهتمام بسلامة الأطفال',
+            'class_id' => $this->class_id ?? null,
+            'teacher_id' => $this->teacher_id ?? null,
+            'curriculum_id' => $this->curriculum_id ?? null,
             'scheduled_date' => $this->scheduled_date ?? now()->format('Y-m-d'),
-            'start_time' => $this->start_time ?? '08:00',
-            'end_time' => $this->end_time ?? '10:00',
-            'estimated_duration' => $this->estimated_duration ?? 60,
+            'start_time' => $this->start_time ?? '08:30',
+            'end_time' => $this->end_time ?? '09:30',
+            'activity_type' => $this->activity_type ?? $activityTypes[array_rand($activityTypes)],
+            'difficulty_level' => $this->difficulty_level ?? $difficultyLevels[array_rand($difficultyLevels)],
+            'required_materials' => $this->required_materials ?? json_encode(['ورق', 'أقلام ألوان', 'كتب تعليمية']),
+            'estimated_duration' => $this->estimated_duration ?? rand(30, 90),
+            'location' => $this->location ?? $locations[array_rand($locations)],
             'is_active' => $this->is_active ?? true,
-            'completed_at' => $this->completed_at ?? now()->format('Y-m-d'),
+            'learning_objectives' => $this->learning_objectives ?? json_encode(['تنمية المهارات الحركية', 'تعزيز التفكير الإبداعي']),
+            'outcomes' => $this->outcomes ?? json_encode(['إتقان المهارة المستهدفة', 'المشاركة الجماعية']),
+            'completed_at' => $this->completed_at ?? null,
+            'notes' => $this->notes ?? 'نشاط ممتع ومفيد',
+            'status' => $this->status ?? 'active',
+            'category' => $this->category ?? 'تعليمي',
+            'materials_needed' => $this->materials_needed ?? null,
+            'assessment_criteria' => $this->assessment_criteria ?? json_encode(['المشاركة', 'الإتقان']),
+            'max_participants' => $this->max_participants ?? rand(10, 25),
         ]);
     }
 

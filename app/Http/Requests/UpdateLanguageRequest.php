@@ -22,6 +22,23 @@ class UpdateLanguageRequest extends FormRequest
         ];
     }
 
+    protected function prepareForValidation()
+    {
+        $languages = [
+            ['name' => 'العربية', 'code' => 'ar', 'is_rtl' => true],
+            ['name' => 'English', 'code' => 'en', 'is_rtl' => false],
+            ['name' => 'Français', 'code' => 'fr', 'is_rtl' => false],
+        ];
+        $lang = $languages[array_rand($languages)];
+
+        $this->merge([
+            'name' => $this->name ?? $lang['name'],
+            'code' => $this->code ?? $lang['code'],
+            'is_rtl' => $this->is_rtl ?? $lang['is_rtl'],
+            'is_active' => $this->is_active ?? null,
+        ]);
+    }
+
     public function attributes()
     {
         return [

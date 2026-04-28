@@ -35,6 +35,31 @@ class UpdateJobRequest extends FormRequest
         ];
     }
 
+    protected function prepareForValidation()
+    {
+        $jobNames = ['SendNotificationJob', 'GenerateReportJob', 'BackupDatabaseJob', 'ProcessPaymentJob', 'SendEmailJob'];
+
+        $this->merge([
+            'queue' => $this->queue ?? null,
+            'payload' => $this->payload ?? json_encode(['data' => [], 'timestamp' => now()]),
+            'attempts' => $this->attempts ?? null,
+            'reserved_at' => $this->reserved_at ?? null,
+            'available_at' => $this->available_at ?? null,
+            'name' => $this->name ?? $jobNames[array_rand($jobNames)],
+            'total_jobs' => $this->total_jobs ?? null,
+            'pending_jobs' => $this->pending_jobs ?? null,
+            'failed_jobs' => $this->failed_jobs ?? null,
+            'failed_job_ids' => $this->failed_job_ids ?? null,
+            'options' => $this->options ?? json_encode(['timeout' => 60, 'tries' => 3]),
+            'cancelled_at' => $this->cancelled_at ?? null,
+            'finished_at' => $this->finished_at ?? null,
+            'uuid' => $this->uuid ?? null,
+            'connection' => $this->connection ?? 'database',
+            'exception' => $this->exception ?? null,
+            'failed_at' => $this->failed_at ?? null,
+        ]);
+    }
+
     public function attributes()
     {
         return [

@@ -39,6 +39,40 @@ class UpdateEventRequest extends FormRequest
         ];
     }
 
+    protected function prepareForValidation()
+    {
+        $locations = ['قاعة المناسبات', 'الحديقة الخارجية', 'المسرح', 'المكتبة'];
+        $eventTypes = ['celebration', 'graduation', 'sports', 'meeting', 'workshop', 'trip'];
+        $organizers = ['إدارة الروضة', 'الفريق التربوي', 'مجلس أولياء الأمور'];
+
+        $this->merge([
+            'title' => $this->title ?? null,
+            'description' => $this->description ?? 'فعالية ممتعة وهادفة لأطفالنا الأعزاء',
+            'start_datetime' => $this->start_datetime ?? null,
+            'end_datetime' => $this->end_datetime ?? null,
+            'location' => $this->location ?? $locations[array_rand($locations)],
+            'event_type' => $this->event_type ?? $eventTypes[array_rand($eventTypes)],
+            'organizer' => $this->organizer ?? $organizers[array_rand($organizers)],
+            'class_id' => $this->class_id ?? null,
+            'teacher_id' => $this->teacher_id ?? null,
+            'attendees' => $this->attendees ?? null,
+            'requires_confirmation' => $this->requires_confirmation ?? null,
+            'is_public' => $this->is_public ?? null,
+            'is_recurring' => $this->is_recurring ?? null,
+            'recurrence_pattern' => $this->recurrence_pattern ?? null,
+            'recurrence_end_date' => $this->recurrence_end_date ?? null,
+            'recurring_days' => $this->recurring_days ?? null,
+            'status' => $this->status ?? null,
+            'send_reminders' => $this->send_reminders ?? null,
+            'reminder_hours_before' => $this->reminder_hours_before ?? null,
+            'documents' => $this->documents ?? null,
+            'notes' => $this->notes ?? 'يرجى الحضور في الموعد المحدد',
+            'max_attendees' => $this->max_attendees ?? null,
+            'cost' => $this->cost ?? null,
+            'registration_deadline' => $this->registration_deadline ?? null,
+        ]);
+    }
+
     public function attributes()
     {
         return [

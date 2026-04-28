@@ -24,10 +24,18 @@ class StoreFeeRequest extends FormRequest
 
     protected function prepareForValidation()
     {
+        $feeNames = ['الرسوم الشهرية', 'رسوم التسجيل', 'رسوم النقل', 'رسوم الوجبات', 'رسوم الأنشطة الإضافية'];
+        $frequencies = ['monthly', 'quarterly', 'yearly', 'one_time'];
+        $categories = ['tuition', 'registration', 'transportation', 'meals', 'activities'];
+
         $this->merge([
-            'name' => $this->name ?? 'Fee ' . time(),
-            'amount' => $this->amount ?? 0,
+            'name' => $this->name ?? $feeNames[array_rand($feeNames)],
+            'amount' => $this->amount ?? rand(500, 2000),
+            'description' => $this->description ?? 'رسوم نظامية للروضة',
             'is_active' => $this->is_active ?? true,
+            'frequency' => $this->frequency ?? $frequencies[array_rand($frequencies)],
+            'category' => $this->category ?? $categories[array_rand($categories)],
+            'due_date' => $this->due_date ?? now()->addDays(rand(1, 30))->format('Y-m-d'),
         ]);
     }
 

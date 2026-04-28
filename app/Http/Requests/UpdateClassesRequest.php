@@ -35,6 +35,32 @@ class UpdateClassesRequest extends FormRequest
         ];
     }
 
+    protected function prepareForValidation()
+    {
+        $rooms = ['101', '102', '103', '104', '201', '202', 'A1', 'A2', 'B1', 'B2'];
+
+        $this->merge([
+            'name' => $this->name ?? null,
+            'code' => $this->code ?? null,
+            'description' => $this->description ?? 'فصل دراسي مجهز بأحدث الوسائل التعليمية للأطفال',
+            'teacher_id' => $this->teacher_id ?? null,
+            'grade_level_id' => $this->grade_level_id ?? null,
+            'age_group' => $this->age_group ?? null,
+            'capacity' => $this->capacity ?? null,
+            'current_students' => $this->current_students ?? null,
+            'start_time' => $this->start_time ?? null,
+            'end_time' => $this->end_time ?? null,
+            'room_number' => $this->room_number ?? $rooms[array_rand($rooms)],
+            'monthly_fee' => $this->monthly_fee ?? null,
+            'is_active' => $this->is_active ?? null,
+            'schedule' => $this->schedule ?? null,
+            'location' => $this->location ?? null,
+            'start_date' => $this->start_date ?? null,
+            'end_date' => $this->end_date ?? null,
+            'curriculum' => $this->curriculum ?? null,
+        ]);
+    }
+
     public function attributes()
     {
         return [

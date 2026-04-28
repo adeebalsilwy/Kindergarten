@@ -28,11 +28,17 @@ class StorePaymentRequest extends FormRequest
 
     protected function prepareForValidation()
     {
+        $paymentMethods = ['cash', 'bank_transfer', 'credit_card', 'check', 'online'];
+
         $this->merge([
-            'amount' => $this->amount ?? 0,
+            'child_id' => $this->child_id ?? null,
+            'fee_id' => $this->fee_id ?? null,
+            'amount' => $this->amount ?? rand(500, 3000),
             'payment_date' => $this->payment_date ?? now()->format('Y-m-d'),
-            'payment_method' => $this->payment_method ?? 'cash',
-            'status' => $this->status ?? 'pending',
+            'payment_method' => $this->payment_method ?? $paymentMethods[array_rand($paymentMethods)],
+            'status' => $this->status ?? 'completed',
+            'reference_number' => $this->reference_number ?? 'REF-' . strtoupper(Str::random(8)),
+            'receipt_number' => $this->receipt_number ?? 'RCP-' . date('Y') . '-' . rand(1000, 9999),
         ]);
     }
 

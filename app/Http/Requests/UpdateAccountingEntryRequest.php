@@ -24,6 +24,22 @@ class UpdateAccountingEntryRequest extends FormRequest
         ];
     }
 
+    protected function prepareForValidation()
+    {
+        $descriptions = ['رسوم تسجيل طالب', 'دفع رواتب المعلمين', 'مصاريف صيانة', 'إيرادات الأنشطة', 'مصاريف تشغيلية'];
+        $accountTypes = ['revenue', 'expense', 'asset', 'liability', 'equity'];
+
+        $this->merge([
+            'description' => $this->description ?? $descriptions[array_rand($descriptions)],
+            'debit' => $this->debit ?? null,
+            'credit' => $this->credit ?? null,
+            'entry_date' => $this->entry_date ?? null,
+            'reference' => $this->reference ?? 'REF-' . date('Y') . '-' . rand(1000, 9999),
+            'account_type' => $this->account_type ?? $accountTypes[array_rand($accountTypes)],
+            'created_by' => $this->created_by ?? null,
+        ]);
+    }
+
     public function attributes()
     {
         return [

@@ -22,6 +22,21 @@ class UpdateAttendanceRequest extends FormRequest
         ];
     }
 
+    protected function prepareForValidation()
+    {
+        $absenceReasons = ['مرض', 'عائلي', 'سفر', 'أخرى'];
+
+        $this->merge([
+            'child_id' => $this->child_id ?? null,
+            'date' => $this->date ?? null,
+            'status' => $this->status ?? null,
+            'notes' => $this->notes ?? 'حضور منتظم',
+            'check_in' => $this->check_in ?? null,
+            'check_out' => $this->check_out ?? null,
+            'absence_reason' => $this->absence_reason ?? $absenceReasons[array_rand($absenceReasons)],
+        ]);
+    }
+
     public function attributes()
     {
         return [

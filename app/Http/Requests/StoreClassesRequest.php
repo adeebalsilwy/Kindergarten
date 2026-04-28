@@ -37,16 +37,22 @@ class StoreClassesRequest extends FormRequest
 
     protected function prepareForValidation()
     {
+        $classNames = ['فراشات', 'نجوم', 'أقمار', 'زهور', 'أشبال', 'عصافير', 'فراشات الصغار', 'نجوم المستقبل'];
+        $ageGroups = ['toddlers', 'preschool', 'pre_k', 'kindergarten'];
+        $rooms = ['101', '102', '103', '104', '201', '202', 'A1', 'A2', 'B1', 'B2'];
+
         $this->merge([
-            'name' => $this->name ?? 'Class ' . time(),
-            'code' => $this->code ?? 'CLS' . time(),
-            'capacity' => $this->capacity ?? 20,
+            'name' => $this->name ?? 'فصل ' . $classNames[array_rand($classNames)],
+            'code' => $this->code ?? 'CLS-' . strtoupper(Str::random(4)),
+            'description' => $this->description ?? 'فصل دراسي مجهز بأحدث الوسائل التعليمية للأطفال',
+            'capacity' => $this->capacity ?? rand(15, 25),
             'current_students' => $this->current_students ?? 0,
-            'monthly_fee' => $this->monthly_fee ?? 0,
+            'monthly_fee' => $this->monthly_fee ?? rand(800, 2000),
             'is_active' => $this->is_active ?? true,
-            'start_time' => $this->start_time ?? '08:00',
-            'end_time' => $this->end_time ?? '14:00',
-            'room_number' => $this->room_number ?? '101',
+            'start_time' => $this->start_time ?? '07:30',
+            'end_time' => $this->end_time ?? '13:30',
+            'room_number' => $this->room_number ?? $rooms[array_rand($rooms)],
+            'age_group' => $this->age_group ?? $ageGroups[array_rand($ageGroups)],
         ]);
     }
 

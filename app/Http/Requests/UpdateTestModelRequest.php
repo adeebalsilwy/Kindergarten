@@ -19,6 +19,15 @@ class UpdateTestModelRequest extends FormRequest
         ];
     }
 
+    protected function prepareForValidation()
+    {
+        $testNames = ['اختبار القدرات', 'اختبار الذكاء', 'اختبار التحصيلي', 'تقييم سلوكي', 'تقييم مهارات'];
+
+        $this->merge([
+            'name' => $this->name ?? $testNames[array_rand($testNames)] . ' - ' . now()->format('Y-m-d'),
+        ]);
+    }
+
     public function attributes()
     {
         return [

@@ -37,6 +37,40 @@ class UpdateActivityRequest extends FormRequest
         ];
     }
 
+    protected function prepareForValidation()
+    {
+        $locations = ['قاعة الأنشطة الرئيسية', 'الحديقة الخارجية', 'غرفة الفنون', 'المكتبة'];
+        $activityTypes = ['educational', 'sports', 'art', 'music', 'social'];
+        $difficultyLevels = ['easy', 'medium', 'hard'];
+
+        $this->merge([
+            'title' => $this->title ?? null,
+            'description' => $this->description ?? 'نشاط تعليمي ممتع ومفيد للأطفال',
+            'instructions' => $this->instructions ?? 'اتباع خطوات النشاط بعناية',
+            'class_id' => $this->class_id ?? null,
+            'teacher_id' => $this->teacher_id ?? null,
+            'curriculum_id' => $this->curriculum_id ?? null,
+            'scheduled_date' => $this->scheduled_date ?? null,
+            'start_time' => $this->start_time ?? null,
+            'end_time' => $this->end_time ?? null,
+            'activity_type' => $this->activity_type ?? $activityTypes[array_rand($activityTypes)],
+            'difficulty_level' => $this->difficulty_level ?? $difficultyLevels[array_rand($difficultyLevels)],
+            'required_materials' => $this->required_materials ?? null,
+            'estimated_duration' => $this->estimated_duration ?? null,
+            'location' => $this->location ?? $locations[array_rand($locations)],
+            'is_active' => $this->is_active ?? null,
+            'learning_objectives' => $this->learning_objectives ?? null,
+            'outcomes' => $this->outcomes ?? null,
+            'completed_at' => $this->completed_at ?? null,
+            'notes' => $this->notes ?? 'نشاط ممتع ومفيد',
+            'status' => $this->status ?? null,
+            'category' => $this->category ?? null,
+            'materials_needed' => $this->materials_needed ?? null,
+            'assessment_criteria' => $this->assessment_criteria ?? null,
+            'max_participants' => $this->max_participants ?? null,
+        ]);
+    }
+
     public function attributes()
     {
         return [

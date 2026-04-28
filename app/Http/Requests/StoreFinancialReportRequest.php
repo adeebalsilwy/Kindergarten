@@ -21,8 +21,10 @@ class StoreFinancialReportRequest extends FormRequest
 
     protected function prepareForValidation()
     {
+        $reportTypes = ['تقرير الإيرادات', 'تقرير المصروفات', 'التقرير المالي الشهري', 'تقرير المصاريف التشغيلية', 'تقرير الأرباح والخسائر'];
+
         $this->merge([
-            'name' => $this->name ?? 'Financial Report ' . time(),
+            'name' => $this->name ?? $reportTypes[array_rand($reportTypes)] . ' - ' . now()->format('Y-m'),
         ]);
     }
 

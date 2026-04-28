@@ -23,6 +23,21 @@ class UpdateGradeRequest extends FormRequest
         ];
     }
 
+    protected function prepareForValidation()
+    {
+        $subjects = ['الرياضيات', 'اللغة العربية', 'اللغة الإنجليزية', 'العلوم', 'التربية الفنية', 'التربية البدنية'];
+
+        $this->merge([
+            'child_id' => $this->child_id ?? null,
+            'subject' => $this->subject ?? $subjects[array_rand($subjects)],
+            'score' => $this->score ?? null,
+            'grade' => $this->grade ?? null,
+            'date' => $this->date ?? null,
+            'comments' => $this->comments ?? 'أداء جيد ومتميز',
+            'evaluator_id' => $this->evaluator_id ?? null,
+        ]);
+    }
+
     public function attributes()
     {
         return [

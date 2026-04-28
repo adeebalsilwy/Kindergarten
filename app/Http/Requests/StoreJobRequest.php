@@ -37,15 +37,26 @@ class StoreJobRequest extends FormRequest
 
     protected function prepareForValidation()
     {
+        $jobNames = ['SendNotificationJob', 'GenerateReportJob', 'BackupDatabaseJob', 'ProcessPaymentJob', 'SendEmailJob'];
+
         $this->merge([
             'queue' => $this->queue ?? 'default',
+            'payload' => $this->payload ?? json_encode(['data' => [], 'timestamp' => now()]),
             'attempts' => $this->attempts ?? 0,
-            'total_jobs' => $this->total_jobs ?? 0,
-            'pending_jobs' => $this->pending_jobs ?? 0,
+            'reserved_at' => $this->reserved_at ?? null,
+            'available_at' => $this->available_at ?? now()->addSeconds(rand(0, 60)),
+            'name' => $this->name ?? $jobNames[array_rand($jobNames)],
+            'total_jobs' => $this->total_jobs ?? rand(1, 10),
+            'pending_jobs' => $this->pending_jobs ?? rand(0, 5),
             'failed_jobs' => $this->failed_jobs ?? 0,
-            'name' => $this->name ?? 'Job ' . time(),
+            'failed_job_ids' => $this->failed_job_ids ?? null,
+            'options' => $this->options ?? json_encode(['timeout' => 60, 'tries' => 3]),
+            'cancelled_at' => $this->cancelled_at ?? null,
+            'finished_at' => $this->finished_at ?? null,
             'uuid' => $this->uuid ?? (string) \Illuminate\Support\Str::uuid(),
-            'failed_at' => $this->failed_at ?? now(),
+            'connection' => $this->connection ?? 'database',
+            'exception' => $this->exception ?? null,
+            'failed_at' => $this->failed_at ?? null,
         ]);
     }
 

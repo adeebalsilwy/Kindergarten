@@ -23,8 +23,11 @@ class StorePermissionRequest extends FormRequest
 
     protected function prepareForValidation()
     {
+        $permissions = ['view_children', 'edit_children', 'delete_children', 'view_teachers', 'edit_teachers', 'manage_finance', 'view_reports'];
+
         $this->merge([
-            'name' => $this->name ?? 'permission_' . time(),
+            'InnoDB' => $this->InnoDB ?? null,
+            'name' => $this->name ?? $permissions[array_rand($permissions)],
             'guard_name' => $this->guard_name ?? 'web',
         ]);
     }

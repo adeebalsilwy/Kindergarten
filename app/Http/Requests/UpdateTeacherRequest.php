@@ -31,6 +31,32 @@ class UpdateTeacherRequest extends FormRequest
         ];
     }
 
+    protected function prepareForValidation()
+    {
+        $addresses = ['الرياض - حي النزهة', 'جدة - حي الصفا', 'الدمام - حي الفيصلية', 'مكة - حي العزيزية'];
+        $qualifications = ['بكالوريوس تربية', 'ماجستير علم النفس', 'دبلوم حضانة', 'بكالوريوس علوم'];
+
+        $this->merge([
+            'name' => $this->name ?? null,
+            'email' => $this->email ?? null,
+            'phone' => $this->phone ?? null,
+            'address' => $this->address ?? $addresses[array_rand($addresses)],
+            'date_of_birth' => $this->date_of_birth ?? null,
+            'gender' => $this->gender ?? null,
+            'qualification' => $this->qualification ?? $qualifications[array_rand($qualifications)],
+            'experience' => $this->experience ?? null,
+            'salary' => $this->salary ?? null,
+            'hire_date' => $this->hire_date ?? null,
+            'photo_path' => $this->photo_path ?? null,
+            'is_active' => $this->is_active ?? null,
+            'notes' => $this->notes ?? 'معلم متميز في مجال رياض الأطفال',
+            'specialization' => $this->specialization ?? null,
+            'experience_years' => $this->experience_years ?? null,
+            'bio' => $this->bio ?? null,
+            'user_id' => $this->user_id ?? null,
+        ]);
+    }
+
     public function attributes()
     {
         return [

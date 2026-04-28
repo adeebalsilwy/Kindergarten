@@ -22,6 +22,18 @@ class UpdateCacheRequest extends FormRequest
         ];
     }
 
+    protected function prepareForValidation()
+    {
+        $cacheKeys = ['app_settings', 'user_session', 'dashboard_data', 'language_cache', 'config_cache'];
+
+        $this->merge([
+            'key' => $this->key ?? $cacheKeys[array_rand($cacheKeys)] . '_' . time(),
+            'value' => $this->value ?? json_encode(['cached_at' => now(), 'data' => []]),
+            'expiration' => $this->expiration ?? rand(1800, 7200),
+            'owner' => $this->owner ?? 'system',
+        ]);
+    }
+
     public function attributes()
     {
         return [

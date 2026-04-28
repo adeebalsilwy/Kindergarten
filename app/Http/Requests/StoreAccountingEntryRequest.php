@@ -26,12 +26,17 @@ class StoreAccountingEntryRequest extends FormRequest
 
     protected function prepareForValidation()
     {
+        $descriptions = ['رسوم تسجيل طالب', 'دفع رواتب المعلمين', 'مصاريف صيانة', 'إيرادات الأنشطة', 'مصاريف تشغيلية'];
+        $accountTypes = ['revenue', 'expense', 'asset', 'liability', 'equity'];
+
         $this->merge([
-            'debit' => $this->debit ?? 0,
-            'credit' => $this->credit ?? 0,
+            'description' => $this->description ?? $descriptions[array_rand($descriptions)],
+            'debit' => $this->debit ?? rand(0, 5000),
+            'credit' => $this->credit ?? rand(0, 5000),
             'entry_date' => $this->entry_date ?? now()->format('Y-m-d'),
-            'reference' => $this->reference ?? 'REF' . time(),
-            'account_type' => $this->account_type ?? 'general',
+            'reference' => $this->reference ?? 'REF-' . date('Y') . '-' . rand(1000, 9999),
+            'account_type' => $this->account_type ?? $accountTypes[array_rand($accountTypes)],
+            'created_by' => $this->created_by ?? auth()->id(),
         ]);
     }
 

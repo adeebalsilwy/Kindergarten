@@ -24,6 +24,21 @@ class UpdateDashboardContentRequest extends FormRequest
         ];
     }
 
+    protected function prepareForValidation()
+    {
+        $sections = ['welcome_section', 'stats_cards', 'recent_activities', 'announcements', 'calendar'];
+        $keys = ['title', 'subtitle', 'description', 'header', 'footer'];
+
+        $this->merge([
+            'section' => $this->section ?? $sections[array_rand($sections)],
+            'key' => $this->key ?? $keys[array_rand($keys)] . '_' . time(),
+            'content' => $this->content ?? json_encode(['ar' => 'محتوى عربي', 'en' => 'English Content']),
+            'is_active' => $this->is_active ?? null,
+            'order' => $this->order ?? rand(1, 10),
+            'metadata' => $this->metadata ?? json_encode(['type' => 'text', 'style' => 'default']),
+        ]);
+    }
+
     public function attributes()
     {
         return [

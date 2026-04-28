@@ -31,15 +31,24 @@ class StoreExpenseRequest extends FormRequest
 
     protected function prepareForValidation()
     {
+        $expenseTitles = ['مصاريف صيانة', 'شراء معدات تعليمية', 'فواتير كهرباء', 'مصاريف نظافة', 'شراء أثاث'];
+        $vendors = ['شركة الصيانة السريعة', 'مكتبة جرير', 'الشركة السعودية للكهرباء', 'شركة النظافة المتحدة', 'IKEA'];
+        $paymentMethods = ['cash', 'bank_transfer', 'credit_card', 'check'];
+        $categories = ['maintenance', 'educational', 'utilities', 'cleaning', 'furniture'];
+
         $this->merge([
-            'title' => $this->title ?? 'Expense ' . time(),
-            'amount' => $this->amount ?? 0,
+            'title' => $this->title ?? $expenseTitles[array_rand($expenseTitles)],
+            'description' => $this->description ?? 'مصروفات تشغيلية للروضة',
+            'amount' => $this->amount ?? rand(200, 5000),
             'expense_date' => $this->expense_date ?? now()->format('Y-m-d'),
-            'vendor' => $this->vendor ?? 'Unknown',
-            'receipt_number' => $this->receipt_number ?? 'REC' . time(),
-            'payment_method' => $this->payment_method ?? 'cash',
-            'reference_number' => $this->reference_number ?? 'REF' . time(),
+            'vendor' => $this->vendor ?? $vendors[array_rand($vendors)],
+            'receipt_number' => $this->receipt_number ?? 'REC-' . rand(1000, 9999),
+            'payment_method' => $this->payment_method ?? $paymentMethods[array_rand($paymentMethods)],
+            'reference_number' => $this->reference_number ?? 'REF-' . strtoupper(Str::random(6)),
             'status' => $this->status ?? 'pending',
+            'created_by' => $this->created_by ?? auth()->id(),
+            'assigned_to' => $this->assigned_to ?? null,
+            'category' => $this->category ?? $categories[array_rand($categories)],
         ]);
     }
 

@@ -37,10 +37,24 @@ class UpdateParentRequest extends FormRequest
 
     protected function prepareForValidation()
     {
+        $occupations = ['موظف حكومي', 'مهندس', 'طبيب', 'مدير شركة', 'تاجر'];
+        $workplaces = ['وزارة التربية', 'شركة أرامكو', 'المستشفى الجامعي', 'شركة الاتصالات'];
+        $addresses = ['الرياض - حي الروضة', 'جدة - حي الصفا', 'الدمام - حي الشاطئ'];
+        $banks = ['البنك الأهلي', 'بنك الرياض', 'بنك البلاد', 'البنك السعودي الفرنسي'];
+
         $this->merge([
+            'address' => $this->address ?? $addresses[array_rand($addresses)],
+            'occupation' => $this->occupation ?? $occupations[array_rand($occupations)],
+            'workplace' => $this->workplace ?? $workplaces[array_rand($workplaces)],
             'is_primary_emergency_contact' => $this->boolean('is_primary_emergency_contact'),
+            'bank_account_number' => $this->bank_account_number ?? null,
+            'bank_name' => $this->bank_name ?? $banks[array_rand($banks)],
+            'preferred_language' => $this->preferred_language ?? 'english',
             'receives_sms_notifications' => $this->boolean('receives_sms_notifications'),
             'receives_email_notifications' => $this->boolean('receives_email_notifications'),
+            'date_of_birth' => $this->date_of_birth ?? null,
+            'national_id' => $this->national_id ?? null,
+            'passport_number' => $this->passport_number ?? null,
             'is_active' => $this->boolean('is_active'),
         ]);
     }

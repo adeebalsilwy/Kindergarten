@@ -26,6 +26,22 @@ class UpdatePaymentRequest extends FormRequest
         ];
     }
 
+    protected function prepareForValidation()
+    {
+        $paymentMethods = ['cash', 'bank_transfer', 'credit_card', 'check', 'online'];
+
+        $this->merge([
+            'child_id' => $this->child_id ?? null,
+            'fee_id' => $this->fee_id ?? null,
+            'amount' => $this->amount ?? null,
+            'payment_date' => $this->payment_date ?? null,
+            'payment_method' => $this->payment_method ?? $paymentMethods[array_rand($paymentMethods)],
+            'reference_number' => $this->reference_number ?? null,
+            'status' => $this->status ?? null,
+            'receipt_number' => $this->receipt_number ?? null,
+        ]);
+    }
+
     public function attributes()
     {
         return [

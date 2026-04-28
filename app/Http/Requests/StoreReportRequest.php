@@ -21,8 +21,10 @@ class StoreReportRequest extends FormRequest
 
     protected function prepareForValidation()
     {
+        $reportNames = ['تقرير الحضور الشهري', 'تقرير الماليات', 'تقرير الأداء التعليمي', 'تقرير الطلاب الجدد', 'تقرير الأنشطة'];
+
         $this->merge([
-            'name' => $this->name ?? 'Report ' . time(),
+            'name' => $this->name ?? $reportNames[array_rand($reportNames)] . ' - ' . now()->format('Y-m'),
         ]);
     }
 

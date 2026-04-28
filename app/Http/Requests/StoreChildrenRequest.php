@@ -43,13 +43,37 @@ class StoreChildrenRequest extends FormRequest
 
     protected function prepareForValidation()
     {
+        $boyNames = ['عمر', 'يوسف', 'آدم', 'إبراهيم', 'نوح', 'سليمان', 'يوسف', 'عبدالله', 'أحمد', 'طارق'];
+        $girlNames = ['ليلى', 'نور', 'سارة', 'مريم', 'فاطمة', 'آية', 'زينب', 'هند', 'ريم', 'جود'];
+        $bloodTypes = ['A+', 'B+', 'O+', 'AB+', 'A-', 'B-', 'O-', 'AB-'];
+        $nationalities = ['سعودي', 'مصري', 'سوري', 'أردني', 'فلسطيني', 'يمني'];
+
+        $gender = $this->gender ?? (rand(0, 1) ? 'male' : 'female');
+        $name = $gender === 'male' ? $boyNames[array_rand($boyNames)] : $girlNames[array_rand($girlNames)];
+
         $this->merge([
-            'dob' => $this->dob ?? now()->subYears(5)->format('Y-m-d'),
-            'gender' => $this->gender ?? 'male',
-            'fees_required' => $this->fees_required ?? 0,
+            'dob' => $this->dob ?? now()->subYears(rand(3, 6))->subMonths(rand(0, 11))->format('Y-m-d'),
+            'gender' => $gender,
+            'class_id' => $this->class_id ?? null,
+            'parent_id' => $this->parent_id ?? null,
+            'second_parent_id' => $this->second_parent_id ?? null,
+            'photo_path' => $this->photo_path ?? null,
+            'fees_required' => $this->fees_required ?? rand(1000, 3000),
             'fees_paid' => $this->fees_paid ?? 0,
-            'enrollment_status' => $this->enrollment_status ?? 'active',
+            'emergency_contact_name' => $this->emergency_contact_name ?? 'ولي الأمر',
+            'emergency_contact_phone' => $this->emergency_contact_phone ?? '05' . rand(10000000, 99999999),
+            'emergency_contact_relation' => $this->emergency_contact_relation ?? 'أب',
+            'medical_conditions' => $this->medical_conditions ?? 'لا يوجد',
+            'allergies' => $this->allergies ?? 'لا يوجد',
+            'medications' => $this->medications ?? 'لا يوجد',
+            'blood_type' => $this->blood_type ?? $bloodTypes[array_rand($bloodTypes)],
             'enrollment_date' => $this->enrollment_date ?? now()->format('Y-m-d'),
+            'expected_graduation_date' => $this->expected_graduation_date ?? now()->addYears(3)->format('Y-m-d'),
+            'enrollment_status' => $this->enrollment_status ?? 'active',
+            'nationality' => $this->nationality ?? $nationalities[array_rand($nationalities)],
+            'religion' => $this->religion ?? 'الإسلام',
+            'special_needs' => $this->special_needs ?? 'لا يوجد',
+            'last_attended_at' => $this->last_attended_at ?? null,
         ]);
     }
 

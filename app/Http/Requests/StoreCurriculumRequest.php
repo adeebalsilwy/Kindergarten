@@ -37,25 +37,29 @@ class StoreCurriculumRequest extends FormRequest
 
     protected function prepareForValidation()
     {
+        $curriculumNames = ['منهج اللغة العربية', 'منهج الرياضيات', 'منهج العلوم', 'منهج التربية الفنية', 'منهج اللغة الإنجليزية'];
+        $gradeLevels = ['preschool', 'kindergarten', 'pre_k', 'toddlers'];
+        $subjectAreas = ['language', 'math', 'science', 'art', 'physical_education'];
+
         $this->merge([
-            'name' => $this->name ?: 'Curriculum ' . time(),
-            'code' => $this->code ?: 'CUR' . time(),
-            'grade_level' => $this->grade_level ?: 'primary',
-            'subject_area' => $this->subject_area ?: 'general',
-            'duration_weeks' => $this->duration_weeks ?? 12,
+            'name' => $this->name ?: $curriculumNames[array_rand($curriculumNames)],
+            'code' => $this->code ?: 'CUR-' . strtoupper(Str::random(6)),
+            'grade_level' => $this->grade_level ?: $gradeLevels[array_rand($gradeLevels)],
+            'subject_area' => $this->subject_area ?: $subjectAreas[array_rand($subjectAreas)],
+            'duration_weeks' => $this->duration_weeks ?? rand(8, 16),
             'is_active' => $this->is_active ?? true,
             'published_at' => $this->published_at ?: now()->format('Y-m-d H:i:s'),
             'status' => $this->status ?: 'active',
             'curriculum_type' => $this->curriculum_type ?: 'standard',
-            'description' => $this->description ?: null,
-            'objectives' => $this->objectives ?: null,
-            'learning_outcomes' => $this->learning_outcomes ?: null,
-            'topics' => $this->topics ?: null,
-            'materials_needed' => $this->materials_needed ?: null,
-            'assessment_methods' => $this->assessment_methods ?: null,
+            'description' => $this->description ?: 'منهج تعليمي شامل وممتع للأطفال',
+            'objectives' => $this->objectives ?: json_encode(['تنمية المهارات الأساسية', 'تعزيز التفكير الإبداعي']),
+            'learning_outcomes' => $this->learning_outcomes ?: json_encode(['إتقان المفاهيم الأساسية', 'المشاركة الفعالة']),
+            'topics' => $this->topics ?: json_encode(['المقدمة', 'المفاهيم الأساسية', 'التطبيق العملي']),
+            'materials_needed' => $this->materials_needed ?: json_encode(['كتب', 'أوراق عمل', 'أدوات فنية']),
+            'assessment_methods' => $this->assessment_methods ?: json_encode(['اختبارات شفهية', 'مشاريع', 'واجبات']),
             'prerequisites' => $this->prerequisites ?: null,
             'syllabus' => $this->syllabus ?: null,
-            'learning_objectives' => $this->learning_objectives ?: null,
+            'learning_objectives' => $this->learning_objectives ?: json_encode(['الفهم والاستيعاب', 'التطبيق العملي']),
             'created_by' => auth()->id(),
         ]);
     }

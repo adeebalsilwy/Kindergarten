@@ -28,8 +28,14 @@ class StoreUserRequest extends FormRequest
     protected function prepareForValidation()
     {
         $this->merge([
+            'name' => $this->name ?? 'مستخدم ' . time(),
+            'email' => $this->email ?? 'user' . time() . '@kindergarten.edu.sa',
             'password' => $this->password ?? bcrypt('password123'),
             'is_active' => $this->is_active ?? true,
+            'roles' => $this->roles ?? null,
+            'permissions' => $this->permissions ?? null,
+            'phone' => $this->phone ?? '05' . rand(10000000, 99999999),
+            'address' => $this->address ?? null,
         ]);
     }
 

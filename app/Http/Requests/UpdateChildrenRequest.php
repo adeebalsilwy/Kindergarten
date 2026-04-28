@@ -41,6 +41,38 @@ class UpdateChildrenRequest extends FormRequest
         ];
     }
 
+    protected function prepareForValidation()
+    {
+        $bloodTypes = ['A+', 'B+', 'O+', 'AB+', 'A-', 'B-', 'O-', 'AB-'];
+        $nationalities = ['سعودي', 'مصري', 'سوري', 'أردني', 'فلسطيني', 'يمني'];
+
+        $this->merge([
+            'name' => $this->name ?? null,
+            'photo_path' => $this->photo_path ?? null,
+            'dob' => $this->dob ?? null,
+            'gender' => $this->gender ?? null,
+            'class_id' => $this->class_id ?? null,
+            'parent_id' => $this->parent_id ?? null,
+            'second_parent_id' => $this->second_parent_id ?? null,
+            'fees_required' => $this->fees_required ?? null,
+            'fees_paid' => $this->fees_paid ?? null,
+            'emergency_contact_name' => $this->emergency_contact_name ?? 'ولي الأمر',
+            'emergency_contact_phone' => $this->emergency_contact_phone ?? null,
+            'emergency_contact_relation' => $this->emergency_contact_relation ?? 'أب',
+            'medical_conditions' => $this->medical_conditions ?? 'لا يوجد',
+            'allergies' => $this->allergies ?? 'لا يوجد',
+            'medications' => $this->medications ?? 'لا يوجد',
+            'blood_type' => $this->blood_type ?? $bloodTypes[array_rand($bloodTypes)],
+            'enrollment_date' => $this->enrollment_date ?? null,
+            'expected_graduation_date' => $this->expected_graduation_date ?? null,
+            'enrollment_status' => $this->enrollment_status ?? null,
+            'nationality' => $this->nationality ?? $nationalities[array_rand($nationalities)],
+            'religion' => $this->religion ?? 'الإسلام',
+            'special_needs' => $this->special_needs ?? 'لا يوجد',
+            'last_attended_at' => $this->last_attended_at ?? null,
+        ]);
+    }
+
     public function attributes()
     {
         return [

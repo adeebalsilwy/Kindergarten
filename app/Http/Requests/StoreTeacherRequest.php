@@ -33,14 +33,24 @@ class StoreTeacherRequest extends FormRequest
 
     protected function prepareForValidation()
     {
+        $teacherNames = ['أحمد محمد', 'فاطمة علي', 'سارة أحمد', 'محمد عبدالله', 'نورة سعد', 'ليلى خالد'];
+        $qualifications = ['بكالوريوس تربية', 'ماجستير علم النفس', 'دبلوم حضانة', 'بكالوريوس علوم'];
+        $addresses = ['الرياض - حي النزهة', 'جدة - حي الصفا', 'الدمام - حي الفيصلية', 'مكة - حي العزيزية'];
+
         $this->merge([
-            'name' => $this->name ?? 'Teacher',
-            'email' => $this->email ?? 'teacher' . time() . '@school.com',
-            'phone' => $this->phone ?? '0000000000',
-            'gender' => $this->gender ?? 'female',
-            'salary' => $this->salary ?? 0,
-            'hire_date' => $this->hire_date ?? now()->format('Y-m-d'),
+            'name' => $this->name ?? $teacherNames[array_rand($teacherNames)],
+            'email' => $this->email ?? 'teacher' . time() . '@kindergarten.edu.sa',
+            'phone' => $this->phone ?? '05' . rand(10000000, 99999999),
+            'address' => $this->address ?? $addresses[array_rand($addresses)],
+            'date_of_birth' => $this->date_of_birth ?? now()->subYears(rand(25, 45))->format('Y-m-d'),
+            'gender' => $this->gender ?? (rand(0, 1) ? 'male' : 'female'),
+            'qualification' => $this->qualification ?? $qualifications[array_rand($qualifications)],
+            'experience' => $this->experience ?? rand(1, 15) . ' سنوات خبرة في التدريس',
+            'salary' => $this->salary ?? rand(5000, 15000),
+            'hire_date' => $this->hire_date ?? now()->subYears(rand(0, 5))->format('Y-m-d'),
+            'photo_path' => $this->photo_path ?? null,
             'is_active' => $this->is_active ?? true,
+            'notes' => $this->notes ?? 'معلم متميز في مجال رياض الأطفال',
         ]);
     }
 

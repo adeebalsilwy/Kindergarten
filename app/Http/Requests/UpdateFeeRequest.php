@@ -22,6 +22,22 @@ class UpdateFeeRequest extends FormRequest
         ];
     }
 
+    protected function prepareForValidation()
+    {
+        $frequencies = ['monthly', 'quarterly', 'yearly', 'one_time'];
+        $categories = ['tuition', 'registration', 'transportation', 'meals', 'activities'];
+
+        $this->merge([
+            'name' => $this->name ?? null,
+            'amount' => $this->amount ?? null,
+            'description' => $this->description ?? 'رسوم نظامية للروضة',
+            'is_active' => $this->is_active ?? null,
+            'frequency' => $this->frequency ?? $frequencies[array_rand($frequencies)],
+            'category' => $this->category ?? $categories[array_rand($categories)],
+            'due_date' => $this->due_date ?? null,
+        ]);
+    }
+
     public function attributes()
     {
         return [

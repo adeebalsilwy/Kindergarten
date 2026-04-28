@@ -35,6 +35,35 @@ class UpdateCurriculumRequest extends FormRequest
         ];
     }
 
+    protected function prepareForValidation()
+    {
+        $gradeLevels = ['preschool', 'kindergarten', 'pre_k', 'toddlers'];
+        $subjectAreas = ['language', 'math', 'science', 'art', 'physical_education'];
+
+        $this->merge([
+            'name' => $this->name ?? null,
+            'code' => $this->code ?? null,
+            'description' => $this->description ?? 'منهج تعليمي شامل وممتع للأطفال',
+            'objectives' => $this->objectives ?? null,
+            'learning_outcomes' => $this->learning_outcomes ?? null,
+            'grade_level' => $this->grade_level ?? $gradeLevels[array_rand($gradeLevels)],
+            'subject_area' => $this->subject_area ?? $subjectAreas[array_rand($subjectAreas)],
+            'topics' => $this->topics ?? null,
+            'materials_needed' => $this->materials_needed ?? null,
+            'curriculum_type' => $this->curriculum_type ?? null,
+            'duration_weeks' => $this->duration_weeks ?? null,
+            'assessment_methods' => $this->assessment_methods ?? null,
+            'is_active' => $this->is_active ?? null,
+            'published_at' => $this->published_at ?? null,
+            'created_by' => $this->created_by ?? null,
+            'connected_materials' => $this->connected_materials ?? [],
+            'status' => $this->status ?? null,
+            'prerequisites' => $this->prerequisites ?? null,
+            'syllabus' => $this->syllabus ?? null,
+            'learning_objectives' => $this->learning_objectives ?? null,
+        ]);
+    }
+
     public function attributes()
     {
         return [

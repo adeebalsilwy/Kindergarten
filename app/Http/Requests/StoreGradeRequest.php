@@ -25,10 +25,17 @@ class StoreGradeRequest extends FormRequest
 
     protected function prepareForValidation()
     {
+        $subjects = ['الرياضيات', 'اللغة العربية', 'اللغة الإنجليزية', 'العلوم', 'التربية الفنية', 'التربية البدنية'];
+        $arabicScores = ['ممتاز', 'جيد جداً', 'جيد', 'مقبول', 'ضعيف'];
+
         $this->merge([
-            'subject' => $this->subject ?? 'General',
-            'score' => $this->score ?? '0',
+            'child_id' => $this->child_id ?? null,
+            'subject' => $this->subject ?? $subjects[array_rand($subjects)],
+            'score' => $this->score ?? rand(60, 100),
+            'grade' => $this->grade ?? null,
             'date' => $this->date ?? now()->format('Y-m-d'),
+            'comments' => $this->comments ?? 'أداء جيد ومتميز',
+            'evaluator_id' => $this->evaluator_id ?? auth()->id(),
         ]);
     }
 

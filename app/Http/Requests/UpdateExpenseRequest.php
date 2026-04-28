@@ -29,6 +29,28 @@ class UpdateExpenseRequest extends FormRequest
         ];
     }
 
+    protected function prepareForValidation()
+    {
+        $vendors = ['شركة الصيانة السريعة', 'مكتبة جرير', 'الشركة السعودية للكهرباء', 'شركة النظافة المتحدة', 'IKEA'];
+        $paymentMethods = ['cash', 'bank_transfer', 'credit_card', 'check'];
+        $categories = ['maintenance', 'educational', 'utilities', 'cleaning', 'furniture'];
+
+        $this->merge([
+            'title' => $this->title ?? null,
+            'description' => $this->description ?? 'مصروفات تشغيلية للروضة',
+            'amount' => $this->amount ?? null,
+            'expense_date' => $this->expense_date ?? null,
+            'vendor' => $this->vendor ?? $vendors[array_rand($vendors)],
+            'receipt_number' => $this->receipt_number ?? null,
+            'payment_method' => $this->payment_method ?? $paymentMethods[array_rand($paymentMethods)],
+            'reference_number' => $this->reference_number ?? null,
+            'status' => $this->status ?? null,
+            'created_by' => $this->created_by ?? null,
+            'assigned_to' => $this->assigned_to ?? null,
+            'category' => $this->category ?? $categories[array_rand($categories)],
+        ]);
+    }
+
     public function attributes()
     {
         return [
