@@ -14,7 +14,7 @@
 @endsection
 
 @section('subcontent')
-<div class="intro-y flex items-center mt-8">
+<div class="intro-y flex items-center mt-8" dir="{{ app()->getLocale() === 'ar' ? 'rtl' : 'ltr' }}">
     <h2 class="text-lg font-medium me-auto">{{ __('guardians.add_new') }}</h2>
     <div class="flex gap-2">
         <x-base.button variant="outline-secondary" onclick="window.history.back()">
@@ -107,10 +107,10 @@
                     <x-form-field name="preferred_language" 
                                  label="{{ __('guardians.fields.preferred_language') }}" 
                                  type="select" 
-                                 :value="old('preferred_language', 'en')" 
+                                 :value="old('preferred_language', app()->getLocale())" 
                                  :options="[
-                                     'ar' => 'Arabic',
-                                     'en' => 'English'
+                                     'en' => 'English',
+                                     'ar' => 'العربية'
                                  ]" 
                                  class="col-span-12 sm:col-span-6" />
                 </x-form-section>

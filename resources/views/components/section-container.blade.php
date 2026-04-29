@@ -6,8 +6,12 @@
     'actions' => null
 ])
 
+@php
+    $initialState = ($collapsible && !$defaultOpen) ? 'true' : 'false';
+@endphp
+
 <div class="intro-y col-span-12"
-     x-data="{ collapsed: {{ $collapsible && !$defaultOpen ? 'true' : 'false' }} }">
+     x-data="{ collapsed: {{ $initialState }} }">
     <div class="box p-5">
         @if($title || $actions)
             <div class="flex items-center justify-between mb-4">
