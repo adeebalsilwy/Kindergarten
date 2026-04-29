@@ -48,10 +48,28 @@ class Activity extends Model
         'learning_objectives' => 'array',
         'outcomes' => 'array',
         'assessment_criteria' => 'array',
+        'materials_needed' => 'array',
         'completed_at' => 'datetime',
         'max_participants' => 'integer',
         'deleted_at' => 'datetime',
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'scheduled_date' => 'datetime',
+            'required_materials' => 'array',
+            'estimated_duration' => 'integer',
+            'is_active' => 'boolean',
+            'learning_objectives' => 'array',
+            'outcomes' => 'array',
+            'assessment_criteria' => 'array',
+            'materials_needed' => 'array',
+            'completed_at' => 'datetime',
+            'max_participants' => 'integer',
+            'deleted_at' => 'datetime',
+        ];
+    }
 
     protected $dates = [
         'completed_at',
@@ -71,6 +89,13 @@ class Activity extends Model
         static::creating(function ($activity) {
             $activity->status = $activity->status ?? 'active';
             $activity->is_active = $activity->is_active ?? true;
+            
+            // Initialize array fields if not set
+            $activity->required_materials = $activity->required_materials ?? [];
+            $activity->learning_objectives = $activity->learning_objectives ?? [];
+            $activity->outcomes = $activity->outcomes ?? [];
+            $activity->assessment_criteria = $activity->assessment_criteria ?? [];
+            $activity->materials_needed = $activity->materials_needed ?? [];
         });
     }
 
@@ -126,6 +151,13 @@ class Activity extends Model
         $materials = $this->materials->pluck('name')->toArray();
         $legacyMaterials = $this->required_materials ?? [];
         return array_merge($materials, $legacyMaterials);
+    }
+
+    // Helper methods to safely handle array fields
+    public function getSafeArrayAttribute(string $field): array
+    {
+        $value = $this->$field;
+        return is_array($value) ? $value : [];
     }
 
     // Mutators

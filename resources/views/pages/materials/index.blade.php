@@ -6,37 +6,41 @@
 
 @section('subcontent')
     <!-- Page Header -->
-    <x-page-header
-        :title="__('materials.list')"
-        :subtitle="__('Manage your materials efficiently')"
-        icon="Package"
-        :actions="[
-            [
-                'type' => 'button',
-                'variant' => 'outline-primary',
-                'icon' => 'FileText',
-                'label' => __('global.export_pdf'),
-                'href' => route('materials.export.pdf'),
-                'can' => auth()->user()->can('export', App\Models\Material::class)
-            ],
-            [
-                'type' => 'button',
-                'variant' => 'outline-success',
-                'icon' => 'FileSpreadsheet',
-                'label' => __('global.export_excel'),
-                'href' => route('materials.export.excel'),
-                'can' => auth()->user()->can('export', App\Models\Material::class)
-            ],
-            [
-                'type' => 'button',
-                'variant' => 'primary',
-                'icon' => 'Plus',
-                'label' => __('materials.create_new'),
-                'href' => route('materials.create'),
-                'can' => auth()->user()->can('create', App\Models\Material::class)
-            ]
-        ]"
-    />
+    <div class="intro-y flex flex-col sm:flex-row items-center mt-8 mb-6">
+        <div class="flex-1">
+            <div class="flex items-center">
+                <div class="bg-primary/10 p-2 rounded-lg me-3">
+                    <x-base.lucide icon="Package" class="w-6 h-6 text-primary" />
+                </div>
+                <div>
+                    <h2 class="text-2xl font-bold text-slate-800">{{ __('materials.list') }}</h2>
+                    <p class="text-sm text-slate-500 mt-1">Manage your materials efficiently</p>
+                </div>
+            </div>
+        </div>
+        <div class="w-full sm:w-auto flex gap-2 mt-4 sm:mt-0">
+            @can('export', App\Models\Material::class)
+            <x-base.button variant="outline-primary" as="a" href="{{ route('materials.export.pdf') }}" class="flex items-center">
+                <x-base.lucide icon="FileText" class="w-4 h-4 me-2" />
+                {{ __('global.export_pdf') }}
+            </x-base.button>
+            <x-base.button variant="outline-success" as="a" href="{{ route('materials.export.excel') }}" class="flex items-center">
+                <x-base.lucide icon="FileSpreadsheet" class="w-4 h-4 me-2" />
+                {{ __('global.export_excel') }}
+            </x-base.button>
+            @endcan
+            @can('create', App\Models\Material::class)
+            <x-base.button variant="primary" as="a" href="{{ route('materials.create') }}" class="flex items-center">
+                <x-base.lucide icon="Plus" class="w-4 h-4 me-2" />
+                {{ __('materials.create_new') }}
+            </x-base.button>
+            @endcan
+            <x-base.button variant="outline-secondary" id="fillDemoData" class="flex items-center">
+                <x-base.lucide icon="Database" class="w-4 h-4 me-2" />
+                Fill Demo Data
+            </x-base.button>
+        </div>
+    </div>
 
     <div class="grid grid-cols-12 gap-6 mt-5">
         <!-- Statistics Cards -->
@@ -314,4 +318,139 @@
             @endif
         </x-section-container>
     </div>
+
+    <!-- Demo Data Modal -->
+    <div id="demoDataModal" class="hidden">
+        <div class="fixed inset-0 z-50 flex items-center justify-center">
+            <div class="absolute inset-0 bg-slate-900/75" @click="closeDemoModal()"></div>
+            <div class="relative bg-white rounded-lg shadow-xl w-full max-w-lg mx-4 p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-lg font-bold text-slate-800">Fill Materials with Demo Data</h3>
+                    <button @click="closeDemoModal()" class="p-1 rounded-lg hover:bg-slate-100">
+                        <x-base.lucide icon="X" class="w-5 h-5" />
+                    </button>
+                </div>
+                <div class="mb-6">
+                    <p class="text-sm text-slate-600 mb-4">This will create sample materials for testing purposes.</p>
+                    <div class="bg-blue-50 border border-blue-200 rounded-lg p-3">
+                        <div class="flex items-start">
+                            <x-base.lucide icon="Info" class="w-5 h-5 text-blue-600 me-2 mt-0.5" />
+                            <div class="text-sm text-blue-800">
+                                <strong>Sample materials include:</strong>
+                                <ul class="list-disc ms-4 mt-2 space-y-1">
+                                    <li>Art Supplies (Paint, Brushes, Paper)</li>
+                                    <li>Educational Tools (Tablets, Books)</li>
+                                    <li>Sports Equipment (Balls, Cones)</li>
+                                    <li>Science Materials (Microscopes, Chemicals)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex justify-end gap-2">
+                    <x-base.button variant="outline-secondary" @click="closeDemoModal()">Cancel</x-base.button>
+                    <x-base.button variant="primary" id="confirmDemoFill">
+                        <x-base.lucide icon="Check" class="w-4 h-4 me-2" />
+                        Fill Data
+                    </x-base.button>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
+
+@push('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const demoModal = document.getElementById('demoDataModal');
+        const fillDemoBtn = document.getElementById('fillDemoData');
+        const confirmBtn = document.getElementById('confirmDemoFill');
+
+        if (fillDemoBtn) {
+            fillDemoBtn.addEventListener('click', function() {
+                demoModal.classList.remove('hidden');
+            });
+        }
+
+        window.closeDemoModal = function() {
+            demoModal.classList.add('hidden');
+        };
+
+        if (confirmBtn) {
+            confirmBtn.addEventListener('click', function() {
+                confirmBtn.disabled = true;
+                confirmBtn.innerHTML = '<svg class="animate-spin h-4 w-4 me-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Creating...';
+
+                fetch('{{ route('materials.create') }}', {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'text/html',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                })
+                .then(response => response.text())
+                .then(html => {
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, 'text/html');
+                    const form = doc.querySelector('form');
+                    
+                    if (form) {
+                        const demoData = {
+                            name: 'Demo Art Supplies Set',
+                            description: 'A comprehensive set of art supplies for kindergarten activities including paints, brushes, colored paper, and crayons.',
+                            category: 'arts_crafts',
+                            type: 'consumable',
+                            quantity: 50,
+                            unit: 'set',
+                            status: 'available',
+                            cost: 25.99,
+                            supplier: 'Educational Supplies Co.',
+                            purchase_date: new Date().toISOString().split('T')[0],
+                            quantity_required: 10,
+                            specifications: '{"color": "multicolor", "age_range": "3-8 years", "material": "non-toxic"}'
+                        };
+
+                        Object.keys(demoData).forEach(key => {
+                            const input = form.querySelector(`[name="${key}"]`);
+                            if (input) {
+                                input.value = demoData[key];
+                            }
+                        });
+
+                        const formAction = form.getAttribute('action');
+                        const formData = new FormData();
+                        formData.append('_token', '{{ csrf_token() }}');
+                        Object.keys(demoData).forEach(key => {
+                            formData.append(key, demoData[key]);
+                        });
+
+                        return fetch(formAction, {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                'Accept': 'text/html'
+                            },
+                            body: formData
+                        });
+                    }
+                })
+                .then(response => {
+                    if (response && response.ok) {
+                        window.location.href = '{{ route('materials.index') }}?success=1';
+                    } else {
+                        alert('Error creating demo material. Please try again.');
+                        confirmBtn.disabled = false;
+                        confirmBtn.innerHTML = '<x-base.lucide icon="Check" class="w-4 h-4 me-2" /> Fill Data';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred. Please try again.');
+                    confirmBtn.disabled = false;
+                    confirmBtn.innerHTML = '<x-base.lucide icon="Check" class="w-4 h-4 me-2" /> Fill Data';
+                });
+            });
+        }
+    });
+</script>
+@endpush

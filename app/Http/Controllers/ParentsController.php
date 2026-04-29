@@ -114,8 +114,7 @@ class ParentsController extends Controller
         $headerRange = 'A3:'.chr(ord('A') + count($headers) - 1).'3';
         $sheet->getStyle($headerRange)->getFont()->setBold(true);
         $sheet->getStyle($headerRange)->getFill()
-            ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID);
-        $sheet->getStyle($headerRange)->getFill()
+            ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
             ->getStartColor()->setARGB('FFEEEEEE');
 
         // Add data rows

@@ -53,12 +53,16 @@
                     @foreach($item->getAttributes() as $key => $value)
                         @if(!in_array($key, ['id', 'created_at', 'updated_at', 'deleted_at']))
                             <td>
-                                @if(is_bool($value))
+                                @if(is_null($value))
+                                    -
+                                @elseif(is_bool($value))
                                     {{ $value ? __('global.yes') : __('global.no') }}
-                                @elseif(in_array($key, ['created_at', 'updated_at']) && $value)
-                                    {{ \Carbon\Carbon::parse($value)->format('Y-m-d H:i:s') }}
                                 @elseif(is_array($value))
-                                    {{ implode(', ', $value) }}
+                                    {{ is_array($value) ? implode(', ', $value) : '' }}
+                                @elseif($value instanceof \Carbon\Carbon)
+                                    {{ $value->format('Y-m-d H:i:s') }}
+                                @elseif(in_array($key, ['scheduled_date', 'completed_at']) && $value)
+                                    {{ \Carbon\Carbon::parse($value)->format('Y-m-d') }}
                                 @else
                                     {{ $value ?? '-' }}
                                 @endif

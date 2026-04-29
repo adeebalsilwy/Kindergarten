@@ -28,7 +28,7 @@ foreach ($attributes->all() as $__key => $__value) {
 
 unset($__defined_vars); ?>
 
-<?php if (! $__env->hasRenderedOnce('cd5309ac-1aac-4995-ba94-fa972259cb2d')): $__env->markAsRenderedOnce('cd5309ac-1aac-4995-ba94-fa972259cb2d');
+<?php if (! $__env->hasRenderedOnce('8bd7bf53-3e20-49de-83f1-bca6a65ec703')): $__env->markAsRenderedOnce('8bd7bf53-3e20-49de-83f1-bca6a65ec703');
 $__env->startPush('vendors'); ?>
     <?php echo app('Illuminate\Foundation\Vite')('resources/js/vendors/modal.js'); ?>
 <?php $__env->stopPush(); endif; ?>
@@ -45,4 +45,4 @@ $__env->startPush('vendors'); ?>
         ])->merge($attributes->whereDoesntStartWith('class')->getAttributes())); ?>
 
 ><?php echo e($slot); ?></<?php echo e($as); ?>>
-<?php /**PATH E:\backup\Source\resources\views/components/base/slideover/index.blade.php ENDPATH**/ ?>
+<?php /**PATH E:\backup\Source\resources\views/components/base/dialog/index.blade.php ENDPATH**/ ?>

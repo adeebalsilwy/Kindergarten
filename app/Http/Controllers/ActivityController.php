@@ -107,7 +107,8 @@ class ActivityController extends Controller
 
         // Style header row
         $headerRange = 'A3:'.chr(ord('A') + count($headers) - 1).'3';
-        $sheet->getStyle($headerRange)->getFont()->setBold(true)
+        $sheet->getStyle($headerRange)->getFont()->setBold(true);
+        $sheet->getStyle($headerRange)->getFill()
             ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
             ->getStartColor()->setARGB('FFEEEEEE');
 
@@ -120,7 +121,9 @@ class ActivityController extends Controller
                     if (is_a($value, 'Carbon\Carbon')) {
                         $sheet->setCellValue($col.$row, $value->format('Y-m-d H:i:s'));
                     } elseif (is_array($value)) {
-                        $sheet->setCellValue($col.$row, implode(', ', $value));
+                        $sheet->setCellValue($col.$row, is_array($value) ? implode(', ', $value) : ($value ?? '-'));
+                    } elseif (is_bool($value)) {
+                        $sheet->setCellValue($col.$row, $value ? __('global.yes') : __('global.no'));
                     } else {
                         $sheet->setCellValue($col.$row, $value ?? '-');
                     }

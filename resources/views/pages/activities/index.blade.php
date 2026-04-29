@@ -82,23 +82,59 @@
                 <x-base.table.tbody>
                     @forelse($activities as $activity)
                         <x-base.table.tr class="intro-x">
-                            <x-base.table.td class="text-center">{{ $activity->title ?? '-' }}</x-base.table.td>
-                            <x-base.table.td class="text-center">{{ $activity->class_id ?? '-' }}</x-base.table.td>
-                            <x-base.table.td class="text-center">{{ $activity->teacher_id ?? '-' }}</x-base.table.td>
-                            <x-base.table.td class="text-center">{{ $activity->curriculum_id ?? '-' }}</x-base.table.td>
+                            <x-base.table.td class="text-center">{{ is_array($activity->title) ? implode(', ', $activity->title) : ($activity->title ?? '-') }}</x-base.table.td>
+                            <x-base.table.td class="text-center">
+                                @if($activity->relationLoaded('class'))
+                                    {{ is_string($activity->class->name) ? $activity->class->name : '-' }}
+                                @else
+                                    {{ $activity->class_id ?? '-' }}
+                                @endif
+                            </x-base.table.td>
+                            <x-base.table.td class="text-center">
+                                @if($activity->relationLoaded('teacher'))
+                                    {{ is_string($activity->teacher->full_name) ? $activity->teacher->full_name : (is_string($activity->teacher->name) ? $activity->teacher->name : '-') }}
+                                @else
+                                    {{ $activity->teacher_id ?? '-' }}
+                                @endif
+                            </x-base.table.td>
+                            <x-base.table.td class="text-center">
+                                @if($activity->relationLoaded('curriculum'))
+                                    {{ is_string($activity->curriculum->title) ? $activity->curriculum->title : '-' }}
+                                @else
+                                    {{ $activity->curriculum_id ?? '-' }}
+                                @endif
+                            </x-base.table.td>
                             <x-base.table.td class="text-center">{{ $activity->scheduled_date ? $activity->scheduled_date->format('Y-m-d') : '-' }}</x-base.table.td>
-                            <x-base.table.td class="text-center">{{ $activity->start_time ?? '-' }}</x-base.table.td>
-                            <x-base.table.td class="text-center">{{ $activity->end_time ?? '-' }}</x-base.table.td>
-                            <x-base.table.td class="text-center">{{ $activity->activity_type ?? '-' }}</x-base.table.td>
-                            <x-base.table.td class="text-center">{{ $activity->difficulty_level ?? '-' }}</x-base.table.td>
-                            <x-base.table.td class="text-center">{{ is_array($activity->required_materials) ? implode(', ', array_slice($activity->required_materials, 0, 3)) . (count($activity->required_materials) > 3 ? '...' : '') : ($activity->required_materials ?? '-') }}</x-base.table.td>
-                            <x-base.table.td class="text-center">{{ $activity->estimated_duration ?? '-' }}</x-base.table.td>
-                            <x-base.table.td class="text-center">{{ $activity->location ?? '-' }}</x-base.table.td>
+                            <x-base.table.td class="text-center">{{ is_array($activity->start_time) ? implode(', ', $activity->start_time) : ($activity->start_time ?? '-') }}</x-base.table.td>
+                            <x-base.table.td class="text-center">{{ is_array($activity->end_time) ? implode(', ', $activity->end_time) : ($activity->end_time ?? '-') }}</x-base.table.td>
+                            <x-base.table.td class="text-center">{{ is_array($activity->activity_type) ? implode(', ', $activity->activity_type) : ($activity->activity_type ?? '-') }}</x-base.table.td>
+                            <x-base.table.td class="text-center">{{ is_array($activity->difficulty_level) ? implode(', ', $activity->difficulty_level) : ($activity->difficulty_level ?? '-') }}</x-base.table.td>
+                            <x-base.table.td class="text-center">
+                                @if(is_array($activity->required_materials))
+                                    {{ implode(', ', array_slice($activity->required_materials, 0, 3)) . (count($activity->required_materials) > 3 ? '...' : '') }}
+                                @else
+                                    {{ $activity->required_materials ?? '-' }}
+                                @endif
+                            </x-base.table.td>
+                            <x-base.table.td class="text-center">{{ is_numeric($activity->estimated_duration) ? $activity->estimated_duration : '-' }}</x-base.table.td>
+                            <x-base.table.td class="text-center">{{ is_array($activity->location) ? implode(', ', $activity->location) : ($activity->location ?? '-') }}</x-base.table.td>
                             <x-base.table.td class="text-center">
                                 <div class="flex items-center justify-center {{ $activity->is_active ? 'text-success' : 'text-danger' }}"> <x-base.lucide icon="{{ $activity->is_active ? 'CheckSquare' : 'XSquare' }}" class="w-4 h-4 me-2" /> {{ $activity->is_active ? __('global.yes') : __('global.no') }} </div>
                             </x-base.table.td>
-                            <x-base.table.td class="text-center">{{ is_array($activity->learning_objectives) ? implode(', ', array_slice($activity->learning_objectives, 0, 2)) . (count($activity->learning_objectives) > 2 ? '...' : '') : ($activity->learning_objectives ?? '-') }}</x-base.table.td>
-                            <x-base.table.td class="text-center">{{ is_array($activity->outcomes) ? implode(', ', array_slice($activity->outcomes, 0, 2)) . (count($activity->outcomes) > 2 ? '...' : '') : ($activity->outcomes ?? '-') }}</x-base.table.td>
+                            <x-base.table.td class="text-center">
+                                @if(is_array($activity->learning_objectives))
+                                    {{ implode(', ', array_slice($activity->learning_objectives, 0, 2)) . (count($activity->learning_objectives) > 2 ? '...' : '') }}
+                                @else
+                                    {{ $activity->learning_objectives ?? '-' }}
+                                @endif
+                            </x-base.table.td>
+                            <x-base.table.td class="text-center">
+                                @if(is_array($activity->outcomes))
+                                    {{ implode(', ', array_slice($activity->outcomes, 0, 2)) . (count($activity->outcomes) > 2 ? '...' : '') }}
+                                @else
+                                    {{ $activity->outcomes ?? '-' }}
+                                @endif
+                            </x-base.table.td>
                             <x-base.table.td class="text-center">{{ $activity->completed_at ? $activity->completed_at->format('Y-m-d') : '-' }}</x-base.table.td>
 
                             @if($canEdit || $canDelete || $canView)

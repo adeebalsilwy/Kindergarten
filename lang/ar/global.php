@@ -61,6 +61,8 @@ return [
         'select_all' => 'تحديد الكل',
         'deselect_all' => 'إلغاء تحديد الكل',
         'demo_data' => 'بيانات تجريبية',
+        'fill_demo_data' => 'تعبئة بيانات تجريبية',
+        'filled' => 'تم التعبئة',
         'basic_info' => 'المعلومات الأساسية',
         'security' => 'الأمان',
         'roles_permissions' => 'الأدوار والصلاحيات',

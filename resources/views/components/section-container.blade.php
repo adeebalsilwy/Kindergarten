@@ -36,7 +36,7 @@
                             <x-base.lucide
                                 icon="ChevronDown"
                                 class="w-5 h-5 text-slate-500 transform transition-transform"
-                                :class="{'rotate-180': !collapsed}"
+                                ::class="{'rotate-180': !collapsed}"
                             />
                         </button>
                     @endif

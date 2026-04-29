@@ -13,6 +13,10 @@
 @section('subcontent')
     <div class="intro-y flex items-center mt-8">
         <h2 class="text-lg font-medium me-auto">{{ __('Curriculum.add_new') }}</h2>
+        <button type="button" onclick="fillDemoData()" class="btn btn-outline-secondary me-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 me-2"><path d="M8 2v4"></path><path d="M16 2v4"></path><rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path></svg>
+            {{ __('global.fill_demo_data') }}
+        </button>
     </div>
     
     <!-- Tab Navigation -->
@@ -272,20 +276,139 @@
         document.addEventListener('DOMContentLoaded', function() {
             const tabButtons = document.querySelectorAll('.tab-button');
             const tabContents = document.querySelectorAll('.tab-content');
-            
+
             tabButtons.forEach(button => {
                 button.addEventListener('click', function(e) {
                     e.preventDefault();
                     const tabId = this.getAttribute('data-tab');
-                    
+
                     // Remove active class from all buttons and contents
                     tabButtons.forEach(btn => btn.classList.remove('active'));
                     tabContents.forEach(content => content.classList.remove('active'));
-                    
+
                     // Add active class to clicked button and corresponding content
                     this.classList.add('active');
                     document.getElementById(tabId).classList.add('active');
                 });
+            });
+
+            // Fill Demo Data functionality
+            document.getElementById('fill-demo-data').addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                // Find form by action containing 'curricula'
+                const forms = document.querySelectorAll('form');
+                let form = null;
+                forms.forEach(function(f) {
+                    const action = f.getAttribute('action') || '';
+                    if (action.includes('curricula')) {
+                        form = f;
+                    }
+                });
+
+                if (!form) {
+                    console.error('Form with action containing "curricula" not found');
+                    alert('لم يتم العثور على النموذج!');
+                    return;
+                }
+
+                console.log('Form found:', form);
+
+                const demoData = {
+                    'name': 'منهج اللغة العربية - المستوى الأول',
+                    'code': 'CUR-ARB-' + Math.floor(1000 + Math.random() * 9000),
+                    'description': 'منهج شامل لتعليم اللغة العربية للأطفال في مرحلة الروضة، يتضمن مهارات القراءة والكتابة والتعبير الشفهي.',
+                    'grade_level': 'kindergarten',
+                    'subject_area': 'language',
+                    'curriculum_type': 'standard',
+                    'duration_weeks': '12',
+                    'topics': 'الحروف الهجائية, الكلمات البسيطة, الجمل القصيرة, القراءة الجهرية, الكتابة الأساسية',
+                    'objectives': 'تعلم الحروف العربية, قراءة الكلمات البسيطة, كتابة الحروف والكلمات, التعبير الشفهي',
+                    'learning_outcomes': 'إتقان الحروف الهجائية, قراءة جمل بسيطة, كتابة الاسم, التحدث بثقة',
+                    'materials_needed': 'كتب تعليمية, أوراق عمل, أقلام ملونة, سبورة بيضاء, مغناطيسات حروف',
+                    'assessment_methods': 'اختبارات شفهية, واجبات يومية, مشاريع فنية, ملاحظة الأداء',
+                    'prerequisites': 'معرفة أساسية بالألوان, القدرة على التركيز 15 دقيقة',
+                    'syllabus': 'الأسبوع 1-2: الحروف الهجائية\nالأسبوع 3-4: الكلمات البسيطة\nالأسبوع 5-6: الجمل القصيرة\nالأسبوع 7-8: القراءة الجهرية\nالأسبوع 9-10: الكتابة الأساسية\nالأسبوع 11-12: المراجعة والتقييم',
+                    'learning_objectives': 'فهم الحروف والكلمات, التطبيق العملي على الكتابة, التقييم الذاتي',
+                    'status': 'active',
+                    'published_at': new Date().toISOString().slice(0, 16)
+                };
+
+                // Fill all fields directly in the form
+                const allFields = form.querySelectorAll('input[name], textarea[name], select[name]');
+                console.log('Found fields:', allFields.length);
+                let filledCount = 0;
+
+                allFields.forEach(function(field) {
+                    const name = field.getAttribute('name');
+                    if (!name) return;
+
+                    // Skip CSRF token
+                    if (name === '_token') return;
+
+                    // Skip array fields like connected_materials[]
+                    if (name.includes('[]')) return;
+
+                    // Get base name (remove [] if present)
+                    const baseName = name.replace('[]', '');
+
+                    // Handle is_active checkbox specially
+                    if (baseName === 'is_active') {
+                        if (field.type === 'hidden') {
+                            field.value = '1';
+                            filledCount++;
+                        } else if (field.type === 'checkbox') {
+                            field.checked = true;
+                            filledCount++;
+                        }
+                        return;
+                    }
+
+                    // Handle other fields
+                    if (demoData.hasOwnProperty(baseName)) {
+                        const value = demoData[baseName];
+                        console.log('Filling field:', baseName, 'with value:', value);
+
+                        if (field.tagName.toLowerCase() === 'select') {
+                            // For select, find matching option
+                            let optionFound = false;
+                            for (let i = 0; i < field.options.length; i++) {
+                                if (field.options[i].value === value) {
+                                    field.selectedIndex = i;
+                                    optionFound = true;
+                                    break;
+                                }
+                            }
+                            if (!optionFound && field.options.length > 0) {
+                                field.selectedIndex = 0;
+                            }
+                        } else {
+                            // For input and textarea
+                            field.value = value;
+                        }
+                        filledCount++;
+
+                        // Trigger events
+                        field.dispatchEvent(new Event('input', { bubbles: true }));
+                        field.dispatchEvent(new Event('change', { bubbles: true }));
+                    }
+                });
+
+                console.log('Filled', filledCount, 'fields');
+
+                // Show success message
+                const btn = document.getElementById('fill-demo-data');
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 me-2"><polyline points="20 6 9 17 4 12"></polyline></svg> {{ __("global.filled") }} (' + filledCount + ')';
+                btn.classList.remove('btn-outline-secondary');
+                btn.classList.add('btn-success');
+
+                setTimeout(function() {
+                    btn.innerHTML = originalText;
+                    btn.classList.remove('btn-success');
+                    btn.classList.add('btn-outline-secondary');
+                }, 2000);
             });
         });
     </script>

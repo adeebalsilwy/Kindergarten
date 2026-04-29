@@ -30,6 +30,8 @@ return [
     'reset_password' => 'Reset password',
     'send_password_reset_link' => 'Send password reset link',
     'save' => 'Save',
+    'fill_demo_data' => 'Fill Demo Data',
+    'filled' => 'Filled',
     'search' => 'Search',
     'show' => 'Show',
     'systemCalendar' => 'Calendar',

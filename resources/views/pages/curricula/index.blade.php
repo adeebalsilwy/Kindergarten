@@ -5,28 +5,39 @@
 @endsection
 
 @section('subcontent')
-    <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
-        <h2 class="text-lg font-medium me-auto">{{ __('Curriculum.list') }}</h2>
-        <div class="w-full sm:w-auto flex mt-4 sm:mt-0">
+    <div class="intro-y flex flex-col sm:flex-row items-center mt-8 mb-6">
+        <div class="flex-1">
+            <div class="flex items-center">
+                <div class="bg-primary/10 p-2 rounded-lg me-3">
+                    <x-base.lucide icon="BookOpen" class="w-6 h-6 text-primary" />
+                </div>
+                <div>
+                    <h2 class="text-2xl font-bold text-slate-800">{{ __('Curriculum.list') }}</h2>
+                    <p class="text-sm text-slate-500 mt-1">Manage educational curricula and programs</p>
+                </div>
+            </div>
+        </div>
+        <div class="w-full sm:w-auto flex gap-2 mt-4 sm:mt-0">
             @can('export_curricula')
-                        <div class="flex gap-2">
-                            <x-base.button variant="outline-primary" as="a" href="{{ route('curricula.export.pdf') }}" class="flex items-center">
-                                <x-base.lucide icon="FileText" class="w-4 h-4 me-2" />
-                                {{ __('global.export_pdf') }}
-                            </x-base.button>
-                            <x-base.button variant="outline-success" as="a" href="{{ route('curricula.export.excel') }}" class="flex items-center">
-                                <x-base.lucide icon="FileSpreadsheet" class="w-4 h-4 me-2" />
-                                {{ __('global.export_excel') }}
-                            </x-base.button>
-                        </div>
+            <x-base.button variant="outline-primary" as="a" href="{{ route('curricula.export.pdf') }}" class="flex items-center">
+                <x-base.lucide icon="FileText" class="w-4 h-4 me-2" />
+                {{ __('global.export_pdf') }}
+            </x-base.button>
+            <x-base.button variant="outline-success" as="a" href="{{ route('curricula.export.excel') }}" class="flex items-center">
+                <x-base.lucide icon="FileSpreadsheet" class="w-4 h-4 me-2" />
+                {{ __('global.export_excel') }}
+            </x-base.button>
             @endcan
-
             @can('create_curricula')
-            <x-base.button variant="primary" as="a" href="{{ route('curricula.create') }}" class="ms-2 flex items-center">
+            <x-base.button variant="primary" as="a" href="{{ route('curricula.create') }}" class="flex items-center">
                 <x-base.lucide icon="Plus" class="w-4 h-4 me-2" />
                 {{ __('Curriculum.add_new') }}
             </x-base.button>
             @endcan
+            <x-base.button variant="outline-secondary" id="fillDemoData" class="flex items-center">
+                <x-base.lucide icon="Database" class="w-4 h-4 me-2" />
+                Fill Demo Data
+            </x-base.button>
         </div>
     </div>
 

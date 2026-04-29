@@ -308,7 +308,7 @@ class CurriculumController extends Controller
         $validatedData = $request->validated();
 
         // Convert comma-separated string fields to JSON arrays
-        $arrayFields = ['topics', 'objectives', 'learning_outcomes', 'materials_needed', 'assessment_methods'];
+        $arrayFields = ['topics', 'objectives', 'learning_outcomes', 'materials_needed', 'assessment_methods', 'prerequisites', 'learning_objectives'];
         foreach ($arrayFields as $field) {
             if (isset($validatedData[$field]) && is_string($validatedData[$field]) && !empty($validatedData[$field])) {
                 $decoded = json_decode($validatedData[$field], true);
@@ -366,7 +366,7 @@ class CurriculumController extends Controller
         $validatedData = $request->validated();
 
         // Convert comma-separated string fields to JSON arrays
-        $arrayFields = ['topics', 'objectives', 'learning_outcomes', 'materials_needed', 'assessment_methods'];
+        $arrayFields = ['topics', 'objectives', 'learning_outcomes', 'materials_needed', 'assessment_methods', 'prerequisites', 'learning_objectives'];
         foreach ($arrayFields as $field) {
             if (isset($validatedData[$field]) && is_string($validatedData[$field]) && !empty($validatedData[$field])) {
                 $decoded = json_decode($validatedData[$field], true);
