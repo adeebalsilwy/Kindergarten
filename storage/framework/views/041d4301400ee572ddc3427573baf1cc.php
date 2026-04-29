@@ -1,10 +1,10 @@
 <?php $__env->startSection('head'); ?>
-    <title><?php echo e(__('Activity.add_new')); ?> - Laravel</title>
+    <title><?php echo e(__('activities.add_new')); ?> - Laravel</title>
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('subcontent'); ?>
     <div class="intro-y flex items-center mt-8">
-        <h2 class="text-lg font-medium me-auto"><?php echo e(__('Activity.add_new')); ?></h2>
+        <h2 class="text-lg font-medium me-auto"><?php echo e(__('activities.add_new')); ?></h2>
     </div>
     <div class="grid grid-cols-12 gap-6 mt-5">
         <div class="intro-y col-span-12 lg:col-span-10">
@@ -323,14 +323,14 @@
                         <div class="col-span-12 sm:col-span-6">
                             <?php if (isset($component)) { $__componentOriginalf4c8ecf26ef77d4de25edf56eae3a34d = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginalf4c8ecf26ef77d4de25edf56eae3a34d = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.form-field','data' => ['label' => ''.e(__('activities.fields.status')).'','name' => 'status','type' => 'select','options' => ['active' => __('activities.status.active'), 'completed' => __('activities.status.completed'), 'cancelled' => __('activities.status.cancelled'), 'postponed' => __('activities.status.postponed')],'value' => ''.e(old('status', $activity->status ?? 'active')).'']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.form-field','data' => ['label' => 'Status','name' => 'status','type' => 'select','options' => ['active' => 'Active', 'completed' => 'Completed', 'cancelled' => 'Cancelled', 'postponed' => 'Postponed'],'value' => ''.e(old('status', $activity->status ?? 'active')).'']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('form-field'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['label' => ''.e(__('activities.fields.status')).'','name' => 'status','type' => 'select','options' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(['active' => __('activities.status.active'), 'completed' => __('activities.status.completed'), 'cancelled' => __('activities.status.cancelled'), 'postponed' => __('activities.status.postponed')]),'value' => ''.e(old('status', $activity->status ?? 'active')).'']); ?>
+<?php $component->withAttributes(['label' => 'Status','name' => 'status','type' => 'select','options' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(['active' => 'Active', 'completed' => 'Completed', 'cancelled' => 'Cancelled', 'postponed' => 'Postponed']),'value' => ''.e(old('status', $activity->status ?? 'active')).'']); ?>
 <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginalf4c8ecf26ef77d4de25edf56eae3a34d)): ?>

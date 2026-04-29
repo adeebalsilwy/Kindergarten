@@ -214,7 +214,7 @@
                                 <x-base.form-label>{{ __('curricula.fields.status') }}</x-base.form-label>
                                 <x-base.form-select name="status" class="mt-2">
                                     <option value="draft" {{ old('status', '') == 'draft' ? 'selected' : '' }}>{{ __('curricula.status.draft') }}</option>
-                                    <option value="active" {{ old('status', '') == 'active' ? 'selected' : '' }}>{{ __('curricula.status.active') }}</option>
+                                    <option value="published" {{ old('status', '') == 'published' ? 'selected' : '' }}>{{ __('curricula.status.published') }}</option>
                                     <option value="archived" {{ old('status', '') == 'archived' ? 'selected' : '' }}>{{ __('curricula.status.archived') }}</option>
                                 </x-base.form-select>
                                 @error('status')
@@ -320,7 +320,7 @@
                 setVal('prerequisites', 'معرفة أساسية بالألوان, القدرة على التركيز 15 دقيقة');
                 setVal('syllabus', 'الأسبوع 1-2: الحروف الهجائية\nالأسبوع 3-4: الكلمات البسيطة\nالأسبوع 5-6: الجمل القصيرة\nالأسبوع 7-8: القراءة الجهرية\nالأسبوع 9-10: الكتابة الأساسية\nالأسبوع 11-12: المراجعة والتقييم');
                 setVal('learning_objectives', 'فهم الحروف والكلمات, التطبيق العملي على الكتابة, التقييم الذاتي');
-                setVal('status', 'active');
+                setVal('status', 'published');
                 setVal('published_at', new Date().toISOString().slice(0, 16));
 
                 // Handle checkbox

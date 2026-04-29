@@ -230,7 +230,7 @@
                                 <x-base.form-label>{{ __('curricula.fields.status') }}</x-base.form-label>
                                 <x-base.form-select name="status" class="mt-2">
                                     <option value="draft" {{ old('status', $curriculum->status ?? '') == 'draft' ? 'selected' : '' }}>{{ __('curricula.status.draft') }}</option>
-                                    <option value="active" {{ old('status', $curriculum->status ?? '') == 'active' ? 'selected' : '' }}>{{ __('curricula.status.active') }}</option>
+                                    <option value="published" {{ old('status', $curriculum->status ?? '') == 'published' ? 'selected' : '' }}>{{ __('curricula.status.published') }}</option>
                                     <option value="archived" {{ old('status', $curriculum->status ?? '') == 'archived' ? 'selected' : '' }}>{{ __('curricula.status.archived') }}</option>
                                 </x-base.form-select>
                                 @error('status')

@@ -30,6 +30,11 @@ return [
         'delete' => 'حذف',
         'confirm_delete' => 'هل أنت متأكد؟',
     ],
+    'status' => [
+        'draft' => 'مسودة',
+        'published' => 'منشور',
+        'archived' => 'مؤرشف',
+    ],
     'messages' => [
         'created' => 'تم إنشاء السجل بنجاح.',
         'updated' => 'تم تحديث السجل بنجاح.',

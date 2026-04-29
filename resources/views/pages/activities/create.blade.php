@@ -1,12 +1,12 @@
 @extends('../themes/' . $activeTheme . '/' . $activeLayout)
 
 @section('head')
-    <title>{{ __('Activity.add_new') }} - Laravel</title>
+    <title>{{ __('activities.add_new') }} - Laravel</title>
 @endsection
 
 @section('subcontent')
     <div class="intro-y flex items-center mt-8">
-        <h2 class="text-lg font-medium me-auto">{{ __('Activity.add_new') }}</h2>
+        <h2 class="text-lg font-medium me-auto">{{ __('activities.add_new') }}</h2>
     </div>
     <div class="grid grid-cols-12 gap-6 mt-5">
         <div class="intro-y col-span-12 lg:col-span-10">
@@ -137,10 +137,10 @@
                         </div>
                         <div class="col-span-12 sm:col-span-6">
                             <x-form-field
-                                label="{{ __('activities.fields.status') }}"
+                                label="Status"
                                 name="status"
                                 type="select"
-                                :options="['active' => __('activities.status.active'), 'completed' => __('activities.status.completed'), 'cancelled' => __('activities.status.cancelled'), 'postponed' => __('activities.status.postponed')]"
+                                :options="['active' => 'Active', 'completed' => 'Completed', 'cancelled' => 'Cancelled', 'postponed' => 'Postponed']"
                                 value="{{ old('status', $activity->status ?? 'active') }}"
                             />
                         </div>

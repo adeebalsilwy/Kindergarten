@@ -30,6 +30,11 @@ return [
         'delete' => 'Delete',
         'confirm_delete' => 'Are you sure?',
     ],
+    'status' => [
+        'draft' => 'Draft',
+        'published' => 'Published',
+        'archived' => 'Archived',
+    ],
     'messages' => [
         'created' => 'Record created successfully.',
         'updated' => 'Record updated successfully.',
