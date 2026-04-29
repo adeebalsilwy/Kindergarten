@@ -277,18 +277,18 @@
     </div>
 <?php $__env->stopSection(); ?>
 
-<?php if (! $__env->hasRenderedOnce('2fc661db-fd41-4064-9cc3-da43cac1ed88')): $__env->markAsRenderedOnce('2fc661db-fd41-4064-9cc3-da43cac1ed88');
+<?php if (! $__env->hasRenderedOnce('65cef78d-8741-4288-938e-8d10b44f562f')): $__env->markAsRenderedOnce('65cef78d-8741-4288-938e-8d10b44f562f');
 $__env->startPush('styles'); ?>
     <?php echo app('Illuminate\Foundation\Vite')('resources/css/vendors/tippy.css'); ?>
     <?php echo app('Illuminate\Foundation\Vite')('resources/css/themes/kindergarten/side-nav.css'); ?>
 <?php $__env->stopPush(); endif; ?>
 
-<?php if (! $__env->hasRenderedOnce('19802514-3297-429b-99a4-2759a2dd76d6')): $__env->markAsRenderedOnce('19802514-3297-429b-99a4-2759a2dd76d6');
+<?php if (! $__env->hasRenderedOnce('3ca49280-73b3-4d70-840b-768f19d5125b')): $__env->markAsRenderedOnce('3ca49280-73b3-4d70-840b-768f19d5125b');
 $__env->startPush('vendors'); ?>
     <?php echo app('Illuminate\Foundation\Vite')('resources/js/vendors/tippy.js'); ?>
 <?php $__env->stopPush(); endif; ?>
 
-<?php if (! $__env->hasRenderedOnce('ec9e66ab-ad58-4433-852c-78a062db1a23')): $__env->markAsRenderedOnce('ec9e66ab-ad58-4433-852c-78a062db1a23');
+<?php if (! $__env->hasRenderedOnce('ffc78033-a1fc-4bc6-bb49-8d934124c3de')): $__env->markAsRenderedOnce('ffc78033-a1fc-4bc6-bb49-8d934124c3de');
 $__env->startPush('scripts'); ?>
     <?php echo app('Illuminate\Foundation\Vite')('resources/js/themes/kindergarten.js'); ?>
 <?php $__env->stopPush(); endif; ?>
