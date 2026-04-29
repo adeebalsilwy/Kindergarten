@@ -56,8 +56,8 @@ class AttendanceService
                         [
                             'status' => $attendanceData['status'],
                             'notes' => $attendanceData['notes'] ?? null,
-                            'check_in' => $attendanceData['check_in'] ?? null,
-                            'check_out' => $attendanceData['check_out'] ?? null,
+                            'check_in_time' => $attendanceData['check_in'] ?? null,
+                            'check_out_time' => $attendanceData['check_out'] ?? null,
                             'absence_reason' => $attendanceData['absence_reason'] ?? null,
                         ]
                     );

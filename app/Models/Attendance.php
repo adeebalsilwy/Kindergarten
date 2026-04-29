@@ -22,15 +22,22 @@ class Attendance extends Model
         'date',
         'status',
         'notes',
-        'check_in',
-        'check_out',
+        'check_in_time',
+        'check_out_time',
         'absence_reason',
+        'check_in_location',
+        'check_out_location',
+        'check_in_status',
+        'check_out_status',
+        'attendance_type',
+        'duration_minutes',
     ];
 
     protected $casts = [
         'date' => 'datetime',
-        'check_in' => 'datetime',
-        'check_out' => 'datetime',
+        'check_in_time' => 'datetime',
+        'check_out_time' => 'datetime',
+        'duration_minutes' => 'integer',
     ];
 
     public function child()
@@ -47,9 +54,10 @@ class Attendance extends Model
     {
         return [
             'date' => 'datetime',
-            'check_in' => 'datetime',
-            'check_out' => 'datetime',
+            'check_in_time' => 'datetime',
+            'check_out_time' => 'datetime',
             'deleted_at' => 'datetime',
+            'duration_minutes' => 'integer',
         ];
     }
 }

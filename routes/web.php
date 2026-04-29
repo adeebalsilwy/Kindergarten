@@ -115,9 +115,10 @@ Route::middleware(['auth', 'verified', 'role:Administrator|Accountant|Principal'
 });
 Route::get('attendances/bulk', [AttendanceController::class, 'bulk'])->name('attendances.bulk')->middleware(['auth', 'role:Administrator|Principal|Teacher']);
 Route::post('attendances/bulk', [AttendanceController::class, 'bulkStore'])->name('attendances.bulk.store')->middleware(['auth', 'role:Administrator|Principal|Teacher']);
-Route::resource('grades', GradeController::class)->middleware(['auth', 'verified', 'role:Administrator|Principal|Teacher']);
+// Grades Routes - Export routes must be defined BEFORE resource routes
 Route::get('grades/export/pdf', [GradeController::class, 'exportPdf'])->name('grades.export.pdf')->middleware(['auth', 'verified', 'role:Administrator|Principal|Teacher']);
 Route::get('grades/export/excel', [GradeController::class, 'exportExcel'])->name('grades.export.excel')->middleware(['auth', 'verified', 'role:Administrator|Principal|Teacher']);
+Route::resource('grades', GradeController::class)->middleware(['auth', 'verified', 'role:Administrator|Principal|Teacher']);
 Route::get('children/{child}/account-statement', [ChildrenController::class, 'accountStatement'])->name('children.account-statement')->middleware(['auth', 'verified']);
 Route::resource('children', ChildrenController::class)->middleware(['auth', 'verified', 'role:Administrator|Principal|Teacher']);
 

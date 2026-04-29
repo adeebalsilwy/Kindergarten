@@ -106,6 +106,11 @@ class Classes extends Model
             ->withTimestamps();
     }
 
+    public function curriculum(): BelongsTo
+    {
+        return $this->belongsTo(Curriculum::class, 'curriculum', 'name');
+    }
+
     // Accessors
     public function getSlugAttribute(): string
     {
