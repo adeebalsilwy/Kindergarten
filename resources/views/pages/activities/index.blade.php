@@ -1,23 +1,23 @@
 @extends('../themes/' . $activeTheme . '/' . $activeLayout)
 
 @section('head')
-    <title>{{ __('Activity.list') }} - Laravel</title>
+    <title>{{ __('activities.list') }} - Laravel</title>
 @endsection
 
 @section('subcontent')
     <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
-        <h2 class="text-lg font-medium me-auto">{{ __('Activity.list') }}</h2>
+        <h2 class="text-lg font-medium me-auto">{{ __('activities.list') }}</h2>
         <div class="w-full sm:w-auto flex mt-4 sm:mt-0">
             @can('export_activities')
 
                         <div class="flex gap-2">
                             <x-base.button variant="outline-primary" as="a" href="{{ route('activities.export.pdf') }}" class="flex items-center">
                                 <x-base.lucide icon="FileText" class="w-4 h-4 me-2" />
-                                {{ __('global.export_pdf') }}
+                                {{ __('global.pdf') }}
                             </x-base.button>
                             <x-base.button variant="outline-success" as="a" href="{{ route('activities.export.excel') }}" class="flex items-center">
                                 <x-base.lucide icon="FileSpreadsheet" class="w-4 h-4 me-2" />
-                                {{ __('global.export_excel') }}
+                                {{ __('global.excel') }}
                             </x-base.button>
                         </div>
             @endcan
@@ -25,7 +25,7 @@
             @can('create_activities')
             <x-base.button variant="primary" as="a" href="{{ route('activities.create') }}" class="ms-2 flex items-center">
                 <x-base.lucide icon="Plus" class="w-4 h-4 me-2" />
-                {{ __('Activity.add_new') }}
+                {{ __('activities.add_new') }}
             </x-base.button>
             @endcan
         </div>
@@ -155,7 +155,7 @@
                                     @endcan
 
                                     @can('delete_activities')
-                                    <form action="{{ route('activities.destroy', $activity->id) }}" method="POST" onsubmit="return confirm('{{ __('global.confirm_delete') }}')" class="inline">
+                                    <form action="{{ route('activities.destroy', $activity->id) }}" method="POST" onsubmit="return confirm('{{ __('activities.actions.confirm_delete') }}')" class="inline">
                                         @csrf
                                         @method('DELETE')
                                         <x-base.button variant="outline-danger" type="submit" size="sm">
@@ -174,11 +174,11 @@
                             <x-base.table.td colspan="{{ 16 + ($canEdit || $canDelete || $canView ? 1 : 0) }}" class="text-center py-10">
                                 <div class="flex flex-col items-center justify-center">
                                     <x-base.lucide icon="Inbox" class="w-16 h-16 text-gray-400 mb-4" />
-                                    <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100">{{ __('global.no_data_found') }}</h3>
-                                    <p class="text-gray-500 dark:text-gray-400 mt-1">{{ __('global.no_data_description') }}</p>
+                                    <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100">{{ __('global.no_records_found') }}</h3>
+                                    <p class="text-gray-500 dark:text-gray-400 mt-1">{{ __('global.no_records_found') }}</p>
                                     <x-base.button variant="primary" as="a" href="{{ route('activities.create') }}" class="mt-4">
                                         <x-base.lucide icon="Plus" class="w-4 h-4 me-2" />
-                                        {{ __('Activity.add_new') }}
+                                        {{ __('activities.add_new') }}
                                     </x-base.button>
                                 </div>
                             </x-base.table.td>
