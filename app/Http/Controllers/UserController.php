@@ -224,10 +224,10 @@ class UserController extends Controller
             $user = $this->service->create($data);
             
             // Sync roles - convert to integers
-            if ($request->has('roles')) {
+            if ($request->has('roles') && is_array($request->roles)) {
                 $roleIds = array_map('intval', $request->roles);
                 $user->syncRoles($roleIds);
-            } else {
+            } elseif (!$request->has('roles')) {
                 // Assign default Teacher role if no roles selected
                 $teacherRole = \Spatie\Permission\Models\Role::where('name', 'Teacher')->first();
                 if ($teacherRole) {
@@ -236,7 +236,7 @@ class UserController extends Controller
             }
             
             // Sync permissions - convert to integers
-            if ($request->has('permissions')) {
+            if ($request->has('permissions') && is_array($request->permissions)) {
                 $permissionIds = array_map('intval', $request->permissions);
                 $user->syncPermissions($permissionIds);
             }
@@ -307,14 +307,14 @@ class UserController extends Controller
             $user = $this->service->update($id, $data);
             
             // Sync roles - convert to integers
-            if ($request->has('roles')) {
+            if ($request->has('roles') && is_array($request->roles)) {
                 $roleIds = array_map('intval', $request->roles);
                 $user->syncRoles($roleIds);
             }
             // If no roles submitted, keep existing roles (don't remove them)
             
             // Sync permissions - convert to integers  
-            if ($request->has('permissions')) {
+            if ($request->has('permissions') && is_array($request->permissions)) {
                 $permissionIds = array_map('intval', $request->permissions);
                 $user->syncPermissions($permissionIds);
             }

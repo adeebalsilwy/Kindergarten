@@ -32,8 +32,6 @@ class UpdateUserRequest extends FormRequest
             'email' => $this->email ?? null,
             'password' => $this->password ?? null,
             'is_active' => $this->is_active ?? null,
-            'roles' => $this->roles ?? null,
-            'permissions' => $this->permissions ?? null,
             'phone' => $this->phone ?? '05' . rand(10000000, 99999999),
             'address' => $this->address ?? null,
         ]);
